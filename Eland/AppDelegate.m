@@ -11,7 +11,7 @@
 #import "ViewController.h"
 
 @implementation AppDelegate
-
+@synthesize hasConnect;
 - (void)dealloc
 {
     [_window release];

@@ -50,6 +50,13 @@
 		0104777417DF25D800BDCCE0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0104777317DF25D700BDCCE0 /* CFNetwork.framework */; };
 		0104777617DF25DE00BDCCE0 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0104777517DF25DE00BDCCE0 /* MobileCoreServices.framework */; };
 		0104777817DF25EE00BDCCE0 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0104777717DF25EE00BDCCE0 /* libz.dylib */; };
+		01B5A60B17DFF42F0076738C /* AnimateLoadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B5A60817DFF42F0076738C /* AnimateLoadView.m */; };
+		01B5A60C17DFF42F0076738C /* AnimateErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B5A60A17DFF42F0076738C /* AnimateErrorView.m */; };
+		01B5A61017DFF5270076738C /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = 01B5A60F17DFF5270076738C /* error.png */; };
+		01B5A61817E006CA0076738C /* NSData+TPCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B5A61717E006CA0076738C /* NSData+TPCategory.m */; };
+		01B5A61B17E006F20076738C /* UIImage+TPCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B5A61A17E006F20076738C /* UIImage+TPCategory.m */; };
+		01B5A61E17E00BCA0076738C /* UIColor+TPCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B5A61D17E00BC90076738C /* UIColor+TPCategory.m */; };
+		01B5A62117E00BF90076738C /* NSString+TPCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B5A62017E00BF90076738C /* NSString+TPCategory.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -131,6 +138,19 @@
 		0104777317DF25D700BDCCE0 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		0104777517DF25DE00BDCCE0 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		0104777717DF25EE00BDCCE0 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		01B5A60717DFF42F0076738C /* AnimateLoadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimateLoadView.h; sourceTree = "<group>"; };
+		01B5A60817DFF42F0076738C /* AnimateLoadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimateLoadView.m; sourceTree = "<group>"; };
+		01B5A60917DFF42F0076738C /* AnimateErrorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimateErrorView.h; sourceTree = "<group>"; };
+		01B5A60A17DFF42F0076738C /* AnimateErrorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimateErrorView.m; sourceTree = "<group>"; };
+		01B5A60F17DFF5270076738C /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = error.png; sourceTree = "<group>"; };
+		01B5A61617E006CA0076738C /* NSData+TPCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+TPCategory.h"; sourceTree = "<group>"; };
+		01B5A61717E006CA0076738C /* NSData+TPCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+TPCategory.m"; sourceTree = "<group>"; };
+		01B5A61917E006F20076738C /* UIImage+TPCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+TPCategory.h"; sourceTree = "<group>"; };
+		01B5A61A17E006F20076738C /* UIImage+TPCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+TPCategory.m"; sourceTree = "<group>"; };
+		01B5A61C17E00BC90076738C /* UIColor+TPCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+TPCategory.h"; sourceTree = "<group>"; };
+		01B5A61D17E00BC90076738C /* UIColor+TPCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+TPCategory.m"; sourceTree = "<group>"; };
+		01B5A61F17E00BF80076738C /* NSString+TPCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+TPCategory.h"; sourceTree = "<group>"; };
+		01B5A62017E00BF90076738C /* NSString+TPCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+TPCategory.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +226,7 @@
 		010476E117DF1A0A00BDCCE0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				01B5A60E17DFF5110076738C /* images */,
 				010476E217DF1A0A00BDCCE0 /* Eland-Info.plist */,
 				010476E317DF1A0A00BDCCE0 /* InfoPlist.strings */,
 				010476E617DF1A0A00BDCCE0 /* main.m */,
@@ -220,6 +241,7 @@
 		0104770017DF1A1500BDCCE0 /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				01B5A61517E006B80076738C /* Category */,
 				0104770B17DF1D2E00BDCCE0 /* Common */,
 				0104770417DF1A5F00BDCCE0 /* Data */,
 				0104770317DF1A4000BDCCE0 /* lib */,
@@ -289,8 +311,7 @@
 		0104770B17DF1D2E00BDCCE0 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				0104770C17DF1D5000BDCCE0 /* BasicViewController.h */,
-				0104770D17DF1D5000BDCCE0 /* BasicViewController.m */,
+				01B5A61117DFF5450076738C /* Basic */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -373,6 +394,42 @@
 			path = ASIHttpRequest;
 			sourceTree = "<group>";
 		};
+		01B5A60E17DFF5110076738C /* images */ = {
+			isa = PBXGroup;
+			children = (
+				01B5A60F17DFF5270076738C /* error.png */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
+		01B5A61117DFF5450076738C /* Basic */ = {
+			isa = PBXGroup;
+			children = (
+				01B5A60717DFF42F0076738C /* AnimateLoadView.h */,
+				01B5A60817DFF42F0076738C /* AnimateLoadView.m */,
+				01B5A60917DFF42F0076738C /* AnimateErrorView.h */,
+				01B5A60A17DFF42F0076738C /* AnimateErrorView.m */,
+				0104770C17DF1D5000BDCCE0 /* BasicViewController.h */,
+				0104770D17DF1D5000BDCCE0 /* BasicViewController.m */,
+			);
+			name = Basic;
+			sourceTree = "<group>";
+		};
+		01B5A61517E006B80076738C /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				01B5A61F17E00BF80076738C /* NSString+TPCategory.h */,
+				01B5A62017E00BF90076738C /* NSString+TPCategory.m */,
+				01B5A61C17E00BC90076738C /* UIColor+TPCategory.h */,
+				01B5A61D17E00BC90076738C /* UIColor+TPCategory.m */,
+				01B5A61917E006F20076738C /* UIImage+TPCategory.h */,
+				01B5A61A17E006F20076738C /* UIImage+TPCategory.m */,
+				01B5A61617E006CA0076738C /* NSData+TPCategory.h */,
+				01B5A61717E006CA0076738C /* NSData+TPCategory.m */,
+			);
+			name = Category;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -432,6 +489,7 @@
 				010476FA17DF1A0A00BDCCE0 /* ViewController_iPad.xib in Resources */,
 				0104772917DF1EF600BDCCE0 /* NoticeView.bundle in Resources */,
 				0104775817DF243D00BDCCE0 /* ReadMe.rtf in Resources */,
+				01B5A61017DFF5270076738C /* error.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -468,6 +526,12 @@
 				0104777017DF25A800BDCCE0 /* ASIHTTPRequest.m in Sources */,
 				0104777117DF25A800BDCCE0 /* ASIInputStream.m in Sources */,
 				0104777217DF25A800BDCCE0 /* ASINetworkQueue.m in Sources */,
+				01B5A60B17DFF42F0076738C /* AnimateLoadView.m in Sources */,
+				01B5A60C17DFF42F0076738C /* AnimateErrorView.m in Sources */,
+				01B5A61817E006CA0076738C /* NSData+TPCategory.m in Sources */,
+				01B5A61B17E006F20076738C /* UIImage+TPCategory.m in Sources */,
+				01B5A61E17E00BCA0076738C /* UIColor+TPCategory.m in Sources */,
+				01B5A62117E00BF90076738C /* NSString+TPCategory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -593,6 +657,7 @@
 				010476FF17DF1A0A00BDCCE0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
