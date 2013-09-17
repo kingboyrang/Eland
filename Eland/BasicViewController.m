@@ -9,6 +9,7 @@
 #import "BasicViewController.h"
 #import "WBErrorNoticeView.h"
 #import "WBSuccessNoticeView.h"
+#import "UIColor+TPCategory.h"
 @interface BasicViewController (){
     AnimateLoadView *_loadView;
     AnimateErrorView *_errorView;
@@ -42,6 +43,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.view.backgroundColor=[UIColor colorFromHexRGB:@"F1F4F2"];
     //网络检测
     [[UIApplication sharedApplication] addObserver:self forKeyPath:@"hasConnect" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
     //横竖屏检测
