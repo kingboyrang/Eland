@@ -1,28 +1,40 @@
 //
 //  MainViewController.m
-//  CaseSearch
+//  active
 //
-//  Created by rang on 13-7-25.
-//  Copyright (c) 2013年 rang. All rights reserved.
+//  Created by 徐 军 on 13-8-20.
+//  Copyright (c) 2013年 chenjin. All rights reserved.
 //
 
 #import "MainViewController.h"
+#import "UIColor+TPCategory.h"
+#import "UIImage+TPCategory.h"
 #import "IndexViewController.h"
 #import "aboutUSViewController.h"
-#import "UserSetViewController.h"
 #import "SystemCheckViewController.h"
-#import "UIColor+TPCategory.h"
+#import "UserSetViewController.h"
+//获取设备的物理高度
+#define ScreenHeight [UIScreen mainScreen].bounds.size.height
+#define TABRHEIGHT 44 //工具栏高度
+#define STATUSBARHEIGHT 20 //状态栏高度
+#define ScreenWidth [UIScreen mainScreen].bounds.size.width
 @interface MainViewController ()
--(void)loadControls;
+-(void)updateTabBarViewFrame:(UIInterfaceOrientation)orientation;
+-(void)updateSelectedStatus:(int)selectTag lastIndex:(int)prevIndex;
+-(void)updateNavigatorFrame:(UIInterfaceOrientation)orientation;
 @end
 
 @implementation MainViewController
-
+-(void)dealloc{
+    [super dealloc];
+    [_tabbarView release];
+    [_silderView release];
+}
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+         [self.tabBar setHidden:YES];
     }
     return self;
 }
@@ -30,57 +42,211 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self loadControls];
-    
-    //UIImage *image=[[UIImage imageNamed:@"arrow_down@2x.png"] imageRotatedByDegrees:-90];
-    //[self saveImage:image withName:@"arrow_down@2x.png"];
+    [self _initViewController];//初始化子控制器
+    [self _initTabbarView];//创建自定义tabBar
 }
 
--(void)loadControls{
-   
-    
-    //110,178,5
-    IndexViewController *index=[[[IndexViewController alloc] init] autorelease];
-    [index.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"index_select.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"index_normal.png"]];
-    UINavigationController *nav1=[[[UINavigationController alloc] initWithRootViewController:index] autorelease];
-    
-    
-    UserSetViewController *userSet=[[[UserSetViewController alloc] init] autorelease];
-    //userSet.title=@"使用者設定";
-    
-    [userSet.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"user_select.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"user_normal.png"]];
-    UINavigationController *nav2=[[[UINavigationController alloc] initWithRootViewController:userSet] autorelease];
-    
-    aboutUSViewController *aboutUS=[[[aboutUSViewController alloc] init] autorelease];
-    //aboutUS.title=@"關於我";
-    [aboutUS.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"about_select.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"about_normal.png"]];
-    UINavigationController *nav3=[[[UINavigationController alloc] initWithRootViewController:aboutUS] autorelease];
-    
-    
-    SystemCheckViewController *systemCheck=[[[SystemCheckViewController alloc] init] autorelease];
-    //systemCheck.title=@"系統檢查";
-    [systemCheck.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"system_select.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"system_normal.png"]];
-    UINavigationController *nav4=[[[UINavigationController alloc] initWithRootViewController:systemCheck] autorelease];
-    
-    [self setViewControllers:[NSArray arrayWithObjects:nav1,nav2,nav3,nav4, nil]];
-    
-    
-    
-   
-    UIView *bgView=[[[UIView alloc] initWithFrame:self.tabBar.bounds] autorelease];
-    bgView.backgroundColor=[UIColor colorFromHexRGB:@"272727"];
-    [bgView setAutoresizesSubviews:YES];
-    [bgView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
-    [self.tabBar insertSubview:bgView atIndex:1];
-    self.tabBar.opaque=YES;
-    
-     
-
-}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - UI
+//初始化子控制器
+- (void)_initViewController {
+    IndexViewController *index=[[[IndexViewController alloc] init] autorelease];
+    index.title=@"首頁";
+    UINavigationController *nav1=[[[UINavigationController alloc] initWithRootViewController:index] autorelease];
+    nav1.delegate=self;
+
+    UserSetViewController *userset=[[[UserSetViewController alloc] init] autorelease];
+    userset.title=@"使用者設定";
+    UINavigationController *nav2=[[[UINavigationController alloc] initWithRootViewController:userset] autorelease];
+    nav2.delegate=self;
+    
+    
+    aboutUSViewController *aboutUs=[[[aboutUSViewController alloc] init] autorelease];
+    aboutUs.title=@"關於我";
+    UINavigationController *nav3=[[[UINavigationController alloc] initWithRootViewController:aboutUs] autorelease];
+    nav3.delegate=self;
+    
+    SystemCheckViewController *system=[[[SystemCheckViewController alloc] init] autorelease];
+    system.title=@"系統檢查";
+    UINavigationController *nav4=[[[UINavigationController alloc] initWithRootViewController:system] autorelease];
+    nav4.delegate=self;
+    
+    
+    self.viewControllers = [NSArray arrayWithObjects:nav1,nav2,nav3,nav4, nil];
+    
+    //重设可见视图大小 
+    UIView *transitionView =[[self.view subviews] objectAtIndex:0];
+    CGRect frame=transitionView.frame;
+    frame.size.height=ScreenHeight-TABRHEIGHT-STATUSBARHEIGHT;
+    frame.size.width=ScreenWidth;
+    transitionView.frame=frame;
+}
+
+//创建自定义tabBar
+- (void)_initTabbarView {
+    _tabbarView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-TABRHEIGHT-STATUSBARHEIGHT, ScreenWidth, TABRHEIGHT)];
+    _tabbarView.backgroundColor=[UIColor colorFromHexRGB:@"272727"];
+    _tabbarView.autoresizesSubviews=YES;
+    _tabbarView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleTopMargin;
+    [self.view addSubview:_tabbarView];
+    NSArray *backgroud = @[@"index_normal.png",@"user_normal.png",@"about_normal.png",@"system_normal.png"];
+    NSArray *heightBackground = @[@"index_select.png",@"user_select.png",@"about_select.png",@"system_select.png"];
+    CGFloat w=ScreenWidth/backgroud.count*1.0;
+    
+    //滑块
+    _silderView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, w, TABRHEIGHT)];
+    [_silderView setImage:[UIImage createImageWithColor:[UIColor colorFromHexRGB:@"343434"]]];
+    //_silderView.tag=999;
+    [_tabbarView addSubview:_silderView];
+    //总数
+    _barButtonItemCount=[backgroud count];
+    //
+    _prevSelectIndex=0;
+    
+    for (int i=0; i<backgroud.count; i++) {
+        NSString *backImage = backgroud[i];
+        NSString *heightImage = heightBackground[i];
+        UIImage *normal=[UIImage imageNamed:backImage];
+        UIImage *hight=[UIImage imageNamed:heightImage];
+        
+        CGFloat leftX=i==0?(w-normal.size.width)/2:i*w+(w-normal.size.width)/2;
+        UIButton *button =[[UIButton alloc] initWithFrame:CGRectMake(leftX, 0, normal.size.width, TABRHEIGHT)];
+        [button setBackgroundImage:normal forState:UIControlStateNormal];
+        [button setBackgroundImage:hight forState:UIControlStateSelected];
+        button.tag = i;
+        if (i==0) {
+            button.selected=YES;
+        }
+        [button addTarget:self action:@selector(selectedTab:) forControlEvents:UIControlEventTouchUpInside];
+        
+       [_tabbarView addSubview:button];
+        [button release];
+    }
+    
+}
+
+#pragma mark - actions
+//tab 按钮的点击事件
+- (void)selectedTab:(UIButton *)button {
+
+    button.selected=YES;
+    CGRect frame=_silderView.frame;
+    frame.origin.x=button.tag*frame.size.width;
+    [UIView animateWithDuration:0.2 animations:^{
+        _silderView.frame=frame;
+        [self updateSelectedStatus:button.tag lastIndex:_prevSelectIndex];
+    }];
+    //判断是否是重复点击tab按钮
+    if (button.tag == self.selectedIndex && button.tag == 0) {
+       //[_homeCtrl autorefresh];
+    }
+    self.selectedIndex = button.tag;
+    
+}
+//是否隐藏tabbar
+- (void)showTabbar:(BOOL)show {
+    
+}
+#pragma mark - UINavigationController delegate
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    //viewController.hidesBottomBarWhenPushed=YES;
+    //导航控制器子控制器的个数
+    int count = navigationController.viewControllers.count;
+    if (count == 1) {
+        [self showTabbar:YES];
+    }else if (count == 2) {
+        [self showTabbar:NO];
+    }
+}
+#pragma mark 旋转处理
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
+    return YES;
+}
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                         duration:(NSTimeInterval)duration
+{
+    [self updateNavigatorFrame:toInterfaceOrientation];
+    [self updateTabBarViewFrame:toInterfaceOrientation];
+}
+#pragma mark 私有方法
+-(void)updateSelectedStatus:(int)selectTag lastIndex:(int)prevIndex{
+    UIButton *btn;
+    if (prevIndex==0) {
+        btn=[_tabbarView.subviews objectAtIndex:1];
+    }else{
+       btn=(UIButton*)[_tabbarView viewWithTag:prevIndex];
+    }
+    btn.selected=NO;
+    _prevSelectIndex=selectTag;
+}
+-(void)updateTabBarViewFrame:(UIInterfaceOrientation)orientation{
+    CGFloat transitionViewH,transitionViewW;
+    UIView * transitionView =[[self.view subviews] objectAtIndex:0];
+    if(UIInterfaceOrientationIsLandscape(orientation))
+    {
+        CGRect frame=_tabbarView.frame;
+        frame.origin.y=ScreenWidth-TABRHEIGHT;
+        frame.size.width=ScreenHeight;
+        _tabbarView.frame=frame;
+        
+        transitionViewH=transitionView.bounds.size.width-TABRHEIGHT;
+        transitionViewW=ScreenHeight;
+        
+    }else{
+        CGRect frame=_tabbarView.frame;
+        frame.origin.y=ScreenHeight-TABRHEIGHT-STATUSBARHEIGHT;
+        frame.size.width=ScreenWidth;
+        _tabbarView.frame=frame;
+        
+        transitionViewH=ScreenHeight-TABRHEIGHT-STATUSBARHEIGHT;
+        transitionViewW=ScreenWidth;
+        
+    }
+    //重设self.tabBarController.view大小
+    CGRect frame=transitionView.frame;
+    frame.size.height=transitionViewH;
+    frame.size.width=transitionViewW;
+    transitionView.frame=frame;
+    
+    
+    CGFloat w=_tabbarView.frame.size.width/4.0;
+    //重设滑块大小
+    frame=_silderView.frame;
+    frame.size.width=w;
+    frame.origin.x=self.selectedIndex*w;
+    _silderView.frame=frame;
+    //重设UIButton位置
+    for (int i=0; i<_barButtonItemCount; i++) {
+        id v=[_tabbarView viewWithTag:i];
+        if (i==0&&![v isKindOfClass:[UIButton class]]) {
+            v=[_tabbarView.subviews objectAtIndex:1];
+        }
+        if([v isKindOfClass:[UIButton class]]){
+            UIButton *btn=(UIButton*)v;
+            frame=btn.frame;
+            CGFloat leftX=i==0?(w-frame.size.width)/2:i*w+(w-frame.size.width)/2;
+            frame.origin.x=leftX;
+            btn.frame=frame;
+        }
+    }
+}
+-(void)updateNavigatorFrame:(UIInterfaceOrientation)orientation{
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        return;
+    }
+    if ([[self.viewControllers objectAtIndex:self.selectedIndex] isKindOfClass:[UINavigationController class]]) {
+        UINavigationController *nav=(UINavigationController*)[self.viewControllers objectAtIndex:self.selectedIndex];
+        CGRect frame=nav.navigationBar.frame;
+        if(UIInterfaceOrientationIsLandscape(orientation)){//横屏
+            frame.size.height=32.0;
+        }else{
+            frame.size.height=44.0;
+        }
+        nav.navigationBar.frame=frame;
+    }
+}
 @end

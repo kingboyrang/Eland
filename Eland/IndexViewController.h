@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "REMenu.h"
 @interface IndexViewController : BasicViewController<UITableViewDataSource,UITableViewDelegate>
+@property (strong, nonatomic) REMenu *menu;
 @end
