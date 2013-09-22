@@ -85,6 +85,7 @@
 		26A0ECE417EF2E9B009AF735 /* system_select.png in Resources */ = {isa = PBXBuildFile; fileRef = 26A0ECDC17EF2E9B009AF735 /* system_select.png */; };
 		26A0ECE517EF2E9B009AF735 /* user_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 26A0ECDD17EF2E9B009AF735 /* user_normal.png */; };
 		26A0ECE617EF2E9B009AF735 /* user_select.png in Resources */ = {isa = PBXBuildFile; fileRef = 26A0ECDE17EF2E9B009AF735 /* user_select.png */; };
+		26A0ECE817EF343F009AF735 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26A0ECE717EF343F009AF735 /* Entitlements.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -218,6 +219,7 @@
 		26A0ECDC17EF2E9B009AF735 /* system_select.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = system_select.png; sourceTree = "<group>"; };
 		26A0ECDD17EF2E9B009AF735 /* user_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_normal.png; sourceTree = "<group>"; };
 		26A0ECDE17EF2E9B009AF735 /* user_select.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_select.png; sourceTree = "<group>"; };
+		26A0ECE717EF343F009AF735 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -243,6 +245,7 @@
 		010476CB17DF1A0A00BDCCE0 = {
 			isa = PBXGroup;
 			children = (
+				26A0ECE717EF343F009AF735 /* Entitlements.plist */,
 				010476E017DF1A0A00BDCCE0 /* Eland */,
 				010476D917DF1A0A00BDCCE0 /* Frameworks */,
 				010476D717DF1A0A00BDCCE0 /* Products */,
@@ -653,6 +656,7 @@
 				26A0ECE417EF2E9B009AF735 /* system_select.png in Resources */,
 				26A0ECE517EF2E9B009AF735 /* user_normal.png in Resources */,
 				26A0ECE617EF2E9B009AF735 /* user_select.png in Resources */,
+				26A0ECE817EF343F009AF735 /* Entitlements.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -747,7 +751,8 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 澜洲 吴 (M3F85US4G2)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -761,6 +766,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3EF2AC8B-9576-4315-8F7A-7D5426E02617";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -774,7 +780,8 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 澜洲 吴 (M3F85US4G2)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -782,6 +789,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3EF2AC8B-9576-4315-8F7A-7D5426E02617";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -791,11 +799,15 @@
 		010476FE17DF1A0A00BDCCE0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 澜洲 吴 (M3F85US4G2)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Eland/Eland-Prefix.pch";
 				HEADER_SEARCH_PATHS = "${SDK_ROOT}/usr/include/libxml2";
 				INFOPLIST_FILE = "Eland/Eland-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3EF2AC8B-9576-4315-8F7A-7D5426E02617";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -803,14 +815,60 @@
 		010476FF17DF1A0A00BDCCE0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 澜洲 吴 (M3F85US4G2)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Eland/Eland-Prefix.pch";
 				HEADER_SEARCH_PATHS = "${SDK_ROOT}/usr/include/libxml2";
 				INFOPLIST_FILE = "Eland/Eland-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3EF2AC8B-9576-4315-8F7A-7D5426E02617";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
+		};
+		26A0ECE917EF3599009AF735 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Maxense Corp.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Maxense Corp.";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "9B4A02E0-5E37-49DB-8002-D36828A385B4";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9B4A02E0-5E37-49DB-8002-D36828A385B4";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = AdHoc;
+		};
+		26A0ECEA17EF3599009AF735 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Maxense Corp.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Maxense Corp.";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Eland/Eland-Prefix.pch";
+				HEADER_SEARCH_PATHS = "${SDK_ROOT}/usr/include/libxml2";
+				INFOPLIST_FILE = "Eland/Eland-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9B4A02E0-5E37-49DB-8002-D36828A385B4";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9B4A02E0-5E37-49DB-8002-D36828A385B4";
+				WRAPPER_EXTENSION = app;
+			};
+			name = AdHoc;
 		};
 /* End XCBuildConfiguration section */
 
@@ -820,6 +878,7 @@
 			buildConfigurations = (
 				010476FB17DF1A0A00BDCCE0 /* Debug */,
 				010476FC17DF1A0A00BDCCE0 /* Release */,
+				26A0ECE917EF3599009AF735 /* AdHoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -829,6 +888,7 @@
 			buildConfigurations = (
 				010476FE17DF1A0A00BDCCE0 /* Debug */,
 				010476FF17DF1A0A00BDCCE0 /* Release */,
+				26A0ECEA17EF3599009AF735 /* AdHoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
