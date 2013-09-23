@@ -1,0 +1,16 @@
+<font face='HelveticaNeue-CondensedBold' size=15 color='#ffd200'>‧系統介紹：</font>
+<font color='#666666'>1．施政互動APP擁有案件通報、案件查詢和推播訊息中心等功能。</font>
+<font color='#666666'>2．案件通報可提供路平報修、路燈報修、環保查報、寵物協尋、稅務預約及戶政預約等6項通報服務。</font>
+<font color='#666666'>3．案件查詢可以案件分類、時間區間、鄉鎮市和是否由此行動裝置通報等條件查詢案件的辦理情況。</font>
+<font color='#666666'>4．推播訊息中心可瀏覽此APP所接收到的歷史推播資訊。</font>
+<font face='HelveticaNeue-CondensedBold' size=15 color='#ffd200'>‧網站連結:</font><a color='#666666' href='http://cir.e-land.gov.tw'>http://cir.e-land.gov.tw</a>
+<font face='HelveticaNeue-CondensedBold' size=15 color='#ffd200'>‧版本:</font><font color='#666666'>v1.0</font>
+<font face='HelveticaNeue-CondensedBold' size=15 color='#ffd200'>‧Copyright © 2012 宜蘭縣政府版權所有</font>
+<font face='HelveticaNeue-CondensedBold' size=15 color='#ffd200'>‧聯絡地址:</font><font color='#666666'>26060 宜蘭市凱旋里三鄰縣政北路一號</font>
+<font face='HelveticaNeue-CondensedBold' size=15 color='#ffd200'>‧聯絡電話(總機):</font><font color='#666666'>(03)925-1000</font>
+<font face='HelveticaNeue-CondensedBold' size=15 color='#ffd200'>‧為民服務專線:</font><font color='#666666'>縣境直撥1999</font> 
+<font face='HelveticaNeue-CondensedBold' size=15 color='#ffd200'>‧旅遊諮詢專線:</font><font color='#666666'>(03)987-2403</font> 
+<font face='HelveticaNeue-CondensedBold' size=15 color='#ffd200'>‧服務時間:</font><font color='#666666'>週一至週五8:00-17:30</font> 
+<font face='HelveticaNeue-CondensedBold' size=15 color='#ffd200'>‧冬令時間(每年11月1日至隔年2月底):</font><font color='#666666'>8:00-17:00</font>
+<font face='HelveticaNeue-CondensedBold' size=15 color='#ffd200'>‧系統客服專線:</font><font color='#666666'>0809090618</font>
+<font face='HelveticaNeue-CondensedBold' size=15 color='#ffd200'>‧系統客服時間:</font><font color='#666666'>週一至週五9:00-18:00</font>

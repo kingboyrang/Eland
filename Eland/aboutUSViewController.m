@@ -7,7 +7,7 @@
 //
 
 #import "aboutUSViewController.h"
-
+#import "RTLabel.h"
 @interface aboutUSViewController ()
 
 @end
@@ -22,27 +22,34 @@
     }
     return self;
 }
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    /***
+   
     NSString *path=[[NSBundle mainBundle] pathForResource:@"aboutUs" ofType:@"txt"];
     NSString *content=[[[NSString alloc] initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil] autorelease];
+    RTLabel *label=[[RTLabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height-44)];
+    label.autoresizesSubviews=YES;
+    label.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    UIScrollView *scrollView=[[UIScrollView alloc] initWithFrame:self.view.bounds];
+    scrollView.showsHorizontalScrollIndicator=NO;
+    scrollView.pagingEnabled=YES;
+    scrollView.autoresizesSubviews=YES;
+    scrollView.autoresizingMask=UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+    scrollView.backgroundColor=[UIColor clearColor];
+    [scrollView addSubview:label];
+    [label setText:content];
+    CGRect frame=label.frame;
+    frame.size.height=label.optimumSize.height+120;
+    label.frame=frame;
+    [scrollView setContentSize:CGSizeMake(self.view.bounds.size.width, label.optimumSize.height)];
     
     
-    CGFloat h=self.view.bounds.size.height;
-    UITextView *textView=[[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width,h)];
-    textView.backgroundColor=[UIColor clearColor];
-    textView.text=content;
-    textView.editable=NO;
-    [textView setFont:[UIFont fontWithName:@"Verdana" size:13]];
-    textView.textColor=[UIColor colorWithRed:110/255.0 green:106/255.0 blue:97/255.0 alpha:1];
-    [textView setAutoresizesSubviews:YES];
-    [textView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin];
-    [self.view addSubview:textView];
-    [textView release];
-     ***/
+    [self.view addSubview:scrollView];
+    [label release];
+    [content release];
+    [scrollView release];
+    
 	// Do any additional setup after loading the view.
 }
 

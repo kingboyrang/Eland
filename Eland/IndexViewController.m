@@ -41,6 +41,13 @@
 -(void)leftDrawerButtonPress:(id)sender{
     if (_menu.isOpen)
         return [_menu close];
+    REMenuItem *indexItem = [[REMenuItem alloc] initWithTitle:@"首頁"
+                                                       image:[UIImage imageNamed:@"Icon_Home"]
+                                            highlightedImage:nil
+                                                      action:^(REMenuItem *item) {
+                                                          NSLog(@"Item: %@", item);
+                                                          self.title=item.title;
+                                                      }];
     
     REMenuItem *homeItem = [[REMenuItem alloc] initWithTitle:@"報修顯目"
                                                        image:[UIImage imageNamed:@"Icon_Home"]
@@ -74,12 +81,13 @@
                                                              self.title=item.title;
                                                          }];
     
-    homeItem.tag = 0;
-    exploreItem.tag = 1;
-    activityItem.tag = 2;
-    profileItem.tag = 3;
+    indexItem.tag=0;
+    homeItem.tag = 1;
+    exploreItem.tag = 2;
+    activityItem.tag = 3;
+    profileItem.tag = 4;
     
-    _menu = [[REMenu alloc] initWithItems:@[homeItem, exploreItem, activityItem, profileItem]];
+    _menu = [[REMenu alloc] initWithItems:@[indexItem,homeItem, exploreItem, activityItem, profileItem]];
     _menu.cornerRadius = 4;
     _menu.shadowColor = [UIColor blackColor];
     _menu.shadowOffset = CGSizeMake(0, 1);

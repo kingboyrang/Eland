@@ -86,6 +86,9 @@
 		26A0ECE517EF2E9B009AF735 /* user_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 26A0ECDD17EF2E9B009AF735 /* user_normal.png */; };
 		26A0ECE617EF2E9B009AF735 /* user_select.png in Resources */ = {isa = PBXBuildFile; fileRef = 26A0ECDE17EF2E9B009AF735 /* user_select.png */; };
 		26A0ECE817EF343F009AF735 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26A0ECE717EF343F009AF735 /* Entitlements.plist */; };
+		26A5BA5D17F072AC00A13AC6 /* aboutUs.txt in Resources */ = {isa = PBXBuildFile; fileRef = 26A5BA5C17F072AC00A13AC6 /* aboutUs.txt */; };
+		26A5BA6217F079A800A13AC6 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26A5BA6117F079A800A13AC6 /* CoreText.framework */; };
+		26A5BA6717F0887900A13AC6 /* RTLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A5BA6617F0887900A13AC6 /* RTLabel.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -220,6 +223,10 @@
 		26A0ECDD17EF2E9B009AF735 /* user_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_normal.png; sourceTree = "<group>"; };
 		26A0ECDE17EF2E9B009AF735 /* user_select.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_select.png; sourceTree = "<group>"; };
 		26A0ECE717EF343F009AF735 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
+		26A5BA5C17F072AC00A13AC6 /* aboutUs.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = aboutUs.txt; sourceTree = "<group>"; };
+		26A5BA6117F079A800A13AC6 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		26A5BA6517F0887900A13AC6 /* RTLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTLabel.h; sourceTree = "<group>"; };
+		26A5BA6617F0887900A13AC6 /* RTLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTLabel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,6 +234,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26A5BA6217F079A800A13AC6 /* CoreText.framework in Frameworks */,
 				0104777817DF25EE00BDCCE0 /* libz.dylib in Frameworks */,
 				0104777617DF25DE00BDCCE0 /* MobileCoreServices.framework in Frameworks */,
 				0104777417DF25D800BDCCE0 /* CFNetwork.framework in Frameworks */,
@@ -263,6 +271,7 @@
 		010476D917DF1A0A00BDCCE0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				26A5BA6117F079A800A13AC6 /* CoreText.framework */,
 				0104777717DF25EE00BDCCE0 /* libz.dylib */,
 				0104777517DF25DE00BDCCE0 /* MobileCoreServices.framework */,
 				0104777317DF25D700BDCCE0 /* CFNetwork.framework */,
@@ -295,6 +304,7 @@
 		010476E117DF1A0A00BDCCE0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				26A5BA5B17F072A100A13AC6 /* Source */,
 				01B5A60E17DFF5110076738C /* images */,
 				010476E217DF1A0A00BDCCE0 /* Eland-Info.plist */,
 				010476E317DF1A0A00BDCCE0 /* InfoPlist.strings */,
@@ -322,6 +332,7 @@
 		0104770117DF1A2100BDCCE0 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				26A5BA5A17F0713E00A13AC6 /* Label */,
 				26A0ECCF17EF2B20009AF735 /* MMDrawerController */,
 				26A0ECC217EF2B13009AF735 /* REMenu */,
 			);
@@ -579,6 +590,23 @@
 			name = TabBarItemBg;
 			sourceTree = "<group>";
 		};
+		26A5BA5A17F0713E00A13AC6 /* Label */ = {
+			isa = PBXGroup;
+			children = (
+				26A5BA6517F0887900A13AC6 /* RTLabel.h */,
+				26A5BA6617F0887900A13AC6 /* RTLabel.m */,
+			);
+			name = Label;
+			sourceTree = "<group>";
+		};
+		26A5BA5B17F072A100A13AC6 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				26A5BA5C17F072AC00A13AC6 /* aboutUs.txt */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -657,6 +685,7 @@
 				26A0ECE517EF2E9B009AF735 /* user_normal.png in Resources */,
 				26A0ECE617EF2E9B009AF735 /* user_select.png in Resources */,
 				26A0ECE817EF343F009AF735 /* Entitlements.plist in Resources */,
+				26A5BA5D17F072AC00A13AC6 /* aboutUs.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -710,6 +739,7 @@
 				26A0ECCE17EF2B13009AF735 /* REMenuItemView.m in Sources */,
 				26A0ECD217EF2B20009AF735 /* MMDrawerBarButtonItem.m in Sources */,
 				26A0ECD517EF2B8D009AF735 /* MainViewController.m in Sources */,
+				26A5BA6717F0887900A13AC6 /* RTLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
