@@ -55,7 +55,7 @@
 //初始化子控制器
 - (void)_initViewController {
     IndexViewController *index=[[[IndexViewController alloc] init] autorelease];
-    index.title=@"首頁";
+    index.title=@"報修顯目";
     UINavigationController *nav1=[[[UINavigationController alloc] initWithRootViewController:index] autorelease];
     nav1.delegate=self;
 
@@ -117,7 +117,7 @@
         UIButton *button =[[UIButton alloc] initWithFrame:CGRectMake(leftX, 0, normal.size.width, TABRHEIGHT)];
         [button setBackgroundImage:normal forState:UIControlStateNormal];
         [button setBackgroundImage:hight forState:UIControlStateSelected];
-        button.tag = i;
+        button.tag = 100+i;
         if (i==0) {
             button.selected=YES;
         }
@@ -135,16 +135,17 @@
 
     button.selected=YES;
     CGRect frame=_silderView.frame;
-    frame.origin.x=button.tag*frame.size.width;
+    frame.origin.x=(button.tag-100)*frame.size.width;
     [UIView animateWithDuration:0.2 animations:^{
+        
         _silderView.frame=frame;
-        [self updateSelectedStatus:button.tag lastIndex:_prevSelectIndex];
+        [self updateSelectedStatus:button.tag-100 lastIndex:_prevSelectIndex];
     }];
     //判断是否是重复点击tab按钮
     if (button.tag == self.selectedIndex && button.tag == 0) {
        //[_homeCtrl autorefresh];
     }
-    self.selectedIndex = button.tag;
+    self.selectedIndex = button.tag-100;
     
 }
 //是否隐藏tabbar
@@ -174,12 +175,7 @@
 }
 #pragma mark 私有方法
 -(void)updateSelectedStatus:(int)selectTag lastIndex:(int)prevIndex{
-    UIButton *btn;
-    if (prevIndex==0) {
-        btn=[_tabbarView.subviews objectAtIndex:1];
-    }else{
-       btn=(UIButton*)[_tabbarView viewWithTag:prevIndex];
-    }
+    UIButton *btn=(UIButton*)[_tabbarView viewWithTag:100+prevIndex];
     btn.selected=NO;
     _prevSelectIndex=selectTag;
 }
@@ -221,10 +217,7 @@
     _silderView.frame=frame;
     //重设UIButton位置
     for (int i=0; i<_barButtonItemCount; i++) {
-        id v=[_tabbarView viewWithTag:i];
-        if (i==0&&![v isKindOfClass:[UIButton class]]) {
-            v=[_tabbarView.subviews objectAtIndex:1];
-        }
+        id v=[_tabbarView viewWithTag:100+i];
         if([v isKindOfClass:[UIButton class]]){
             UIButton *btn=(UIButton*)v;
             frame=btn.frame;

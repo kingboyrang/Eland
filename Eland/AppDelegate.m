@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "MainViewController.h"
 #import "ViewController.h"
-
+#import "UIColor+TPCategory.h"
 @implementation AppDelegate
 @synthesize hasConnect;
 - (void)dealloc
@@ -30,6 +30,9 @@
         self.viewController = [[[ViewController alloc] initWithNibName:@"ViewController_iPad" bundle:nil] autorelease];
     }
      ***/
+    //a2dce1 3bafb9
+    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTintColor:[UIColor colorFromHexRGB:@"5cc2cb"]];
+    
     MainViewController *main=[[[MainViewController alloc] init] autorelease];
     self.window.rootViewController = main;
     [self.window makeKeyAndVisible];

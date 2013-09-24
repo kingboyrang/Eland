@@ -8,6 +8,7 @@
 
 #import "aboutUSViewController.h"
 #import "RTLabel.h"
+#import "UIColor+TPCategory.h"
 @interface aboutUSViewController ()
 
 @end
@@ -50,6 +51,7 @@
     [content release];
     [scrollView release];
     
+    //self.view.backgroundColor=[UIColor colorFromHexRGB:@"49c1cc"];
 	// Do any additional setup after loading the view.
 }
 
