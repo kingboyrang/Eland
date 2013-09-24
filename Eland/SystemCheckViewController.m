@@ -37,6 +37,7 @@
     [super viewDidLoad];
     CGRect rect=self.view.bounds;
     
+    
     _tableView=[[UITableView alloc] initWithFrame:rect style:UITableViewStylePlain];
     _tableView.dataSource=self;
     _tableView.delegate=self;
@@ -93,14 +94,15 @@
 //定义分区的标题
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 	//设置标题显示的视图
-	UIView *tempview = [[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 40)]autorelease];
+	UIView *tempview = [[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 40)]autorelease];
 	[tempview setBackgroundColor:[UIColor colorFromHexRGB:@"fbab09"]];
+    tempview.autoresizingMask=UIViewAutoresizingFlexibleWidth;
 
 	UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, 80, 30)];
 	lab.text = section==0?@"網絡檢查:":@"定位檢定:";
 	lab.backgroundColor = [UIColor clearColor];
 	lab.textAlignment = NSTextAlignmentCenter;
-	
+    //lab.autoresizingMask=UIViewAutoresizingFlexibleLeftMargin;
 	
 	[tempview addSubview:lab];
 	
@@ -134,6 +136,26 @@
             tableCell.selectionStyle=UITableViewCellSelectionStyleNone;
         }
         return tableCell;
+    }
+}
+#pragma mark 旋转处理
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
+    return YES;
+}
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                         duration:(NSTimeInterval)duration
+{
+    CGRect screenRect=[[UIScreen mainScreen] bounds];
+    if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation)){//竖屏
+        
+       self.tableView.bounces=YES;
+        CGRect frame=self.tableView.frame;
+        frame.size.height=screenRect.size.height-20-32-44;
+        self.tableView.frame=frame;
+        NSLog(@"frame=%@\n",NSStringFromCGRect(frame));
+    }else{
+       self.tableView.bounces=NO;
+        self.tableView.frame=self.view.bounds;
     }
 }
 @end

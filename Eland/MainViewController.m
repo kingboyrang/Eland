@@ -170,6 +170,7 @@
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
                                          duration:(NSTimeInterval)duration
 {
+    
     [self updateNavigatorFrame:toInterfaceOrientation];
     [self updateTabBarViewFrame:toInterfaceOrientation];
 }
@@ -189,7 +190,9 @@
         frame.size.width=ScreenHeight;
         _tabbarView.frame=frame;
         
-        transitionViewH=transitionView.bounds.size.width-TABRHEIGHT;
+        
+        transitionViewH=ScreenWidth-TABRHEIGHT;
+        //transitionView.bounds.size.width-TABRHEIGHT;
         transitionViewW=ScreenHeight;
         
     }else{
@@ -232,14 +235,16 @@
         return;
     }
     if ([[self.viewControllers objectAtIndex:self.selectedIndex] isKindOfClass:[UINavigationController class]]) {
-        UINavigationController *nav=(UINavigationController*)[self.viewControllers objectAtIndex:self.selectedIndex];
-        CGRect frame=nav.navigationBar.frame;
+       
         if(UIInterfaceOrientationIsLandscape(orientation)){//横屏
-            frame.size.height=32.0;
+            
         }else{
+            UINavigationController *nav=(UINavigationController*)[self.viewControllers objectAtIndex:self.selectedIndex];
+            CGRect frame=nav.navigationBar.frame;
             frame.size.height=44.0;
+            nav.navigationBar.frame=frame;
         }
-        nav.navigationBar.frame=frame;
+        
     }
 }
 @end
