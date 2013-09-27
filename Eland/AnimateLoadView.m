@@ -20,6 +20,7 @@
 -(void)dealloc{
     [super dealloc];
     [_activityIndicatorView release],_activityIndicatorView=nil;
+    [_labelTitle removeObserver:self forKeyPath:@"text"];
     [_labelTitle release],_labelTitle=nil;
 }
 - (id)initWithFrame:(CGRect)frame

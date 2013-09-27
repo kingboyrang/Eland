@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AnimateLoadView.h"
 #import "AnimateErrorView.h"
+#import "ZAActivityBar.h"
 @interface BasicViewController : UIViewController
 @property(nonatomic,readonly) BOOL hasNetwork;
 @property(nonatomic,readonly) BOOL isPad;
@@ -23,4 +24,9 @@
 //网络提示
 - (void) showNoNetworkNotice:(void (^)(void))dismissError;
 - (void) showSuccessNoticeWithTitle:(NSString*)title;
+//加载状态
+- (void)showLoadingStatus:(NSString*)title;
+- (void)showLoadingSuccessStatus:(NSString*)title;
+- (void)showLoadingFailedStatus:(NSString*)title;
+- (void)hideLoadingStatus;
 @end

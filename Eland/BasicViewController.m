@@ -199,4 +199,17 @@
         _errorView.frame=frame;
     }
 }
+#pragma mark 加载状态
+- (void)showLoadingStatus:(NSString*)title{
+    [ZAActivityBar showWithStatus:title];
+}
+- (void)showLoadingSuccessStatus:(NSString*)title{
+    [ZAActivityBar showSuccessWithStatus:title];
+}
+- (void)showLoadingFailedStatus:(NSString*)title{
+    [ZAActivityBar showErrorWithStatus:title];
+}
+- (void)hideLoadingStatus{
+    [ZAActivityBar dismiss];
+}
 @end

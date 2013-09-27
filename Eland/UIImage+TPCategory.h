@@ -95,4 +95,9 @@
  * Masks the context with the image, then fills with the gradient (two colors in an array)
  */
 - (void)drawInRect:(CGRect)rect withAlphaMaskGradient:(NSArray*)colors;
+/*
+ * save image local
+ */
+- (BOOL)saveImage:(NSString*)path;
+- (BOOL)saveImage:(NSString*)path withName:(NSString*)fileName;
 @end

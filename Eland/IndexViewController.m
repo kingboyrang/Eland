@@ -8,6 +8,7 @@
 
 #import "IndexViewController.h"
 #import "MMDrawerBarButtonItem.h"
+#import "WBSuccessNoticeView.h"
 @interface IndexViewController ()
 -(void)setupLeftMenuButton;
 @end
@@ -31,6 +32,7 @@
 {
     [super viewDidLoad];
     [self setupLeftMenuButton];
+    
 }
 -(void)setupLeftMenuButton{
     MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];

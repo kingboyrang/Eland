@@ -21,6 +21,7 @@
 -(void)dealloc{
     [super dealloc];
     [_imageView release],_imageView=nil;
+    [_labelTitle removeObserver:self forKeyPath:@"text"];
     [_labelTitle release],_labelTitle=nil;
 }
 - (id)initWithFrame:(CGRect)frame

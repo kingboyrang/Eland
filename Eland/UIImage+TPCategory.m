@@ -508,4 +508,14 @@ CGFloat RadiansToDegrees(CGFloat radians) {return radians * 180/M_PI;};
 	CGContextRestoreGState(context);
 	
 }
+/*
+ * save image local
+ */
+-(BOOL)saveImage:(NSString*)path{
+   return  [UIImagePNGRepresentation(self) writeToFile:path atomically:YES]; // 保存成功会返回YES
+}
+-(BOOL)saveImage:(NSString*)path withName:(NSString*)fileName{
+    NSString *filePath = [path stringByAppendingPathComponent:fileName];   // 保存文件的名称
+    return  [self saveImage:filePath];
+}
 @end
