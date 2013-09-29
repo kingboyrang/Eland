@@ -1,21 +1,22 @@
 //
-//  UserSetViewController.m
-//  CaseSearch
+//  BusinessAreaViewController.m
+//  Eland
 //
-//  Created by rang on 13-7-23.
+//  Created by rang on 13-9-29.
 //  Copyright (c) 2013年 rang. All rights reserved.
 //
 
-#import "UserSetViewController.h"
+#import "BusinessAreaViewController.h"
 #import "TKLabelTextFieldCell.h"
+#import "TKLabelTextViewCell.h"
 #import "TKEmptyCell.h"
 #import "UIColor+TPCategory.h"
-#import "SecrecyViewController.h"
-@interface UserSetViewController ()
+#import "UIDevice+TPCategory.h"
+@interface BusinessAreaViewController ()
 
 @end
 
-@implementation UserSetViewController
+@implementation BusinessAreaViewController
 @synthesize cells=_cells;
 @synthesize tableView=_tableView;
 -(void)dealloc{
@@ -35,15 +36,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.navigationItem resetNavigationBarBack];
-   
-    UIBarButtonItem *rightBtn=[[UIBarButtonItem alloc] initWithTitle:@"存储" style:UIBarButtonItemStylePlain target:self action:@selector(buttonSaveClick)];
-    self.navigationItem.rightBarButtonItem=rightBtn;
-    [rightBtn release];
-    
-    
     CGRect rect=self.view.bounds;
-    
     _tableView=[[UITableView alloc] initWithFrame:rect style:UITableViewStyleGrouped];
     _tableView.dataSource=self;
     _tableView.delegate=self;
@@ -53,35 +46,32 @@
     [_tableView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
     [self.view addSubview:_tableView];
     
-    TKLabelTextFieldCell *cell1=[[[TKLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-    [cell1 setLabelName:@"姓名" required:NO];
-    cell1.field.placeholder=@"editable name";
+    TKLabelTextViewCell *cell1=[[[TKLabelTextViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    [cell1 setLabelName:@"APP憑證" required:NO];
+    cell1.textView.editable=NO;
+    cell1.textView.userInteractionEnabled=NO;
+    cell1.textView.text=[[UIDevice currentDevice] uniqueDeviceIdentifier];
     
     TKLabelTextFieldCell *cell2=[[[TKLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-    [cell2 setLabelName:@"手機號碼" required:NO];
-    cell2.field.placeholder=@"editable phone";
+    [cell2 setLabelName:@"狀態" required:NO];
+    cell2.field.placeholder=@"editable status";
     
     TKLabelTextFieldCell *cell3=[[[TKLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-     [cell3 setLabelName:@"Email" required:NO];
-    cell3.field.placeholder=@"editable Email";
+    [cell3 setLabelName:@"裝置名稱" required:NO];
+    cell3.field.enabled=NO;
+    cell3.field.text=@"施政互動";
     
     TKLabelTextFieldCell *cell4=[[[TKLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-    [cell4 setLabelName:@"暱稱" required:NO];
-    cell4.field.placeholder=@"editable nick";
+    [cell4 setLabelName:@"帳號" required:NO];
+    cell4.field.placeholder=@"editable account";
+    
+    TKLabelTextFieldCell *cell5=[[[TKLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    [cell5 setLabelName:@"密碼" required:NO];
+    cell5.field.placeholder=@"editable pwd";
     
     
-    self.cells =[NSMutableArray arrayWithObjects:cell1,cell2,cell3,cell4, nil];
-    
-    self.view.backgroundColor=[UIColor colorFromHexRGB:@"dfdfdf"];
+    self.cells =[NSMutableArray arrayWithObjects:cell1,cell2,cell3,cell4,cell5, nil];
 	// Do any additional setup after loading the view.
-}
--(void)buttonSaveClick{
-
-}
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 #pragma mark UITableView Delegate & DataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -102,20 +92,28 @@
         return tableCell;
     }else{
         TKEmptyCell *cell=[[TKEmptyCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-        cell.textLabel.text=@"隱私及資訊安全保護政策";
+        cell.textLabel.text=@"同步";
         cell.textLabel.textColor=[UIColor colorFromHexRGB:@"666666"];
         cell.textLabel.textAlignment=NSTextAlignmentCenter;
         cell.backgroundColor=[UIColor colorFromHexRGB:@"5cc2cb"];//a2dce1
         return cell;
     }
 }
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section==0&&indexPath.row==0) {
+        return 65.0;
+    }
+    return 44.0;
+}
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if(indexPath.section==1&&indexPath.row==0){
-        SecrecyViewController *secrecy=[[SecrecyViewController alloc] init];
-        secrecy.title=@"隱私及資訊安全保護政策";
-        [self.navigationController pushViewController:secrecy animated:YES];
-        [secrecy release];
     }
 }
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
 @end

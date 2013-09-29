@@ -10,6 +10,8 @@
 #import "MainViewController.h"
 #import "ViewController.h"
 #import "UIColor+TPCategory.h"
+#import "UserSet.h"
+#import "SecrecyViewController.h"
 @implementation AppDelegate
 @synthesize hasConnect;
 - (void)dealloc
@@ -22,19 +24,22 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
-    // Override point for customization after application launch.
-    /***
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        self.viewController = [[[ViewController alloc] initWithNibName:@"ViewController_iPhone" bundle:nil] autorelease];
-    } else {
-        self.viewController = [[[ViewController alloc] initWithNibName:@"ViewController_iPad" bundle:nil] autorelease];
-    }
-     ***/
+ 
     //a2dce1 3bafb9
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTintColor:[UIColor colorFromHexRGB:@"5cc2cb"]];
     
-    MainViewController *main=[[[MainViewController alloc] init] autorelease];
-    self.window.rootViewController = main;
+    UserSet *user=[UserSet sharedInstance];
+    if (!user.isReadPrivacy) {
+        SecrecyViewController *privacy=[[SecrecyViewController alloc] init];
+        privacy.title=@"隱私及資訊安全保護政策";
+        UINavigationController *nav=[[UINavigationController alloc] initWithRootViewController:privacy];
+        self.window.rootViewController = nav;
+        [privacy release];
+        [nav release];
+    }else{
+        MainViewController *main=[[[MainViewController alloc] init] autorelease];
+        self.window.rootViewController = main;
+    }
     [self.window makeKeyAndVisible];
     return YES;
 }

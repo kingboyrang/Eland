@@ -39,7 +39,8 @@
     _textView = [[GCPlaceholderTextView alloc] initWithFrame:CGRectZero];
 	_textView.contentInset = UIEdgeInsetsZero;
 	_textView.backgroundColor = [UIColor clearColor];
-
+    _textView.textColor=[UIColor blackColor];
+    _textView.font = [UIFont boldSystemFontOfSize:16.0];
     [self.contentView addSubview:_textView];
 	
     

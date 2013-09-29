@@ -13,4 +13,5 @@
     #import <Foundation/Foundation.h>
     #import "UINavigationBar+TPCategory.h"
     #import "BasicViewController.h"
+    #import "UINavigationItem+TPCategory.h"
 #endif
