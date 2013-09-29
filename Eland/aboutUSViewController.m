@@ -51,6 +51,7 @@
     [content release];
     [scrollView release];
     
+    [self.navigationItem setShadowTitle:@"關於我"];
     //self.view.backgroundColor=[UIColor colorFromHexRGB:@"49c1cc"];
 	// Do any additional setup after loading the view.
 }

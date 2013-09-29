@@ -118,6 +118,7 @@
 		26A587EB17F81CB600850DED /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 26A587EA17F81CB500850DED /* search.png */; };
 		26A587EE17F81F3500850DED /* CaseSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A587ED17F81F3500850DED /* CaseSearchViewController.m */; };
 		26A587F117F81F4D00850DED /* PushViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A587F017F81F4D00850DED /* PushViewController.m */; };
+		26A587F417F842B700850DED /* FXLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A587F317F842B600850DED /* FXLabel.m */; };
 		26A5BA5D17F072AC00A13AC6 /* aboutUs.txt in Resources */ = {isa = PBXBuildFile; fileRef = 26A5BA5C17F072AC00A13AC6 /* aboutUs.txt */; };
 		26A5BA6217F079A800A13AC6 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26A5BA6117F079A800A13AC6 /* CoreText.framework */; };
 		26A5BA6717F0887900A13AC6 /* RTLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A5BA6617F0887900A13AC6 /* RTLabel.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -307,6 +308,8 @@
 		26A587ED17F81F3500850DED /* CaseSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaseSearchViewController.m; sourceTree = "<group>"; };
 		26A587EF17F81F4D00850DED /* PushViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushViewController.h; sourceTree = "<group>"; };
 		26A587F017F81F4D00850DED /* PushViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushViewController.m; sourceTree = "<group>"; };
+		26A587F217F842B600850DED /* FXLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXLabel.h; sourceTree = "<group>"; };
+		26A587F317F842B600850DED /* FXLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXLabel.m; sourceTree = "<group>"; };
 		26A5BA5C17F072AC00A13AC6 /* aboutUs.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = aboutUs.txt; sourceTree = "<group>"; };
 		26A5BA6117F079A800A13AC6 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		26A5BA6517F0887900A13AC6 /* RTLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTLabel.h; sourceTree = "<group>"; };
@@ -824,6 +827,8 @@
 		26A5BA5A17F0713E00A13AC6 /* Label */ = {
 			isa = PBXGroup;
 			children = (
+				26A587F217F842B600850DED /* FXLabel.h */,
+				26A587F317F842B600850DED /* FXLabel.m */,
 				26A5BA6517F0887900A13AC6 /* RTLabel.h */,
 				26A5BA6617F0887900A13AC6 /* RTLabel.m */,
 			);
@@ -1004,6 +1009,7 @@
 				26A5878717F7DD0200850DED /* UIDevice+TPCategory.m in Sources */,
 				26A587EE17F81F3500850DED /* CaseSearchViewController.m in Sources */,
 				26A587F117F81F4D00850DED /* PushViewController.m in Sources */,
+				26A587F417F842B700850DED /* FXLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -35,12 +35,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+   
     [self.navigationItem resetNavigationBarBack];
    
     UIBarButtonItem *rightBtn=[[UIBarButtonItem alloc] initWithTitle:@"存储" style:UIBarButtonItemStylePlain target:self action:@selector(buttonSaveClick)];
     self.navigationItem.rightBarButtonItem=rightBtn;
     [rightBtn release];
-    
+     [self.navigationItem setShadowTitle:@"使用者設定"];
     
     CGRect rect=self.view.bounds;
     
@@ -113,7 +114,6 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if(indexPath.section==1&&indexPath.row==0){
         SecrecyViewController *secrecy=[[SecrecyViewController alloc] init];
-        secrecy.title=@"隱私及資訊安全保護政策";
         [self.navigationController pushViewController:secrecy animated:YES];
         [secrecy release];
     }

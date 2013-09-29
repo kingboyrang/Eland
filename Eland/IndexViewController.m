@@ -54,20 +54,25 @@
     [self setupLeftMenuButton];
     [self.navigationItem titleViewBackground];
     
+    CGRect rect=self.view.bounds;
+    //rect.size.height-=44;
+    
     _casesearch=[[CaseSearchViewController alloc] init];
-     _casesearch.view.frame=self.view.bounds;
+     _casesearch.view.frame=rect;
     [self addChildViewController:_casesearch];
     
     _push=[[PushViewController alloc] init];
-     _push.view.frame=self.view.bounds;
+     _push.view.frame=rect;
     [self addChildViewController:_push];
     
     _businessarea=[[BusinessAreaViewController alloc] init];
-    _businessarea.view.frame=self.view.bounds;
+    _businessarea.view.frame=rect;
+    _businessarea.view.autoresizesSubviews=YES;
+    _businessarea.view.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     [self addChildViewController:_businessarea];
     
     _repairItem=[[RepairItemViewController alloc] init];
-    _repairItem.view.frame=self.view.bounds;
+    _repairItem.view.frame=rect;
     [self addChildViewController:_repairItem];
     [self.view addSubview:_repairItem.view];
     
@@ -231,5 +236,4 @@
 {
     return YES;
 }
-
 @end

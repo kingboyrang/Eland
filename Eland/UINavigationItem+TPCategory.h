@@ -11,4 +11,5 @@
 @interface UINavigationItem (TPCategory)
 -(void)titleViewBackground;
 -(void)resetNavigationBarBack;
+-(void)setShadowTitle:(NSString*)title;
 @end

@@ -80,9 +80,8 @@
     
     self.checkcells =[NSMutableArray arrayWithObjects:cell1,cell2,cell3, nil];
     self.gpscells =[NSMutableArray arrayWithObjects:cell4,cell5,cell6, nil];
-    //cell1.field.placeholder=@"editable name";
     
-	// Do any additional setup after loading the view.
+    [self.navigationItem setShadowTitle:@"系統檢查"];
 }
 
 - (void)didReceiveMemoryWarning

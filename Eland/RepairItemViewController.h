@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RepairItemViewController : UIViewController<UICollectionViewDataSource,UICollectionViewDelegate>{
+@interface RepairItemViewController : BasicViewController<UICollectionViewDataSource,UICollectionViewDelegate>{
 @private
     UICollectionView *_collectionView;
     NSMutableArray *_sourceData;

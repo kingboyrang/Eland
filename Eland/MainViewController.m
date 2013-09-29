@@ -55,23 +55,19 @@
 //初始化子控制器
 - (void)_initViewController {
     IndexViewController *index=[[[IndexViewController alloc] init] autorelease];
-    index.title=@"報修顯目";
     UINavigationController *nav1=[[[UINavigationController alloc] initWithRootViewController:index] autorelease];
     nav1.delegate=self;
 
     UserSetViewController *userset=[[[UserSetViewController alloc] init] autorelease];
-    userset.title=@"使用者設定";
     UINavigationController *nav2=[[[UINavigationController alloc] initWithRootViewController:userset] autorelease];
     nav2.delegate=self;
     
     
     aboutUSViewController *aboutUs=[[[aboutUSViewController alloc] init] autorelease];
-    aboutUs.title=@"關於我";
     UINavigationController *nav3=[[[UINavigationController alloc] initWithRootViewController:aboutUs] autorelease];
     nav3.delegate=self;
     
     SystemCheckViewController *system=[[[SystemCheckViewController alloc] init] autorelease];
-    system.title=@"系統檢查";
     UINavigationController *nav4=[[[UINavigationController alloc] initWithRootViewController:system] autorelease];
     nav4.delegate=self;
     

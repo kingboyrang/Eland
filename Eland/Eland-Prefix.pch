@@ -14,4 +14,5 @@
     #import "UINavigationBar+TPCategory.h"
     #import "BasicViewController.h"
     #import "UINavigationItem+TPCategory.h"
+    #import "Global.h"
 #endif

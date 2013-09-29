@@ -10,6 +10,7 @@
 #import "MainViewController.h"
 #import "UserSetViewController.h"
 #import "UserSet.h"
+#import "UIColor+TPCategory.h"
 @interface SecrecyViewController ()
 
 @end
@@ -33,6 +34,8 @@
         UIBarButtonItem *rightBtn=[[UIBarButtonItem alloc] initWithTitle:@"確認" style:UIBarButtonItemStyleBordered target:self action:@selector(buttonClick)];
         self.navigationItem.rightBarButtonItem=rightBtn;
         [rightBtn release];
+    }else{
+       [self.navigationItem setShadowTitle:@"隱私及資訊安全保護政策"];
     }
     NSString *path=[[NSBundle mainBundle] pathForResource:@"Privacy" ofType:@"txt"];
     NSString *content=[[[NSString alloc] initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil] autorelease];
@@ -44,7 +47,8 @@
     textView.text=content;
     textView.editable=NO;
     [textView setFont:[UIFont fontWithName:@"Verdana" size:16]];
-    textView.textColor=[UIColor colorWithRed:110/255.0 green:106/255.0 blue:97/255.0 alpha:1];
+    textView.textColor=[UIColor colorFromHexRGB:@"666666"];
+    //[UIColor colorWithRed:110/255.0 green:106/255.0 blue:97/255.0 alpha:1];
     [textView setAutoresizesSubviews:YES];
     [textView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin];
     [self.view addSubview:textView];

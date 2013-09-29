@@ -37,6 +37,7 @@
 {
     [super viewDidLoad];
     CGRect rect=self.view.bounds;
+    rect.size.height-=44*2;
     _tableView=[[UITableView alloc] initWithFrame:rect style:UITableViewStyleGrouped];
     _tableView.dataSource=self;
     _tableView.delegate=self;
@@ -101,7 +102,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section==0&&indexPath.row==0) {
-        return 65.0;
+        return self.isPad?44.0:65.0;
     }
     return 44.0;
 }
@@ -115,5 +116,16 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+#pragma mark -
+#pragma mark Rotation
 
+- (BOOL)shouldAutorotate
+{
+    return YES;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return YES;
+}
 @end
