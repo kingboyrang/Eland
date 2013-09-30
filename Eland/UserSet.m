@@ -67,6 +67,10 @@
     self.isReadPrivacy=YES;
     [self save];
 }
+- (void) registerAppToken:(NSString*)token{
+    self.AppToken=token;
+    [self save];
+}
 +(NSString*)ObjectToXml{
     UserSet *app=[UserSet sharedInstance];
     if (app) {

@@ -13,5 +13,5 @@
     UICollectionView *_collectionView;
     NSMutableArray *_sourceData;
 }
-
+-(void)relayout:(BOOL)isLand;
 @end

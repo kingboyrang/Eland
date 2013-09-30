@@ -7,6 +7,7 @@
 //
 
 #import "RepairItemViewController.h"
+#import "UIColor+TPCategory.h"
 @interface RepairItemViewController ()
 
 @end
@@ -30,21 +31,20 @@
 {
     [super viewDidLoad];
     UICollectionViewFlowLayout *flowlayout=[[UICollectionViewFlowLayout alloc] init];
-    if (DeviceIsPad) {
-        flowlayout.itemSize=CGSizeMake(256, 217.6);
-    }else{
-       flowlayout.itemSize=CGSizeMake(106, 90);
-    }
+    CGFloat h=204*(DeviceWidth/3.0)/240;
+    flowlayout.itemSize=CGSizeMake(DeviceWidth/3.0, h);
     flowlayout.scrollDirection=UICollectionViewScrollDirectionVertical;
     flowlayout.sectionInset=UIEdgeInsetsMake(0, 0, 0, 0);
     flowlayout.minimumLineSpacing=0.0;
     flowlayout.minimumInteritemSpacing=0.0;
     _collectionView=[[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:flowlayout];
+    _collectionView.backgroundColor=[UIColor colorFromHexRGB:@"cfd2d9"];
     _collectionView.dataSource=self;
     _collectionView.delegate=self;
     _collectionView.bounces=NO;
+    _collectionView.scrollEnabled=NO;
     _collectionView.showsVerticalScrollIndicator=NO;
-    _collectionView.autoresizingMask=UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+    //_collectionView.autoresizingMask=UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     _collectionView.backgroundColor=[UIColor whiteColor];
     [_collectionView setUserInteractionEnabled:YES];
     
@@ -53,12 +53,15 @@
     [flowlayout release];
     
     _sourceData=[[NSMutableArray alloc] init];
-    for (int i=1; i<9; i++) {
+    for (int i=1; i<8; i++) {
         [_sourceData addObject:[NSString stringWithFormat:@"fk_0%d.jpg",i]];
-        
     }
-    int len=DeviceIsPad?8:5;
-    for (int i=1; i<len; i++) {
+    [_sourceData addObject:@"fk_08.jpg"];
+    [_sourceData addObject:@"fk_08.jpg"];
+    
+    CGFloat surplus=self.view.bounds.size.height-3*h-44*2;
+    int row=surplus/h>1?(surplus/h+1):surplus/h;
+    for (int i=1; i<=row*3; i++) {
         [_sourceData addObject:@"fk_08.jpg"];
     }
   // Do any additional setup after loading the view.
@@ -87,33 +90,61 @@
     return self.isLandscape?CGSizeMake(120,102):CGSizeMake(106,90);
 }
  ***/
+-(void)relayout:(BOOL)isLand{
+    if (!self.isPad) {
+        UICollectionViewFlowLayout *flowlayout=[[UICollectionViewFlowLayout alloc] init];
+        flowlayout.scrollDirection=UICollectionViewScrollDirectionVertical;
+        flowlayout.sectionInset=UIEdgeInsetsMake(0, 0, 0, 0);
+        flowlayout.minimumLineSpacing=0.0;
+        flowlayout.minimumInteritemSpacing=0.0;
+        if (isLand) {
+            flowlayout.itemSize=CGSizeMake(DeviceHeight/4.0, 204*(DeviceHeight/4.0)/240);
+        }else{
+            flowlayout.itemSize=CGSizeMake(DeviceWidth/3.0, 204*(DeviceWidth/3.0)/240);
+        }
+        _collectionView.collectionViewLayout=flowlayout;
+    }
+    if (isLand) {
+        [_sourceData addObject:@"fk_08.jpg"];
+        _collectionView.frame=CGRectMake(0, 0, DeviceHeight,self.view.bounds.size.width-44-20-32);
+    }
+    else{
+        [_sourceData removeLastObject];
+        _collectionView.frame=CGRectMake(0, 0, DeviceWidth,DeviceHeight-44*2-20);
+    }
+    [_collectionView reloadData];
+    [_collectionView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES]; 
+}
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
     return YES;
 }
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
                                          duration:(NSTimeInterval)duration
 {
-    if (self.isPad) {
+   
+    if (!self.isPad) {
+        UICollectionViewFlowLayout *flowlayout=[[UICollectionViewFlowLayout alloc] init];
+        flowlayout.scrollDirection=UICollectionViewScrollDirectionVertical;
+        flowlayout.sectionInset=UIEdgeInsetsMake(0, 0, 0, 0);
+        flowlayout.minimumLineSpacing=0.0;
+        flowlayout.minimumInteritemSpacing=0.0;
         if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
-          [_sourceData addObject:@"fk_08.jpg"];
+            flowlayout.itemSize=CGSizeMake(DeviceHeight/4.0, 204*(DeviceHeight/4.0)/240);
+        }else{
+            flowlayout.itemSize=CGSizeMake(DeviceWidth/3.0, 204*(DeviceWidth/3.0)/240);
         }
-        else{
-            [_sourceData removeLastObject];
-        }
-        [_collectionView reloadData];
-    }else{
-    UICollectionViewFlowLayout *flowlayout=[[UICollectionViewFlowLayout alloc] init];
-    flowlayout.scrollDirection=UICollectionViewScrollDirectionVertical;
-    flowlayout.sectionInset=UIEdgeInsetsMake(0, 0, 0, 0);
-    flowlayout.minimumLineSpacing=0.0;
-    flowlayout.minimumInteritemSpacing=0.0;
+        _collectionView.collectionViewLayout=flowlayout;
+    }
     if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
-       flowlayout.itemSize=CGSizeMake(120, 102);
-    }else{
-       flowlayout.itemSize=CGSizeMake(106, 90);
+        [_sourceData addObject:@"fk_08.jpg"];
+       _collectionView.frame=CGRectMake(0, 0, DeviceHeight,self.view.bounds.size.width-44-20-32);
     }
-    _collectionView.collectionViewLayout=flowlayout;
+    else{
+        [_sourceData removeLastObject];
+        _collectionView.frame=CGRectMake(0, 0, DeviceWidth,self.view.bounds.size.height);
+    }
+    [_collectionView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES]; 
+   
     [_collectionView reloadData];
-    }
 }
 @end

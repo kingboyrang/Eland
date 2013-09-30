@@ -21,4 +21,5 @@
     UIViewController  *_currentViewController;
 }
 @property (strong, nonatomic) REMenu *menu;
+-(void)reSubViewLayout;
 @end

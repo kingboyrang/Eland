@@ -143,6 +143,15 @@
     }
     self.selectedIndex = button.tag-100;
     
+    //重设布局
+    if (self.selectedIndex==0) {
+        UINavigationController *nav=(UINavigationController*)[self.viewControllers objectAtIndex:self.selectedIndex];
+        IndexViewController *index=(IndexViewController*)[nav.viewControllers objectAtIndex:0];
+        if (index) {
+            [index reSubViewLayout];
+        }
+    }
+    
 }
 //是否隐藏tabbar
 - (void)showTabbar:(BOOL)show {

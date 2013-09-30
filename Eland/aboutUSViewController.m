@@ -9,6 +9,7 @@
 #import "aboutUSViewController.h"
 #import "RTLabel.h"
 #import "UIColor+TPCategory.h"
+#import "AboutScrollView.h"
 @interface aboutUSViewController ()
 
 @end
@@ -26,34 +27,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-   
-    NSString *path=[[NSBundle mainBundle] pathForResource:@"aboutUs" ofType:@"txt"];
-    NSString *content=[[[NSString alloc] initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil] autorelease];
-    RTLabel *label=[[RTLabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height-44)];
-    label.autoresizesSubviews=YES;
-    label.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-    UIScrollView *scrollView=[[UIScrollView alloc] initWithFrame:self.view.bounds];
-    scrollView.showsHorizontalScrollIndicator=NO;
-    scrollView.pagingEnabled=YES;
-    scrollView.autoresizesSubviews=YES;
-    scrollView.autoresizingMask=UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-    scrollView.backgroundColor=[UIColor clearColor];
-    [scrollView addSubview:label];
-    [label setText:content];
-    CGRect frame=label.frame;
-    frame.size.height=label.optimumSize.height+120;
-    label.frame=frame;
-    [scrollView setContentSize:CGSizeMake(self.view.bounds.size.width, label.optimumSize.height)];
-    
-    
+    AboutScrollView *scrollView=[[AboutScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
     [self.view addSubview:scrollView];
-    [label release];
-    [content release];
     [scrollView release];
-    
     [self.navigationItem setShadowTitle:@"關於我"];
-    //self.view.backgroundColor=[UIColor colorFromHexRGB:@"49c1cc"];
-	// Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning

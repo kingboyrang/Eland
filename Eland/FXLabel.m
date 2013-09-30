@@ -177,8 +177,9 @@
     CGFloat fontSize = self.font.pointSize;
     if (self.adjustsFontSizeToFitWidth)
     {
+        //self.minimumFontSize
         textRect.size = [self.text sizeWithFont:self.font
-                                    minFontSize:self.minimumFontSize
+                                    minFontSize:14.0
                                  actualFontSize:&fontSize
                                        forWidth:rect.size.width
                                   lineBreakMode:self.lineBreakMode];

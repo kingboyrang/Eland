@@ -37,7 +37,6 @@
 {
     [super viewDidLoad];
     CGRect rect=self.view.bounds;
-    rect.size.height-=44*2;
     _tableView=[[UITableView alloc] initWithFrame:rect style:UITableViewStyleGrouped];
     _tableView.dataSource=self;
     _tableView.delegate=self;
@@ -73,6 +72,13 @@
     
     self.cells =[NSMutableArray arrayWithObjects:cell1,cell2,cell3,cell4,cell5, nil];
 	// Do any additional setup after loading the view.
+}
+-(void)relayout:(BOOL)isLand{
+    if (isLand) {
+        _tableView.frame=CGRectMake(0, 0, DeviceHeight,DeviceWidth-44*2);
+    }else{
+        _tableView.frame=CGRectMake(0, 0, DeviceWidth,DeviceHeight-44*2-20);
+    }
 }
 #pragma mark UITableView Delegate & DataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

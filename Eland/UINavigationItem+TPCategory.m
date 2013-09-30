@@ -13,13 +13,12 @@
 @implementation UINavigationItem (TPCategory)
 -(void)titleViewBackground{
     
+    CGFloat w=(356*40)/52;
+    CGFloat leftx=(DeviceWidth-w)/2.0;
     
-    CGFloat w=(256*44)/67;
-    CGFloat leftx=(320-w)/2.0;
-    
-    UIImage *logoImage=[[UIImage imageNamed:@"logo.png"] imageByScalingProportionallyToSize:CGSizeMake(w, 44)];
+    UIImage *logoImage=[[UIImage imageNamed:@"logo.png"] imageByScalingProportionallyToSize:CGSizeMake(w, 40)];
     UIImageView *logoView=[[UIImageView alloc] initWithImage:logoImage];
-    logoView.frame=CGRectMake(leftx, 0, w, 44);
+    logoView.frame=CGRectMake(leftx, 0, w, 40);
     self.titleView=logoView;
     [logoView setImage:logoImage];
 }

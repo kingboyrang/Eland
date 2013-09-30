@@ -11,4 +11,5 @@
 @interface BusinessAreaViewController : BasicViewController<UITableViewDataSource,UITableViewDelegate>
 @property(nonatomic,retain) UITableView *tableView;
 @property (nonatomic,strong) NSMutableArray *cells;
+-(void)relayout:(BOOL)isLand;
 @end

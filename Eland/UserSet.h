@@ -24,5 +24,7 @@
 - (void) save;
 //读取隐私权限
 - (void) readPrivacy;
+//注册token
+- (void) registerAppToken:(NSString*)token;
 + (NSString*)ObjectToXml;
 @end

@@ -12,6 +12,7 @@
 #import "CaseSearchViewController.h"
 #import "PushViewController.h"
 #import "BusinessAreaViewController.h"
+#import "AppDelegate.h"
 @interface IndexViewController ()
 - (void)setupLeftMenuButton;
 - (void)switchViewControllers:(int)tag;
@@ -73,11 +74,30 @@
     
     _repairItem=[[RepairItemViewController alloc] init];
     _repairItem.view.frame=rect;
+    _repairItem.view.autoresizesSubviews=YES;
+    _repairItem.view.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     [self addChildViewController:_repairItem];
     [self.view addSubview:_repairItem.view];
     
     _currentViewController=_repairItem;
     
+}
+-(void)reSubViewLayout{
+    AppDelegate *app=[[UIApplication sharedApplication] delegate];
+    if (app.isLandscape) {
+        if ([_currentViewController isKindOfClass:[RepairItemViewController class]]) {
+            [_repairItem relayout:app.isLandscape];
+        }
+        if ([_currentViewController isKindOfClass:[CaseSearchViewController class]]) {
+            [_casesearch relayout:app.isLandscape];
+        }
+        if ([_currentViewController isKindOfClass:[PushViewController class]]) {
+            [_push relayout:app.isLandscape];
+        }
+        if ([_currentViewController isKindOfClass:[BusinessAreaViewController class]]) {
+            [_businessarea relayout:app.isLandscape];
+        }
+    }
 }
 - (void)addSearch:(int)tag{
     if (tag==1) {
@@ -92,14 +112,19 @@
     }
 }
 - (void)switchViewControllers:(int)tag{
+    AppDelegate *app=[[UIApplication sharedApplication] delegate];
     UIViewController *oldViewController=_currentViewController;
     switch (tag) {
         case 0:
         {
+            //UIApplication *app=[UIApplication sharedApplication];
+            
+            [_repairItem relayout:app.isLandscape];
             [self transitionFromViewController:_currentViewController toViewController:_repairItem duration:1 options:UIViewAnimationOptionTransitionCurlUp animations:^{
             }  completion:^(BOOL finished) {
                 if (finished) {
                     _currentViewController=_repairItem;
+                    
                 }else{
                     _currentViewController=oldViewController;
                 }
@@ -134,6 +159,7 @@
             break;
         case 3:
         {
+            [_businessarea relayout:app.isLandscape];
             [self transitionFromViewController:_currentViewController toViewController:_businessarea duration:1 options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
                 
             }  completion:^(BOOL finished) {

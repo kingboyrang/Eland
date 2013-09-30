@@ -8,23 +8,26 @@
 
 #import "AppDelegate.h"
 #import "MainViewController.h"
-#import "ViewController.h"
 #import "UIColor+TPCategory.h"
 #import "UserSet.h"
 #import "SecrecyViewController.h"
 @implementation AppDelegate
 @synthesize hasConnect;
+@synthesize isLandscape;
 - (void)dealloc
 {
     [_window release];
-    [_viewController release];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super dealloc];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    self.isLandscape=NO;
+    //横竖屏检测
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(detectShowOrientation) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
+    
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
- 
     //a2dce1 3bafb9
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTintColor:[UIColor colorFromHexRGB:@"5cc2cb"]];
     
@@ -43,7 +46,14 @@
     [self.window makeKeyAndVisible];
     return YES;
 }
-
+#pragma mark 横竖屏检测
+-(void)detectShowOrientation{
+    if ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeLeft ||[UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeRight){//横屏
+        self.isLandscape=YES;
+    }else{//竖屏
+        self.isLandscape=NO;
+    }
+}
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

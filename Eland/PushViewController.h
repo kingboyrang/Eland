@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface PushViewController : UIViewController
-
+-(void)relayout:(BOOL)isLand;
 @end

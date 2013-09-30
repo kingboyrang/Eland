@@ -11,10 +11,15 @@
 #import "WBBlueGradientView.h"
 
 @implementation WBBlueGradientView
-
+- (id)initWithFrame:(CGRect)frame{
+    if (self=[super initWithFrame:frame]) {
+       self.backgroundColor=[UIColor colorWithRed:0.0f green:0.831f blue:0.176f alpha:1.0]; // green
+    }
+    return self;
+}
 - (void)drawRect:(CGRect)rect
 {
-    
+    /***
     UIColor *redTop = [UIColor colorWithRed:37/255.0f green:122/255.0f blue:185/255.0f alpha:1.0];
     UIColor *redBot = [UIColor colorWithRed:18/255.0f green:96/255.0f blue:154/255.0f alpha:1.0];
     
@@ -47,6 +52,7 @@
     UIView *secondBotDarkLine = [[UIView alloc]initWithFrame:CGRectMake(0.0, self.bounds.size.height, self.frame.size.width, 1.0)];
     secondBotDarkLine.backgroundColor = [UIColor colorWithRed:4/255.0f green:45/255.0f blue:75/255.0f alpha:1.0];
     [self addSubview:secondBotDarkLine];
+     **/
 }
 
 @end

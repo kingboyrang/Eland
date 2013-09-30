@@ -11,6 +11,8 @@
 #import "TKEmptyCell.h"
 #import "UIColor+TPCategory.h"
 #import "SecrecyViewController.h"
+#import "UserSet.h"
+#import "WBSuccessNoticeView.h"
 @interface UserSetViewController ()
 
 @end
@@ -54,22 +56,35 @@
     [_tableView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
     [self.view addSubview:_tableView];
     
+    UserSet *entity=[UserSet sharedInstance];
+    
     TKLabelTextFieldCell *cell1=[[[TKLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     [cell1 setLabelName:@"姓名" required:NO];
     cell1.field.placeholder=@"editable name";
+    if ([entity.Name length]>0) {
+        cell1.field.text=entity.Name;
+    }
     
     TKLabelTextFieldCell *cell2=[[[TKLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     [cell2 setLabelName:@"手機號碼" required:NO];
     cell2.field.placeholder=@"editable phone";
+    if ([entity.Mobile length]>0) {
+        cell2.field.text=entity.Mobile;
+    }
     
     TKLabelTextFieldCell *cell3=[[[TKLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
      [cell3 setLabelName:@"Email" required:NO];
     cell3.field.placeholder=@"editable Email";
+    if ([entity.Email length]>0) {
+        cell3.field.text=entity.Email;
+    }
     
     TKLabelTextFieldCell *cell4=[[[TKLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     [cell4 setLabelName:@"暱稱" required:NO];
     cell4.field.placeholder=@"editable nick";
-    
+    if ([entity.Nick length]>0) {
+        cell4.field.text=entity.Nick;
+    }
     
     self.cells =[NSMutableArray arrayWithObjects:cell1,cell2,cell3,cell4, nil];
     
@@ -77,6 +92,40 @@
 	// Do any additional setup after loading the view.
 }
 -(void)buttonSaveClick{
+    TKLabelTextFieldCell *cell1=(TKLabelTextFieldCell*)[self.cells objectAtIndex:0];
+    if (!cell1.hasValue) {
+        //[cell1 errorVerify];
+        [cell1 shake];
+        return;
+    }
+    TKLabelTextFieldCell *cell2=(TKLabelTextFieldCell*)[self.cells objectAtIndex:1];
+    if (!cell2.hasValue) {
+        //[cell2 errorVerify];
+        [cell2 shake];
+        return;
+    }
+    TKLabelTextFieldCell *cell3=(TKLabelTextFieldCell*)[self.cells objectAtIndex:2];
+    if (!cell3.hasValue) {
+        //[cell3 errorVerify];
+        [cell3 shake];
+        return;
+    }
+    TKLabelTextFieldCell *cell4=(TKLabelTextFieldCell*)[self.cells objectAtIndex:3];
+    if (!cell4.hasValue) {
+        //[cell4 errorVerify];
+        [cell4 shake];
+        return;
+    }
+    UserSet *user=[UserSet sharedInstance];
+    user.Name=cell1.field.text;
+    user.Mobile=cell2.field.text;
+    user.Email=cell3.field.text;
+    user.Nick=cell4.field.text;
+    [user save];
+    WBSuccessNoticeView *successView=[WBSuccessNoticeView successNoticeInView:self.view title:@"存儲成功!"];
+     //successView.gradientView.backgroundColor=[UIColor colorFromHexRGB:@"00c724"];
+    //successView.view.backgroundColor=[UIColor colorFromHexRGB:@"00c724"];
+    [successView show];
 
 }
 - (void)didReceiveMemoryWarning

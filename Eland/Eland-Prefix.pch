@@ -15,4 +15,5 @@
     #import "BasicViewController.h"
     #import "UINavigationItem+TPCategory.h"
     #import "Global.h"
+    #import "AlertHelper.h"
 #endif
