@@ -195,7 +195,7 @@
     UIFont *font = [self.font fontWithSize:fontSize];
 
     //set position
-    switch (self.textAlignment)
+    switch ((int)self.textAlignment)
     {
         case NSTextAlignmentCenter:
         {

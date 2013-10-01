@@ -30,7 +30,8 @@
     AboutScrollView *scrollView=[[AboutScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
     [self.view addSubview:scrollView];
     [scrollView release];
-    [self.navigationItem setShadowTitle:@"關於我"];
+    //[self.navigationItem setShadowTitle:@"關於我"];
+    [self.navigationItem titleViewBackground];
 }
 
 - (void)didReceiveMemoryWarning

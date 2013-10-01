@@ -29,13 +29,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.navigationItem titleViewBackground];
     if (self.tabBarController==nil) {
-        [self.navigationItem titleViewBackground];
         UIBarButtonItem *rightBtn=[[UIBarButtonItem alloc] initWithTitle:@"確認" style:UIBarButtonItemStyleBordered target:self action:@selector(buttonClick)];
         self.navigationItem.rightBarButtonItem=rightBtn;
         [rightBtn release];
-    }else{
-       [self.navigationItem setShadowTitle:@"隱私及資訊安全保護政策"];
     }
     NSString *path=[[NSBundle mainBundle] pathForResource:@"Privacy" ofType:@"txt"];
     NSString *content=[[[NSString alloc] initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil] autorelease];

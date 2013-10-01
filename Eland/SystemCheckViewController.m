@@ -81,7 +81,8 @@
     self.checkcells =[NSMutableArray arrayWithObjects:cell1,cell2,cell3, nil];
     self.gpscells =[NSMutableArray arrayWithObjects:cell4,cell5,cell6, nil];
     
-    [self.navigationItem setShadowTitle:@"系統檢查"];
+    //[self.navigationItem setShadowTitle:@"系統檢查"];
+    [self.navigationItem titleViewBackground];
 }
 
 - (void)didReceiveMemoryWarning

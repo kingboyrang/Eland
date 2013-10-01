@@ -13,8 +13,10 @@
 #import "SecrecyViewController.h"
 #import "UserSet.h"
 #import "WBSuccessNoticeView.h"
+#import "TKButtonButtonCell.h"
 @interface UserSetViewController ()
-
+-(void)buttonSaveClick;
+-(void)buttonSecrecyClick;
 @end
 
 @implementation UserSetViewController
@@ -40,10 +42,8 @@
    
     [self.navigationItem resetNavigationBarBack];
    
-    UIBarButtonItem *rightBtn=[[UIBarButtonItem alloc] initWithTitle:@"存储" style:UIBarButtonItemStylePlain target:self action:@selector(buttonSaveClick)];
-    self.navigationItem.rightBarButtonItem=rightBtn;
-    [rightBtn release];
-     [self.navigationItem setShadowTitle:@"使用者設定"];
+    [self.navigationItem titleViewBackground];
+     //[self.navigationItem setShadowTitle:@"使用者設定"];
     
     CGRect rect=self.view.bounds;
     
@@ -133,6 +133,11 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+-(void)buttonSecrecyClick{
+    SecrecyViewController *secrecy=[[SecrecyViewController alloc] init];
+    [self.navigationController pushViewController:secrecy animated:YES];
+    [secrecy release];
+}
 #pragma mark UITableView Delegate & DataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;
@@ -151,20 +156,13 @@
         }
         return tableCell;
     }else{
-        TKEmptyCell *cell=[[TKEmptyCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-        cell.textLabel.text=@"隱私及資訊安全保護政策";
-        cell.textLabel.textColor=[UIColor colorFromHexRGB:@"666666"];
-        cell.textLabel.textAlignment=NSTextAlignmentCenter;
-        cell.backgroundColor=[UIColor colorFromHexRGB:@"5cc2cb"];//a2dce1
+        TKButtonButtonCell *cell=[[TKButtonButtonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        cell.selectionStyle=UITableViewCellSelectionStyleNone;
+        [cell.leftButton setTitle:@"存儲" forState:UIControlStateNormal];
+        [cell.leftButton addTarget:self action:@selector(buttonSaveClick) forControlEvents:UIControlEventTouchUpInside];
+        [cell.rightButton setTitle:@"隱私及資訊安全保護政策" forState:UIControlStateNormal];
+        [cell.rightButton addTarget:self action:@selector(buttonSecrecyClick) forControlEvents:UIControlEventTouchUpInside];
         return cell;
-    }
-}
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if(indexPath.section==1&&indexPath.row==0){
-        SecrecyViewController *secrecy=[[SecrecyViewController alloc] init];
-        [self.navigationController pushViewController:secrecy animated:YES];
-        [secrecy release];
     }
 }
 @end

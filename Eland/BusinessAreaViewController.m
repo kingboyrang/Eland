@@ -100,9 +100,9 @@
     }else{
         TKEmptyCell *cell=[[TKEmptyCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
         cell.textLabel.text=@"同步";
-        cell.textLabel.textColor=[UIColor colorFromHexRGB:@"666666"];
+        cell.textLabel.textColor=[UIColor whiteColor];
         cell.textLabel.textAlignment=NSTextAlignmentCenter;
-        cell.backgroundColor=[UIColor colorFromHexRGB:@"5cc2cb"];//a2dce1
+        cell.backgroundColor=[UIColor colorFromHexRGB:@"5e5e5e"];//a2dce1
         return cell;
     }
 }

@@ -7,19 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "REMenu.h"
-@class RepairItemViewController;
-@class CaseSearchViewController;
-@class PushViewController;
-@class BusinessAreaViewController;
+
 @interface IndexViewController : BasicViewController<UITableViewDataSource,UITableViewDelegate>{
-@private
-    RepairItemViewController *_repairItem;
-    CaseSearchViewController *_casesearch;
-    PushViewController *_push;
-    BusinessAreaViewController *_businessarea;
-    UIViewController  *_currentViewController;
 }
-@property (strong, nonatomic) REMenu *menu;
--(void)reSubViewLayout;
+
 @end

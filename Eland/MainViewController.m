@@ -148,7 +148,7 @@
         UINavigationController *nav=(UINavigationController*)[self.viewControllers objectAtIndex:self.selectedIndex];
         IndexViewController *index=(IndexViewController*)[nav.viewControllers objectAtIndex:0];
         if (index) {
-            [index reSubViewLayout];
+            //[index reSubViewLayout];
         }
     }
     
