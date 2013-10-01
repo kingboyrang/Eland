@@ -42,7 +42,10 @@
     _collectionView.dataSource=self;
     _collectionView.delegate=self;
     _collectionView.bounces=NO;
-    _collectionView.scrollEnabled=NO;
+    if (self.isPad) {
+        _collectionView.scrollEnabled=NO;
+    }
+    
     _collectionView.showsVerticalScrollIndicator=NO;
     //_collectionView.autoresizingMask=UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     _collectionView.backgroundColor=[UIColor whiteColor];
@@ -106,7 +109,7 @@
     }
     if (isLand) {
         [_sourceData addObject:@"fk_08.jpg"];
-        _collectionView.frame=CGRectMake(0, 0, DeviceHeight,self.view.bounds.size.width-44-20-32);
+        _collectionView.frame=CGRectMake(0, 0, DeviceHeight,DeviceWidth-44-20-32);
     }
     else{
         [_sourceData removeLastObject];
@@ -137,11 +140,11 @@
     }
     if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
         [_sourceData addObject:@"fk_08.jpg"];
-       _collectionView.frame=CGRectMake(0, 0, DeviceHeight,self.view.bounds.size.width-44-20-32);
+       _collectionView.frame=CGRectMake(0, 0, DeviceHeight,DeviceWidth-44-20-32);
     }
     else{
         [_sourceData removeLastObject];
-        _collectionView.frame=CGRectMake(0, 0, DeviceWidth,self.view.bounds.size.height);
+        _collectionView.frame=CGRectMake(0, 0, DeviceWidth,DeviceHeight-44);
     }
     [_collectionView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES]; 
    

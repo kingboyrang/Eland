@@ -10,14 +10,17 @@
 #import "AppDelegate.h"
 #import "MenuBar.h"
 #import "UIColor+TPCategory.h"
-@interface IndexViewController ()
+#import "RepairItemViewController.h"
+@interface IndexViewController (){
+    MenuBar *_menuBar;
+}
 - (void)addSearch:(int)tag;
 @end
 
 @implementation IndexViewController
 -(void)dealloc{
     [super dealloc];
-   
+    [_menuBar release],_menuBar=nil;
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -32,22 +35,18 @@
 {
     [super viewDidLoad];
     [self.navigationItem titleViewBackground];
+    CGFloat h=self.isPad?58:40;
+    _menuBar=[[MenuBar alloc] initWithFrame:CGRectMake(0, 0, DeviceWidth, h)];
+    _menuBar.autoresizesSubviews=YES;
+    _menuBar.autoresizingMask=UIViewAutoresizingFlexibleWidth;
+    [self.view addSubview:_menuBar];
+   
+    RepairItemViewController *repair=[[RepairItemViewController alloc] init];
+    repair.view.frame=CGRectMake(0, h, self.view.bounds.size.width, self.view.bounds.size.height-h);
+    [self addChildViewController:repair];
+    [self.view addSubview:repair.view];
+     
     
-    /***
-    UIView *topView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, DeviceWidth, 44)];
-    topView.backgroundColor=[UIColor colorFromHexRGB:@"3db5c0"];
-    topView.autoresizingMask=UIViewAutoresizingFlexibleWidth;
-    [self.view addSubview:topView];
-    [topView release];
-     ***/
-    MenuBar *menu=[[MenuBar alloc] initWithFrame:CGRectMake(0, 0, DeviceWidth, 40)];
-    menu.autoresizesSubviews=YES;
-    menu.autoresizingMask=UIViewAutoresizingFlexibleWidth;
-    [self.view addSubview:menu];
-    [menu release];
-    
-    
-        
 }
 - (void)addSearch:(int)tag{
     if (tag==1) {
@@ -68,12 +67,6 @@
 }
 #pragma mark -
 #pragma mark Rotation
-
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
     return YES;

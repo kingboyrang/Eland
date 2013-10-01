@@ -13,7 +13,6 @@
 -(void)loadControls;
 -(void)selectedButton:(id)sender;
 - (void)handleAutoScrolling:(BOOL)animated;
-- (CGFloat)getCenterOfItemAtIndex:(NSInteger)index;
 @end
 
 @implementation MenuBar
@@ -42,6 +41,10 @@
 }
 -(void)loadControls{
     CGFloat w=40*150/58,h=40;
+    if (DeviceIsPad) {
+        w=150;
+        h=58;
+    }
     CGSize imageSize=CGSizeMake(w, h);
     UIButton *btn1=[UIButton buttonWithType:UIButtonTypeCustom];
     btn1.frame=CGRectMake(0, 0, w, h);
@@ -80,11 +83,10 @@
     CGFloat leftX=DeviceWidth<totalW?0:(self.bounds.size.width-totalW)/2;
     
     _scrollView.contentSize=CGSizeMake(totalW, h);
-    _scrollView.frame=CGRectMake(leftX, 0,self.bounds.size.width, 40);
+    _scrollView.frame=CGRectMake(leftX, 0,self.bounds.size.width, h);
     
     [self addSubview:_scrollView];
-   
-
+    
 }
 -(void)layoutSubviews{
     [super layoutSubviews];
@@ -98,6 +100,7 @@
         frame.size.width=_scrollView.contentSize.width;
     }
     _scrollView.frame=frame;
+    [self handleAutoScrolling:YES];
 }
 -(void)setSelectedItemIndex:(int)index{
      _selectedIndex=index;
@@ -108,6 +111,7 @@
     btn2.selected=NO;
     
     _prevSelectedIndex=index;
+    [self handleAutoScrolling:YES];
 }
 -(void)selectedButton:(id)sender{
     UIButton *btn=(UIButton*)sender;
@@ -121,17 +125,13 @@
     
     _prevSelectedIndex=btn.tag-100;
     
-    //[self handleAutoScrolling:YES];
+    [self handleAutoScrolling:YES];
 }
 - (void)handleAutoScrolling:(BOOL)animated {
-    [_scrollView setContentOffset:CGPointMake(_selectedIndex*(_scrollView.contentSize.width/4), 0) animated:animated];
-}
-- (CGFloat)getCenterOfItemAtIndex:(NSInteger)index {
-    return _scrollView.contentSize.width/index;
-}
-#pragma mark -
-#pragma mark UIScrollViewDelegate Methods
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
-
+    CGFloat leftX=(_selectedIndex+1)*(_scrollView.contentSize.width/4)-_scrollView.bounds.size.width;
+    if (leftX<0) {
+        leftX=0;
+    }
+    [_scrollView setContentOffset:CGPointMake(leftX, 0) animated:animated];
 }
 @end
