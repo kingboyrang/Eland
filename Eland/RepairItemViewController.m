@@ -125,6 +125,7 @@
                                          duration:(NSTimeInterval)duration
 {
    
+    NSLog(@"执行这里〜〜〜");
     if (!self.isPad) {
         UICollectionViewFlowLayout *flowlayout=[[UICollectionViewFlowLayout alloc] init];
         flowlayout.scrollDirection=UICollectionViewScrollDirectionVertical;

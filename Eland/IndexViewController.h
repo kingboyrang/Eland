@@ -7,8 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface IndexViewController : BasicViewController<UITableViewDataSource,UITableViewDelegate>{
+#import "RepairItemViewController.h"
+#import "CaseSearchViewController.h"
+#import "PushViewController.h"
+#import "BusinessAreaViewController.h"
+#import "PagerViewController.h"
+@interface IndexViewController : PagerViewController{
+    /**@private
+    RepairItemViewController *_repair;
+    CaseSearchViewController *_caseSearch;
+    PushViewController *_push;
+    BusinessAreaViewController *_business;
+    UIViewController *_currentViewController;
+     ***/
 }
-
+-(void)selectedMenuItemIndex:(int)index;
+- (void)handChangePageIndex:(int)index;
 @end

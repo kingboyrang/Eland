@@ -17,6 +17,7 @@
 
 @implementation MenuBar
 @synthesize selectedIndex=_selectedIndex;
+@synthesize controlers;
 -(void)dealloc{
     [super dealloc];
     [_scrollView release],_scrollView=nil;
@@ -40,7 +41,8 @@
     return self;
 }
 -(void)loadControls{
-    CGFloat w=40*150/58,h=40;
+    //CGFloat w=40*150/58,h=40;
+    CGFloat w=DeviceWidth/4,h=40;//w*58/140
     if (DeviceIsPad) {
         w=150;
         h=58;
@@ -52,6 +54,8 @@
     btn1.selected=YES;
     [btn1 setBackgroundImage:[[UIImage imageNamed:@"repair_normal.png"] imageByScalingProportionallyToSize:imageSize] forState:UIControlStateNormal];
     [btn1 setBackgroundImage:[[UIImage imageNamed:@"repair_select.png"] imageByScalingProportionallyToSize:imageSize] forState:UIControlStateSelected];
+    //[btn1 setBackgroundImage:[UIImage imageNamed:@"repair_normal.png"] forState:UIControlStateNormal];
+    //[btn1 setBackgroundImage:[UIImage imageNamed:@"repair_select.png"] forState:UIControlStateSelected];
     [btn1 addTarget:self action:@selector(selectedButton:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:btn1];
     
@@ -83,7 +87,7 @@
     CGFloat leftX=DeviceWidth<totalW?0:(self.bounds.size.width-totalW)/2;
     
     _scrollView.contentSize=CGSizeMake(totalW, h);
-    _scrollView.frame=CGRectMake(leftX, 0,self.bounds.size.width, h);
+    _scrollView.frame=CGRectMake(leftX, (self.frame.size.height-h)/2.0,self.bounds.size.width, h);
     
     [self addSubview:_scrollView];
     
@@ -112,6 +116,10 @@
     
     _prevSelectedIndex=index;
     [self handleAutoScrolling:YES];
+    
+    if (self.controlers&&[self.controlers respondsToSelector:@selector(selectedMenuItemIndex:)]) {
+        [self.controlers performSelector:@selector(selectedMenuItemIndex:) withObject:_selectedIndex];
+    }
 }
 -(void)selectedButton:(id)sender{
     UIButton *btn=(UIButton*)sender;
@@ -126,6 +134,10 @@
     _prevSelectedIndex=btn.tag-100;
     
     [self handleAutoScrolling:YES];
+    
+    if (self.controlers&&[self.controlers respondsToSelector:@selector(selectedMenuItemIndex:)]) {
+        [self.controlers performSelector:@selector(selectedMenuItemIndex:) withObject:_selectedIndex];
+    }
 }
 - (void)handleAutoScrolling:(BOOL)animated {
     CGFloat leftX=(_selectedIndex+1)*(_scrollView.contentSize.width/4)-_scrollView.bounds.size.width;

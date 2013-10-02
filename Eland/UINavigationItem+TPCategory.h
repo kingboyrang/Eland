@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-
 @interface UINavigationItem (TPCategory)
 -(void)titleViewBackground;
 -(void)resetNavigationBarBack;

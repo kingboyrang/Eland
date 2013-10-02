@@ -40,8 +40,6 @@
 {
     [super viewDidLoad];
    
-    [self.navigationItem resetNavigationBarBack];
-   
     [self.navigationItem titleViewBackground];
      //[self.navigationItem setShadowTitle:@"使用者設定"];
     

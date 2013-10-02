@@ -7,7 +7,7 @@
 //
 
 #import "CaseSearchViewController.h"
-
+#import "SearchField.h"
 @interface CaseSearchViewController ()
 
 @end
@@ -26,7 +26,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
+    SearchField *field=[[SearchField alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44*3)];
+    field.autoresizingMask=UIViewAutoresizingFlexibleWidth;
+    [self.view addSubview:field];
+    [field release];
 	// Do any additional setup after loading the view.
 }
 -(void)relayout:(BOOL)isLand{

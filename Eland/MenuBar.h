@@ -14,5 +14,6 @@
     int _prevSelectedIndex;
 }
 @property(nonatomic,readonly) int selectedIndex;
+@property(nonatomic,assign) id controlers;
 -(void)setSelectedItemIndex:(int)index;
 @end

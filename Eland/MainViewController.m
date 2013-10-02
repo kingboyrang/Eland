@@ -13,6 +13,7 @@
 #import "aboutUSViewController.h"
 #import "SystemCheckViewController.h"
 #import "UserSetViewController.h"
+#import "BasicNagigationController.h"
 //获取设备的物理高度
 #define ScreenHeight [UIScreen mainScreen].bounds.size.height
 #define TABRHEIGHT 44 //工具栏高度
@@ -55,20 +56,20 @@
 //初始化子控制器
 - (void)_initViewController {
     IndexViewController *index=[[[IndexViewController alloc] init] autorelease];
-    UINavigationController *nav1=[[[UINavigationController alloc] initWithRootViewController:index] autorelease];
+    BasicNagigationController *nav1=[[[BasicNagigationController alloc] initWithRootViewController:index] autorelease];
     nav1.delegate=self;
 
     UserSetViewController *userset=[[[UserSetViewController alloc] init] autorelease];
-    UINavigationController *nav2=[[[UINavigationController alloc] initWithRootViewController:userset] autorelease];
+    BasicNagigationController *nav2=[[[BasicNagigationController alloc] initWithRootViewController:userset] autorelease];
     nav2.delegate=self;
     
     
     aboutUSViewController *aboutUs=[[[aboutUSViewController alloc] init] autorelease];
-    UINavigationController *nav3=[[[UINavigationController alloc] initWithRootViewController:aboutUs] autorelease];
+    BasicNagigationController *nav3=[[[BasicNagigationController alloc] initWithRootViewController:aboutUs] autorelease];
     nav3.delegate=self;
     
     SystemCheckViewController *system=[[[SystemCheckViewController alloc] init] autorelease];
-    UINavigationController *nav4=[[[UINavigationController alloc] initWithRootViewController:system] autorelease];
+    BasicNagigationController *nav4=[[[BasicNagigationController alloc] initWithRootViewController:system] autorelease];
     nav4.delegate=self;
     
     

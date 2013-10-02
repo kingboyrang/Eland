@@ -10,7 +10,7 @@
 #import "AppDelegate.h"
 #import "MenuBar.h"
 #import "UIColor+TPCategory.h"
-#import "RepairItemViewController.h"
+#import "UIImage+TPCategory.h"
 @interface IndexViewController (){
     MenuBar *_menuBar;
 }
@@ -35,18 +35,33 @@
 {
     [super viewDidLoad];
     [self.navigationItem titleViewBackground];
-    CGFloat h=self.isPad?58:40;
+    CGFloat h=DeviceIsPad?58:40;
     _menuBar=[[MenuBar alloc] initWithFrame:CGRectMake(0, 0, DeviceWidth, h)];
+    _menuBar.controlers=self;
     _menuBar.autoresizesSubviews=YES;
     _menuBar.autoresizingMask=UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:_menuBar];
-   
-    RepairItemViewController *repair=[[RepairItemViewController alloc] init];
-    repair.view.frame=CGRectMake(0, h, self.view.bounds.size.width, self.view.bounds.size.height-h);
-    [self addChildViewController:repair];
-    [self.view addSubview:repair.view];
-     
     
+   RepairItemViewController *_repair=[[RepairItemViewController alloc] init];
+   CaseSearchViewController *_caseSearch=[[CaseSearchViewController alloc] init];
+   PushViewController *_push=[[PushViewController alloc] init];
+   BusinessAreaViewController *_business=[[BusinessAreaViewController alloc] init];
+    [self addChildViewController:_repair];
+    [self addChildViewController:_caseSearch];
+    [self addChildViewController:_push];
+    [self addChildViewController:_business];
+    /***
+    NSString *path=[DocumentPath stringByAppendingPathComponent:@"back.png"];
+    UIImage *image=[[UIImage imageNamed:@"back.png"] imageByScalingProportionallyToSize:CGSizeMake(116*35/49, 35)];
+    [image saveImage:path];
+    NSLog(@"path=%@\n",path);
+     ***/
+}
+- (void)handChangePageIndex:(int)index{
+    [_menuBar setSelectedItemIndex:index];
+}
+-(void)selectedMenuItemIndex:(int)index{
+    [self changePageIndex:index];
 }
 - (void)addSearch:(int)tag{
     if (tag==1) {
@@ -64,11 +79,5 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-#pragma mark -
-#pragma mark Rotation
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-{
-    return YES;
 }
 @end
