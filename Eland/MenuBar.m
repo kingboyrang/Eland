@@ -42,7 +42,7 @@
 }
 -(void)loadControls{
     //CGFloat w=40*150/58,h=40;
-    CGFloat w=DeviceWidth/4,h=40;//w*58/140
+    CGFloat h=self.bounds.size.height,w=140*h/58;//w*58/140
     if (DeviceIsPad) {
         w=150;
         h=58;
@@ -87,7 +87,7 @@
     CGFloat leftX=DeviceWidth<totalW?0:(self.bounds.size.width-totalW)/2;
     
     _scrollView.contentSize=CGSizeMake(totalW, h);
-    _scrollView.frame=CGRectMake(leftX, (self.frame.size.height-h)/2.0,self.bounds.size.width, h);
+    _scrollView.frame=CGRectMake(leftX, 0,self.bounds.size.width, h);
     
     [self addSubview:_scrollView];
     

@@ -22,6 +22,7 @@
     [encoder encodeObject:self.Mobile forKey:@"Mobile"];
     [encoder encodeObject:self.Email forKey:@"Email"];
     [encoder encodeObject:self.AppToken forKey:@"AppToken"];
+    [encoder encodeBool:self.isRegisterToken forKey:@"isRegisterToken"];
     [encoder encodeBool:self.isSync forKey:@"isSync"];
     [encoder encodeBool:self.isFirstLoad forKey:@"isFirstLoad"];
     [encoder encodeBool:self.isSecondLoad forKey:@"isSecondLoad"];
@@ -35,6 +36,7 @@
         self.Mobile=[aDecoder decodeObjectForKey:@"Mobile"];
         self.Email=[aDecoder decodeObjectForKey:@"Email"];
         self.AppToken=[aDecoder decodeObjectForKey:@"AppToken"];
+        self.isRegisterToken=[aDecoder decodeBoolForKey:@"isRegisterToken"];
         self.isSync=[aDecoder decodeBoolForKey:@"isSync"];
         self.isFirstLoad=[aDecoder decodeBoolForKey:@"isFirstLoad"];
         self.isSecondLoad=[aDecoder decodeBoolForKey:@"isSecondLoad"];
@@ -67,8 +69,9 @@
     self.isReadPrivacy=YES;
     [self save];
 }
-- (void) registerAppToken:(NSString*)token{
+- (void) registerAppToken:(NSString*)token status:(BOOL)status{
     self.AppToken=token;
+    self.isRegisterToken=status;
     [self save];
 }
 +(NSString*)ObjectToXml{
@@ -97,6 +100,7 @@
         self.Mobile=obj.Mobile;
         self.Email=obj.Email;
         self.AppToken=obj.AppToken;
+        self.isRegisterToken=obj.isRegisterToken;
         self.isSync=obj.isSync;
         self.isFirstLoad=obj.isFirstLoad;
         self.isSecondLoad=obj.isSecondLoad;
@@ -108,6 +112,7 @@
         self.Mobile=@"";
         self.Email=@"";
         self.AppToken=@"";
+        self.isRegisterToken=NO;
         self.isSync=NO;
         self.isFirstLoad=NO;
         self.isSecondLoad=NO;

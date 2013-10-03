@@ -28,6 +28,7 @@
 @implementation MainViewController
 -(void)dealloc{
     [super dealloc];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_tabbarView release];
     [_silderView release];
 }
@@ -45,6 +46,12 @@
     [super viewDidLoad];
     [self _initViewController];//初始化子控制器
     [self _initTabbarView];//创建自定义tabBar
+    
+    //接收推播信息
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotifice:) name:kPushNotificeName object:nil];
+}
+-(void)receiveNotifice:(NSNotification*)notice{
+    //NSDictionary *dic=[notice userInfo];
 }
 
 - (void)didReceiveMemoryWarning

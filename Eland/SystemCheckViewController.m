@@ -8,9 +8,12 @@
 
 #import "SystemCheckViewController.h"
 #import "TKLabelTextFieldCell.h"
+#import "TKButtonLabelCell.h"
 #import "UIColor+TPCategory.h"
+#import "NetWorkConnection.h"
 @interface SystemCheckViewController ()
-
+- (void)buttonLocation:(id)sender;
+- (void)buttonCompare;
 @end
 
 @implementation SystemCheckViewController
@@ -37,11 +40,14 @@
     [super viewDidLoad];
     CGRect rect=self.view.bounds;
     
+    UIImageView *imageview = [[[UIImageView alloc] initWithFrame:self.view.bounds] autorelease];
+    [imageview setImage:[UIImage imageNamed:@"systemcheckbg.jpg"]];
+    
     
     _tableView=[[UITableView alloc] initWithFrame:rect style:UITableViewStylePlain];
     _tableView.dataSource=self;
     _tableView.delegate=self;
-    _tableView.backgroundView=nil;
+    _tableView.backgroundView=imageview;
     [_tableView setBackgroundColor:[UIColor clearColor]];
     [_tableView setAutoresizesSubviews:YES];
     [_tableView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
@@ -49,34 +55,34 @@
     _tableView.bounces=NO;
     [self.view addSubview:_tableView];
     
+    BOOL is3G=[NetWorkConnection IsEnable3G];
+    TKButtonLabelCell *cell1=[[[TKButtonLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    [cell1.button setTitle:@"WIFI 3G:" forState:UIControlStateNormal];
+    [cell1 setLabelValue:is3G?@"開啟":@"未開啟" normal:is3G];
     
-    TKLabelTextFieldCell *cell1=[[[TKLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-    [cell1 setLabelName:@"WIFI 3G:" required:NO];
-    cell1.field.enabled=NO;
+    BOOL isConnection=[NetWorkConnection IsEnableConnection];
+    TKButtonLabelCell *cell2=[[[TKButtonLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    [cell2.button setTitle:@"Internet:" forState:UIControlStateNormal];
+    [cell2 setLabelValue:isConnection?@"正常連接":@"連接異常" normal:isConnection];
     
-    TKLabelTextFieldCell *cell2=[[[TKLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-    [cell2 setLabelName:@"Internet:" required:NO];
-    cell2.field.enabled=NO;
-    
-    TKLabelTextFieldCell *cell3=[[[TKLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-    [cell3 setLabelName:@"施政互動:" required:NO];
-    cell3.field.enabled=NO;
+    TKButtonLabelCell *cell3=[[[TKButtonLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    [cell3.button setTitle:@"施政互動:" forState:UIControlStateNormal];
     
     self.checkcells =[NSMutableArray arrayWithObjects:cell1,cell2,cell3, nil];
     
     
     
-    TKLabelTextFieldCell *cell4=[[[TKLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-    [cell4 setLabelName:@"A點:" required:NO];
-    cell4.field.enabled=NO;
+    TKButtonLabelCell *cell4=[[[TKButtonLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    [cell4.button setTitle:@"A點:" forState:UIControlStateNormal];
+    [cell4.button addTarget:self action:@selector(buttonLocation:) forControlEvents:UIControlEventTouchUpInside];
     
-    TKLabelTextFieldCell *cell5=[[[TKLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-    [cell5 setLabelName:@"B點:" required:NO];
-    cell5.field.enabled=NO;
+    TKButtonLabelCell *cell5=[[[TKButtonLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    [cell5.button setTitle:@"B點:" forState:UIControlStateNormal];
+    [cell5.button addTarget:self action:@selector(buttonLocation:) forControlEvents:UIControlEventTouchUpInside];
     
-    TKLabelTextFieldCell *cell6=[[[TKLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-    [cell6 setLabelName:@"測試結果:" required:NO];
-    cell6.field.enabled=NO;
+    TKButtonLabelCell *cell6=[[[TKButtonLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    [cell6.button setTitle:@"測試結果:" forState:UIControlStateNormal];
+    [cell6.button addTarget:self action:@selector(buttonCompare) forControlEvents:UIControlEventTouchUpInside];
     
     self.checkcells =[NSMutableArray arrayWithObjects:cell1,cell2,cell3, nil];
     self.gpscells =[NSMutableArray arrayWithObjects:cell4,cell5,cell6, nil];
@@ -84,7 +90,21 @@
     //[self.navigationItem setShadowTitle:@"系統檢查"];
     [self.navigationItem titleViewBackground];
 }
-
+- (void)buttonLocation:(id)sender{
+    UIButton *btn=(UIButton*)sender;
+    TKButtonLabelCell *cell=(TKButtonLabelCell*)[[btn superview] superview];
+    [cell startLocation];
+}
+- (void)buttonCompare{
+    TKButtonLabelCell *cell1=self.gpscells[0];
+    TKButtonLabelCell *cell2=self.gpscells[1];
+    TKButtonLabelCell *cell3=self.gpscells[2];
+    if ([cell1.label.text isEqualToString:cell2.label.text]) {
+        [cell3 setLabelValue:@"定位正常" normal:YES];
+    }else{
+       [cell3 setLabelValue:@"定位異常" normal:NO];
+    }
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -126,12 +146,16 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section==0) {
         UITableViewCell *tableCell=self.checkcells[indexPath.row];
+      
         if (indexPath.row!=0||indexPath.row!=2) {
             tableCell.selectionStyle=UITableViewCellSelectionStyleNone;
         }
         return tableCell;
     }else{
         UITableViewCell *tableCell=self.gpscells[indexPath.row];
+        UIView *tempView = [[[UIView alloc] init] autorelease];
+        tableCell.backgroundView=tempView;
+        tableCell.backgroundColor=[UIColor clearColor];
         if (indexPath.row!=0||indexPath.row!=2) {
             tableCell.selectionStyle=UITableViewCellSelectionStyleNone;
         }

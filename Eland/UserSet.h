@@ -15,6 +15,7 @@
 @property(nonatomic,copy) NSString *Mobile;
 @property(nonatomic,copy) NSString *Email;
 @property(nonatomic,copy) NSString *AppToken;//推播Token
+@property(nonatomic,assign) BOOL isRegisterToken;//推播Token
 @property(nonatomic,assign) BOOL isSync;//判断是否已同步
 @property(nonatomic,assign) BOOL isFirstLoad;
 @property(nonatomic,assign) BOOL isSecondLoad;
@@ -25,6 +26,6 @@
 //读取隐私权限
 - (void) readPrivacy;
 //注册token
-- (void) registerAppToken:(NSString*)token;
+- (void) registerAppToken:(NSString*)token status:(BOOL)status;
 + (NSString*)ObjectToXml;
 @end

@@ -11,6 +11,10 @@
 #import "UIColor+TPCategory.h"
 #import "UserSet.h"
 #import "SecrecyViewController.h"
+#import "ZAActivityBar.h"
+#import "ServiceHelper.h"
+#import "PushToken.h"
+#import "CacheHelper.h"
 @implementation AppDelegate
 @synthesize hasConnect;
 @synthesize isLandscape;
@@ -20,17 +24,40 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super dealloc];
 }
-
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+-(void)registerAPNS{
+    //注册推播
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge |UIRemoteNotificationTypeSound)];
+}
+-(void)registerAPNSToken:(NSString*)deviceId{
+    if ([deviceId length]==0) {
+        [self registerAPNS];
+        return;
+    }
+    UserSet *entity=[UserSet sharedInstance];
+    if (![entity isRegisterToken]) {
+        [ServiceHelper asynService:[PushToken registerTokenWithDeivceId:deviceId] success:^(ServiceResult *result) {
+            [entity registerAppToken:deviceId status:YES];
+            
+        } failed:^(NSError *error, NSDictionary *userInfo) {
+            [entity registerAppToken:deviceId status:NO];
+        }];
+    }
+}
+-(void)initParams{
+    [ZAActivityBar setLocationTabBar];
+    [self registerAPNS];
     self.isLandscape=NO;
     //横竖屏检测
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(detectShowOrientation) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
-    
-    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     //a2dce1 3bafb9
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTintColor:[UIColor colorFromHexRGB:@"5cc2cb"]];
+}
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
     
+    [self initParams];
+    //[CacheHelper asyncCacheCity];
+    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     UserSet *user=[UserSet sharedInstance];
     if (!user.isReadPrivacy) {
         SecrecyViewController *privacy=[[SecrecyViewController alloc] init];
@@ -68,7 +95,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    [self registerAPNSToken:[[UserSet sharedInstance] AppToken]];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -80,5 +107,31 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+#pragma mark - APNS 回傳結果
+// 成功取得設備編號token
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    
+    NSString *deviceId = [[deviceToken description]
+                          substringWithRange:NSMakeRange(1, [[deviceToken description] length]-2)];
+    deviceId = [deviceId stringByReplacingOccurrencesOfString:@" " withString:@""];
+    deviceId = [deviceId stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
+    [self registerAPNSToken:deviceId];
+}
+#pragma mark -
+#pragma mark 接收的推播信息
+- (void) application:(UIApplication *) app didReceiveRemoteNotification:(NSDictionary *) userInfo
+{
+    if ([[userInfo objectForKey:@"aps"] objectForKey:@"alert"]!=nil) {
+        NSString *post=[userInfo objectForKey:@"guid"];
+        NSDictionary  *dic=[NSDictionary dictionaryWithObjectsAndKeys:post,@"guid", nil];
+        NSNotification *notification = [NSNotification notificationWithName:kPushNotificeName object:nil userInfo:dic];
+        [[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotification:) withObject:notification waitUntilDone:NO];
+    }
 
+}
+// 或無法取得設備編號token
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    //表示信息推播失败
+}
 @end

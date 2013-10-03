@@ -27,6 +27,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UIImageView *imageView=[[UIImageView alloc] initWithFrame:self.view.bounds];
+    imageView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    [imageView setImage:[UIImage imageNamed:@"systemcheckbg.jpg"]];
+    [self.view addSubview:imageView];
+    [imageView release];
+    //tableCell.backgroundColor=[UIColor clearColor];
+    
     AboutScrollView *scrollView=[[AboutScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
     [self.view addSubview:scrollView];
     [scrollView release];

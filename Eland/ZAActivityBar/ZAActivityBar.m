@@ -79,7 +79,8 @@
 
 + (void) setLocationTabBar
 {
-    [ZAActivityBar sharedView].offset = 49.0f;
+    //[ZAActivityBar sharedView].offset = 49.0f;
+    [ZAActivityBar sharedView].offset = 60.0f;
 }
 
 + (void) setLocationNavBar
