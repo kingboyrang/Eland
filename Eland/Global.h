@@ -6,6 +6,9 @@
 //  Copyright (c) 2013年 rang. All rights reserved.
 //
 
+//http://60.251.51.217/Pushs.Admin/
+//http://60.251.51.217/Cases.Admin/
+
 //获取设备的物理大小
 #define DeviceRect [UIScreen mainScreen].bounds
 #define DeviceWidth [UIScreen mainScreen].bounds.size.width
