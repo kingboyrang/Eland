@@ -1,0 +1,69 @@
+//
+//  CaseCategoryHelper.m
+//  Eland
+//
+//  Created by aJia on 13/10/4.
+//  Copyright (c) 2013年 rang. All rights reserved.
+//
+
+#import "CaseCategoryHelper.h"
+#import "CaseCategory.h"
+#import "TreeViewNode.h"
+@implementation CaseCategoryHelper
+-(NSMutableArray*)sourceTreeNodes{
+    CaseCategory *item=[[[CaseCategory alloc] init] autorelease];
+    item.Name=@"全部";
+    item.GUID=@"";
+    item.Parent=@"";
+    
+    TreeViewNode *node=[[[TreeViewNode alloc] init] autorelease];
+    node.nodeLevel = 0;
+    node.nodeObject =item;
+    node.isExpanded = NO;
+    
+    NSMutableArray *arr=[self fillTreeNodes];
+    NSMutableArray *result=[NSMutableArray array];
+    [result addObject:node];
+    if (arr&&[arr count]>0) {
+        [result addObjectsFromArray:arr];
+    }
+    return result;
+}
+-(NSMutableArray*)fillTreeNodes{
+    if (self.categorys==nil||[self.categorys count]==0) {
+        return nil;
+    }
+    NSMutableArray *source=[self childsTreeNodes:@""];
+    return [self childsObjectTreeNodes:source Level:0];
+}
+-(NSMutableArray*)childsTreeNodes:(NSString*)parent
+{
+    NSString *match=[NSString stringWithFormat:@"SELF.Parent =='%@'",parent];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:match];
+    NSArray *results = [self.categorys filteredArrayUsingPredicate:predicate];
+    if (results&&[results count]>0) {
+        return [NSMutableArray arrayWithArray:results];
+    }
+    return nil;
+}
+-(NSMutableArray*)childsObjectTreeNodes:(NSMutableArray*)source Level:(int)level{
+    if (source&&[source count]>0) {
+        NSMutableArray *result=[NSMutableArray array];
+        for (CaseCategory *item in source) {
+            TreeViewNode *firstLevelNode1 =[[[TreeViewNode alloc] init] autorelease];
+            firstLevelNode1.nodeLevel = level;
+            firstLevelNode1.nodeObject =item;
+            firstLevelNode1.isExpanded = NO;
+            
+            NSMutableArray *childs=[self childsTreeNodes:item.GUID];
+            if (childs&&[childs count]>0) {
+                //NSLog(@"childs=%@\n",childs);
+                firstLevelNode1.nodeChildren=[self childsObjectTreeNodes:childs Level:level+1];
+            }
+            [result addObject:firstLevelNode1];
+        }
+        return result;
+    }
+    return nil;
+}
+@end

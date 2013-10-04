@@ -7,7 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "ASIDownloadCache.h"
 @interface CacheHelper : NSObject
-+(void)asyncCacheCity;
++(void)cacheCityFromArray:(NSArray*)citys;
++(NSArray*)readCacheCitys;
+
++(void)cacheCaseCategoryFromArray:(NSArray*)categorys;
++(NSArray*)readCacheCaseCategorys;
 @end

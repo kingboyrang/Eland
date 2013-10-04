@@ -11,12 +11,22 @@
 #import "TKSearchTextFieldCell.h"
 #import "TKSearchDoubleFieldCell.h"
 #import "TKSearchCalendarCell.h"
+#import "VillageTownViewController.h"
+#import "CaseCategoryViewController.h"
 @implementation SearchField
 @synthesize cells=_cells;
+@synthesize levevlCaseArgs=_levevlCaseArgs;
 - (void)dealloc{
     [super dealloc];
     [_tableView release],_tableView=nil;
     [_cells release],_cells=nil;
+    [_levevlCaseArgs release],_levevlCaseArgs=nil;
+    if (popoverCity) {
+        [popoverCity release],popoverCity=nil;
+    }
+    if (popoverCategory) {
+        [popoverCategory release],popoverCategory=nil;
+    }
 }
 - (id)initWithFrame:(CGRect)frame
 {
@@ -37,7 +47,11 @@
         
         TKSearchDoubleFieldCell *cell2=[[[TKSearchDoubleFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
         cell2.label.text=@"分類";
+        cell2.leftField.popoverTextField.placeholder=@"請選擇分類";
+        cell2.leftField.delegate=self;
         cell2.rightLabel.text=@"鄉鎮";
+        cell2.rightField.popoverTextField.placeholder=@"請選擇鄉鎮";
+        cell2.rightField.delegate=self;
         
         TKSearchCalendarCell *cell3=[[[TKSearchCalendarCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
         cell3.label.text=@"日期";
@@ -47,8 +61,68 @@
         cell3.startCalendar.datePicker.maximumDate=[NSDate date];
         cell3.endCalendar.datePicker.maximumDate=[NSDate date];
         self.cells=[NSMutableArray arrayWithObjects:cell1,cell2,cell3, nil];
+        
+        if (!_levevlCaseArgs) {
+            _levevlCaseArgs=[[LevelCaseArgs alloc] init];
+        }
     }
     return self;
+}
+-(void)selectedCaseCategory:(CaseCategory*)category{
+    TKSearchDoubleFieldCell *cell=self.cells[1];
+    cell.leftField.popoverTextField.text=category.Name;
+    if (popoverCategory) {
+        [popoverCategory dismissPopoverAnimated:YES];
+    }
+    _levevlCaseArgs.CaseSettingGuid=category.GUID;
+}
+
+-(void)hidePopoverCity{
+    if (popoverCity) {
+        [popoverCity dismissPopoverAnimated:YES];
+    }
+}
+-(void)selectedVillageTown:(CaseCity*)city{
+     TKSearchDoubleFieldCell *cell=self.cells[1];
+     cell.rightField.popoverTextField.text=city.Name;
+    [self hidePopoverCity];
+    _levevlCaseArgs.CityGuid=city.GUID;
+}
+#pragma mark FPPopoverControllerDelegate
+- (void)presentedNewPopoverController:(FPPopoverController *)newPopoverController
+          shouldDismissVisiblePopover:(FPPopoverController*)visiblePopoverController
+{
+    [visiblePopoverController dismissPopoverAnimated:YES];
+    [visiblePopoverController autorelease];
+}
+#pragma mark -
+#pragma mark CVUIPopoverTextDelegate Methods
+-(void)doneShowPopoverView:(id)sender senderView:(id)view{
+    TKSearchDoubleFieldCell *cell=self.cells[1];
+    if (cell.leftField==sender) {
+        if (!popoverCategory) {
+            CaseCategoryViewController *controller=[[[CaseCategoryViewController alloc] init] autorelease];
+            controller.delegate=self;
+            popoverCategory = [[FPPopoverController alloc] initWithViewController:controller];
+            popoverCategory.tint=FPPopoverLightGrayTint;
+            popoverCategory.contentSize = CGSizeMake(300, 300);
+            popoverCategory.arrowDirection = FPPopoverArrowDirectionAny;
+        }
+        [popoverCategory presentPopoverFromView:view];
+    }
+    if(cell.rightField==sender)
+    {
+        if (!popoverCity) {
+            VillageTownViewController *controller=[[[VillageTownViewController alloc] init] autorelease];
+            controller.delegate=self;
+            popoverCity = [[FPPopoverController alloc] initWithViewController:controller];
+            popoverCity.tint=FPPopoverLightGrayTint;
+            popoverCity.contentSize = CGSizeMake(200, 300);
+            popoverCity.arrowDirection = FPPopoverArrowDirectionAny;
+        }
+        [popoverCity presentPopoverFromView:view];
+        //[popoverCity presentPopoverFromView:view containerView:self];
+    }
 }
 #pragma mark -
 #pragma mark UITableViewDataSource Methods

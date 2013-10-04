@@ -48,7 +48,7 @@
 }
 #pragma mark -
 #pragma mark CVUIPopoverTextDelegate Methods
--(void)doneShowPopoverView{
+-(void)doneShowPopoverView:(id)sender senderView:(id)view{
     if (self.popoverView) {
         [self.popoverView show:self];
     }

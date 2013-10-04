@@ -51,11 +51,12 @@
     [self addChildViewController:_push];
     [self addChildViewController:_business];
     /***
-    NSString *path=[DocumentPath stringByAppendingPathComponent:@"back.png"];
-    UIImage *image=[[UIImage imageNamed:@"back.png"] imageByScalingProportionallyToSize:CGSizeMake(116*35/49, 35)];
+    NSString *path=[DocumentPath stringByAppendingPathComponent:@"Close.png"];
+    UIImage *image=[[UIImage imageNamed:@"Open.png"] imageRotatedByDegrees:-90];
     [image saveImage:path];
     NSLog(@"path=%@\n",path);
      ***/
+    
 }
 - (void)handChangePageIndex:(int)index{
     [_menuBar setSelectedItemIndex:index];

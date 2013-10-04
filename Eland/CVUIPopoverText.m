@@ -25,7 +25,7 @@
         //设置按钮
         buttonTap=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
         buttonTap.backgroundColor=[UIColor clearColor];
-        [buttonTap addTarget:self action:@selector(buttonChooseClick) forControlEvents:UIControlEventTouchUpInside];
+        [buttonTap addTarget:self action:@selector(buttonChooseClick:) forControlEvents:UIControlEventTouchUpInside];
         
         [self addSubview:self.popoverTextField];
         [self addSubview:buttonTap];
@@ -45,9 +45,9 @@
     self.popoverTextField.frame=frame;
     buttonTap.frame=frame;
 }
--(void)buttonChooseClick{
-    if (self.delegate&&[self.delegate respondsToSelector:@selector(doneShowPopoverView)]) {
-        [self.delegate doneShowPopoverView];
+-(void)buttonChooseClick:(id)sender{
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(doneShowPopoverView:senderView:)]) {
+        [self.delegate doneShowPopoverView:self senderView:sender];
     }
 }
 

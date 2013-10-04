@@ -7,10 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface SearchField : UIView<UITableViewDataSource,UITableViewDelegate>{
+#import "FPPopoverController.h"
+#import "CVUIPopoverText.h"
+#import "CaseCity.h"
+#import "CaseCategory.h"
+#import "LevelCaseArgs.h"
+@interface SearchField : UIView<UITableViewDataSource,UITableViewDelegate,CVUIPopoverTextDelegate,FPPopoverControllerDelegate>{
 @private
     UITableView *_tableView;
+    FPPopoverController *popoverCity;
+    FPPopoverController *popoverCategory;
 }
 @property (nonatomic,strong) NSMutableArray *cells;
+@property(nonatomic,strong) LevelCaseArgs *levevlCaseArgs;
+-(void)hidePopoverCity;
+-(void)selectedVillageTown:(CaseCity*)city;
+-(void)selectedCaseCategory:(CaseCategory*)category;
 @end

@@ -10,7 +10,7 @@
 
 @protocol CVUIPopoverTextDelegate <NSObject>
 @optional
--(void)doneShowPopoverView;
+-(void)doneShowPopoverView:(id)sender senderView:(id)view;
 @end
 
 @interface CVUIPopoverText : UIView{

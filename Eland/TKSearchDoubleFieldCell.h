@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "TKSearchLabelCell.h"
-#import "EMKeyboardBarTextField.h"
-@interface TKSearchDoubleFieldCell : TKSearchLabelCell<UITextFieldDelegate>
-@property (nonatomic,strong) EMKeyboardBarTextField *leftField;
-@property (nonatomic,strong) EMKeyboardBarTextField *rightField;
+#import "CVUIPopoverText.h"
+@interface TKSearchDoubleFieldCell : TKSearchLabelCell
+@property (nonatomic,strong) CVUIPopoverText *leftField;
+@property (nonatomic,strong) CVUIPopoverText *rightField;
 @property (nonatomic,strong) UILabel *rightLabel;
 @end

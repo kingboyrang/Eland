@@ -34,7 +34,7 @@
 // 取得指定的項目設定 - GET
 #define SingleCaseSettingURL @"http://192.168.123.134/Cases.Admin/WebServices/CaseSetting.aspx?action=2&guid=%@"
 // 取得设定的所有類別 - GET
-#define CaseCategoryURL @"http://192.168.123.134/Cases.Admin/WebServices/CaseCategory.aspx?guid=%@"
+#define CaseCategoryURL @"http://192.168.123.134/Cases.Admin/WebServices/CaseCategory.aspx"
 // 查询项目 - POST
 #define CaseSearchURL @"http://192.168.123.134/Cases.Admin/WebServices/CaseSearch.aspx"
 // 取得项目 - GET

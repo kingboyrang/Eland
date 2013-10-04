@@ -14,7 +14,8 @@
 #import "ZAActivityBar.h"
 #import "ServiceHelper.h"
 #import "PushToken.h"
-#import "CacheHelper.h"
+#import "NetWorkConnection.h"
+#import "asyncHelper.h"
 @implementation AppDelegate
 @synthesize hasConnect;
 @synthesize isLandscape;
@@ -51,12 +52,17 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(detectShowOrientation) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
     //a2dce1 3bafb9
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTintColor:[UIColor colorFromHexRGB:@"5cc2cb"]];
+    //检测是否有网络
+    [[NetWorkConnection sharedInstance] dynamicListenerNetwork:^(NetworkStatus status, BOOL isConnection) {
+        self.hasConnect=isConnection;
+    }];
+    
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
     [self initParams];
-    //[CacheHelper asyncCacheCity];
+    //[asyncHelper asyncLoadCaseCategory:nil];
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     UserSet *user=[UserSet sharedInstance];
     if (!user.isReadPrivacy) {
