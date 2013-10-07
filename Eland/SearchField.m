@@ -102,10 +102,13 @@
     _levevlCaseArgs.BApplyDate=cell2.startCalendar.popoverText.popoverTextField.text;
     _levevlCaseArgs.EApplyDate=cell2.endCalendar.popoverText.popoverTextField.text;
     
+     return [_levevlCaseArgs XmlSerialize];
+    /***
     NSString *result=[_levevlCaseArgs XmlSerialize];
     result=[result stringByReplacingOccurrencesOfString:@"<" withString:@"&lt;"];
     result=[result stringByReplacingOccurrencesOfString:@">" withString:@"&gt;"];
     return result;
+     ***/
 }
 #pragma mark FPPopoverControllerDelegate
 - (void)presentedNewPopoverController:(FPPopoverController *)newPopoverController

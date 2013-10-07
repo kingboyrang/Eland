@@ -17,6 +17,7 @@
 #import "ShakingAlertView.h"
 #import "CaseDetailViewController.h"
 #import "ASIFormDataRequest.h"
+#import "WBSuccessNoticeView.h"
 @interface CaseSearchViewController (){
     SearchField *_searchField;
 }
@@ -50,7 +51,7 @@
     _searchField.autoresizingMask=UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:_searchField];
     
-    _tableView =[[PullingRefreshTableView alloc] initWithFrame:CGRectMake(0, h, self.view.bounds.size.width,self.view.bounds.size.height-h) pullingDelegate:self];
+    _tableView =[[PullingRefreshTableView alloc] initWithFrame:CGRectMake(0, h, self.view.bounds.size.width,self.view.bounds.size.height-h-44*2-44) pullingDelegate:self];
     _tableView.dataSource=self;
     _tableView.delegate=self;
     _tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
@@ -138,25 +139,23 @@
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     [request setPostValue:[_searchField searchArgs] forKey:@"xml"];
-     NSLog(@"param=%@\n",[_searchField searchArgs]);
-    //ASIHTTPRequest *request=[ASIHTTPRequest requestWithURL:url];
-    //[request addRequestHeader:@"xml" value:[_searchField searchArgs]];
     [request setRequestMethod:@"POST"];
-    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
     [request setCompletionBlock:^{
-         NSLog(@"xml=%@\n",request.responseString);
+        if(request.responseStatusCode!=200){
+            [_tableView tableViewDidFinishedLoading];
+            _tableView.reachedTheEnd  = NO;
+            _searchField.levevlCaseArgs.Pager.PageNumber--;
+            WBInfoNoticeView *info=[WBInfoNoticeView infoNoticeInView:self.view title:@"服務沒有返回數據!"];
+            [info show];
+            return;
+        }
         NSString *xmlStr=[request.responseString stringByReplacingOccurrencesOfString:@"xmlns=\"LevelCase[]\"" withString:@""];
         NSArray *strArr=[xmlStr componentsSeparatedByString:@"<;>"];
         NSString *xml=[strArr objectAtIndex:1];
-        
-       
         int itemCount=[strArr[0] intValue];
         _searchField.levevlCaseArgs.Pager.TotalItemsCount=itemCount;
         if (self.refreshing) {
             self.refreshing = NO;
-            if (self.list) {
-                [self.list removeAllObjects];
-            }
         }
         if (_searchField.levevlCaseArgs.Pager.PageNumber>=_searchField.levevlCaseArgs.Pager.TotalPageCount) {
             [_tableView tableViewDidFinishedLoadingWithMessage:@"沒有了哦..."];
@@ -166,7 +165,6 @@
             _tableView.reachedTheEnd  = NO;
             XmlParseHelper *parse=[[[XmlParseHelper alloc] initWithData:xml] autorelease];
             NSArray *result=[parse selectNodes:@"//LevelCase" className:@"LevelCase"];
-            
             if (_searchField.levevlCaseArgs.Pager.PageNumber==1) {
                 self.list=[NSMutableArray arrayWithArray:result];
                 [_tableView reloadData];
@@ -182,7 +180,8 @@
                 [_tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationFade];
                 [_tableView endUpdates];
             }
-            
+            WBSuccessNoticeView *successView=[WBSuccessNoticeView successNoticeInView:self.view title:[NSString stringWithFormat:@"當前更新%d數據!",result.count]];
+            [successView show];
         }
         //
        
