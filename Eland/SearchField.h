@@ -19,7 +19,8 @@
     FPPopoverController *popoverCategory;
 }
 @property (nonatomic,strong) NSMutableArray *cells;
-@property(nonatomic,strong) LevelCaseArgs *levevlCaseArgs;
+@property (nonatomic,strong) LevelCaseArgs *levevlCaseArgs;
+@property (nonatomic,readonly) NSString *searchArgs;
 -(void)hidePopoverCity;
 -(void)selectedVillageTown:(CaseCity*)city;
 -(void)selectedCaseCategory:(CaseCategory*)category;

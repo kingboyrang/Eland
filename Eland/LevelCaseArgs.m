@@ -8,21 +8,20 @@
 
 #import "LevelCaseArgs.h"
 
-
+@interface LevelCaseArgs ()
+-(NSString*)propertyToNode:(NSString*)field nodeName:(NSString*)name;
+@end
 
 @implementation LevelCaseArgs
 -(NSString*)XmlSerialize{
     NSMutableString *xml=[NSMutableString stringWithFormat:@"<?xml version=\"1.0\"?>"];
     [xml appendString:@"<LevelCaseArgs xmlns=\"LevelCaseArgs\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"];
    [xml appendString:[self toXmlString]];
-    
-    [xml appendFormat:@"<GUID>%@</GUID>",[self getPropertyValue:_GUID]];
-    [xml appendFormat:@"<Level>%@</Level>",[self getPropertyValue:_Level]];
-    [xml appendFormat:@"<CaseSettingGuid>%@</CaseSettingGuid>",[self getPropertyValue:_CaseSettingGuid]];
-    [xml appendFormat:@"<CityGuid>%@</CityGuid>",[self getPropertyValue:_CityGuid]];
-    [xml appendFormat:@"<Nick>%@</Nick>",[self getPropertyValue:_Nick]];
-    [xml appendFormat:@"<Status>%@</Status>",[self getPropertyValue:_Status]];
-    
+    [xml appendString:[self propertyToNode:_GUID nodeName:@"GUID"]];
+    [xml appendString:[self propertyToNode:_Level nodeName:@"Level"]];
+    [xml appendString:[self propertyToNode:_CaseSettingGuid nodeName:@"CaseSettingGuid"]];
+    [xml appendString:[self propertyToNode:_CityGuid nodeName:@"CityGuid"]];
+    [xml appendString:[self propertyToNode:_Nick nodeName:@"Nick"]];
     if (_BApplyDate==nil) {
         [xml appendString:@"<BApplyDate xsi:nil=\"true\"/>"];
     }else{
@@ -35,5 +34,12 @@
     }
     [xml appendString:@"</LevelCaseArgs>"];
     return xml;
+}
+-(NSString*)propertyToNode:(NSString*)field nodeName:(NSString*)name{
+    NSString *str=[self getPropertyValue:field];
+    if ([str length]==0) {
+        return @"";
+    }
+    return [NSString stringWithFormat:@"<%@>%@</%@>",name,str,name];
 }
 @end

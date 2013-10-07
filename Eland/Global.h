@@ -22,6 +22,7 @@
 //设备
 #define DeviceIsPad UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad
 
+//通知post name
 #define kPushNotificeName @"kPushNotificeNameInfo"
 
 

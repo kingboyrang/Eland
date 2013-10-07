@@ -15,4 +15,5 @@
 -(NSMutableArray*)childsObjectTreeNodes:(NSMutableArray*)source Level:(int)level;
 
 -(NSMutableArray*)sourceTreeNodes;
++(NSString*)getCategoryName:(NSString*)guid;
 @end

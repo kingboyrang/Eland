@@ -25,5 +25,6 @@
  @return The newly created success notice object.
  */
 + (WBSuccessNoticeView *)successNoticeInView:(UIView *)view title:(NSString *)title;
++ (WBSuccessNoticeView *)successNoticeInView:(UIView *)view title:(NSString *)title dismiss:(void (^)(BOOL dismissedInteractively))block;
 
 @end

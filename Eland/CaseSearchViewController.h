@@ -7,7 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface CaseSearchViewController : UIViewController
+#import "PullingRefreshTableView.h"
+#import "LevelCaseArgs.h"
+#import "LevelCase.h"
+@interface CaseSearchViewController : UIViewController<PullingRefreshTableViewDelegate,UITableViewDataSource,UITableViewDelegate>
+{
+  @private
+    PullingRefreshTableView *_tableView;
+}
+@property (nonatomic) BOOL refreshing;
+@property (nonatomic,strong) NSMutableArray *list;
 -(void)relayout:(BOOL)isLand;
-
+-(void)loadingSource;
+-(void)showAlterViewPassword:(LevelCase*)entity success:(void (^)(void))completed;
 @end

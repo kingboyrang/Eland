@@ -13,6 +13,7 @@
 #import "UIImage+TPCategory.h"
 @interface IndexViewController (){
     MenuBar *_menuBar;
+    CaseSearchViewController *_caseSearch;
 }
 - (void)addSearch:(int)tag;
 @end
@@ -21,6 +22,7 @@
 -(void)dealloc{
     [super dealloc];
     [_menuBar release],_menuBar=nil;
+    [_caseSearch release],_caseSearch=nil;
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -43,7 +45,7 @@
     [self.view addSubview:_menuBar];
     
    RepairItemViewController *_repair=[[RepairItemViewController alloc] init];
-   CaseSearchViewController *_caseSearch=[[CaseSearchViewController alloc] init];
+   _caseSearch=[[CaseSearchViewController alloc] init];
    PushViewController *_push=[[PushViewController alloc] init];
    BusinessAreaViewController *_business=[[BusinessAreaViewController alloc] init];
     [self addChildViewController:_repair];
@@ -60,9 +62,15 @@
 }
 - (void)handChangePageIndex:(int)index{
     [_menuBar setSelectedItemIndex:index];
+    if (index==1) {
+        [_caseSearch loadingSource];
+    }
 }
 -(void)selectedMenuItemIndex:(int)index{
     [self changePageIndex:index];
+    if (index==1) {
+        [_caseSearch loadingSource];
+    }
 }
 - (void)addSearch:(int)tag{
     if (tag==1) {

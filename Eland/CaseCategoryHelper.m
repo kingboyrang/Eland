@@ -9,6 +9,7 @@
 #import "CaseCategoryHelper.h"
 #import "CaseCategory.h"
 #import "TreeViewNode.h"
+#import "CacheHelper.h"
 @implementation CaseCategoryHelper
 -(NSMutableArray*)sourceTreeNodes{
     CaseCategory *item=[[[CaseCategory alloc] init] autorelease];
@@ -65,5 +66,19 @@
         return result;
     }
     return nil;
+}
++(NSString*)getCategoryName:(NSString*)guid{
+    NSArray *arr=[CacheHelper readCacheCaseCategorys];
+    if (arr==nil||[arr count]==0) {
+        return @"";
+    }
+    NSString *match=[NSString stringWithFormat:@"SELF.GUID =='%@'",guid];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:match];
+    NSArray *results = [arr filteredArrayUsingPredicate:predicate];
+    if (results&&[results count]>0) {
+        CaseCategory *item=[results objectAtIndex:0];
+        return item.Name;
+    }
+   return @"";
 }
 @end

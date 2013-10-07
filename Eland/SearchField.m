@@ -16,6 +16,7 @@
 @implementation SearchField
 @synthesize cells=_cells;
 @synthesize levevlCaseArgs=_levevlCaseArgs;
+@synthesize searchArgs;
 - (void)dealloc{
     [super dealloc];
     [_tableView release],_tableView=nil;
@@ -64,6 +65,11 @@
         
         if (!_levevlCaseArgs) {
             _levevlCaseArgs=[[LevelCaseArgs alloc] init];
+            _levevlCaseArgs.Pager=[[Pager alloc] init];
+            _levevlCaseArgs.Pager.PageNumber=0;
+            _levevlCaseArgs.Pager.PageSize=10;
+            _levevlCaseArgs.Pager.TotalItemsCount=0;
+            _levevlCaseArgs.Pager.TotalPageCount=0;
         }
     }
     return self;
@@ -87,6 +93,19 @@
      cell.rightField.popoverTextField.text=city.Name;
     [self hidePopoverCity];
     _levevlCaseArgs.CityGuid=city.GUID;
+}
+-(NSString*)searchArgs{
+    TKSearchTextFieldCell *cell1=self.cells[0];
+    _levevlCaseArgs.GUID=cell1.field.text;
+    
+    TKSearchCalendarCell *cell2=self.cells[2];
+    _levevlCaseArgs.BApplyDate=cell2.startCalendar.popoverText.popoverTextField.text;
+    _levevlCaseArgs.EApplyDate=cell2.endCalendar.popoverText.popoverTextField.text;
+    
+    NSString *result=[_levevlCaseArgs XmlSerialize];
+    result=[result stringByReplacingOccurrencesOfString:@"<" withString:@"&lt;"];
+    result=[result stringByReplacingOccurrencesOfString:@">" withString:@"&gt;"];
+    return result;
 }
 #pragma mark FPPopoverControllerDelegate
 - (void)presentedNewPopoverController:(FPPopoverController *)newPopoverController

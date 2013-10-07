@@ -43,6 +43,10 @@ typedef enum WBNoticeViewSlidingMode {
 /**
  The view from which the notice will be displayed.
  */
+@property(nonatomic, strong) UIView *gradientView;
+/**
+ The view from which the notice will be displayed.
+ */
 @property (nonatomic, weak) UIView *view;
 
 /**

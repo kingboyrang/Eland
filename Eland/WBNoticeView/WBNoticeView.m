@@ -15,7 +15,7 @@
 
 @property(nonatomic, strong) UILabel *titleLabel;
 @property(nonatomic, strong) UILabel *messageLabel;
-@property(nonatomic, strong) UIView *gradientView;
+
 @property(nonatomic, assign, getter = isObserving) BOOL observing;
 @property(nonatomic, assign) CGFloat hiddenYOrigin;
 @property(nonatomic, strong) WBNoticeView *currentNotice;
