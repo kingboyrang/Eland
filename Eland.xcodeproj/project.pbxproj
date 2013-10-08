@@ -113,6 +113,10 @@
 		01B38F9F17FBF1E90011EE56 /* TKSearchCalendarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B38F9E17FBF1E80011EE56 /* TKSearchCalendarCell.m */; };
 		01B38FA317FC0B5B0011EE56 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 01B38FA217FC0B5A0011EE56 /* back.png */; };
 		01B38FA617FC114D0011EE56 /* BasicNagigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B38FA517FC114B0011EE56 /* BasicNagigationController.m */; };
+		01B398791803F03700DACB9A /* gps_abnormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 01B398751803F03600DACB9A /* gps_abnormal.png */; };
+		01B3987A1803F03700DACB9A /* gps_noraml.png in Resources */ = {isa = PBXBuildFile; fileRef = 01B398761803F03700DACB9A /* gps_noraml.png */; };
+		01B3987B1803F03700DACB9A /* net_abnormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 01B398771803F03700DACB9A /* net_abnormal.png */; };
+		01B3987C1803F03700DACB9A /* net_noraml.png in Resources */ = {isa = PBXBuildFile; fileRef = 01B398781803F03700DACB9A /* net_noraml.png */; };
 		01B448A917F902D4004B3A6C /* AboutScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B448A817F902D4004B3A6C /* AboutScrollView.m */; };
 		01B448B117F94EEA004B3A6C /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B448AE17F94EEA004B3A6C /* UIAlertView+Blocks.m */; };
 		01B448B217F94EEA004B3A6C /* RIButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B448B017F94EEA004B3A6C /* RIButtonItem.m */; };
@@ -394,6 +398,10 @@
 		01B38FA217FC0B5A0011EE56 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		01B38FA417FC11490011EE56 /* BasicNagigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicNagigationController.h; sourceTree = "<group>"; };
 		01B38FA517FC114B0011EE56 /* BasicNagigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicNagigationController.m; sourceTree = "<group>"; };
+		01B398751803F03600DACB9A /* gps_abnormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gps_abnormal.png; sourceTree = "<group>"; };
+		01B398761803F03700DACB9A /* gps_noraml.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gps_noraml.png; sourceTree = "<group>"; };
+		01B398771803F03700DACB9A /* net_abnormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = net_abnormal.png; sourceTree = "<group>"; };
+		01B398781803F03700DACB9A /* net_noraml.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = net_noraml.png; sourceTree = "<group>"; };
 		01B448A717F902D4004B3A6C /* AboutScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutScrollView.h; sourceTree = "<group>"; };
 		01B448A817F902D4004B3A6C /* AboutScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutScrollView.m; sourceTree = "<group>"; };
 		01B448AD17F94EEA004B3A6C /* UIAlertView+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Blocks.h"; sourceTree = "<group>"; };
@@ -1119,6 +1127,10 @@
 		01B5A60E17DFF5110076738C /* images */ = {
 			isa = PBXGroup;
 			children = (
+				01B398751803F03600DACB9A /* gps_abnormal.png */,
+				01B398761803F03700DACB9A /* gps_noraml.png */,
+				01B398771803F03700DACB9A /* net_abnormal.png */,
+				01B398781803F03700DACB9A /* net_noraml.png */,
 				26A587EA17F81CB500850DED /* search.png */,
 				26A587E817F81BC300850DED /* search@2x.png */,
 				26A5878B17F7E74400850DED /* RepairItem */,
@@ -1505,6 +1517,10 @@
 				01A563D818024DE7004149BA /* icon-info.png in Resources */,
 				01A563D918024DE7004149BA /* icon-info@2x.png in Resources */,
 				01A563E618027E6C004149BA /* cell_title.png in Resources */,
+				01B398791803F03700DACB9A /* gps_abnormal.png in Resources */,
+				01B3987A1803F03700DACB9A /* gps_noraml.png in Resources */,
+				01B3987B1803F03700DACB9A /* net_abnormal.png in Resources */,
+				01B3987C1803F03700DACB9A /* net_noraml.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

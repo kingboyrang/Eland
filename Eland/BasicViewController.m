@@ -10,11 +10,16 @@
 #import "WBErrorNoticeView.h"
 #import "WBSuccessNoticeView.h"
 #import "UIColor+TPCategory.h"
+#import "AppDelegate.h"
 @interface BasicViewController (){
     AnimateLoadView *_loadView;
     AnimateErrorView *_errorView;
+    UIButton *_gpsButton;
+    UIButton *_netButton;
 }
--(void)detectShowOrientation;
+- (void)detectShowOrientation;
+- (void)updateNetworkImage:(BOOL)isBoo;
+- (void)addCheckBarButton;
 @end
 
 @implementation BasicViewController
@@ -29,7 +34,15 @@
     if(_errorView){
         [_errorView release],_errorView=nil;
     }
+    if(_gpsButton){
+        [_gpsButton release],_gpsButton=nil;
+    }
+    if(_netButton){
+        [_netButton release],_netButton=nil;
+    }
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+     AppDelegate *delegated=[[UIApplication sharedApplication] delegate];
+    [delegated removeObserver:self forKeyPath:@"hasConnect"];
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -43,27 +56,59 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     self.view.backgroundColor=[UIColor colorFromHexRGB:@"F1F4F2"];
-    //网络检测
-    [[UIApplication sharedApplication] addObserver:self forKeyPath:@"hasConnect" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
+    [self addCheckBarButton];
     //横竖屏检测
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(detectShowOrientation) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
+    //网络检测
+    AppDelegate *delegated=[[UIApplication sharedApplication] delegate];
+    [delegated addObserver:self forKeyPath:@"hasConnect" options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:nil];
 	// Do any additional setup after loading the view.
 }
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (void)addCheckBarButton{
+    UIView *custom=[[UIView alloc] initWithFrame:CGRectZero];
+    custom.backgroundColor=[UIColor clearColor];
+    //gps
+    UIImage *gpsImage=[UIImage imageNamed:@"gps_noraml.png"];
+    _gpsButton=[[UIButton buttonWithType:UIButtonTypeCustom] retain];
+    _gpsButton.frame=CGRectMake(0, 0, 35, 35);
+    [_gpsButton setImage:gpsImage forState:UIControlStateNormal];
+    [_gpsButton setImage:[UIImage imageNamed:@"gps_abnormal.png"] forState:UIControlStateSelected];
+    [custom addSubview:_gpsButton];
+    //net
+    _netButton=[[UIButton buttonWithType:UIButtonTypeCustom] retain];
+    _netButton.frame=CGRectMake(_gpsButton.frame.size.width, 0, 35, 35);
+    [_netButton setImage:[UIImage imageNamed:@"net_noraml.png"] forState:UIControlStateNormal];
+    [_netButton setImage:[UIImage imageNamed:@"net_abnormal.png"] forState:UIControlStateSelected];
+    [custom addSubview:_netButton];
+    //frame
+    custom.frame=CGRectMake(0,(44-_netButton.frame.size.height)/2.0, _netButton.frame.size.width*2, _netButton.frame.size.height);
+    
+    UIBarButtonItem *rightBtn=[[UIBarButtonItem alloc] initWithCustomView:custom];
+    self.navigationItem.rightBarButtonItem=rightBtn;
+    [custom release];
+    [rightBtn release];
+}
+- (void)updateNetworkImage:(BOOL)isBoo{
+   
+    if (isBoo) {
+        _netButton.selected=NO;
+    }else{
+        _netButton.selected=YES;
+    }
+   
+    
+}
 #pragma mark 横竖屏检测
 -(void)detectShowOrientation{
     if ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeLeft ||[UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeRight){//
-        //NSLog(@"videolist 横屏");
         _isLandscape=YES;
     }else{//
-        //NSLog(@"videoList 竖屏");
         _isLandscape=NO;
     }
 }
@@ -92,9 +137,11 @@
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
    if([keyPath isEqualToString:@"hasConnect"])
    {
-       if (![[change objectForKey:@"new"] isEqualToString:[change objectForKey:@"old"]]) {
-           NSNumber *number=[change objectForKey:@"new"];
-           _hasNetwork=[number boolValue];
+       NSNumber *number1=[change objectForKey:@"new"];
+       NSNumber *number2=[change objectForKey:@"old"];
+       if ([number1 boolValue]!=[number2 boolValue]) {
+           _hasNetwork=[number1 boolValue];
+           [self updateNetworkImage:_hasNetwork];
        }
    }
 }

@@ -85,14 +85,14 @@
     //重设可见视图大小 
     UIView *transitionView =[[self.view subviews] objectAtIndex:0];
     CGRect frame=transitionView.frame;
-    frame.size.height=ScreenHeight-TABRHEIGHT-STATUSBARHEIGHT;
+    frame.size.height=ScreenHeight-TABRHEIGHT;
     frame.size.width=ScreenWidth;
     transitionView.frame=frame;
 }
 
 //创建自定义tabBar
 - (void)_initTabbarView {
-    _tabbarView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-TABRHEIGHT-STATUSBARHEIGHT, ScreenWidth, TABRHEIGHT)];
+    _tabbarView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-TABRHEIGHT, ScreenWidth, TABRHEIGHT)];
     _tabbarView.backgroundColor=[UIColor colorFromHexRGB:@"272727"];
     _tabbarView.autoresizesSubviews=YES;
     _tabbarView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleTopMargin;
@@ -209,11 +209,11 @@
         
     }else{
         CGRect frame=_tabbarView.frame;
-        frame.origin.y=ScreenHeight-TABRHEIGHT-STATUSBARHEIGHT;
+        frame.origin.y=ScreenHeight-TABRHEIGHT;
         frame.size.width=ScreenWidth;
         _tabbarView.frame=frame;
         
-        transitionViewH=ScreenHeight-TABRHEIGHT-STATUSBARHEIGHT;
+        transitionViewH=ScreenHeight-TABRHEIGHT;
         transitionViewW=ScreenWidth;
         
     }

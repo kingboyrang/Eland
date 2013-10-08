@@ -45,6 +45,8 @@
     }
 }
 -(void)initParams{
+    
+    
     [ZAActivityBar setLocationTabBar];
     [self registerAPNS];
     self.isLandscape=NO;
@@ -60,7 +62,7 @@
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
+    //[application setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     [self initParams];
     //[asyncHelper asyncLoadCaseCategory:nil];
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];

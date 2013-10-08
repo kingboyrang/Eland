@@ -41,8 +41,8 @@
     return self;
 }
 -(void)loadControls{
-    //CGFloat w=40*150/58,h=40;
-    CGFloat h=self.bounds.size.height,w=140*h/58;//w*58/140
+    CGFloat w=DeviceWidth/4.0,h=40;
+    //CGFloat h=self.bounds.size.height,w=140*h/58;//w*58/140
     if (DeviceIsPad) {
         w=150;
         h=58;
