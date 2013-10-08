@@ -8,20 +8,35 @@
 
 #import "TPSearchCell.h"
 #import "CircularDetail.h"
+#import "SearchDetail.h"
+#import "UIColor+TPCategory.h"
 @implementation TPSearchCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        /***
         CircularDetail *detail=[[CircularDetail alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, 119)];
         detail.autoresizesSubviews=YES;
         detail.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         detail.tag=100;
         [self.contentView addSubview:detail];
         [detail release];
-        self.selectionStyle=UITableViewCellSelectionStyleNone;
-        self.backgroundColor=[UIColor clearColor];
+         ***/
+        
+        SearchDetail *detail=[[SearchDetail alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, 62)];
+        detail.autoresizesSubviews=YES;
+        detail.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        detail.tag=100;
+        [self.contentView addSubview:detail];
+        [detail release];
+        self.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+       
+        UIView *bgView = [[UIView alloc] init];
+        bgView.backgroundColor = [UIColor colorFromHexRGB:@"f4f4f4"];
+        self.backgroundView = bgView;
+        [bgView release];
 
     }
     return self;

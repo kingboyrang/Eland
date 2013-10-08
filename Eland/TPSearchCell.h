@@ -10,5 +10,5 @@
 #import "LevelCase.h"
 @interface TPSearchCell : UITableViewCell
 -(void)setDataSource:(LevelCase*)entity;
--(void)selectedCellAnimal:(void (^)(void))completed;
+//-(void)selectedCellAnimal:(void (^)(void))completed;
 @end

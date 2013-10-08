@@ -22,5 +22,5 @@
      ***/
 }
 -(void)selectedMenuItemIndex:(int)index;
-- (void)handChangePageIndex:(int)index;
+//- (void)handChangePageIndex:(int)index;
 @end

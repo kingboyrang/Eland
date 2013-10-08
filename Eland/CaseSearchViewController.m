@@ -23,6 +23,7 @@
 }
 -(void)loadData;
 -(void)showFailedPasswordAlert:(LevelCase*)entity failure:(void (^)(void))failed;
+-(void)buttonSearch;
 @end
 
 @implementation CaseSearchViewController
@@ -46,23 +47,29 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    CGFloat h=44*3;
+    CGFloat h=44*4;
     _searchField=[[SearchField alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, h)];
     _searchField.autoresizingMask=UIViewAutoresizingFlexibleWidth;
+    [_searchField.buttonCell.button addTarget:self action:@selector(buttonSearch) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_searchField];
     
     _tableView =[[PullingRefreshTableView alloc] initWithFrame:CGRectMake(0, h, self.view.bounds.size.width,self.view.bounds.size.height-h-44*2-44) pullingDelegate:self];
     _tableView.dataSource=self;
     _tableView.delegate=self;
-    _tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
+    //_tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
     //_tableView.backgroundColor=[UIColor colorWithRed:243/255.0 green:239/255.0 blue:228/255.0 alpha:1.0];
     [self.view addSubview:_tableView];
     
      //self.view.backgroundColor=[UIColor colorWithRed:243/255.0 green:239/255.0 blue:228/255.0 alpha:1.0];
 	// Do any additional setup after loading the view.
 }
+//查询
+-(void)buttonSearch{
+    [_searchField resetLoadingSearch];
+    [_tableView launchRefreshing];
+}
 -(void)relayout:(BOOL)isLand{
-
+   
 }
 -(void)loadingSource{
     if (_searchField.levevlCaseArgs.Pager.PageNumber==0){
@@ -114,22 +121,21 @@
 #pragma mark - Table view delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 129;
+    return 62;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    TPSearchCell *cell=(TPSearchCell*)[tableView cellForRowAtIndexPath:indexPath];
-    [cell selectedCellAnimal:^{
-        LevelCase *entity=(LevelCase*)[self.list objectAtIndex:indexPath.row];
-        [self showAlterViewPassword:entity success:^{
-            //表示成功了
-            CaseDetailViewController *detail=[[CaseDetailViewController alloc] init];
-            detail.itemCase=entity;
-            [self.navigationController pushViewController:detail animated:YES];
-            [detail release];
-        }];
+    //TPSearchCell *cell=(TPSearchCell*)[tableView cellForRowAtIndexPath:indexPath];
+    LevelCase *entity=(LevelCase*)[self.list objectAtIndex:indexPath.row];
+    [self showAlterViewPassword:entity success:^{
+        //表示成功了
+        CaseDetailViewController *detail=[[CaseDetailViewController alloc] init];
+        detail.itemCase=entity;
+        [self.navigationController pushViewController:detail animated:YES];
+        [detail release];
     }];
+    //[cell selectedCellAnimal:^{}];
 }
 #pragma mark -
 #pragma mark 加载数据

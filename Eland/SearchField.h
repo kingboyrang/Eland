@@ -12,6 +12,7 @@
 #import "CaseCity.h"
 #import "CaseCategory.h"
 #import "LevelCaseArgs.h"
+#import "TKSearchButtonCell.h"
 @interface SearchField : UIView<UITableViewDataSource,UITableViewDelegate,CVUIPopoverTextDelegate,FPPopoverControllerDelegate>{
 @private
     UITableView *_tableView;
@@ -21,7 +22,9 @@
 @property (nonatomic,strong) NSMutableArray *cells;
 @property (nonatomic,strong) LevelCaseArgs *levevlCaseArgs;
 @property (nonatomic,readonly) NSString *searchArgs;
+@property (nonatomic,strong) TKSearchButtonCell *buttonCell;
 -(void)hidePopoverCity;
 -(void)selectedVillageTown:(CaseCity*)city;
 -(void)selectedCaseCategory:(CaseCategory*)category;
+-(void)resetLoadingSearch;
 @end

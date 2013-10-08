@@ -186,6 +186,8 @@
 		26A0ECE517EF2E9B009AF735 /* user_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 26A0ECDD17EF2E9B009AF735 /* user_normal.png */; };
 		26A0ECE617EF2E9B009AF735 /* user_select.png in Resources */ = {isa = PBXBuildFile; fileRef = 26A0ECDE17EF2E9B009AF735 /* user_select.png */; };
 		26A0ECE817EF343F009AF735 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26A0ECE717EF343F009AF735 /* Entitlements.plist */; };
+		26A2F97D1804306200216412 /* TKSearchButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A2F97C1804306200216412 /* TKSearchButtonCell.m */; };
+		26A2F980180437C100216412 /* SearchDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A2F97F180437C100216412 /* SearchDetail.m */; };
 		26A5877117F7C61900850DED /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 26A5877017F7C61900850DED /* logo.png */; };
 		26A5877417F7C6EC00850DED /* UINavigationItem+TPCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A5877317F7C6EC00850DED /* UINavigationItem+TPCategory.m */; };
 		26A5877617F7C8CD00850DED /* Privacy.txt in Resources */ = {isa = PBXBuildFile; fileRef = 26A5877517F7C8CD00850DED /* Privacy.txt */; };
@@ -520,6 +522,10 @@
 		26A0ECDD17EF2E9B009AF735 /* user_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_normal.png; sourceTree = "<group>"; };
 		26A0ECDE17EF2E9B009AF735 /* user_select.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_select.png; sourceTree = "<group>"; };
 		26A0ECE717EF343F009AF735 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
+		26A2F97B1804306100216412 /* TKSearchButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKSearchButtonCell.h; sourceTree = "<group>"; };
+		26A2F97C1804306200216412 /* TKSearchButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKSearchButtonCell.m; sourceTree = "<group>"; };
+		26A2F97E180437C100216412 /* SearchDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchDetail.h; sourceTree = "<group>"; };
+		26A2F97F180437C100216412 /* SearchDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchDetail.m; sourceTree = "<group>"; };
 		26A5877017F7C61900850DED /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		26A5877217F7C6EC00850DED /* UINavigationItem+TPCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationItem+TPCategory.h"; sourceTree = "<group>"; };
 		26A5877317F7C6EC00850DED /* UINavigationItem+TPCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationItem+TPCategory.m"; sourceTree = "<group>"; };
@@ -1050,6 +1056,8 @@
 				01A563E3180263BD004149BA /* TPSearchCell.m */,
 				01A563DD1802600D004149BA /* CircularDetail.h */,
 				01A563DE1802600E004149BA /* CircularDetail.m */,
+				26A2F97E180437C100216412 /* SearchDetail.h */,
+				26A2F97F180437C100216412 /* SearchDetail.m */,
 			);
 			name = ShowCell;
 			sourceTree = "<group>";
@@ -1068,6 +1076,8 @@
 				01B38F8D17FBE7C00011EE56 /* TKSearchDoubleFieldCell.m */,
 				01B38F9D17FBF1E70011EE56 /* TKSearchCalendarCell.h */,
 				01B38F9E17FBF1E80011EE56 /* TKSearchCalendarCell.m */,
+				26A2F97B1804306100216412 /* TKSearchButtonCell.h */,
+				26A2F97C1804306200216412 /* TKSearchButtonCell.m */,
 			);
 			name = Search;
 			sourceTree = "<group>";
@@ -1658,6 +1668,8 @@
 				0138D5D31802ACA500C1FA36 /* NSData+Base64.m in Sources */,
 				0138D5D41802ACA500C1FA36 /* ShakingAlertView.m in Sources */,
 				0138D5D71802BD3000C1FA36 /* ASIFormDataRequest.m in Sources */,
+				26A2F97D1804306200216412 /* TKSearchButtonCell.m in Sources */,
+				26A2F980180437C100216412 /* SearchDetail.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

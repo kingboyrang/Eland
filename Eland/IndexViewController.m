@@ -60,12 +60,14 @@
      ***/
     
 }
+/***
 - (void)handChangePageIndex:(int)index{
     [_menuBar setSelectedItemIndex:index];
     if (index==1) {
         [_caseSearch loadingSource];
     }
 }
+ **/
 -(void)selectedMenuItemIndex:(int)index{
     [self changePageIndex:index];
     if (index==1) {

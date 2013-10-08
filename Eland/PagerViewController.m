@@ -35,11 +35,11 @@
     self.scrollView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     self.scrollView.backgroundColor=[UIColor clearColor];
 	// Do any additional setup after loading the view, typically from a nib.
-	[self.scrollView setPagingEnabled:YES];
-	[self.scrollView setScrollEnabled:YES];
+	[self.scrollView setPagingEnabled:NO];
+	[self.scrollView setScrollEnabled:NO];
 	[self.scrollView setShowsHorizontalScrollIndicator:NO];
 	[self.scrollView setShowsVerticalScrollIndicator:NO];
-	[self.scrollView setDelegate:self];
+	//[self.scrollView setDelegate:self];
     
     self.pageControl=[[UIPageControl alloc] initWithFrame:CGRectMake((self.view.bounds.size.width-200)/2.0, self.view.bounds.size.height-40-5, 200, 30)];
     self.pageControl.hidden=YES;

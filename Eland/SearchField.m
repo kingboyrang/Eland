@@ -61,18 +61,22 @@
         cell3.endCalendar.popoverText.popoverTextField.placeholder=@"結束日期";
         cell3.startCalendar.datePicker.maximumDate=[NSDate date];
         cell3.endCalendar.datePicker.maximumDate=[NSDate date];
-        self.cells=[NSMutableArray arrayWithObjects:cell1,cell2,cell3, nil];
+        
+        _buttonCell=[[TKSearchButtonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        self.cells=[NSMutableArray arrayWithObjects:cell1,cell2,cell3,_buttonCell, nil];
         
         if (!_levevlCaseArgs) {
             _levevlCaseArgs=[[LevelCaseArgs alloc] init];
             _levevlCaseArgs.Pager=[[Pager alloc] init];
-            _levevlCaseArgs.Pager.PageNumber=0;
-            _levevlCaseArgs.Pager.PageSize=10;
-            _levevlCaseArgs.Pager.TotalItemsCount=0;
-            _levevlCaseArgs.Pager.TotalPageCount=0;
+            [self resetLoadingSearch];
         }
     }
     return self;
+}
+-(void)resetLoadingSearch{
+    _levevlCaseArgs.Pager.PageNumber=0;
+    _levevlCaseArgs.Pager.PageSize=10;
+    _levevlCaseArgs.Pager.TotalItemsCount=0;
 }
 -(void)selectedCaseCategory:(CaseCategory*)category{
     TKSearchDoubleFieldCell *cell=self.cells[1];
