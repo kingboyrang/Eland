@@ -11,9 +11,15 @@
 #import "TKButtonLabelCell.h"
 #import "UIColor+TPCategory.h"
 #import "NetWorkConnection.h"
+#import "TKCheckLabelCell.h"
+#import "TKCheckButtonCell.h"
 @interface SystemCheckViewController ()
 - (void)buttonLocation:(id)sender;
 - (void)buttonCompare;
+- (void)addNetSorce;
+- (void)addGpsSorce;
+- (void)checkNetConnection;
+- (void)checkGPSConnection;
 @end
 
 @implementation SystemCheckViewController
@@ -34,7 +40,35 @@
     }
     return self;
 }
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
 
+    [self checkNetConnection];
+    [self checkGPSConnection];
+    
+}
+- (void)checkNetConnection{
+    BOOL is3G=[NetWorkConnection IsEnable3G];
+    TKCheckLabelCell *cell1=(TKCheckLabelCell*)self.checkcells[0];
+    [cell1 setLabelValue:is3G?@"開啟":@"未開啟" normal:is3G];
+    
+    BOOL isConnection=[NetWorkConnection IsEnableConnection];
+    TKCheckLabelCell *cell2=(TKCheckLabelCell*)self.checkcells[1];
+    [cell2 setLabelValue:isConnection?@"正常連接":@"連接異常" normal:isConnection];
+    
+    BOOL isEland=[NetWorkConnection isEnabledAccessURL:CityDownURL];
+    TKCheckLabelCell *cell3=(TKCheckLabelCell*)self.checkcells[2];
+    [cell3 setLabelValue:isEland?@"正常連接":@"連接異常" normal:isEland];
+    
+    BOOL isPush=[NetWorkConnection isEnabledAccessURL:PushWebserviceURL];
+    TKCheckLabelCell *cell4=(TKCheckLabelCell*)self.checkcells[3];
+    [cell4 setLabelValue:isPush?@"正常連接":@"連接異常" normal:isPush];
+}
+- (void)checkGPSConnection{
+    BOOL is3G=[NetWorkConnection locationServicesEnabled];
+    TKCheckLabelCell *cell1=(TKCheckLabelCell*)self.gpscells[0];
+    [cell1 setLabelValue:is3G?@"開啟":@"未開啟" normal:is3G];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -55,54 +89,102 @@
     _tableView.bounces=NO;
     [self.view addSubview:_tableView];
     
-    BOOL is3G=[NetWorkConnection IsEnable3G];
-    TKButtonLabelCell *cell1=[[[TKButtonLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-    [cell1.button setTitle:@"WIFI 3G:" forState:UIControlStateNormal];
-    [cell1 setLabelValue:is3G?@"開啟":@"未開啟" normal:is3G];
-    
-    BOOL isConnection=[NetWorkConnection IsEnableConnection];
-    TKButtonLabelCell *cell2=[[[TKButtonLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-    [cell2.button setTitle:@"Internet:" forState:UIControlStateNormal];
-    [cell2 setLabelValue:isConnection?@"正常連接":@"連接異常" normal:isConnection];
-    
-    TKButtonLabelCell *cell3=[[[TKButtonLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-    [cell3.button setTitle:@"施政互動:" forState:UIControlStateNormal];
-    
-    self.checkcells =[NSMutableArray arrayWithObjects:cell1,cell2,cell3, nil];
-    
-    
-    
-    TKButtonLabelCell *cell4=[[[TKButtonLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-    [cell4.button setTitle:@"A點:" forState:UIControlStateNormal];
-    [cell4.button addTarget:self action:@selector(buttonLocation:) forControlEvents:UIControlEventTouchUpInside];
-    
-    TKButtonLabelCell *cell5=[[[TKButtonLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-    [cell5.button setTitle:@"B點:" forState:UIControlStateNormal];
-    [cell5.button addTarget:self action:@selector(buttonLocation:) forControlEvents:UIControlEventTouchUpInside];
-    
-    TKButtonLabelCell *cell6=[[[TKButtonLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-    [cell6.button setTitle:@"測試結果:" forState:UIControlStateNormal];
-    [cell6.button addTarget:self action:@selector(buttonCompare) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.checkcells =[NSMutableArray arrayWithObjects:cell1,cell2,cell3, nil];
-    self.gpscells =[NSMutableArray arrayWithObjects:cell4,cell5,cell6, nil];
-    
+   
+    [self addNetSorce];
+    [self addGpsSorce];
     //[self.navigationItem setShadowTitle:@"系統檢查"];
     [self.navigationItem titleViewBackground];
 }
+- (void)addGpsSorce{
+    TKCheckLabelCell *cell1=[[[TKCheckLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    cell1.leftLabel.text=@"1.先檢查GPS狀態:";
+    
+    TKCheckLabelCell *cell2=[[[TKCheckLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    cell2.leftLabel.text=@"2.做A點定位";
+    
+    TKCheckButtonCell *cell3=[[[TKCheckButtonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    [cell3.button setTitle:@"A點" forState:UIControlStateNormal];
+    [cell3.button addTarget:self action:@selector(buttonLocation:) forControlEvents:UIControlEventTouchUpInside];
+    cell3.label.text=@"未定位";
+    
+    TKCheckLabelCell *cell4=[[[TKCheckLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    cell4.leftLabel.text=@"3.往任一方向移動50公尺";
+    
+    
+    TKCheckLabelCell *cell5=[[[TKCheckLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    cell5.leftLabel.text=@"4.做B點定位";
+    
+    TKCheckButtonCell *cell6=[[[TKCheckButtonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    [cell6.button setTitle:@"B點:" forState:UIControlStateNormal];
+    [cell6.button addTarget:self action:@selector(buttonLocation:) forControlEvents:UIControlEventTouchUpInside];
+     cell6.label.text=@"未定位";
+    
+    TKButtonLabelCell *cell7=[[[TKButtonLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    [cell7.button setTitle:@"測試結果:" forState:UIControlStateNormal];
+    [cell7.button setTitleColor:[UIColor colorFromHexRGB:@"3DB5C0"] forState:UIControlStateNormal];
+    [cell7.button addTarget:self action:@selector(buttonCompare) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    self.gpscells =[NSMutableArray arrayWithObjects:cell1,cell2,cell3,cell4,cell5,cell6,cell7, nil];
+
+}
+- (void)addNetSorce{
+    
+    TKCheckLabelCell *cell1=[[[TKCheckLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    cell1.leftLabel.text=@"WIFI 3G:";
+    cell1.leftLabel.textColor=[UIColor colorFromHexRGB:@"3DB5C0"];
+   
+    
+   
+    TKCheckLabelCell *cell2=[[[TKCheckLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    cell2.leftLabel.text=@"Internet:";
+    cell2.leftLabel.textColor=[UIColor colorFromHexRGB:@"3DB5C0"];
+    
+    
+    
+    TKCheckLabelCell *cell3=[[[TKCheckLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    cell3.leftLabel.text=@"施政互動:";
+    cell3.leftLabel.textColor=[UIColor colorFromHexRGB:@"3DB5C0"];
+   
+    
+    
+    TKCheckLabelCell *cell4=[[[TKCheckLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    cell4.leftLabel.text=@"推播中心:";
+    cell4.leftLabel.textColor=[UIColor colorFromHexRGB:@"3DB5C0"];
+   
+    
+    self.checkcells =[NSMutableArray arrayWithObjects:cell1,cell2,cell3,cell4, nil];
+
+}
 - (void)buttonLocation:(id)sender{
+    TKCheckButtonCell *cell1=self.gpscells[2];
+    TKCheckButtonCell *cell2=self.gpscells[5];
+    TKButtonLabelCell *cell3=self.gpscells[6];
+    
     UIButton *btn=(UIButton*)sender;
-    TKButtonLabelCell *cell=(TKButtonLabelCell*)[[btn superview] superview];
-    [cell startLocation];
+    TKCheckButtonCell *cell=(TKCheckButtonCell*)[[btn superview] superview];
+    [cell startLocation:^(BOOL finished) {
+        if (finished) {
+            if (![cell1.label.text isEqualToString:@"未定位"]&&![cell2.label.text isEqualToString:@"未定位"]) {
+                if ([cell1.label.text isEqualToString:cell2.label.text]) {
+                    [cell3 setLabelValue:@"定位正常" normal:YES];
+                }else{
+                    [cell3 setLabelValue:@"定位異常" normal:NO];
+                }
+            }
+        }
+    }];
 }
 - (void)buttonCompare{
-    TKButtonLabelCell *cell1=self.gpscells[0];
-    TKButtonLabelCell *cell2=self.gpscells[1];
-    TKButtonLabelCell *cell3=self.gpscells[2];
-    if ([cell1.label.text isEqualToString:cell2.label.text]) {
-        [cell3 setLabelValue:@"定位正常" normal:YES];
-    }else{
-       [cell3 setLabelValue:@"定位異常" normal:NO];
+    TKCheckButtonCell *cell1=self.gpscells[2];
+    TKCheckButtonCell *cell2=self.gpscells[5];
+    TKButtonLabelCell *cell3=self.gpscells[6];
+    if (![cell1.label.text isEqualToString:@"未定位"]&&![cell2.label.text isEqualToString:@"未定位"]) {
+       if ([cell1.label.text isEqualToString:cell2.label.text]) {
+         [cell3 setLabelValue:@"定位正常" normal:YES];
+       }else{
+        [cell3 setLabelValue:@"定位異常" normal:NO];
+       }
     }
 }
 - (void)didReceiveMemoryWarning
@@ -118,7 +200,7 @@
 	[tempview setBackgroundColor:[UIColor colorFromHexRGB:@"fbab09"]];
     tempview.autoresizingMask=UIViewAutoresizingFlexibleWidth;
 
-	UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, 80, 30)];
+	UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 80, 30)];
 	lab.text = section==0?@"網絡檢查:":@"定位檢定:";
 	lab.backgroundColor = [UIColor clearColor];
 	lab.textAlignment = NSTextAlignmentCenter;
@@ -129,6 +211,13 @@
 	[lab release];
 	
 	return tempview;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (indexPath.section==1) {
+        if(indexPath.row==2||indexPath.row==5||indexPath.row==6)return 40.0;
+    }
+    return 30;
 }
 //指定标题的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{

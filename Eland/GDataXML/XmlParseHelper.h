@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@class XmlNode;
+#import "XmlNode.h"
 @class GDataXMLNode;
 @class GDataXMLDocument;
 @interface XmlParseHelper : NSObject

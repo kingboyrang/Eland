@@ -16,10 +16,11 @@
 - (id) initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if(!(self=[super initWithStyle:style reuseIdentifier:reuseIdentifier])) return nil;
         _button=[UIButton buttonWithType:UIButtonTypeCustom];
-        _button.frame=CGRectMake(0, 0, 100, 44);
+        _button.frame=CGRectMake(10, 0, 100, 44);
         _button.backgroundColor=[UIColor clearColor];
         [_button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         _button.titleLabel.font=[UIFont boldSystemFontOfSize:16];
+    _button.titleLabel.textAlignment=NSTextAlignmentLeft;
         [self.contentView addSubview:_button];
         
         _label=[[UILabel alloc] initWithFrame:CGRectZero];
@@ -59,6 +60,13 @@ BOOL isLoading=NO;
 }
 - (void) layoutSubviews {
     [super layoutSubviews];
+    
+    CGSize size=[_button.titleLabel.text textSize:[UIFont boldSystemFontOfSize:16] withWidth:self.bounds.size.width];
+    CGRect frame=_button.frame;
+    if (size.width>frame.size.width) {
+        frame.size.width=size.width;
+        _button.frame=frame;
+    }
 
     CGRect r = CGRectInset(self.contentView.bounds, 8, 8);
 	r.origin.x += self.button.frame.size.width + 6;

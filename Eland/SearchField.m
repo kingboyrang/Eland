@@ -8,11 +8,12 @@
 
 #import "SearchField.h"
 #import "UIColor+TPCategory.h"
-#import "TKSearchTextFieldCell.h"
+
 #import "TKSearchDoubleFieldCell.h"
 #import "TKSearchCalendarCell.h"
 #import "VillageTownViewController.h"
 #import "CaseCategoryViewController.h"
+#import "TKSearchEmptyCell.h"
 @implementation SearchField
 @synthesize cells=_cells;
 @synthesize levevlCaseArgs=_levevlCaseArgs;
@@ -43,8 +44,8 @@
         _tableView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         [self addSubview:_tableView];
         
-        TKSearchTextFieldCell *cell1=[[[TKSearchTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-        cell1.label.text=@"案件編號";
+        _buttonCell=[[TKSearchTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        _buttonCell.label.text=@"案件編號";
         
         TKSearchDoubleFieldCell *cell2=[[[TKSearchDoubleFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
         cell2.label.text=@"分類";
@@ -62,8 +63,8 @@
         cell3.startCalendar.datePicker.maximumDate=[NSDate date];
         cell3.endCalendar.datePicker.maximumDate=[NSDate date];
         
-        _buttonCell=[[TKSearchButtonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-        self.cells=[NSMutableArray arrayWithObjects:cell1,cell2,cell3,_buttonCell, nil];
+        TKSearchEmptyCell *cell4=[[[TKSearchEmptyCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+        self.cells=[NSMutableArray arrayWithObjects:_buttonCell,cell2,cell3,cell4, nil];
         
         if (!_levevlCaseArgs) {
             _levevlCaseArgs=[[LevelCaseArgs alloc] init];
@@ -75,7 +76,7 @@
 }
 -(void)resetLoadingSearch{
     _levevlCaseArgs.Pager.PageNumber=0;
-    _levevlCaseArgs.Pager.PageSize=10;
+    _levevlCaseArgs.Pager.PageSize=DeviceIsPad?20:10;
     _levevlCaseArgs.Pager.TotalItemsCount=0;
 }
 -(void)selectedCaseCategory:(CaseCategory*)category{

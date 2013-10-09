@@ -24,6 +24,7 @@
 -(void)loadData;
 -(void)showFailedPasswordAlert:(LevelCase*)entity failure:(void (^)(void))failed;
 -(void)buttonSearch;
+-(void)buttonShowAndHideSearch:(id)sender;
 @end
 
 @implementation CaseSearchViewController
@@ -53,6 +54,8 @@
     [_searchField.buttonCell.button addTarget:self action:@selector(buttonSearch) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_searchField];
     
+   
+    
     _tableView =[[PullingRefreshTableView alloc] initWithFrame:CGRectMake(0, h, self.view.bounds.size.width,self.view.bounds.size.height-h-44*2-44) pullingDelegate:self];
     _tableView.dataSource=self;
     _tableView.delegate=self;
@@ -60,8 +63,63 @@
     //_tableView.backgroundColor=[UIColor colorWithRed:243/255.0 green:239/255.0 blue:228/255.0 alpha:1.0];
     [self.view addSubview:_tableView];
     
+    UIButton *btn=[UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setImage:[UIImage imageNamed:@"up.png"] forState:UIControlStateNormal];
+    [btn setImage:[UIImage imageNamed:@"down.png"] forState:UIControlStateSelected];
+    btn.frame=CGRectMake((self.view.bounds.size.width-77*44/49)/2.0, h-44, 77*44/49, 44);
+    [btn addTarget:self action:@selector(buttonShowAndHideSearch:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:btn];
+    
      //self.view.backgroundColor=[UIColor colorWithRed:243/255.0 green:239/255.0 blue:228/255.0 alpha:1.0];
 	// Do any additional setup after loading the view.
+}
+-(void)buttonShowAndHideSearch:(id)sender{
+    UIButton *btn=(UIButton*)sender;
+    if (!btn.selected) {//隐藏
+         btn.selected=YES;
+       
+        CGRect frame=_searchField.frame;
+        frame.origin.y=-1*_searchField.frame.size.height;
+        
+        CGRect btnFrame=btn.frame;
+        btnFrame.origin.y=0;
+        
+        CGRect tabFrame=_tableView.frame;
+        tabFrame.origin.y=0;
+        tabFrame.size.height+=frame.size.height;
+        [UIView animateWithDuration:0.5f animations:^{
+            _searchField.frame=frame;
+            btn.frame=btnFrame;
+            _tableView.frame=tabFrame;
+        } completion:^(BOOL finished) {
+            if (finished) {
+               
+            }
+        }];
+    }else{
+        btn.selected=NO;
+        
+        
+        
+        CGRect frame=_searchField.frame;
+        frame.origin.y=0;
+        
+        CGRect btnFrame=btn.frame;
+        btnFrame.origin.y=frame.size.height-44;
+        
+        CGRect tabFrame=_tableView.frame;
+        tabFrame.origin.y=frame.size.height;
+        tabFrame.size.height-=frame.size.height;
+        [UIView animateWithDuration:0.5f animations:^{
+            _searchField.frame=frame;
+            btn.frame=btnFrame;
+            _tableView.frame=tabFrame;
+        } completion:^(BOOL finished) {
+            if (finished) {
+               
+            }
+        }];
+    }
 }
 //查询
 -(void)buttonSearch{
@@ -175,7 +233,7 @@
                 self.list=[NSMutableArray arrayWithArray:result];
                 [_tableView reloadData];
             }else{
-                NSMutableArray *insertIndexPaths = [NSMutableArray arrayWithCapacity:10];
+                NSMutableArray *insertIndexPaths = [NSMutableArray arrayWithCapacity:_searchField.levevlCaseArgs.Pager.PageSize];
                 for (int i=0; i<[result count]; i++) {
                     [self.list addObject:[result objectAtIndex:i]];
                     NSIndexPath *newPath=[NSIndexPath indexPathForRow:(_searchField.levevlCaseArgs.Pager.PageNumber-1)*_searchField.levevlCaseArgs.Pager.PageSize+i inSection:0];

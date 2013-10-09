@@ -9,6 +9,8 @@
 #import "SearchDetail.h"
 #import "UIColor+TPCategory.h"
 #import "NSString+TPCategory.h"
+#import "CacheHelper.h"
+#import "CaseCategoryHelper.h"
 @interface SearchDetail (){
     UILabel *_labNickMemo;
 }
@@ -81,9 +83,11 @@
 
 }
 -(void)setDataSource:(LevelCase*)args{
+    NSArray *arr=[CacheHelper readCacheCaseCategorys];
+    
     self.labNick.text=args.Nick;
     self.labNumber.text=[args GUID];
-    self.labCategory.text=[args CategoryName];
+    self.labCategory.text=[CaseCategoryHelper getParentCategoryName:args.CaseSettingGuid withArray:arr];
     self.labApplyDate.text=[args formatDataTw];
     if (![args.Status isEqualToString:@"1"]) {
         self.labStatus.textColor=[UIColor colorWithRed:0.25098 green:0.501961 blue:0 alpha:1];
@@ -123,7 +127,7 @@
     frame.size=size;
     _labStatus.frame=frame;
    
-    if (![_labStatus.text isEqualToString:@"辦理中"]) {
+    if ([_labStatus.text isEqualToString:@"辦理中"]) {
         _labStatus.textColor=[UIColor colorWithRed:0.25098 green:0.501961 blue:0 alpha:1];
     }else{
        _labStatus.textColor=[UIColor redColor];

@@ -58,13 +58,13 @@
     [[NetWorkConnection sharedInstance] dynamicListenerNetwork:^(NetworkStatus status, BOOL isConnection) {
         self.hasConnect=isConnection;
     }];
+    //背景任务
+    [asyncHelper backgroundQueueLoad];
     
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    //[application setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     [self initParams];
-    //[asyncHelper asyncLoadCaseCategory:nil];
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     UserSet *user=[UserSet sharedInstance];
     if (!user.isReadPrivacy) {
@@ -104,6 +104,8 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     [self registerAPNSToken:[[UserSet sharedInstance] AppToken]];
+    //背景任务
+    [asyncHelper backgroundQueueLoad];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

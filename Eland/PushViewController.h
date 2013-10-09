@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PushViewController : UIViewController
+@interface PushViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@property(nonatomic,retain) NSMutableArray *listData;
 -(void)relayout:(BOOL)isLand;
 @end

@@ -16,4 +16,6 @@
 
 -(NSMutableArray*)sourceTreeNodes;
 +(NSString*)getCategoryName:(NSString*)guid;
+-(NSString*)getParentCategoryName:(NSString*)guid;
++(NSString*)getParentCategoryName:(NSString*)guid withArray:(NSArray*)arr;
 @end

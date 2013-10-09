@@ -8,10 +8,16 @@
 
 #import <Foundation/Foundation.h>
 #import "ASIDownloadCache.h"
+#import "PushResult.h"
 @interface CacheHelper : NSObject
+//乡镇
 +(void)cacheCityFromArray:(NSArray*)citys;
 +(NSArray*)readCacheCitys;
-
+//案件类别
 +(void)cacheCaseCategoryFromArray:(NSArray*)categorys;
 +(NSArray*)readCacheCaseCategorys;
+//推播信息
++(void)cacheCasePushResult:(PushResult*)entity;
++(void)cacheCasePushFromArray:(NSArray*)results;
++(NSArray*)readCacheCasePush;
 @end

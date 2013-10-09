@@ -14,6 +14,8 @@
 #import "SystemCheckViewController.h"
 #import "UserSetViewController.h"
 #import "BasicNagigationController.h"
+#import "PushResult.h"
+#import "PushDetailViewController.h"
 //获取设备的物理高度
 #define ScreenHeight [UIScreen mainScreen].bounds.size.height
 #define TABRHEIGHT 44 //工具栏高度
@@ -51,7 +53,20 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotifice:) name:kPushNotificeName object:nil];
 }
 -(void)receiveNotifice:(NSNotification*)notice{
-    //NSDictionary *dic=[notice userInfo];
+    NSDictionary *dic=[notice userInfo];
+    NSString *guid=[dic objectForKey:@"guid"];
+    PushResult *entity=[PushResult PushResultWithGuid:guid];
+    
+    UINavigationController *nav=[self.viewControllers objectAtIndex:self.selectedIndex];
+    if ([nav.topViewController isKindOfClass:[PushDetailViewController class]]) {
+        PushDetailViewController *controller=(PushDetailViewController*)nav.topViewController;
+        [controller loadPushDetail:guid];
+    }else{
+       PushDetailViewController *detail=[[PushDetailViewController alloc] init];
+       detail.Entity=entity;
+       [nav pushViewController:detail animated:YES];
+       [detail release];
+    }
 }
 
 - (void)didReceiveMemoryWarning

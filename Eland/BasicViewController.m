@@ -11,6 +11,7 @@
 #import "WBSuccessNoticeView.h"
 #import "UIColor+TPCategory.h"
 #import "AppDelegate.h"
+#import "NetWorkConnection.h"
 @interface BasicViewController (){
     AnimateLoadView *_loadView;
     AnimateErrorView *_errorView;
@@ -20,6 +21,7 @@
 - (void)detectShowOrientation;
 - (void)updateNetworkImage:(BOOL)isBoo;
 - (void)addCheckBarButton;
+- (void)updateGpsImage;
 @end
 
 @implementation BasicViewController
@@ -52,7 +54,10 @@
     }
     return self;
 }
-
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self updateGpsImage];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -93,6 +98,14 @@
     self.navigationItem.rightBarButtonItem=rightBtn;
     [custom release];
     [rightBtn release];
+}
+- (void)updateGpsImage{
+    BOOL boo=[NetWorkConnection locationServicesEnabled];
+    if (boo) {
+        _gpsButton.selected=NO;
+    }else{
+        _gpsButton.selected=YES;
+    }
 }
 - (void)updateNetworkImage:(BOOL)isBoo{
    

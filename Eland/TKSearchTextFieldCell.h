@@ -11,4 +11,5 @@
 #import "EMKeyboardBarTextField.h"
 @interface TKSearchTextFieldCell : TKSearchLabelCell<UITextFieldDelegate>
 @property (nonatomic,strong) EMKeyboardBarTextField *field;
+@property(nonatomic,strong) UIButton *button;
 @end

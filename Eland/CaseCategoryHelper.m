@@ -81,4 +81,33 @@
     }
    return @"";
 }
+-(NSString*)getParentCategoryName:(NSString*)guid{
+    NSString *match=[NSString stringWithFormat:@"SELF.GUID =='%@'",guid];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:match];
+    NSArray *results = [self.categorys filteredArrayUsingPredicate:predicate];
+    if (results&&[results count]>0) {
+        CaseCategory *item=[results objectAtIndex:0];
+        if ([item.Parent length]==0) {
+            return item.Name;
+        }
+        return [self getParentCategoryName:item.Parent];
+    }
+    return @"";
+}
++(NSString*)getParentCategoryName:(NSString*)guid withArray:(NSArray*)arr{
+    if (arr==nil||[arr count]==0) {
+        return @"";
+    }
+    NSString *match=[NSString stringWithFormat:@"SELF.GUID =='%@'",guid];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:match];
+    NSArray *results = [arr filteredArrayUsingPredicate:predicate];
+    if (results&&[results count]>0) {
+        CaseCategory *item=[results objectAtIndex:0];
+        if ([item.Parent length]==0) {
+            return item.Name;
+        }
+        return [self getParentCategoryName:item.Parent withArray:arr];
+    }
+    return @"";
+}
 @end
