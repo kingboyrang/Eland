@@ -29,7 +29,8 @@
 @property(nonatomic,copy) NSString *AppCode;
 @property(nonatomic,retain) CaseExtend *Extend;
 @property(nonatomic,retain) CaseApplicant *Applicant;
-@property(nonatomic,retain) NSMutableArray *Images;
-@property(nonatomic,retain) NSMutableArray *ApprovalImages;
+@property(nonatomic,retain) NSArray *Images;
+@property(nonatomic,retain) NSArray *ApprovalImages;
 -(NSString*)XmlSerialize;
++(Case*)xmlStringToCase:(NSString*)xml;
 @end

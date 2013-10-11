@@ -8,7 +8,6 @@
 
 #import "CaseSearchViewController.h"
 #import "SearchField.h"
-#import "ASIHTTPRequest.h"
 #import "WBInfoNoticeView.h"
 #import "XmlParseHelper.h"
 #import "TPSearchCell.h"
@@ -16,7 +15,6 @@
 #import "AlertHelper.h"
 #import "ShakingAlertView.h"
 #import "CaseDetailViewController.h"
-#import "ASIFormDataRequest.h"
 #import "WBSuccessNoticeView.h"
 @interface CaseSearchViewController (){
     SearchField *_searchField;
@@ -30,10 +28,16 @@
 @implementation CaseSearchViewController
 @synthesize refreshing;
 @synthesize list=_list;
+@synthesize helper=_helper;
 -(void)dealloc{
     [super dealloc];
     [_tableView release],_tableView=nil;
     [_searchField release],_searchField=nil;
+    if (_helper) {
+        [_helper clearDelegatesAndCancel];
+        [_helper release];
+        _helper=nil;
+    }
     [_list release];
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -48,6 +52,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     CGFloat h=44*4;
     _searchField=[[SearchField alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, h)];
     _searchField.autoresizingMask=UIViewAutoresizingFlexibleWidth;
@@ -186,6 +191,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     //TPSearchCell *cell=(TPSearchCell*)[tableView cellForRowAtIndexPath:indexPath];
     LevelCase *entity=(LevelCase*)[self.list objectAtIndex:indexPath.row];
+    NSLog(@"guid=%@,pwd=%@\n",entity.GUID,entity.PWD);
     [self showAlterViewPassword:entity success:^{
         //表示成功了
         CaseDetailViewController *detail=[[CaseDetailViewController alloc] init];
@@ -199,13 +205,15 @@
 #pragma mark 加载数据
 -(void)loadData{
     _searchField.levevlCaseArgs.Pager.PageNumber++;
+    [_helper clearDelegatesAndCancel];
     NSURL *url=[NSURL URLWithString:CaseSearchURL];
     
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request setPostValue:[_searchField searchArgs] forKey:@"xml"];
-    [request setRequestMethod:@"POST"];
-    [request setCompletionBlock:^{
-        if(request.responseStatusCode!=200){
+    
+    self.helper = [ASIFormDataRequest requestWithURL:url];
+    [self.helper  setPostValue:[_searchField searchArgs] forKey:@"xml"];
+    [self.helper  setRequestMethod:@"POST"];
+    [self.helper  setCompletionBlock:^{
+        if(self.helper.responseStatusCode!=200){
             [_tableView tableViewDidFinishedLoading];
             _tableView.reachedTheEnd  = NO;
             _searchField.levevlCaseArgs.Pager.PageNumber--;
@@ -213,7 +221,7 @@
             [info show];
             return;
         }
-        NSString *xmlStr=[request.responseString stringByReplacingOccurrencesOfString:@"xmlns=\"LevelCase[]\"" withString:@""];
+        NSString *xmlStr=[self.helper.responseString stringByReplacingOccurrencesOfString:@"xmlns=\"LevelCase[]\"" withString:@""];
         NSArray *strArr=[xmlStr componentsSeparatedByString:@"<;>"];
         NSString *xml=[strArr objectAtIndex:1];
         int itemCount=[strArr[0] intValue];
@@ -247,17 +255,15 @@
             WBSuccessNoticeView *successView=[WBSuccessNoticeView successNoticeInView:self.view title:[NSString stringWithFormat:@"當前更新%d數據!",result.count]];
             [successView show];
         }
-        //
-       
     }];
-    [request setFailedBlock:^{
+    [self.helper  setFailedBlock:^{
         _searchField.levevlCaseArgs.Pager.PageNumber--;
         self.refreshing = NO;
         [_tableView tableViewDidFinishedLoading];
          WBInfoNoticeView *info=[WBInfoNoticeView infoNoticeInView:self.view title:@"服務沒有返回數據!"];
         [info show];
     }];
-    [request startAsynchronous];
+    [self.helper startAsynchronous];
 }
 #pragma mark - PullingRefreshTableViewDelegate
 //下拉加载

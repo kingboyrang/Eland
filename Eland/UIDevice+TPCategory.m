@@ -122,5 +122,11 @@
 	static NSString *simulatorModel = @"iPhone Simulator";
 	return [[self model] isEqualToString:simulatorModel];
 }
-
++ (BOOL)hasMultitasking{
+     UIDevice* device = [UIDevice currentDevice];
+    if ([device respondsToSelector:@selector(isMultitaskingSupported)]){
+        return YES;
+    }
+    return NO;
+}
 @end

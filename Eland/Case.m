@@ -7,9 +7,8 @@
 //
 
 #import "Case.h"
-
-
-
+#import "GDataXMLNode.h"
+#import "XmlParseHelper.h"
 @implementation Case
 -(NSString*)XmlSerialize{
    NSMutableString *xml=[NSMutableString stringWithFormat:@"<?xml version=\"1.0\"?>"];
@@ -34,5 +33,37 @@
     }
     [xml appendString:@"</Case>"];
     return xml;
+}
++(Case*)xmlStringToCase:(NSString*)xml{
+    Case *entity=[[[Case alloc] init] autorelease];
+    xml=[xml stringByReplacingOccurrencesOfString:@"xmlns=\"Case\"" withString:@""];
+    XmlParseHelper *_parse=[[[XmlParseHelper alloc] init] autorelease];
+    NSError *error=nil;
+    GDataXMLDocument *document=[[GDataXMLDocument alloc] initWithXMLString:xml options:0 error:&error];
+    GDataXMLElement* rootNode = [document rootElement];
+    NSArray *rootChilds=[rootNode children];
+    for (GDataXMLNode *item in rootChilds) {
+        if ([item.name isEqualToString:@"Extend"]) {//扩展资料
+            entity.Extend=[_parse childsNodeToObject:item objectName:@"CaseExtend"];
+            continue;
+        }
+        if ([item.name isEqualToString:@"Applicant"]) {//申请人资料
+            entity.Applicant=[_parse childsNodeToObject:item objectName:@"CaseApplicant"];
+            continue;
+        }
+        if ([item.name isEqualToString:@"Images"]) {//案件图片资料
+            entity.Images=[_parse nodesChildsNodesToObjects:item objectName:@"CaseImage"];
+            continue;
+        }
+        if ([item.name isEqualToString:@"ApprovalImages"]) {//审核图片资料
+            entity.Images=[_parse nodesChildsNodesToObjects:item objectName:@"CaseApprovalImage"];
+            continue;
+        }
+        SEL sel=NSSelectorFromString(item.name);
+        if ([entity respondsToSelector:sel]) {
+            [entity setValue:[item stringValue] forKey:item.name];
+        }
+    }
+    return entity;
 }
 @end

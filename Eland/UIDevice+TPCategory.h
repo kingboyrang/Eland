@@ -44,4 +44,6 @@
  @return `YES` if the device is a simulator and `NO` if it is not.
  */
 - (BOOL)isSimulator;
+//是否支持后台多任务
++ (BOOL)hasMultitasking;
 @end

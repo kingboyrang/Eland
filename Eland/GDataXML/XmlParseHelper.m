@@ -16,7 +16,7 @@
 -(NSString*)getInnerXml:(GDataXMLNode*)node;
 -(NSArray*)getChildNodes:(GDataXMLNode*)parentNode parent:(XmlNode*)parent;
 -(NSMutableDictionary*)childsNodeToDictionary:(GDataXMLNode*)node;
--(id)childsNodeToObject:(GDataXMLNode*)node objectName:(NSString*)className;
+
 -(GDataXMLDocument*)xmlDocumentObject:(id)data;
 -(GDataXMLNode*)getSingleNode:(NSString*)xpath;
 -(GDataXMLNode*)getSingleNode:(NSString*)xpath nameSpaces:(NSDictionary*)spaces;
@@ -138,6 +138,14 @@
         return [self childsNodeToObject:node objectName:className];
     }
     return nil;
+}
+-(NSArray*)nodesChildsNodesToObjects:(GDataXMLNode*)node objectName:(NSString*)className{
+    NSMutableArray *result=[NSMutableArray array];
+    NSArray *childs=[node children];
+    for (GDataXMLNode *item in childs){
+        [result addObject:[self childsNodeToObject:item objectName:className]];
+    }
+    return result;
 }
 -(XmlNode*)soapXmlSelectSingleNode:(NSString*)xpath{
     return [self selectSingleNode:xpath nameSpaces:soapXmlNamespaces];
