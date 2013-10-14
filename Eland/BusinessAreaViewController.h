@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface BusinessAreaViewController : BasicViewController<UITableViewDataSource,UITableViewDelegate>
+#import "ServiceHelper.h"
+@interface BusinessAreaViewController : BasicViewController<ServiceHelperDelegate,UITableViewDataSource,UITableViewDelegate>{
+    ServiceHelper *_serviceHelper;
+}
 @property(nonatomic,retain) UITableView *tableView;
 @property (nonatomic,strong) NSMutableArray *cells;
 -(void)relayout:(BOOL)isLand;

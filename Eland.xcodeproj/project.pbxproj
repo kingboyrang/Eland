@@ -168,6 +168,10 @@
 		01BB48DF17FE5C0900928E0B /* FPPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB48DB17FE5C0900928E0B /* FPPopoverView.m */; };
 		01BB48E017FE5C0900928E0B /* FPTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB48DD17FE5C0900928E0B /* FPTouchView.m */; };
 		01BB48E417FE5CE800928E0B /* VillageTownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB48E317FE5CE800928E0B /* VillageTownViewController.m */; };
+		01C2EA77180B8CC700220F16 /* CaseSettingField.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C2EA76180B8CC700220F16 /* CaseSettingField.m */; };
+		01C2EA7A180B904000220F16 /* CaseSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C2EA79180B904000220F16 /* CaseSetting.m */; };
+		01C2EA7E180BA13800220F16 /* TKShowLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C2EA7D180BA13800220F16 /* TKShowLabelCell.m */; };
+		01C2EA82180BC3BF00220F16 /* TKShowLabelLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C2EA81180BC3BF00220F16 /* TKShowLabelLabelCell.m */; };
 		01E5BD6517F584260020A83E /* ZAActivityBar.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 01E5BD6217F584260020A83E /* ZAActivityBar.bundle */; };
 		01E5BD6617F584260020A83E /* ZAActivityBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E5BD6417F584260020A83E /* ZAActivityBar.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		01E5BD6917F584520020A83E /* SKBounceAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E5BD6817F584520020A83E /* SKBounceAnimation.m */; };
@@ -509,6 +513,14 @@
 		01BB48DD17FE5C0900928E0B /* FPTouchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FPTouchView.m; sourceTree = "<group>"; };
 		01BB48E217FE5CE800928E0B /* VillageTownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VillageTownViewController.h; sourceTree = "<group>"; };
 		01BB48E317FE5CE800928E0B /* VillageTownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VillageTownViewController.m; sourceTree = "<group>"; };
+		01C2EA75180B8CC700220F16 /* CaseSettingField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaseSettingField.h; sourceTree = "<group>"; };
+		01C2EA76180B8CC700220F16 /* CaseSettingField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaseSettingField.m; sourceTree = "<group>"; };
+		01C2EA78180B904000220F16 /* CaseSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaseSetting.h; sourceTree = "<group>"; };
+		01C2EA79180B904000220F16 /* CaseSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaseSetting.m; sourceTree = "<group>"; };
+		01C2EA7C180BA13800220F16 /* TKShowLabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKShowLabelCell.h; sourceTree = "<group>"; };
+		01C2EA7D180BA13800220F16 /* TKShowLabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKShowLabelCell.m; sourceTree = "<group>"; };
+		01C2EA80180BC3BF00220F16 /* TKShowLabelLabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKShowLabelLabelCell.h; sourceTree = "<group>"; };
+		01C2EA81180BC3BF00220F16 /* TKShowLabelLabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKShowLabelLabelCell.m; sourceTree = "<group>"; };
 		01E5BD5E17F5782A0020A83E /* Global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Global.h; sourceTree = "<group>"; };
 		01E5BD6217F584260020A83E /* ZAActivityBar.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ZAActivityBar.bundle; sourceTree = "<group>"; };
 		01E5BD6317F584260020A83E /* ZAActivityBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZAActivityBar.h; sourceTree = "<group>"; };
@@ -783,6 +795,10 @@
 				01A563DB18025C89004149BA /* LevelCase.m */,
 				01B023E518053C2B0018BF9A /* PushResult.h */,
 				01B023E618053C2B0018BF9A /* PushResult.m */,
+				01C2EA75180B8CC700220F16 /* CaseSettingField.h */,
+				01C2EA76180B8CC700220F16 /* CaseSettingField.m */,
+				01C2EA78180B904000220F16 /* CaseSetting.h */,
+				01C2EA79180B904000220F16 /* CaseSetting.m */,
 			);
 			name = Modle;
 			sourceTree = "<group>";
@@ -968,7 +984,8 @@
 		014BDC1217F17BA5001E716D /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				01B38F8217FBC70D0011EE56 /* UI */,
+				01C2EA7B180BA0F700220F16 /* CaseDetailUI */,
+				01B38F8217FBC70D0011EE56 /* CaseSearchUI */,
 				26A587EC17F81F3500850DED /* CaseSearchViewController.h */,
 				26A587ED17F81F3500850DED /* CaseSearchViewController.m */,
 				0138D5C71802AB7400C1FA36 /* CaseDetailViewController.h */,
@@ -1133,13 +1150,13 @@
 			name = UI;
 			sourceTree = "<group>";
 		};
-		01B38F8217FBC70D0011EE56 /* UI */ = {
+		01B38F8217FBC70D0011EE56 /* CaseSearchUI */ = {
 			isa = PBXGroup;
 			children = (
 				01A563E11802638D004149BA /* Search */,
 				01A563E01802637D004149BA /* ShowCell */,
 			);
-			name = UI;
+			name = CaseSearchUI;
 			sourceTree = "<group>";
 		};
 		01B38F8F17FBF10E0011EE56 /* Calendar */ = {
@@ -1317,6 +1334,17 @@
 				0120FDD617FE9296004B12B8 /* CaseCategoryViewController.m */,
 			);
 			name = Common;
+			sourceTree = "<group>";
+		};
+		01C2EA7B180BA0F700220F16 /* CaseDetailUI */ = {
+			isa = PBXGroup;
+			children = (
+				01C2EA7C180BA13800220F16 /* TKShowLabelCell.h */,
+				01C2EA7D180BA13800220F16 /* TKShowLabelCell.m */,
+				01C2EA80180BC3BF00220F16 /* TKShowLabelLabelCell.h */,
+				01C2EA81180BC3BF00220F16 /* TKShowLabelLabelCell.m */,
+			);
+			name = CaseDetailUI;
 			sourceTree = "<group>";
 		};
 		01E5BD5D17F577FA0020A83E /* Uitils */ = {
@@ -1596,6 +1624,7 @@
 				0104772C17DF1EF600BDCCE0 /* WBBlueGradientView.m in Sources */,
 				0104772D17DF1EF600BDCCE0 /* WBErrorNoticeView.m in Sources */,
 				0104772E17DF1EF600BDCCE0 /* WBGrayGradientView.m in Sources */,
+				01C2EA7A180B904000220F16 /* CaseSetting.m in Sources */,
 				0104772F17DF1EF600BDCCE0 /* WBNoticeOperation.m in Sources */,
 				0104773017DF1EF600BDCCE0 /* WBNoticeView.m in Sources */,
 				0104773117DF1EF600BDCCE0 /* WBRedGradientView.m in Sources */,
@@ -1642,8 +1671,10 @@
 				014BDC3417F182BA001E716D /* TKEmptyCell.m in Sources */,
 				01E5BD6617F584260020A83E /* ZAActivityBar.m in Sources */,
 				01E5BD6917F584520020A83E /* SKBounceAnimation.m in Sources */,
+				01C2EA7E180BA13800220F16 /* TKShowLabelCell.m in Sources */,
 				26A5877417F7C6EC00850DED /* UINavigationItem+TPCategory.m in Sources */,
 				26A5877A17F7C98400850DED /* UserSet.m in Sources */,
+				01C2EA82180BC3BF00220F16 /* TKShowLabelLabelCell.m in Sources */,
 				26A5877D17F7CAF600850DED /* SecrecyViewController.m in Sources */,
 				26A5878117F7D89200850DED /* RepairItemViewController.m in Sources */,
 				26A5878417F7DAC300850DED /* BusinessAreaViewController.m in Sources */,
@@ -1662,6 +1693,7 @@
 				01B38F8117FBB35A0011EE56 /* PagerViewController.m in Sources */,
 				01B38F8517FBC7690011EE56 /* SearchField.m in Sources */,
 				01B38F8817FBC9430011EE56 /* TKSearchLabelCell.m in Sources */,
+				01C2EA77180B8CC700220F16 /* CaseSettingField.m in Sources */,
 				01B38F8B17FBCABA0011EE56 /* TKSearchTextFieldCell.m in Sources */,
 				01B38F8E17FBE7C00011EE56 /* TKSearchDoubleFieldCell.m in Sources */,
 				01B38F9217FBF1380011EE56 /* CVUICalendar.m in Sources */,

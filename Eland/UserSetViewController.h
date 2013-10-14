@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UserSetViewController : BasicViewController<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate>
+@interface UserSetViewController : BasicViewController<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate>{
+@private
+    BOOL isSubmit;
+}
 @property(nonatomic,retain) UITableView *tableView;
 @property (nonatomic,strong) NSMutableArray *cells;
 @end

@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "LevelCase.h"
-@interface CaseDetailViewController : BasicViewController
+#import "ServiceHelper.h"
+#import "CaseSetting.h"
+#import "Case.h"
+@interface CaseDetailViewController : BasicViewController<UITableViewDataSource,UITableViewDelegate>{
+    ServiceHelper *_serviceHelper;
+    UITableView *_tableView;
+}
 @property(nonatomic,strong) LevelCase *itemCase;
+@property(nonatomic,strong) Case *entityCase;
+@property(nonatomic,strong) CaseSetting *entityCaseSetting;
+@property(nonatomic,strong) NSMutableArray *cells;
+//@property(nonatomic,strong) NSMutableArray *cellHeights;
 @end

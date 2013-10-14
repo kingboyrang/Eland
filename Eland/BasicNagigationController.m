@@ -50,10 +50,13 @@
 }
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    [super pushViewController:viewController animated:animated];
-    if (viewController.navigationItem.leftBarButtonItem== nil && [self.viewControllers count] > 1) {
+    if (![self.topViewController isKindOfClass:[viewController class]]) {
+        [super pushViewController:viewController animated:animated];
+    }
+    if (viewController.navigationItem.leftBarButtonItem== nil && [self.viewControllers count] > 1){
         viewController.navigationItem.leftBarButtonItem =[self customLeftBackButton];
-    } 
-} 
+    }
+    
+}
 
 @end

@@ -27,5 +27,7 @@
 - (void) readPrivacy;
 //注册token
 - (void) registerAppToken:(NSString*)token status:(BOOL)status;
+//业务专区同步
++ (void) businessSync;
 + (NSString*)ObjectToXml;
 @end

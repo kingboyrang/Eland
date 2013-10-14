@@ -43,8 +43,8 @@
         [_netButton release],_netButton=nil;
     }
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-     AppDelegate *delegated=[[UIApplication sharedApplication] delegate];
-    [delegated removeObserver:self forKeyPath:@"hasConnect"];
+     //AppDelegate *delegated=[[UIApplication sharedApplication] delegate];
+    //[delegated removeObserver:self forKeyPath:@"hasConnect"];
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -68,6 +68,7 @@
     //网络检测
     AppDelegate *delegated=[[UIApplication sharedApplication] delegate];
     [delegated addObserver:self forKeyPath:@"hasConnect" options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:nil];
+    
 	// Do any additional setup after loading the view.
 }
 - (void)didReceiveMemoryWarning

@@ -8,6 +8,7 @@
 
 #import "CaseCityHelper.h"
 #import "CaseCity.h"
+#import "CacheHelper.h"
 @implementation CaseCityHelper
 +(NSMutableArray*)sourceFromArray:(NSArray*)arr{
     CaseCity *item=[[[CaseCity alloc] init] autorelease];
@@ -20,5 +21,19 @@
         [result addObjectsFromArray:arr];
     }
     return result;
+}
++(NSString*)getCityName:(NSString*)guid{
+    NSArray *arr=[CacheHelper readCacheCitys];
+    if (arr==nil||[arr count]==0) {
+        return @"";
+    }
+    NSString *match=[NSString stringWithFormat:@"SELF.GUID =='%@'",guid];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:match];
+    NSArray *results = [arr filteredArrayUsingPredicate:predicate];
+    if (results&&[results count]>0) {
+        CaseCity *item=[results objectAtIndex:0];
+        return item.Name;
+    }
+    return @"";
 }
 @end

@@ -10,4 +10,5 @@
 
 @interface CaseCityHelper : NSObject
 +(NSMutableArray*)sourceFromArray:(NSArray*)arr;
++(NSString*)getCityName:(NSString*)guid;
 @end

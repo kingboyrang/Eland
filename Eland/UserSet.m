@@ -74,6 +74,11 @@
     self.isRegisterToken=status;
     [self save];
 }
++ (void) businessSync{
+    UserSet *user=[UserSet sharedInstance];
+    user.isSync=YES;
+    [user save];
+}
 +(NSString*)ObjectToXml{
     UserSet *app=[UserSet sharedInstance];
     if (app) {

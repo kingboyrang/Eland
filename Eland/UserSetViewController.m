@@ -90,6 +90,10 @@
 	// Do any additional setup after loading the view.
 }
 -(void)buttonSaveClick{
+    if (isSubmit) {
+        return;
+    }
+    isSubmit=YES;
     TKLabelTextFieldCell *cell1=(TKLabelTextFieldCell*)[self.cells objectAtIndex:0];
     if (!cell1.hasValue) {
         //[cell1 errorVerify];
@@ -121,8 +125,9 @@
     user.Nick=cell4.field.text;
     [user save];
     WBSuccessNoticeView *successView=[WBSuccessNoticeView successNoticeInView:self.view title:@"存儲成功!"];
-     //successView.gradientView.backgroundColor=[UIColor colorFromHexRGB:@"00c724"];
-    //successView.view.backgroundColor=[UIColor colorFromHexRGB:@"00c724"];
+    [successView setDismissalBlock:^(BOOL dismissedInteractively) {
+        isSubmit=NO;
+    }];
     [successView show];
 
 }

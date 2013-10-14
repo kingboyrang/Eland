@@ -12,8 +12,12 @@
 #import "TKEmptyCell.h"
 #import "UIColor+TPCategory.h"
 #import "UIDevice+TPCategory.h"
+#import "UserSet.h"
+#import "NSString+TPCategory.h"
 @interface BusinessAreaViewController ()
-
+-(void)buttonSyncClick;
+-(BOOL)formSubmit;
+-(void)checkSync;
 @end
 
 @implementation BusinessAreaViewController
@@ -23,6 +27,7 @@
     [super dealloc];
     [_tableView release],_tableView=nil;
     [_cells release],_cells=nil;
+    [_serviceHelper release],_serviceHelper=nil;
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,7 +41,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    _serviceHelper=[[ServiceHelper alloc] init];
     self.view.backgroundColor=[UIColor colorFromHexRGB:@"dfdfdf"];
     
     CGRect rect=self.view.bounds;
@@ -53,16 +58,22 @@
     [cell1 setLabelName:@"APP憑證" required:NO];
     cell1.textView.editable=NO;
     cell1.textView.userInteractionEnabled=NO;
-    cell1.textView.text=[[UIDevice currentDevice] uniqueDeviceIdentifier];
+    cell1.textView.text=[[UserSet sharedInstance] AppToken];
     
     TKLabelTextFieldCell *cell2=[[[TKLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     [cell2 setLabelName:@"狀態" required:NO];
     cell2.field.placeholder=@"editable status";
+    cell2.field.userInteractionEnabled=NO;
+    if ([[UserSet sharedInstance] isSync]) {
+        cell2.field.text=@"已同步";
+    }else{
+        cell2.field.text=@"未同步";
+    }
     
     TKLabelTextFieldCell *cell3=[[[TKLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     [cell3 setLabelName:@"裝置名稱" required:NO];
-    cell3.field.enabled=NO;
-    cell3.field.text=@"施政互動";
+    cell3.field.userInteractionEnabled=NO;
+    cell3.field.text=@"IOS施政互動";
     
     TKLabelTextFieldCell *cell4=[[[TKLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     [cell4 setLabelName:@"帳號" required:NO];
@@ -74,7 +85,32 @@
     
     
     self.cells =[NSMutableArray arrayWithObjects:cell1,cell2,cell3,cell4,cell5, nil];
+    //[self checkSync];//取得名称
 	// Do any additional setup after loading the view.
+}
+-(void)checkSync{
+    NSString *token=[[[UserSet sharedInstance] AppToken] Trim];
+    if ([token length]>0) {
+        ServiceArgs *args=[[[ServiceArgs alloc] init] autorelease];
+        args.methodName=@"FindToken";
+        args.soapParams=[NSArray arrayWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:token,@"tokenGuid", nil], nil];
+        [_serviceHelper asynService:args delegate:self];
+    }
+}
+#pragma mark -
+#pragma mark ServiceHelperDelegate Methods
+-(void)finishSoapRequest:(ServiceResult*)result{
+    if ([result.xmlString length]>0) {
+         NSString *xml=[result.xmlString stringByReplacingOccurrencesOfString:@"xmlns=\"PushToken\"" withString:@""];
+        [result.xmlParse setDataSource:xml];
+        XmlNode *node=[result.xmlParse selectSingleNode:@"//AppName"];
+        if (node&&[node.Value length]>0) {
+            TKLabelTextFieldCell *cell=self.cells[2];
+            cell.field.text=node.Value;
+        }
+    }
+}
+-(void)failedSoapRequest:(NSError*)error userInfo:(NSDictionary*)dic{
 }
 -(void)relayout:(BOOL)isLand{
     if (isLand) {
@@ -82,6 +118,61 @@
     }else{
         _tableView.frame=CGRectMake(0, 0, DeviceWidth,DeviceHeight-44*2-20);
     }
+}
+-(BOOL)formSubmit{
+    TKLabelTextFieldCell  *cell3=self.cells[3];
+    TKLabelTextFieldCell  *cell4=self.cells[4];
+    if (![cell3 hasValue]) {
+        [cell3 shake];
+        return NO;
+    }
+    if (![cell4 hasValue]) {
+        [cell4 shake];
+        return NO;
+    }
+    return YES;
+}
+//同步
+-(void)buttonSyncClick{
+    if (![self formSubmit]) {
+        return;
+    }
+    TKLabelTextFieldCell *cell2=self.cells[2];
+    TKLabelTextFieldCell  *cell3=self.cells[3];
+    TKLabelTextFieldCell  *cell4=self.cells[4];
+    
+    NSMutableArray *params=[NSMutableArray array];
+    [params addObject:[NSDictionary dictionaryWithObjectsAndKeys:[[UserSet sharedInstance] AppToken],@"tokenGuid", nil]];
+    [params addObject:[NSDictionary dictionaryWithObjectsAndKeys:cell2.field.text,@"appName", nil]];
+    [params addObject:[NSDictionary dictionaryWithObjectsAndKeys:cell3.field.text,@"uid", nil]];
+    [params addObject:[NSDictionary dictionaryWithObjectsAndKeys:cell4.field.text,@"pwd", nil]];
+    
+    [self showLoadingStatus:@"正在同步..."];
+    ServiceArgs *args=[[[ServiceArgs alloc] init] autorelease];
+    args.methodName=@"AccountBinder";
+    args.soapParams=params;
+    [_serviceHelper asynService:args success:^(ServiceResult *result) {
+        if (result.request.responseStatusCode==200) {
+            NSString *xml=[result.xmlString stringByReplacingOccurrencesOfString:@"xmlns=\"Result\"" withString:@""];
+            [result.xmlParse setDataSource:xml];
+            XmlNode *node=[result.xmlParse selectSingleNode:@"//Success"];
+            if (node&&[node.Value isEqualToString:@"true"]) {
+                [UserSet businessSync];
+                TKLabelTextFieldCell *cell1=self.cells[1];
+                cell1.field.text=@"已同步";
+                [self showLoadingFailedStatus:@"同步成功!"];
+            }else{
+                [self showLoadingFailedStatus:@"同步失敗!"];
+            }
+            
+        }else{
+          [self showLoadingFailedStatus:@"同步失敗!"];
+        }
+        
+    } failed:^(NSError *error, NSDictionary *userInfo) {
+        [self showLoadingFailedStatus:@"同步失敗!"];
+    }];
+    
 }
 #pragma mark UITableView Delegate & DataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -118,6 +209,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if(indexPath.section==1&&indexPath.row==0){
+        [self buttonSyncClick];
     }
 }
 - (void)didReceiveMemoryWarning

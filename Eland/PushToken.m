@@ -29,7 +29,7 @@
     push.GUID=deviceId;
     push.UniqueCode=[[UIDevice currentDevice] uniqueDeviceIdentifier];
     push.AppCode=@"Eland";
-    push.AppName=@"施政互動";
+    push.AppName=@"IOS施政互動";
     push.AppType=DeviceIsPad?@"ipad":@"iphone";
     push.Flatbed=DeviceIsPad?@"1":@"2";
     

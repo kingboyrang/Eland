@@ -14,5 +14,7 @@
 @property(nonatomic,copy) NSString *CaseGuid;
 @property(nonatomic,copy) NSString *Content;
 @property(nonatomic,copy) NSString *Path;
+@property(nonatomic,copy) NSString *Name;//图片文件名
+@property(nonatomic,copy) NSString *URL;//图片url地址
 -(NSString*)XmlSerialize;
 @end

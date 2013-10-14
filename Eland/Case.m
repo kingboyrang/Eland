@@ -66,4 +66,20 @@
     }
     return entity;
 }
+-(NSString*)getFieldValue:(NSString*)propertyname{
+    if ([propertyname isEqualToString:@"Images"]||[propertyname isEqualToString:@"ApprovalImages"]) {
+        return @"";
+    }
+    SEL sel=NSSelectorFromString(propertyname);
+    if ([self respondsToSelector:sel]) {//判断是否响应这个属性
+        return [self valueForKey:propertyname];
+    }
+    if (self.Extend&&[self.Extend respondsToSelector:sel]) {
+        return [self.Extend valueForKey:propertyname];
+    }
+    if (self.Applicant&&[self.Applicant respondsToSelector:sel]) {
+        return [self.Applicant valueForKey:propertyname];
+    }
+    return @"";
+}
 @end

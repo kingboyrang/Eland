@@ -45,8 +45,6 @@
     }
 }
 -(void)initParams{
-    
-    
     [ZAActivityBar setLocationTabBar];
     [self registerAPNS];
     self.isLandscape=NO;

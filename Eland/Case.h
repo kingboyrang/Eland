@@ -33,4 +33,5 @@
 @property(nonatomic,retain) NSArray *ApprovalImages;
 -(NSString*)XmlSerialize;
 +(Case*)xmlStringToCase:(NSString*)xml;
+-(NSString*)getFieldValue:(NSString*)propertyname;
 @end
