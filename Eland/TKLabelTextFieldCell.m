@@ -104,7 +104,7 @@
     }
     return NO;
 }
-- (void)endEditing:(NSNotification*) notification
+- (void)endEditing:(NSNotification*)notification
 {
     if (self.required) {
         if (self.hasValue) {

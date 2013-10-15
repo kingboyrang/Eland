@@ -44,15 +44,15 @@
     _menuBar.autoresizingMask=UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:_menuBar];
     
-   RepairItemViewController *_repair=[[RepairItemViewController alloc] init];
+   RepairItemViewController *_repair=[[[RepairItemViewController alloc] init] autorelease];
    _caseSearch=[[CaseSearchViewController alloc] init];
-   PushViewController *_push=[[PushViewController alloc] init];
-   BusinessAreaViewController *_business=[[BusinessAreaViewController alloc] init];
+   PushViewController *_push=[[[PushViewController alloc] init] autorelease];
+   BusinessAreaViewController *_business=[[[BusinessAreaViewController alloc] init] autorelease];
     [self addChildViewController:_repair];
     [self addChildViewController:_caseSearch];
     [self addChildViewController:_push];
     [self addChildViewController:_business];
-    
+    /***
     NSString *path=[DocumentPath stringByAppendingPathComponent:@"load@2x.png"];
     UIImage *image=[UIImage imageNamed:@"wel_i.jpg"];
     [image saveImage:path];
@@ -61,7 +61,7 @@
     NSString *path1=[DocumentPath stringByAppendingPathComponent:@"load.png"];
     UIImage *image1=[[UIImage imageNamed:@"wel_i.jpg"] imageByScalingProportionallyToSize:CGSizeMake(320, 480)];
     [image1 saveImage:path1];
-    
+    ***/
     /***
     NSString *path2=[DocumentPath stringByAppendingPathComponent:@"Default-568h@2x.png"];
     UIImage *image2=[UIImage imageNamed:@"wel.jpg"];

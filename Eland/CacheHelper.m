@@ -63,4 +63,18 @@
     NSArray *arr=[NSKeyedUnarchiver unarchiveObjectWithFile: path];
     return arr;
 }
++(void)cacheCaseSettingsFromArray:(NSArray*)settings{
+    if (settings&&[settings count]>0) {
+        NSString *path=[DocumentPath stringByAppendingPathComponent:@"CacheCaseSettings"];
+        [NSKeyedArchiver archiveRootObject:settings toFile:path];
+    }
+}
++(NSArray*)readCacheCaseSettings{
+    NSString *path=[DocumentPath stringByAppendingPathComponent:@"CacheCaseSettings"];
+    if(![FileHelper existsFilePath:path]){ //如果不存在
+        return nil;
+    }
+    NSArray *arr=[NSKeyedUnarchiver unarchiveObjectWithFile: path];
+    return arr;
+}
 @end

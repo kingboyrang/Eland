@@ -11,5 +11,6 @@
 @interface asyncHelper : NSObject
 +(void)asyncLoadCity:(void (^)(NSArray *result))completed;
 +(void)asyncLoadCaseCategory:(void (^)(NSArray *result))completed;
++(void)asyncLoadCaseSettings:(void (^)(NSArray *result))completed;
 +(void)backgroundQueueLoad;
 @end

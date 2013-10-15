@@ -19,8 +19,10 @@
     UIImage *logoImage=[[UIImage imageNamed:@"logo.png"] imageByScalingProportionallyToSize:CGSizeMake(w, 40)];
     UIImageView *logoView=[[UIImageView alloc] initWithImage:logoImage];
     logoView.frame=CGRectMake(leftx, 0, w, 40);
-    self.titleView=logoView;
     [logoView setImage:logoImage];
+    self.titleView=logoView;
+    [logoView release];
+    
 }
 -(void)resetNavigationBarBack{
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];

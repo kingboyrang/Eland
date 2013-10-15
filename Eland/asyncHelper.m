@@ -11,10 +11,11 @@
 #import "XmlParseHelper.h"
 #import "CacheHelper.h"
 #import "ServiceHelper.h"
-
+#import "CaseSetting.h"
 @interface asyncHelper ()
 +(void)handlerCaseCity:(NSString*)xml;
 +(void)handlerCaseCategory:(NSString*)xml;
++(void)handlerCaseSetting:(NSString*)xml;
 @end
 
 @implementation asyncHelper
@@ -70,8 +71,33 @@
     }];
     [request startAsynchronous];
 }
++(void)asyncLoadCaseSettings:(void (^)(NSArray *result))completed{
+    NSURL *webURL=[NSURL URLWithString:CaseSettingURL];
+    ASIHTTPRequest *request=[ASIHTTPRequest requestWithURL:webURL];
+    [request setCompletionBlock:^{
+        if (request.responseStatusCode==200) {
+            NSArray *arr=[CaseSetting xmlStringToCaseSettings:request.responseString];
+            if (arr&&[arr count]>0) {
+                [CacheHelper cacheCaseSettingsFromArray:arr];
+            }
+            if (completed) {
+                completed(arr);
+            }
+        }else{
+            if (completed) {
+                completed(nil);
+            }
+        }
+    }];
+    [request setFailedBlock:^{
+        if (completed) {
+            completed(nil);
+        }
+    }];
+    [request startAsynchronous];
+}
 +(void)backgroundQueueLoad{
-    ServiceHelper *helper=[ServiceHelper sharedInstance];
+    ServiceHelper *helper=[[[ServiceHelper alloc] init] autorelease];
     ASIHTTPRequest *request=[ASIHTTPRequest requestWithURL:[NSURL URLWithString:CityDownURL]];
     [request setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"city",@"name", nil]];
     [helper addQueue:request];
@@ -80,12 +106,18 @@
     [request1 setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"CaseCategory",@"name", nil]];
     [helper addQueue:request1];
     
+    ASIHTTPRequest *request2=[ASIHTTPRequest requestWithURL:[NSURL URLWithString:CaseSettingURL]];
+    [request2 setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"CaseSetting",@"name", nil]];
+    [helper addQueue:request2];
+    
     [helper startQueue:^(ServiceResult *result) {
         NSString *requestName=[result.userInfo objectForKey:@"name"];
         if ([requestName isEqualToString:@"city"]) {
             [self handlerCaseCity:result.xmlString];
-        }else{
+        }else if([requestName isEqualToString:@"CaseCategory"]){
             [self handlerCaseCategory:result.xmlString];
+        }else{//项目设定
+            [self handlerCaseSetting:result.xmlString];
         }
         
     } failed:^(NSError *error, NSDictionary *userInfo) {
@@ -115,6 +147,15 @@
     NSArray *arr=[parse selectNodes:@"//CaseCategory" className:@"CaseCategory"];
     if (arr&&[arr count]>0) {
         [CacheHelper cacheCaseCategoryFromArray:arr];
+    }
+}
++(void)handlerCaseSetting:(NSString*)xml{
+    if ([xml length]==0) {
+        return;
+    }
+    NSArray *arr=[CaseSetting xmlStringToCaseSettings:xml];
+    if (arr&&[arr count]>0) {
+        [CacheHelper cacheCaseSettingsFromArray:arr];
     }
 }
 @end

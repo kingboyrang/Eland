@@ -11,7 +11,10 @@
 #import "UserSetViewController.h"
 #import "UserSet.h"
 #import "UIColor+TPCategory.h"
-@interface SecrecyViewController ()
+#import "MBProgressHUD.h"
+@interface SecrecyViewController ()<MBProgressHUDDelegate>{
+    MBProgressHUD *HUD;
+}
 
 @end
 
@@ -29,6 +32,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UserSet *user=[UserSet sharedInstance];
+    if (user.isFirstLoad) {
+        [self startLoading];
+    }
+    
     [self.navigationItem titleViewBackground];
     if (self.tabBarController==nil) {
         UIBarButtonItem *rightBtn=[[UIBarButtonItem alloc] initWithTitle:@"確認" style:UIBarButtonItemStyleBordered target:self action:@selector(buttonClick)];
@@ -60,6 +69,52 @@
     main.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentViewController:main animated:YES completion:nil];
     [main release];
+}
+//第一次启动时加载动画
+-(void)startLoading{
+    NSString *loadName=DeviceIsPad?@"ipad_load.jpg":@"load.png";
+    CGRect rect=[[UIScreen mainScreen] bounds];
+    UIImageView *imageView=[[UIImageView alloc] initWithFrame:rect];
+    [imageView setImage:[UIImage imageNamed:loadName]];
+    imageView.tag=100;
+    [self.navigationController.view addSubview:imageView];
+    [imageView release];
+    
+    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:HUD];
+    // Set determinate mode
+    HUD.mode = MBProgressHUDModeAnnularDeterminate;
+    HUD.delegate = self;
+    HUD.labelText = @"Loading";
+    [HUD showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
+}
+//动画效果
+- (void)myProgressTask {
+    
+    UIImageView *imageView=(UIImageView*)[self.navigationController.view viewWithTag:100];
+	// This just increases the progress indicator in a loop
+	float progress = 0.0f;
+	while (progress < 1.0f) {
+		progress += 0.01f;
+		HUD.progress = progress;
+		usleep(30000);//1s=1000(毫秒)=1000000(微秒)
+	}
+    [UIView animateWithDuration:0.5f animations:^{
+        imageView.alpha=0.0;
+    } completion:^(BOOL finished) {
+        [imageView removeFromSuperview];
+        UserSet *user=[UserSet sharedInstance];
+        user.isFirstLoad=NO;
+        [user save];
+    }];
+    
+    //self.window.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
+    
+}
+- (void)hudWasHidden:(MBProgressHUD *)hud{
+    [HUD removeFromSuperview];
+    [HUD release];
+    HUD=nil;
 }
 - (void)didReceiveMemoryWarning
 {

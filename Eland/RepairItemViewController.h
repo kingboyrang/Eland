@@ -11,7 +11,7 @@
 @interface RepairItemViewController : BasicViewController<UICollectionViewDataSource,UICollectionViewDelegate>{
 @private
     UICollectionView *_collectionView;
-    NSMutableArray *_sourceData;
 }
 -(void)relayout:(BOOL)isLand;
+@property(nonatomic,strong) NSMutableArray *sourceData;
 @end

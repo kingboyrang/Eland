@@ -34,6 +34,17 @@
     [xml appendString:@"</Case>"];
     return xml;
 }
+-(NSArray*)imageURLs{
+    if (self.Images&&[self.Images count]>0) {
+        NSMutableArray *arr=[NSMutableArray array];
+        for (CaseImage *item in self.Images) {
+            NSString *url=[NSString stringWithFormat:CaseImageViewURL,item.Path];
+            [arr addObject:url];
+        }
+        return arr;
+    }
+    return nil;
+}
 +(Case*)xmlStringToCase:(NSString*)xml{
     Case *entity=[[[Case alloc] init] autorelease];
     xml=[xml stringByReplacingOccurrencesOfString:@"xmlns=\"Case\"" withString:@""];
@@ -64,6 +75,7 @@
             [entity setValue:[item stringValue] forKey:item.name];
         }
     }
+    [document release];
     return entity;
 }
 -(NSString*)getFieldValue:(NSString*)propertyname{

@@ -89,7 +89,7 @@
             entity.InnerXml=[self getInnerXml:node];
             entity.OuterXml=node.XMLString;
             entity.ChildNodes=[self getChildNodes:node parent:entity];
-            return [entity autorelease];
+            return entity;
     }
     return nil;
 }

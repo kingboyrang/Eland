@@ -14,6 +14,8 @@
 #import "TKShowLabelLabelCell.h"
 #import "TKEmptyCell.h"
 #import "NSString+TPCategory.h"
+#import "Photos.h"
+#import "MKPhotoBrowser.h"
 @interface CaseDetailViewController ()
 -(void)loadAsyncDetail;
 -(void)updateSoureData;
@@ -88,14 +90,14 @@
     NSMutableArray *arr=[NSMutableArray array];
     for (CaseSettingField *item in self.entityCaseSetting.Fields) {
         TKShowLabelLabelCell *cell=[[TKShowLabelLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-        cell.label.text=item.Label;
+        cell.label.text=[NSString stringWithFormat:@"%@:",item.Label];
         cell.rightlabel.text=[self.entityCase getFieldValue:item.Name];
         [arr addObject:cell];
         [cell release];
     }
-    if (self.entityCaseSetting.showImage) {
+    if (self.entityCaseSetting.showImage&&self.entityCase.Images&&[self.entityCase.Images count]>0) {
         TKShowLabelLabelCell *cell=[[TKShowLabelLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-        cell.label.text=@"案件圖片";
+        cell.label.text=@"案件圖片:";
         TKEmptyCell *emptyCell=[[TKEmptyCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
         [arr addObject:cell];
         [arr addObject:emptyCell];
@@ -104,17 +106,46 @@
     }
     self.cells=arr;
     [_tableView reloadData];
-    
-    if (self.entityCase.Images&&self.entityCase.Images.count>0) {
-        CaseImage *entity=self.entityCase.Images[0];
-        NSLog(@"content=%@",entity.Content);
-        NSLog(@"path=%@",entity.Path);
+    if (self.entityCaseSetting.showImage&&self.entityCase.Images&&[self.entityCase.Images count]>0&&[[self.cells lastObject] isKindOfClass:[TKEmptyCell class]]){
+        MKPhotoScroll *_photoScroll=[[MKPhotoScroll alloc] initWithFrame:CGRectMake((self.view.bounds.size.width-296)/2.0,2, 296, 296)];
+        _photoScroll.tag=100;
+        _photoScroll.backgroundColor=[UIColor grayColor];
+        _photoScroll.delegate=self;
+        _photoScroll.autoresizesSubviews=YES;
+        _photoScroll.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        if (self.entityCase.Images&&[self.entityCase.Images count]>0) {
+            [_photoScroll addRangeURLs:[self.entityCase imageURLs]];
+        }
+        TKEmptyCell *cell=[self.cells lastObject];
+        [cell.contentView addSubview:_photoScroll];
+        [_photoScroll release];
     }
+    //
 }
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+#pragma mark -
+#pragma mark MKPhotoScrollDelegate Methods
+-(void)imageViewClick:(UIImageView*)imageView imageIndex:(int)index{
+    TKEmptyCell *cell=[self.cells lastObject];
+    MKPhotoScroll *photoScroll=(MKPhotoScroll*)[cell.contentView viewWithTag:100];
+    if (photoScroll) {
+        NSArray *source=[photoScroll sourceImages];
+        if (source) {
+            Photos *photo=[[[Photos alloc] init] autorelease];
+            [photo addImages:source];
+            photo.photoScroll=photoScroll;
+            //photo.control=self;
+            MKPhotoBrowser *browser=[[[MKPhotoBrowser alloc] initWithDataSource:photo andStartWithPhotoAtIndex:index] autorelease];
+            
+            UINavigationController *nav=[[[UINavigationController alloc] initWithRootViewController:browser] autorelease];
+            [self presentViewController:nav animated:YES completion:nil];
+            [browser hideTrashButtonItem];
+        }
+    }
 }
 #pragma mark -
 #pragma mark UITableViewDataSource Methods

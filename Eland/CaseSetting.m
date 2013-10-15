@@ -10,6 +10,31 @@
 #import "XmlParseHelper.h"
 #import "GDataXMLNode.h"
 @implementation CaseSetting
+- (void)encodeWithCoder:(NSCoder *)encoder{
+    [encoder encodeObject:self.GUID forKey:@"GUID"];
+    [encoder encodeObject:self.Name forKey:@"Name"];
+    [encoder encodeObject:self.ShowCity forKey:@"ShowCity"];
+    [encoder encodeObject:self.UpImg forKey:@"UpImg"];
+    [encoder encodeObject:self.UpImgNum forKey:@"UpImgNum"];
+    [encoder encodeObject:self.Icon forKey:@"Icon"];
+    [encoder encodeObject:self.Memo forKey:@"Memo"];
+    [encoder encodeObject:self.Fields forKey:@"Fields"];
+    
+}
+-(id)initWithCoder:(NSCoder *)aDecoder{
+    if (self=[super init]) {
+        self.GUID=[aDecoder decodeObjectForKey:@"GUID"];
+        self.Name=[aDecoder decodeObjectForKey:@"Name"];
+        self.ShowCity=[aDecoder decodeObjectForKey:@"ShowCity"];
+        self.UpImg=[aDecoder decodeObjectForKey:@"UpImg"];
+        self.UpImgNum=[aDecoder decodeObjectForKey:@"UpImgNum"];
+        self.Icon=[aDecoder decodeObjectForKey:@"Icon"];
+        self.Memo=[aDecoder decodeObjectForKey:@"Memo"];
+        self.Fields=[aDecoder decodeObjectForKey:@"Fields"];
+        
+    }
+    return self;
+}
 -(BOOL)showImage{
     if (_UpImg&&[_UpImg isEqualToString:@"1"]) {
         return YES;
@@ -42,6 +67,12 @@
             [entity setValue:[item stringValue] forKey:item.name];
         }
     }
+    [document release];
     return entity;
+}
++(NSArray*)xmlStringToCaseSettings:(NSString*)xml{
+   xml=[xml stringByReplacingOccurrencesOfString:@"xmlns=\"CaseSetting[]\"" withString:@""];
+   XmlParseHelper *_parse=[[[XmlParseHelper alloc] init] autorelease];
+   return [_parse selectNodes:@"//CaseSetting" className:@"CaseSetting"];
 }
 @end

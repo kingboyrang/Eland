@@ -20,4 +20,7 @@
 +(void)cacheCasePushResult:(PushResult*)entity;
 +(void)cacheCasePushFromArray:(NSArray*)results;
 +(NSArray*)readCacheCasePush;
+//项目设定
++(void)cacheCaseSettingsFromArray:(NSArray*)settings;
++(NSArray*)readCacheCaseSettings;
 @end

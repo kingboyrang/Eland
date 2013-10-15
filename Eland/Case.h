@@ -27,11 +27,12 @@
 @property(nonatomic,copy) NSString *ExpireDate;
 @property(nonatomic,copy) NSString *Source;
 @property(nonatomic,copy) NSString *AppCode;
-@property(nonatomic,retain) CaseExtend *Extend;
-@property(nonatomic,retain) CaseApplicant *Applicant;
-@property(nonatomic,retain) NSArray *Images;
-@property(nonatomic,retain) NSArray *ApprovalImages;
+@property(nonatomic,strong) CaseExtend *Extend;
+@property(nonatomic,strong) CaseApplicant *Applicant;
+@property(nonatomic,strong) NSArray *Images;
+@property(nonatomic,strong) NSArray *ApprovalImages;
 -(NSString*)XmlSerialize;
 +(Case*)xmlStringToCase:(NSString*)xml;
 -(NSString*)getFieldValue:(NSString*)propertyname;
+-(NSArray*)imageURLs;
 @end

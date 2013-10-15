@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "CaseSettingField.h"
-@interface CaseSetting : NSObject
+@interface CaseSetting : NSObject<NSCoding>
 @property(nonatomic,copy) NSString *GUID;
 @property(nonatomic,copy) NSString *Name;
 @property(nonatomic,copy) NSString *ShowCity;
@@ -20,4 +20,5 @@
 
 @property(nonatomic,readonly) BOOL showImage;
 +(CaseSetting*)xmlStringToCaseSetting:(NSString*)xml;
++(NSArray*)xmlStringToCaseSettings:(NSString*)xml;
 @end

@@ -40,7 +40,12 @@
         r.size.height=size.height;
     }
 	_rightlabel.frame = r;
-	
+    
+    if (size.height<=self.label.frame.size.height) {
+        r=self.label.frame;
+        r.origin.y=(self.bounds.size.height-self.label.frame.size.height)/2.0;
+        self.label.frame=r;
+    }
 }
 
 

@@ -8,11 +8,17 @@
 
 #import "RepairItemViewController.h"
 #import "UIColor+TPCategory.h"
+#import "CaseSetting.h"
+#import "CacheHelper.h"
+#import "asyncHelper.h"
+#import "UIImageView+WebCache.h"
 @interface RepairItemViewController ()
-
+-(void)loadRepairItem;
+-(void)updateSourceUI:(NSArray*)arr;
 @end
 
 @implementation RepairItemViewController
+@synthesize sourceData=_sourceData;
 -(void)dealloc{
     [super dealloc];
     [_collectionView release],_collectionView=nil;
@@ -55,21 +61,67 @@
     [self.view addSubview:_collectionView];
     [flowlayout release];
     
+    
+   
     _sourceData=[[NSMutableArray alloc] init];
-    for (int i=1; i<8; i++) {
-        [_sourceData addObject:[NSString stringWithFormat:@"fk_0%d.jpg",i]];
+    for (int i=1; i<10; i++) {
+        //[_sourceData addObject:[NSString stringWithFormat:@"fk_0%d.jpg",i]];
+        CaseSetting *entity=[[CaseSetting alloc] init];
+        [_sourceData addObject:entity];
+        [entity release];
     }
-    [_sourceData addObject:@"fk_08.jpg"];
-    [_sourceData addObject:@"fk_08.jpg"];
+    //[_sourceData addObject:@"fk_08.jpg"];
+    //[_sourceData addObject:@"fk_08.jpg"];
     
     CGFloat surplus=self.view.bounds.size.height-3*h-44*2;
     int row=surplus/h>1?(surplus/h+1):surplus/h;
     for (int i=1; i<=row*3; i++) {
-        [_sourceData addObject:@"fk_08.jpg"];
+        CaseSetting *entity=[[CaseSetting alloc] init];
+        [_sourceData addObject:entity];
+        [entity release];
     }
+    
+    [self loadRepairItem];
   // Do any additional setup after loading the view.
 }
-
+-(void)updateSourceUI:(NSArray*)arr{
+    NSMutableArray *_source=[NSMutableArray arrayWithArray:arr];
+    if (_source.count%3!=0) {
+        int len=(_source.count/3+1)*3-_source.count;
+        for (int i=1; i<=len; i++) {
+            CaseSetting *entity=[[CaseSetting alloc] init];
+            [_source addObject:entity];
+            [entity release];
+        }
+    }
+    UICollectionViewFlowLayout *flowlayout=(UICollectionViewFlowLayout*)_collectionView.collectionViewLayout;
+    CGFloat h=flowlayout.itemSize.height;
+    CGFloat surplus=self.view.bounds.size.height-3*h-44*2;
+    int row=surplus/h>1?(surplus/h+1):surplus/h;
+    for (int i=1; i<=row*3; i++) {
+        CaseSetting *entity=[[CaseSetting alloc] init];
+        [_source addObject:entity];
+        [entity release];
+    }
+    self.sourceData=_source;
+    [_collectionView reloadData];
+    NSLog(@"aa");
+}
+-(void)loadRepairItem{
+    NSArray *arr=[CacheHelper readCacheCaseSettings];
+    if (arr&&[arr count]>0) {
+        [self performSelectorOnMainThread:@selector(updateSourceUI:) withObject:arr waitUntilDone:NO];
+    }else{
+        [asyncHelper asyncLoadCaseSettings:^(NSArray *result) {
+            if (result&&[result count]>0) {
+                [self performSelectorOnMainThread:@selector(updateSourceUI:) withObject:arr waitUntilDone:NO];
+            }else{
+                CaseSetting *entity=[[[CaseSetting alloc] init] autorelease];
+                [self performSelectorOnMainThread:@selector(updateSourceUI:) withObject:[NSArray arrayWithObjects:entity, nil] waitUntilDone:NO];
+            }
+        }];
+    }
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -78,13 +130,24 @@
 #pragma mark -
 #pragma mark UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return [_sourceData count];
+    
+    return [self.sourceData count];
 
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *cellIdentifier=@"Cell";
     UICollectionViewCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[_sourceData objectAtIndex:indexPath.row]]];
+    
+    CaseSetting *entity=[_sourceData objectAtIndex:indexPath.row];
+    if (![entity.Icon isEqual:[NSNull null]]&&[entity.Icon length]>0) {
+        UIImageView *imageView=[[UIImageView alloc] init];
+        [imageView setImageWithURL:[NSURL URLWithString:entity.Icon] placeholderImage:[UIImage imageNamed:@"fk_08.jpg"]];
+        cell.backgroundView = imageView;
+        [imageView release];
+    }
+    else{
+        cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"fk_08.jpg"]];
+    }
     return cell;
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{

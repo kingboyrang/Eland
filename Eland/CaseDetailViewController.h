@@ -11,9 +11,12 @@
 #import "ServiceHelper.h"
 #import "CaseSetting.h"
 #import "Case.h"
-@interface CaseDetailViewController : BasicViewController<UITableViewDataSource,UITableViewDelegate>{
+#import "MKPhotoScroll.h"
+@interface CaseDetailViewController : BasicViewController<MKPhotoScrollDelegate,UITableViewDataSource,UITableViewDelegate>{
+@private
     ServiceHelper *_serviceHelper;
     UITableView *_tableView;
+    
 }
 @property(nonatomic,strong) LevelCase *itemCase;
 @property(nonatomic,strong) Case *entityCase;

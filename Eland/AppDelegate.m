@@ -65,6 +65,11 @@
     [self initParams];
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     UserSet *user=[UserSet sharedInstance];
+    if (user.isSecondLoad==NO) {
+        user.isSecondLoad=YES;
+        user.isFirstLoad=YES;
+        [user save];
+    }
     if (!user.isReadPrivacy) {
         SecrecyViewController *privacy=[[SecrecyViewController alloc] init];
         privacy.title=@"隱私及資訊安全保護政策";
