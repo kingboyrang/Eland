@@ -46,4 +46,7 @@
 // 新增项目 - POST
 #define AddCaseURL @"http://60.251.51.217/Cases.Admin/WebServices/CaseAdd.aspx"
 
+//图片浏览地址
+#define CaseImageURL @"http://60.251.51.217/Cases.Admin/%@"
+
 

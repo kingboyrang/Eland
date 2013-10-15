@@ -74,7 +74,7 @@
             }
         }
     } failed:^(NSError *error, NSDictionary *userInfo) {
-        
+        //图片缓存
     } complete:^{
         if (_entityCaseSetting.Fields==nil||_entityCaseSetting.Fields.count==0) {
             WBInfoNoticeView *info=[WBInfoNoticeView infoNoticeInView:self.view title:@"服務請求未響應!"];
