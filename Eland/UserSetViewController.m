@@ -14,6 +14,7 @@
 #import "UserSet.h"
 #import "WBSuccessNoticeView.h"
 #import "TKButtonButtonCell.h"
+#import "UIDevice+TPCategory.h"
 @interface UserSetViewController ()
 -(void)buttonSaveClick;
 -(void)buttonSecrecyClick;
@@ -39,12 +40,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-   
     [self.navigationItem titleViewBackground];
      //[self.navigationItem setShadowTitle:@"使用者設定"];
     
     CGRect rect=self.view.bounds;
-    
+    /**
+    if (self.IOSSystemVersion>=7.0) {
+         _tableView=[[UITableView alloc] initWithFrame:rect style:UITableViewStylePlain];
+        _tableView.bounces=NO;
+    }else{
+        _tableView=[[UITableView alloc] initWithFrame:rect style:UITableViewStyleGrouped];
+    }
+     ***/
     _tableView=[[UITableView alloc] initWithFrame:rect style:UITableViewStyleGrouped];
     _tableView.dataSource=self;
     _tableView.delegate=self;
@@ -141,6 +148,9 @@
     [self.navigationController pushViewController:secrecy animated:YES];
     [secrecy release];
 }
+-(float)IOSSystemVersion{
+    return [[[UIDevice currentDevice] systemVersion] floatValue];
+}
 #pragma mark UITableView Delegate & DataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;
@@ -168,4 +178,5 @@
         return cell;
     }
 }
+
 @end

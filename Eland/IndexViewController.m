@@ -38,11 +38,15 @@
     [super viewDidLoad];
     [self.navigationItem titleViewBackground];
     CGFloat h=DeviceIsPad?58:40;
+    //CGFloat topY=self.IOSSystemVersion>=7.0?h:0;
     _menuBar=[[MenuBar alloc] initWithFrame:CGRectMake(0, 0, DeviceWidth, h)];
     _menuBar.controlers=self;
     _menuBar.autoresizesSubviews=YES;
     _menuBar.autoresizingMask=UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:_menuBar];
+
+    
+   
     
    RepairItemViewController *_repair=[[[RepairItemViewController alloc] init] autorelease];
    _caseSearch=[[CaseSearchViewController alloc] init];
@@ -52,15 +56,17 @@
     [self addChildViewController:_caseSearch];
     [self addChildViewController:_push];
     [self addChildViewController:_business];
-    /***
-    NSString *path=[DocumentPath stringByAppendingPathComponent:@"load@2x.png"];
-    UIImage *image=[UIImage imageNamed:@"wel_i.jpg"];
+   /***
+    CGFloat w=80,imageh=80*58/150;
+    NSString *path=[DocumentPath stringByAppendingPathComponent:@"bussiness_normal.png"];
+    UIImage *image=[[UIImage imageNamed:@"bussiness_normal.png"] imageByScalingToSize:CGSizeMake(w, imageh)];
     [image saveImage:path];
     NSLog(@"path=%@\n",path);
     
-    NSString *path1=[DocumentPath stringByAppendingPathComponent:@"load.png"];
-    UIImage *image1=[[UIImage imageNamed:@"wel_i.jpg"] imageByScalingProportionallyToSize:CGSizeMake(320, 480)];
+    NSString *path1=[DocumentPath stringByAppendingPathComponent:@"bussiness_select.png"];
+    UIImage *image1=[[UIImage imageNamed:@"bussiness_select.png"] imageByScalingToSize:CGSizeMake(w, imageh)];
     [image1 saveImage:path1];
+    
     ***/
     /***
     NSString *path2=[DocumentPath stringByAppendingPathComponent:@"Default-568h@2x.png"];

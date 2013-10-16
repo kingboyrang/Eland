@@ -10,13 +10,18 @@
 #import "CacheHelper.h"
 #import "PushDetail.h"
 #import "PushDetailViewController.h"
+#import "UserSet.h"
 @interface PushViewController (){
     UITableView *_tableView;
 }
+-(void)loadAndUpdatePush;
 @end
 
 @implementation PushViewController
-
+-(void)dealloc{
+    [super dealloc];
+    [_helper release],_helper=nil;
+}
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -30,12 +35,13 @@
     NSArray *arr=[CacheHelper readCacheCasePush];
     if (arr&&[arr count]>0) {
         //排序
-        NSSortDescriptor *_sorter  = [[NSSortDescriptor alloc] initWithKey:@"Created" ascending:NO];
+        NSSortDescriptor *_sorter  = [[NSSortDescriptor alloc] initWithKey:@"SendTime" ascending:NO];
         NSArray *sortArr=[arr sortedArrayUsingDescriptors:[NSArray arrayWithObjects:_sorter, nil]];
         self.listData=[NSMutableArray arrayWithArray:sortArr];
         [_sorter release];
         [_tableView reloadData];
     }
+    [self loadAndUpdatePush];
 }
 - (void)viewDidLoad
 {
@@ -43,7 +49,33 @@
     _tableView=[[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     _tableView.dataSource=self;
     _tableView.delegate=self;
+    [self.view addSubview:_tableView];
+    _helper=[[ServiceHelper alloc] init];
+   
 	// Do any additional setup after loading the view.
+}
+-(void)loadAndUpdatePush{
+    NSString *token=[[UserSet sharedInstance] AppToken];
+    if ([token length]==0)return;
+    ServiceArgs *args=[[[ServiceArgs alloc] init] autorelease];
+    args.methodName=@"GetMessages";
+    args.soapParams=[NSArray arrayWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:token,@"token", nil], nil];
+    [_helper asynService:args success:^(ServiceResult *result) {
+        if ([result.xmlString length]>0) {
+            NSString *xml=[result.xmlString stringByReplacingOccurrencesOfString:result.xmlnsAttr withString:@""];
+            [result.xmlParse setDataSource:xml];
+            XmlNode *node=[result.xmlParse soapXmlSelectSingleNode:@"//GetMessagesResult"];
+            xml=[node.Value stringByReplacingOccurrencesOfString:@"xmlns=\"Push[]\"" withString:@""];
+            [result.xmlParse setDataSource:xml];
+            NSArray *arr=[result.xmlParse selectNodes:@"//Push" className:@"PushResult"];
+            if (arr&&[arr count]>0) {
+                [CacheHelper cacheCasePushArray:arr];
+            }
+        }
+        
+    } failed:^(NSError *error, NSDictionary *userInfo) {
+        
+    }];
 }
 -(void)relayout:(BOOL)isLand{
 

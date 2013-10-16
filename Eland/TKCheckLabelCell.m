@@ -26,6 +26,11 @@
     _rightLabel.backgroundColor=[UIColor clearColor];
     [self.contentView addSubview:_rightLabel];
     
+    UIView *bgView = [[UIView alloc] init];
+    bgView.backgroundColor = [UIColor clearColor];
+    self.backgroundView = bgView;
+    [bgView release];
+    
     return self;
 }
 

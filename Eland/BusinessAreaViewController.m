@@ -37,7 +37,11 @@
     }
     return self;
 }
-
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    TKLabelTextViewCell *cell1=self.cells[0];
+    cell1.textView.text=[[UserSet sharedInstance] AppToken];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];

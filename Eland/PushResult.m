@@ -7,7 +7,7 @@
 //
 
 #import "PushResult.h"
-
+#import "CacheHelper.h"
 @implementation PushResult
 - (void)encodeWithCoder:(NSCoder *)encoder{
     [encoder encodeObject:self.ID forKey:@"ID"];
@@ -74,5 +74,19 @@
     }
     int y=[[date substringWithRange:NSMakeRange(0, 4)] intValue];
     return [NSString stringWithFormat:@"%d%@",y-1911,[date stringByReplacingCharactersInRange:NSMakeRange(0, 4) withString:@""]];
+}
++(BOOL)existsPushResultWithGuid:(NSString*)guid index:(int*)pos{
+    NSArray *arr=[CacheHelper readCacheCasePush];
+    if (arr&&[arr count]>0) {
+        NSString *match=[NSString stringWithFormat:@"SELF.GUID =='%@'",guid];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:match];
+        NSArray *results = [arr filteredArrayUsingPredicate:predicate];
+        if (results&&[results count]>0) {
+            *pos=[arr indexOfObject:[results objectAtIndex:0]];
+            return YES;
+        }
+    }
+    *pos=-1;
+    return NO;
 }
 @end

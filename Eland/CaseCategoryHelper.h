@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "CaseCategory.h"
 @interface CaseCategoryHelper : NSObject
 @property(nonatomic,strong) NSMutableArray *categorys;
 -(NSMutableArray*)fillTreeNodes;
@@ -18,4 +18,7 @@
 +(NSString*)getCategoryName:(NSString*)guid;
 -(NSString*)getParentCategoryName:(NSString*)guid;
 +(NSString*)getParentCategoryName:(NSString*)guid withArray:(NSArray*)arr;
+//子类别
+-(CaseCategory*)getCaseCategoryWithGuid:(NSString*)guid;
+-(NSMutableArray*)fillCategoryTreeNodes:(NSString*)parent;
 @end

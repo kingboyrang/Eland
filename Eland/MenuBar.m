@@ -41,45 +41,42 @@
     return self;
 }
 -(void)loadControls{
-    CGFloat w=DeviceWidth/4.0,h=40;
-    //CGFloat h=self.bounds.size.height,w=140*h/58;//w*58/140
+    CGFloat w=80,h=30;
     if (DeviceIsPad) {
         w=150;
         h=58;
     }
-    CGSize imageSize=CGSizeMake(w, h);
+   
     UIButton *btn1=[UIButton buttonWithType:UIButtonTypeCustom];
     btn1.frame=CGRectMake(0, 0, w, h);
     btn1.tag=100;
     btn1.selected=YES;
-    [btn1 setBackgroundImage:[[UIImage imageNamed:@"repair_normal.png"] imageByScalingProportionallyToSize:imageSize] forState:UIControlStateNormal];
-    [btn1 setBackgroundImage:[[UIImage imageNamed:@"repair_select.png"] imageByScalingProportionallyToSize:imageSize] forState:UIControlStateSelected];
-    //[btn1 setBackgroundImage:[UIImage imageNamed:@"repair_normal.png"] forState:UIControlStateNormal];
-    //[btn1 setBackgroundImage:[UIImage imageNamed:@"repair_select.png"] forState:UIControlStateSelected];
+    [btn1 setBackgroundImage:[UIImage imageNamed:DeviceIsPad?@"repair_normal.png":@"iphone_repair_normal.png"] forState:UIControlStateNormal];
+    [btn1 setBackgroundImage:[UIImage imageNamed:DeviceIsPad?@"repair_select.png":@"iphone_repair_select.png"] forState:UIControlStateSelected];
     [btn1 addTarget:self action:@selector(selectedButton:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:btn1];
     
     UIButton *btn2=[UIButton buttonWithType:UIButtonTypeCustom];
     btn2.frame=CGRectMake(w, 0, w, h);
     btn2.tag=101;
-    [btn2 setBackgroundImage:[[UIImage imageNamed:@"search_normal.png"] imageByScalingProportionallyToSize:imageSize] forState:UIControlStateNormal];
-    [btn2 setBackgroundImage:[[UIImage imageNamed:@"search_select.png"] imageByScalingProportionallyToSize:imageSize] forState:UIControlStateSelected];
+    [btn2 setBackgroundImage:[UIImage imageNamed:DeviceIsPad?@"search_normal.png":@"iphone_search_normal.png"]  forState:UIControlStateNormal];
+    [btn2 setBackgroundImage:[UIImage imageNamed:DeviceIsPad?@"search_select.png":@"iphone_search_select.png"]  forState:UIControlStateSelected];
     [btn2 addTarget:self action:@selector(selectedButton:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:btn2];
     
     UIButton *btn3=[UIButton buttonWithType:UIButtonTypeCustom];
     btn3.frame=CGRectMake(2*w, 0, w, h);
     btn3.tag=102;
-    [btn3 setBackgroundImage:[[UIImage imageNamed:@"push_normal.png"] imageByScalingProportionallyToSize:imageSize] forState:UIControlStateNormal];
-    [btn3 setBackgroundImage:[[UIImage imageNamed:@"push_select.png"] imageByScalingProportionallyToSize:imageSize] forState:UIControlStateSelected];
+    [btn3 setBackgroundImage:[UIImage imageNamed:DeviceIsPad?@"push_normal.png":@"iphone_push_normal.png"]  forState:UIControlStateNormal];
+    [btn3 setBackgroundImage:[UIImage imageNamed:DeviceIsPad?@"push_select.png":@"iphone_push_select.png"]  forState:UIControlStateSelected];
     [btn3 addTarget:self action:@selector(selectedButton:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:btn3];
     
     UIButton *btn4=[UIButton buttonWithType:UIButtonTypeCustom];
     btn4.frame=CGRectMake(3*w, 0, w, h);
     btn4.tag=103;
-    [btn4 setBackgroundImage:[[UIImage imageNamed:@"bussiness_normal.png"] imageByScalingProportionallyToSize:imageSize] forState:UIControlStateNormal];
-    [btn4 setBackgroundImage:[[UIImage imageNamed:@"bussiness_select.png"] imageByScalingProportionallyToSize:imageSize] forState:UIControlStateSelected];
+    [btn4 setBackgroundImage:[UIImage imageNamed:DeviceIsPad?@"bussiness_normal.png":@"iphone_bussiness_normal.png"] forState:UIControlStateNormal];
+    [btn4 setBackgroundImage:[UIImage imageNamed:DeviceIsPad?@"bussiness_select.png":@"iphone_bussiness_select.png"]  forState:UIControlStateSelected];
     [btn4 addTarget:self action:@selector(selectedButton:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:btn4];
     
@@ -87,9 +84,10 @@
     CGFloat leftX=DeviceWidth<totalW?0:(self.bounds.size.width-totalW)/2;
     
     _scrollView.contentSize=CGSizeMake(totalW, h);
-    _scrollView.frame=CGRectMake(leftX, 0,self.bounds.size.width, h);
+    _scrollView.frame=CGRectMake(leftX,(self.bounds.size.height-h)/2.0,self.bounds.size.width, h);
     
     [self addSubview:_scrollView];
+    
     
 }
 -(void)layoutSubviews{

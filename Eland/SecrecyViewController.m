@@ -34,7 +34,7 @@
     [super viewDidLoad];
     
     UserSet *user=[UserSet sharedInstance];
-    if (user.isFirstLoad) {
+    if (user.isFirstLoad&&[self.navigationController.viewControllers count]==1) {
         [self startLoading];
     }
     

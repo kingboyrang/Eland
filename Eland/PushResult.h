@@ -24,4 +24,6 @@
 @property(nonatomic,copy) NSString *AuthToken;//客户Token
 -(NSString*)formatDataTw;
 +(PushResult*)PushResultWithGuid:(NSString*)guid;
+//判断当前这笔资料是否已存在
++(BOOL)existsPushResultWithGuid:(NSString*)guid index:(int*)pos;
 @end

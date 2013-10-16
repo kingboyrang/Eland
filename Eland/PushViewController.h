@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface PushViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+#import "ServiceHelper.h"
+@interface PushViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>{
+    ServiceHelper *_helper;
+}
 @property(nonatomic,retain) NSMutableArray *listData;
 -(void)relayout:(BOOL)isLand;
 @end

@@ -72,8 +72,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    CGRect rect=self.view.bounds;
-    
+    CGRect rect=self.view.bounds;    
     UIImageView *imageview = [[[UIImageView alloc] initWithFrame:self.view.bounds] autorelease];
     [imageview setImage:[UIImage imageNamed:@"systemcheckbg.jpg"]];
     
@@ -157,12 +156,12 @@
 
 }
 - (void)buttonLocation:(id)sender{
+    UIButton *btn=(UIButton*)sender;
     TKCheckButtonCell *cell1=self.gpscells[2];
     TKCheckButtonCell *cell2=self.gpscells[5];
     TKButtonLabelCell *cell3=self.gpscells[6];
-    
-    UIButton *btn=(UIButton*)sender;
-    TKCheckButtonCell *cell=(TKCheckButtonCell*)[[btn superview] superview];
+
+    TKCheckButtonCell *cell=[cell1.contentView.subviews containsObject:btn]?self.gpscells[2]:self.gpscells[5];
     [cell startLocation:^(BOOL finished) {
         if (finished) {
             if (![cell1.label.text isEqualToString:@"未定位"]&&![cell2.label.text isEqualToString:@"未定位"]) {
@@ -265,7 +264,6 @@
         CGRect frame=self.tableView.frame;
         frame.size.height=screenRect.size.height-20-32-44;
         self.tableView.frame=frame;
-        NSLog(@"frame=%@\n",NSStringFromCGRect(frame));
     }else{
        self.tableView.bounces=NO;
         self.tableView.frame=self.view.bounds;

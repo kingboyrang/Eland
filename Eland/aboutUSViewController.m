@@ -35,7 +35,7 @@
     [imageView release];
     //tableCell.backgroundColor=[UIColor clearColor];
     
-    AboutScrollView *scrollView=[[AboutScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+    AboutScrollView *scrollView=[[AboutScrollView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:scrollView];
     [scrollView release];
     //[self.navigationItem setShadowTitle:@"關於我"];

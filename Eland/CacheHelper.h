@@ -18,6 +18,7 @@
 +(NSArray*)readCacheCaseCategorys;
 //推播信息
 +(void)cacheCasePushResult:(PushResult*)entity;
++(void)cacheCasePushArray:(NSArray*)results;
 +(void)cacheCasePushFromArray:(NSArray*)results;
 +(NSArray*)readCacheCasePush;
 //项目设定

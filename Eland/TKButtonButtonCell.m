@@ -9,6 +9,7 @@
 #import "TKButtonButtonCell.h"
 #import "UIColor+TPCategory.h"
 #import "UIImage+TPCategory.h"
+#import <QuartzCore/QuartzCore.h>
 @implementation TKButtonButtonCell
 
 - (id) initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -40,6 +41,7 @@
     UIView *tempView = [[[UIView alloc] init] autorelease];
     [self setBackgroundView:tempView];
     [self setBackgroundColor:[UIColor clearColor]];
+    self.layer.borderWidth=0.0;
     
     return self;
 }

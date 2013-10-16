@@ -7,7 +7,6 @@
 //
 
 #import "CaseCategoryHelper.h"
-#import "CaseCategory.h"
 #import "TreeViewNode.h"
 #import "CacheHelper.h"
 @implementation CaseCategoryHelper
@@ -109,5 +108,35 @@
         return [self getParentCategoryName:item.Parent withArray:arr];
     }
     return @"";
+}
+-(CaseCategory*)getCaseCategoryWithGuid:(NSString*)guid{
+    NSString *match=[NSString stringWithFormat:@"SELF.GUID =='%@'",guid];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:match];
+    NSArray *results = [self.categorys filteredArrayUsingPredicate:predicate];
+    if (results&&[results count]>0) {
+        CaseCategory *item=[results objectAtIndex:0];
+        return item;
+    }
+    return nil;
+}
+-(NSMutableArray*)fillCategoryTreeNodes:(NSString*)parent{
+    if (self.categorys==nil||[self.categorys count]==0) {
+        return nil;
+    }
+    CaseCategory *entity=[self getCaseCategoryWithGuid:parent];
+    if (entity!=nil) {
+        TreeViewNode *node=[[[TreeViewNode alloc] init] autorelease];
+        node.nodeLevel = 0;
+        node.nodeObject =entity;
+        node.isExpanded = NO;
+        
+        NSMutableArray *source=[self childsTreeNodes:parent];
+        NSMutableArray *childs=[self childsObjectTreeNodes:source Level:1];
+        if (childs&&[childs count]>0) {
+            node.nodeChildren=childs;
+        }
+        return [NSMutableArray arrayWithObjects:node, nil];
+    }
+    return nil;
 }
 @end

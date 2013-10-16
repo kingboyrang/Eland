@@ -14,6 +14,7 @@
 @property(nonatomic,readonly) BOOL hasNetwork;
 @property(nonatomic,readonly) BOOL isPad;
 @property(nonatomic,readonly) BOOL isLandscape;
+@property(nonatomic,readonly) float IOSSystemVersion;
 //动画操作
 -(AnimateErrorView*) errorView;
 -(AnimateLoadView*) loadingView;

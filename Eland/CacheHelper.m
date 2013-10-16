@@ -8,6 +8,7 @@
 
 #import "CacheHelper.h"
 #import "FileHelper.h"
+#import "PushResult.h"
 @implementation CacheHelper
 +(void)cacheCityFromArray:(NSArray*)citys{
     if (citys&&[citys count]>0) {
@@ -38,16 +39,40 @@
     return arr;
 }
 +(void)cacheCasePushResult:(PushResult*)entity{
-    NSArray *arr=[self readCacheCasePush];
     if (entity) {
-        if (arr!=nil&&[arr count]>0) {
-            NSMutableArray *saveArr=[NSMutableArray arrayWithArray:arr];
-            [saveArr addObject:entity];
-            [self cacheCasePushFromArray:saveArr];
+        NSArray *arr=[self readCacheCasePush];
+        NSMutableArray *source=[NSMutableArray array];
+        if (arr&&[arr count]>0) {
+            [source addObjectsFromArray:arr];
+        }
+        int index;
+        BOOL boo=[PushResult existsPushResultWithGuid:entity.GUID index:&index];
+        if (boo) {
+            [source replaceObjectAtIndex:index withObject:entity];
         }else{
-            [self cacheCasePushFromArray:[NSArray arrayWithObjects:entity, nil]];
+            [source addObject:entity];
+        }
+        [CacheHelper cacheCaseSettingsFromArray:source];
+    }
+}
++(void)cacheCasePushArray:(NSArray*)results{
+    if (results&&[results count]>0) {
+    NSMutableArray *source=[NSMutableArray array];
+    NSArray *arr=[self readCacheCasePush];
+    if (arr&&[arr count]>0) {
+        [source addObjectsFromArray:arr];
+    }
+    for (PushResult *item in results) {
+        int index;
+        BOOL boo=[PushResult existsPushResultWithGuid:item.GUID index:&index];
+        if (boo) {
+            [source replaceObjectAtIndex:index withObject:item];
+        }else{
+            [source addObject:item];
         }
     }
+    [CacheHelper cacheCaseSettingsFromArray:source];
+   }
 }
 +(void)cacheCasePushFromArray:(NSArray*)results{
     if (results&&[results count]>0) {
