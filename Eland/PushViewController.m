@@ -15,6 +15,7 @@
     UITableView *_tableView;
 }
 -(void)loadAndUpdatePush;
+-(void)reloadPushInfo;
 @end
 
 @implementation PushViewController
@@ -32,6 +33,22 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self reloadPushInfo];
+    [self loadAndUpdatePush];
+}
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    _tableView=[[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    _tableView.dataSource=self;
+    _tableView.delegate=self;
+    [self.view addSubview:_tableView];
+    _helper=[[ServiceHelper alloc] init];
+   
+	// Do any additional setup after loading the view.
+}
+-(void)reloadPushInfo{
     NSArray *arr=[CacheHelper readCacheCasePush];
     if (arr&&[arr count]>0) {
         //排序
@@ -41,18 +58,6 @@
         [_sorter release];
         [_tableView reloadData];
     }
-    [self loadAndUpdatePush];
-}
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    _tableView=[[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    _tableView.dataSource=self;
-    _tableView.delegate=self;
-    [self.view addSubview:_tableView];
-    _helper=[[ServiceHelper alloc] init];
-   
-	// Do any additional setup after loading the view.
 }
 -(void)loadAndUpdatePush{
     NSString *token=[[UserSet sharedInstance] AppToken];
@@ -70,6 +75,7 @@
             NSArray *arr=[result.xmlParse selectNodes:@"//Push" className:@"PushResult"];
             if (arr&&[arr count]>0) {
                 [CacheHelper cacheCasePushArray:arr];
+                [self reloadPushInfo];
             }
         }
         
