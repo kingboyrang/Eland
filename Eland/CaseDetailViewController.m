@@ -16,6 +16,7 @@
 #import "NSString+TPCategory.h"
 #import "Photos.h"
 #import "MKPhotoBrowser.h"
+#import "TKShowImageCell.h"
 @interface CaseDetailViewController ()
 -(void)loadAsyncDetail;
 -(void)updateSoureData;
@@ -98,28 +99,30 @@
     if (self.entityCaseSetting.showImage&&self.entityCase.Images&&[self.entityCase.Images count]>0) {
         TKShowLabelLabelCell *cell=[[TKShowLabelLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
         cell.label.text=@"案件圖片:";
-        TKEmptyCell *emptyCell=[[TKEmptyCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        TKShowImageCell *emptyCell=[[TKShowImageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        [emptyCell.PhotoScroll addRangeURLs:[self.entityCase imageURLs]];
         [arr addObject:cell];
         [arr addObject:emptyCell];
         [cell release];
         [emptyCell release];
+        
     }
     self.cells=arr;
     [_tableView reloadData];
+    /***
     if (self.entityCaseSetting.showImage&&self.entityCase.Images&&[self.entityCase.Images count]>0&&[[self.cells lastObject] isKindOfClass:[TKEmptyCell class]]){
-        MKPhotoScroll *_photoScroll=[[MKPhotoScroll alloc] initWithFrame:CGRectMake((self.view.bounds.size.width-296)/2.0,2, 296, 296)];
+        MKPhotoScroll *_photoScroll=[[MKPhotoScroll alloc] initWithFrame:CGRectMake((DeviceWidth-296)/2.0,2, 296, 296)];
         _photoScroll.tag=100;
         _photoScroll.backgroundColor=[UIColor grayColor];
         _photoScroll.delegate=self;
-        _photoScroll.autoresizesSubviews=YES;
-        _photoScroll.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-        if (self.entityCase.Images&&[self.entityCase.Images count]>0) {
-            [_photoScroll addRangeURLs:[self.entityCase imageURLs]];
-        }
+        //_photoScroll.autoresizesSubviews=YES;
+        //_photoScroll.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        [_photoScroll addRangeURLs:[self.entityCase imageURLs]];
         TKEmptyCell *cell=[self.cells lastObject];
         [cell.contentView addSubview:_photoScroll];
         [_photoScroll release];
     }
+     ***/
     //
 }
 - (void)didReceiveMemoryWarning

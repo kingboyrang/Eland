@@ -189,9 +189,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    //TPSearchCell *cell=(TPSearchCell*)[tableView cellForRowAtIndexPath:indexPath];
     LevelCase *entity=(LevelCase*)[self.list objectAtIndex:indexPath.row];
-    NSLog(@"guid=%@,pwd=%@\n",entity.GUID,entity.PWD);
     [self showAlterViewPassword:entity success:^{
         //表示成功了
         CaseDetailViewController *detail=[[CaseDetailViewController alloc] init];
@@ -199,7 +197,6 @@
         [self.navigationController pushViewController:detail animated:YES];
         [detail release];
     }];
-    //[cell selectedCellAnimal:^{}];
 }
 #pragma mark -
 #pragma mark 加载数据

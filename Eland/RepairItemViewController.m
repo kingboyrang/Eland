@@ -60,27 +60,7 @@
     [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
     [self.view addSubview:_collectionView];
     [flowlayout release];
-    
-    
-   
-    _sourceData=[[NSMutableArray alloc] init];
-    for (int i=1; i<10; i++) {
-        //[_sourceData addObject:[NSString stringWithFormat:@"fk_0%d.jpg",i]];
-        CaseSetting *entity=[[CaseSetting alloc] init];
-        [_sourceData addObject:entity];
-        [entity release];
-    }
-    //[_sourceData addObject:@"fk_08.jpg"];
-    //[_sourceData addObject:@"fk_08.jpg"];
-    
-    CGFloat surplus=self.view.bounds.size.height-3*h-44*2;
-    int row=surplus/h>1?(surplus/h+1):surplus/h;
-    for (int i=1; i<=row*3; i++) {
-        CaseSetting *entity=[[CaseSetting alloc] init];
-        [_sourceData addObject:entity];
-        [entity release];
-    }
-    
+    //加载项目
     [self loadRepairItem];
   // Do any additional setup after loading the view.
 }
@@ -96,8 +76,13 @@
     }
     UICollectionViewFlowLayout *flowlayout=(UICollectionViewFlowLayout*)_collectionView.collectionViewLayout;
     CGFloat h=flowlayout.itemSize.height;
-    CGFloat surplus=self.view.bounds.size.height-3*h-44*2;
+    
+    int total=_source.count/3;
+    CGFloat surplus=DeviceHeight-total*h-44*3;
     int row=surplus/h>1?(surplus/h+1):surplus/h;
+    if (surplus<h) {
+        row=1;
+    }
     for (int i=1; i<=row*3; i++) {
         CaseSetting *entity=[[CaseSetting alloc] init];
         [_source addObject:entity];
@@ -105,7 +90,7 @@
     }
     self.sourceData=_source;
     [_collectionView reloadData];
-    NSLog(@"aa");
+   
 }
 -(void)loadRepairItem{
     NSArray *arr=[CacheHelper readCacheCaseSettings];
@@ -116,6 +101,7 @@
             if (result&&[result count]>0) {
                 [self performSelectorOnMainThread:@selector(updateSourceUI:) withObject:arr waitUntilDone:NO];
             }else{
+               
                 CaseSetting *entity=[[[CaseSetting alloc] init] autorelease];
                 [self performSelectorOnMainThread:@selector(updateSourceUI:) withObject:[NSArray arrayWithObjects:entity, nil] waitUntilDone:NO];
             }
@@ -139,9 +125,9 @@
     UICollectionViewCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     
     CaseSetting *entity=[_sourceData objectAtIndex:indexPath.row];
-    if (![entity.Icon isEqual:[NSNull null]]&&[entity.Icon length]>0) {
+    if ([[entity IconURLString] length]>0) {
         UIImageView *imageView=[[UIImageView alloc] init];
-        [imageView setImageWithURL:[NSURL URLWithString:entity.Icon] placeholderImage:[UIImage imageNamed:@"fk_08.jpg"]];
+        [imageView setImageWithURL:[NSURL URLWithString:entity.IconURLString] placeholderImage:[UIImage imageNamed:@"fk_08.jpg"]];
         cell.backgroundView = imageView;
         [imageView release];
     }

@@ -57,7 +57,7 @@
         self.hasConnect=isConnection;
     }];
     //背景任务
-    //[asyncHelper backgroundQueueLoad];
+    [asyncHelper backgroundQueueLoad];
     
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions

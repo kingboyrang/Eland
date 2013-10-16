@@ -41,6 +41,12 @@
     }
     return NO;
 }
+-(NSString*)IconURLString{
+    if (_Icon&&[_Icon length]>0) {
+        return [_Icon stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
+    }
+    return @"";
+}
 +(CaseSetting*)xmlStringToCaseSetting:(NSString*)xml{
     CaseSetting *entity=[[[CaseSetting alloc] init] autorelease];
     
@@ -72,7 +78,7 @@
 }
 +(NSArray*)xmlStringToCaseSettings:(NSString*)xml{
    xml=[xml stringByReplacingOccurrencesOfString:@"xmlns=\"CaseSetting[]\"" withString:@""];
-   XmlParseHelper *_parse=[[[XmlParseHelper alloc] init] autorelease];
+   XmlParseHelper *_parse=[[[XmlParseHelper alloc] initWithData:xml] autorelease];
    return [_parse selectNodes:@"//CaseSetting" className:@"CaseSetting"];
 }
 @end
