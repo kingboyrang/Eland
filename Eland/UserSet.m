@@ -92,6 +92,22 @@
     }
     return @"";
 }
++ (BOOL)emptyUser{
+    UserSet *app=[UserSet sharedInstance];
+    if ([app.Name length]==0) {
+        return NO;
+    }
+    if ([app.Mobile length]==0) {
+        return NO;
+    }
+    if ([app.Email length]==0) {
+        return NO;
+    }
+    if ([app.Nick length]==0) {
+        return NO;
+    }
+    return YES;
+}
 #pragma mark -
 #pragma mark 私有方法
 -(void)initloadValue{

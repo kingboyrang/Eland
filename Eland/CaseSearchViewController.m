@@ -16,6 +16,7 @@
 #import "ShakingAlertView.h"
 #import "CaseDetailViewController.h"
 #import "WBSuccessNoticeView.h"
+#import "UIDevice+TPCategory.h"
 @interface CaseSearchViewController (){
     SearchField *_searchField;
 }
@@ -52,6 +53,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //CGFloat topY=[UIDevice IOSSystemVersion]>=7.0?44:0;
+   
     
     CGFloat h=44*4;
     _searchField=[[SearchField alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, h)];

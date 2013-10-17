@@ -31,7 +31,10 @@
 {
     [super viewDidLoad];
     CGFloat h=DeviceIsPad?58:40;
-    self.scrollView=[[UIScrollView alloc] initWithFrame:CGRectMake(0, h, self.view.bounds.size.width, self.view.bounds.size.height-h)];
+    CGFloat topY=self.IOSSystemVersion>=7.0?h+44.0:h;
+
+    
+    self.scrollView=[[UIScrollView alloc] initWithFrame:CGRectMake(0, topY, self.view.bounds.size.width, self.view.bounds.size.height-topY)];
     self.scrollView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     self.scrollView.backgroundColor=[UIColor clearColor];
 	// Do any additional setup after loading the view, typically from a nib.

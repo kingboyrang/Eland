@@ -16,4 +16,5 @@
 }
 //是否隐藏tabbar
 - (void)showTabbar:(BOOL)show;
+- (void)setSelectedItemIndex:(int)index;
 @end

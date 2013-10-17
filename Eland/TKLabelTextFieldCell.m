@@ -31,6 +31,11 @@
 
 #import "TKLabelTextFieldCell.h"
 #import <QuartzCore/QuartzCore.h>
+
+@interface TKLabelTextFieldCell ()
+- (void)endEditing:(NSNotification*)notification;
+@end
+
 @implementation TKLabelTextFieldCell
 @synthesize hasValue;
 @synthesize required;

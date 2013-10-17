@@ -71,6 +71,10 @@
     
 	// Do any additional setup after loading the view.
 }
+-(float)IOSSystemVersion{
+    NSString *version=[[UIDevice currentDevice] systemVersion];
+    return [version floatValue];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -135,7 +139,7 @@
 }
 #pragma mark 网络未连接提示
 - (void) showNoNetworkNotice:(void (^)(void))dismissError{
-    WBErrorNoticeView *notice = [WBErrorNoticeView errorNoticeInView:self.view title:@"Network Error" message:@"Check your network connection."];
+    WBErrorNoticeView *notice = [WBErrorNoticeView errorNoticeInView:self.view title:@"網絡錯誤" message:@"請檢查您的網絡連接."];
     [notice setDismissalBlock:^(BOOL dismissedInteractively) {
         if (dismissError) {
             dismissError();

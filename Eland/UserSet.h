@@ -30,4 +30,6 @@
 //业务专区同步
 + (void) businessSync;
 + (NSString*)ObjectToXml;
+//判断是否有值
++ (BOOL)emptyUser;
 @end

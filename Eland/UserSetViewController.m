@@ -44,6 +44,7 @@
      //[self.navigationItem setShadowTitle:@"使用者設定"];
     
     CGRect rect=self.view.bounds;
+   
     /**
     if (self.IOSSystemVersion>=7.0) {
          _tableView=[[UITableView alloc] initWithFrame:rect style:UITableViewStylePlain];
@@ -147,9 +148,6 @@
     SecrecyViewController *secrecy=[[SecrecyViewController alloc] init];
     [self.navigationController pushViewController:secrecy animated:YES];
     [secrecy release];
-}
--(float)IOSSystemVersion{
-    return [[[UIDevice currentDevice] systemVersion] floatValue];
 }
 #pragma mark UITableView Delegate & DataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

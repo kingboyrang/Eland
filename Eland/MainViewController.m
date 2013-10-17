@@ -176,6 +176,11 @@
     }
     
 }
+- (void)setSelectedItemIndex:(int)index{
+    int pos=100+index;
+    UIButton *btn=(UIButton*)[_tabbarView viewWithTag:pos];
+    [self selectedTab:btn];
+}
 //是否隐藏tabbar
 - (void)showTabbar:(BOOL)show {
     

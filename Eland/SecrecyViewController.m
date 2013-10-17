@@ -72,7 +72,7 @@
 }
 //第一次启动时加载动画
 -(void)startLoading{
-    NSString *loadName=DeviceIsPad?@"ipad_load.jpg":@"load.png";
+    NSString *loadName=DeviceIsPad?@"Default~ipad.png":@"Default.png";
     CGRect rect=[[UIScreen mainScreen] bounds];
     UIImageView *imageView=[[UIImageView alloc] initWithFrame:rect];
     [imageView setImage:[UIImage imageNamed:loadName]];

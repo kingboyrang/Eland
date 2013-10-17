@@ -38,16 +38,15 @@
     [super viewDidLoad];
     [self.navigationItem titleViewBackground];
     CGFloat h=DeviceIsPad?58:40;
-    //CGFloat topY=self.IOSSystemVersion>=7.0?h:0;
-    _menuBar=[[MenuBar alloc] initWithFrame:CGRectMake(0, 0, DeviceWidth, h)];
+    CGFloat topY=self.IOSSystemVersion>=7.0?44.0:0.0;
+    _menuBar=[[MenuBar alloc] initWithFrame:CGRectMake(0, topY, DeviceWidth, h)];
     _menuBar.controlers=self;
     _menuBar.autoresizesSubviews=YES;
     _menuBar.autoresizingMask=UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:_menuBar];
-
     
    
-    
+   
    RepairItemViewController *_repair=[[[RepairItemViewController alloc] init] autorelease];
    _caseSearch=[[CaseSearchViewController alloc] init];
    PushViewController *_push=[[[PushViewController alloc] init] autorelease];
@@ -56,15 +55,18 @@
     [self addChildViewController:_caseSearch];
     [self addChildViewController:_push];
     [self addChildViewController:_business];
+     
+    
+    //[self.view bringSubviewToFront:_menuBar];
+  
    /***
-    CGFloat w=80,imageh=80*58/150;
-    NSString *path=[DocumentPath stringByAppendingPathComponent:@"bussiness_normal.png"];
-    UIImage *image=[[UIImage imageNamed:@"bussiness_normal.png"] imageByScalingToSize:CGSizeMake(w, imageh)];
+    NSString *path=[DocumentPath stringByAppendingPathComponent:@"ipad_load.png"];
+    UIImage *image=[UIImage imageNamed:@"ipad_load.jpg"];
     [image saveImage:path];
     NSLog(@"path=%@\n",path);
     
-    NSString *path1=[DocumentPath stringByAppendingPathComponent:@"bussiness_select.png"];
-    UIImage *image1=[[UIImage imageNamed:@"bussiness_select.png"] imageByScalingToSize:CGSizeMake(w, imageh)];
+    NSString *path1=[DocumentPath stringByAppendingPathComponent:@"ipad_load@2x.png"];
+    UIImage *image1=[UIImage imageNamed:@"ipad_load@2x.jpg"];
     [image1 saveImage:path1];
     
     ***/

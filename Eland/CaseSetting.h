@@ -19,6 +19,7 @@
 @property(nonatomic,strong) NSArray *Fields;
 
 @property(nonatomic,readonly) BOOL showImage;
+@property(nonatomic,readonly) BOOL showCityDown;
 @property(nonatomic,readonly) NSString *IconURLString;
 +(CaseSetting*)xmlStringToCaseSetting:(NSString*)xml;
 +(NSArray*)xmlStringToCaseSettings:(NSString*)xml;

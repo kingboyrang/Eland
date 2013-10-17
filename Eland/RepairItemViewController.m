@@ -12,6 +12,11 @@
 #import "CacheHelper.h"
 #import "asyncHelper.h"
 #import "UIImageView+WebCache.h"
+#import "CaseAddViewController.h"
+#import "UserSet.h"
+#import "AppDelegate.h"
+#import "AlertHelper.h"
+#import "MainViewController.h"
 @interface RepairItemViewController ()
 -(void)loadRepairItem;
 -(void)updateSourceUI:(NSArray*)arr;
@@ -36,6 +41,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    CGRect rect=self.view.bounds;
     UICollectionViewFlowLayout *flowlayout=[[UICollectionViewFlowLayout alloc] init];
     CGFloat h=204*(DeviceWidth/3.0)/240;
     flowlayout.itemSize=CGSizeMake(DeviceWidth/3.0, h);
@@ -43,7 +50,7 @@
     flowlayout.sectionInset=UIEdgeInsetsMake(0, 0, 0, 0);
     flowlayout.minimumLineSpacing=0.0;
     flowlayout.minimumInteritemSpacing=0.0;
-    _collectionView=[[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:flowlayout];
+    _collectionView=[[UICollectionView alloc] initWithFrame:rect collectionViewLayout:flowlayout];
     _collectionView.backgroundColor=[UIColor colorFromHexRGB:@"cfd2d9"];
     _collectionView.dataSource=self;
     _collectionView.delegate=self;
@@ -138,7 +145,24 @@
     return cell;
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"row=%d,choose click",indexPath.row);
+    CaseSetting *setting=self.sourceData[indexPath.row];
+    if (setting.GUID&&[setting.GUID length]>0) {
+        if (![UserSet emptyUser]) {
+            [AlertHelper initWithTitle:@"提示" message:@"使用者設定信息未填寫完整,是否前往填寫?" cancelTitle:@"取消" cancelAction:nil confirmTitle:@"前往" confirmAction:^{
+                MainViewController *main=(MainViewController*)self.tabBarController;
+                [main setSelectedItemIndex:1];
+            }];
+            return;
+        }
+        if (!self.hasNetwork) {
+            [self showNoNetworkNotice:nil];
+            return;
+        }
+        CaseAddViewController *controller=[[CaseAddViewController alloc] init];
+        controller.Entity=setting;
+        [self.navigationController pushViewController:controller animated:YES];
+        [controller release];
+    }
 }
 /***
 //设置元素大小

@@ -17,4 +17,6 @@
 @property(nonatomic,copy) NSString *Required;
 @property(nonatomic,copy) NSString *Sort;
 @property(nonatomic,copy) NSString *Text;
+//是否必填
+@property(nonatomic,readonly) BOOL isRequired;
 @end

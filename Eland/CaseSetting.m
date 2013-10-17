@@ -19,7 +19,6 @@
     [encoder encodeObject:self.Icon forKey:@"Icon"];
     [encoder encodeObject:self.Memo forKey:@"Memo"];
     [encoder encodeObject:self.Fields forKey:@"Fields"];
-    
 }
 -(id)initWithCoder:(NSCoder *)aDecoder{
     if (self=[super init]) {
@@ -37,6 +36,12 @@
 }
 -(BOOL)showImage{
     if (_UpImg&&[_UpImg isEqualToString:@"1"]) {
+        return YES;
+    }
+    return NO;
+}
+-(BOOL)showCityDown{
+    if (_ShowCity&&[_ShowCity isEqualToString:@"1"]) {
         return YES;
     }
     return NO;
