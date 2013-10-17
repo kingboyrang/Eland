@@ -7,7 +7,25 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FPPopoverController.h"
+#import "CaseSetting.h"
+@interface BasicCaseViewController : BasicViewController{
+@private
+    FPPopoverController *popoverCaseCategory;
+    FPPopoverController *popoverCaseCity;
+}
+-(NSMutableArray*)CaseCategoryAndCityCells:(CaseSetting*)entity;
+//注意事项
+-(NSMutableArray*)CaseCategoryNoteCells:(CaseSettingField*)entity;
+//多行文本操作
+-(NSMutableArray*)CaseCategoryTextAreaCells:(CaseSettingField*)entity;
+//单行文本操作
+-(NSMutableArray*)CaseCategoryTextCells:(CaseSettingField*)entity;
+//案件图片
+-(NSMutableArray*)CaseCategoryImagesCells:(CaseSetting*)entity;
 
-@interface BasicCaseViewController : BasicViewController
-
+-(void)buttonCaseCategoryClick:(id)sender CaseCategoryGUID:(NSString*)guid;
+-(void)hidePopoverCaseCategory;
+-(void)buttonCaseCityClick:(id)sender;
+-(void)hidePopoverCaseCity;
 @end

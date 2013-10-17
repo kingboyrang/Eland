@@ -220,6 +220,12 @@
 		01C1B9E3180F6FB20023972E /* Default~ipad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 01C1B9E2180F6FB20023972E /* Default~ipad@2x.png */; };
 		01C1B9E6180F748D0023972E /* CaseAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C1B9E5180F748D0023972E /* CaseAddViewController.m */; };
 		01C1B9EA180F86AF0023972E /* BasicCaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C1B9E9180F86AF0023972E /* BasicCaseViewController.m */; };
+		01C1B9ED180FB2B00023972E /* TKCaseLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C1B9EC180FB2B00023972E /* TKCaseLabelCell.m */; };
+		01C1B9F0180FB48C0023972E /* TKCaseTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C1B9EF180FB48C0023972E /* TKCaseTextFieldCell.m */; };
+		01C1B9F3180FC7CC0023972E /* TKCaseTextViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C1B9F2180FC7CC0023972E /* TKCaseTextViewCell.m */; };
+		01C1B9F6180FCEA20023972E /* TKCaseTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C1B9F5180FCEA20023972E /* TKCaseTextCell.m */; };
+		01C1B9F9180FD6A50023972E /* TKCaseLabelTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C1B9F8180FD6A50023972E /* TKCaseLabelTextFieldCell.m */; };
+		01C1B9FC180FDE000023972E /* TKCaseButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C1B9FB180FDE000023972E /* TKCaseButtonCell.m */; };
 		01C2EA77180B8CC700220F16 /* CaseSettingField.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C2EA76180B8CC700220F16 /* CaseSettingField.m */; };
 		01C2EA7A180B904000220F16 /* CaseSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C2EA79180B904000220F16 /* CaseSetting.m */; };
 		01C2EA7E180BA13800220F16 /* TKShowLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C2EA7D180BA13800220F16 /* TKShowLabelCell.m */; };
@@ -633,6 +639,18 @@
 		01C1B9E5180F748D0023972E /* CaseAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaseAddViewController.m; sourceTree = "<group>"; };
 		01C1B9E8180F86AF0023972E /* BasicCaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicCaseViewController.h; sourceTree = "<group>"; };
 		01C1B9E9180F86AF0023972E /* BasicCaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicCaseViewController.m; sourceTree = "<group>"; };
+		01C1B9EB180FB2B00023972E /* TKCaseLabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKCaseLabelCell.h; sourceTree = "<group>"; };
+		01C1B9EC180FB2B00023972E /* TKCaseLabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKCaseLabelCell.m; sourceTree = "<group>"; };
+		01C1B9EE180FB48C0023972E /* TKCaseTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKCaseTextFieldCell.h; sourceTree = "<group>"; };
+		01C1B9EF180FB48C0023972E /* TKCaseTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKCaseTextFieldCell.m; sourceTree = "<group>"; };
+		01C1B9F1180FC7CC0023972E /* TKCaseTextViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKCaseTextViewCell.h; sourceTree = "<group>"; };
+		01C1B9F2180FC7CC0023972E /* TKCaseTextViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKCaseTextViewCell.m; sourceTree = "<group>"; };
+		01C1B9F4180FCEA20023972E /* TKCaseTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKCaseTextCell.h; sourceTree = "<group>"; };
+		01C1B9F5180FCEA20023972E /* TKCaseTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKCaseTextCell.m; sourceTree = "<group>"; };
+		01C1B9F7180FD6A50023972E /* TKCaseLabelTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKCaseLabelTextFieldCell.h; sourceTree = "<group>"; };
+		01C1B9F8180FD6A50023972E /* TKCaseLabelTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKCaseLabelTextFieldCell.m; sourceTree = "<group>"; };
+		01C1B9FA180FDE000023972E /* TKCaseButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKCaseButtonCell.h; sourceTree = "<group>"; };
+		01C1B9FB180FDE000023972E /* TKCaseButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKCaseButtonCell.m; sourceTree = "<group>"; };
 		01C2EA75180B8CC700220F16 /* CaseSettingField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaseSettingField.h; sourceTree = "<group>"; };
 		01C2EA76180B8CC700220F16 /* CaseSettingField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaseSettingField.m; sourceTree = "<group>"; };
 		01C2EA78180B904000220F16 /* CaseSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaseSetting.h; sourceTree = "<group>"; };
@@ -1115,6 +1133,8 @@
 		014BDC1417F17BB0001E716D /* Case */ = {
 			isa = PBXGroup;
 			children = (
+				01C1B9E8180F86AF0023972E /* BasicCaseViewController.h */,
+				01C1B9E9180F86AF0023972E /* BasicCaseViewController.m */,
 				01C1B9E7180F84320023972E /* UI */,
 				01C1B9E4180F748D0023972E /* CaseAddViewController.h */,
 				01C1B9E5180F748D0023972E /* CaseAddViewController.m */,
@@ -1574,8 +1594,18 @@
 		01C1B9E7180F84320023972E /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				01C1B9E8180F86AF0023972E /* BasicCaseViewController.h */,
-				01C1B9E9180F86AF0023972E /* BasicCaseViewController.m */,
+				01C1B9EB180FB2B00023972E /* TKCaseLabelCell.h */,
+				01C1B9EC180FB2B00023972E /* TKCaseLabelCell.m */,
+				01C1B9EE180FB48C0023972E /* TKCaseTextFieldCell.h */,
+				01C1B9EF180FB48C0023972E /* TKCaseTextFieldCell.m */,
+				01C1B9F1180FC7CC0023972E /* TKCaseTextViewCell.h */,
+				01C1B9F2180FC7CC0023972E /* TKCaseTextViewCell.m */,
+				01C1B9F4180FCEA20023972E /* TKCaseTextCell.h */,
+				01C1B9F5180FCEA20023972E /* TKCaseTextCell.m */,
+				01C1B9F7180FD6A50023972E /* TKCaseLabelTextFieldCell.h */,
+				01C1B9F8180FD6A50023972E /* TKCaseLabelTextFieldCell.m */,
+				01C1B9FA180FDE000023972E /* TKCaseButtonCell.h */,
+				01C1B9FB180FDE000023972E /* TKCaseButtonCell.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -2001,6 +2031,7 @@
 				01BB48D217FE525B00928E0B /* CaseCity.m in Sources */,
 				01BB48D517FE53E600928E0B /* asyncHelper.m in Sources */,
 				01BB48DE17FE5C0900928E0B /* FPPopoverController.m in Sources */,
+				01C1B9ED180FB2B00023972E /* TKCaseLabelCell.m in Sources */,
 				01BB48DF17FE5C0900928E0B /* FPPopoverView.m in Sources */,
 				01BB48E017FE5C0900928E0B /* FPTouchView.m in Sources */,
 				01BB48E417FE5CE800928E0B /* VillageTownViewController.m in Sources */,
@@ -2019,6 +2050,7 @@
 				01A563DC18025C89004149BA /* LevelCase.m in Sources */,
 				01A563DF1802600F004149BA /* CircularDetail.m in Sources */,
 				01A563E4180263BD004149BA /* TPSearchCell.m in Sources */,
+				01C1B9F0180FB48C0023972E /* TKCaseTextFieldCell.m in Sources */,
 				0138D5C91802AB7400C1FA36 /* CaseDetailViewController.m in Sources */,
 				0138D5D21802ACA500C1FA36 /* b64.m in Sources */,
 				01512120180D155800594D95 /* MKPhotoScroll.m in Sources */,
@@ -2027,11 +2059,15 @@
 				01AFB04A180CCB03000799C4 /* UIImage+GIF.m in Sources */,
 				0138D5D31802ACA500C1FA36 /* NSData+Base64.m in Sources */,
 				01AFB046180CCB03000799C4 /* SDWebImageDownloaderOperation.m in Sources */,
+				01C1B9F3180FC7CC0023972E /* TKCaseTextViewCell.m in Sources */,
 				0138D5D41802ACA500C1FA36 /* ShakingAlertView.m in Sources */,
 				0138D5D71802BD3000C1FA36 /* ASIFormDataRequest.m in Sources */,
+				01C1B9FC180FDE000023972E /* TKCaseButtonCell.m in Sources */,
+				01C1B9F9180FD6A50023972E /* TKCaseLabelTextFieldCell.m in Sources */,
 				26A2F97D1804306200216412 /* TKSearchButtonCell.m in Sources */,
 				26A2F980180437C100216412 /* SearchDetail.m in Sources */,
 				01B023D9180501A00018BF9A /* TKSearchEmptyCell.m in Sources */,
+				01C1B9F6180FCEA20023972E /* TKCaseTextCell.m in Sources */,
 				01B023E0180522FD0018BF9A /* TKCheckLabelCell.m in Sources */,
 				01B023E718053C2B0018BF9A /* PushResult.m in Sources */,
 				01B023EA180541670018BF9A /* PushDetailViewController.m in Sources */,

@@ -23,4 +23,6 @@
 @property(nonatomic,readonly) NSString *IconURLString;
 +(CaseSetting*)xmlStringToCaseSetting:(NSString*)xml;
 +(NSArray*)xmlStringToCaseSettings:(NSString*)xml;
+//乡镇市是否必填
+-(BOOL)isRequiredShowCity;
 @end

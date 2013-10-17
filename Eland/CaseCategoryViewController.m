@@ -91,7 +91,11 @@
     }
     CaseCategoryHelper *_helper=[[[CaseCategoryHelper alloc] init] autorelease];
     _helper.categorys=[NSMutableArray arrayWithArray:source];
-    nodes=[[_helper sourceTreeNodes] retain];
+    if (self.ParentGUID&&[self.ParentGUID length]>0) {
+        nodes=[[_helper fillCategoryTreeNodes:self.ParentGUID] retain];
+    }else{
+       nodes=[[_helper sourceTreeNodes] retain];
+    }
     [self fillDisplayArray];
     [_tableView reloadData];
 }
@@ -120,7 +124,11 @@
     NSArray *arr=[CacheHelper readCacheCaseCategorys];
     if (arr&&[arr count]>0) {
         _helper.categorys=[NSMutableArray arrayWithArray:arr];
-        nodes=[[_helper sourceTreeNodes] retain];
+        if (self.ParentGUID&&[self.ParentGUID length]>0) {
+            nodes=[[_helper fillCategoryTreeNodes:self.ParentGUID] retain];
+        }else{
+             nodes=[[_helper sourceTreeNodes] retain];
+        }
         
         [self fillDisplayArray];
         [_tableView reloadData];

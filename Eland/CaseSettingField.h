@@ -19,4 +19,6 @@
 @property(nonatomic,copy) NSString *Text;
 //是否必填
 @property(nonatomic,readonly) BOOL isRequired;
+//
+-(BOOL)isTextArea;
 @end

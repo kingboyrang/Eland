@@ -53,8 +53,8 @@
 @interface EMKeyboardBarTextField : UITextField {
 	
 }
-
 @property (nonatomic, assign) BOOL	showPrompt;
 @property (nonatomic, assign) BOOL	autoLayoutAnimateOnKeyboardWillShow;
 
+- (void)shake;
 @end

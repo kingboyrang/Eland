@@ -12,4 +12,6 @@
 @interface GCPlaceholderTextView : UITextView 
 
 @property(nonatomic, retain) NSString *placeholder;
+@property (nonatomic,assign) id controller;
+- (void)shake;
 @end

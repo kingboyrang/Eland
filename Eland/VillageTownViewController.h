@@ -16,4 +16,5 @@
 }
 @property(nonatomic,retain) NSArray *listData;
 @property(nonatomic,assign) id delegate;
+
 @end

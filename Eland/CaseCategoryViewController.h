@@ -13,4 +13,5 @@
 }
 @property (nonatomic, retain) NSMutableArray *displayArray;
 @property(nonatomic,assign) id delegate;
+@property(nonatomic,copy) NSString *ParentGUID;
 @end

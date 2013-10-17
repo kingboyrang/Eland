@@ -128,7 +128,7 @@
         TreeViewNode *node=[[[TreeViewNode alloc] init] autorelease];
         node.nodeLevel = 0;
         node.nodeObject =entity;
-        node.isExpanded = NO;
+        node.isExpanded = YES;
         
         NSMutableArray *source=[self childsTreeNodes:parent];
         NSMutableArray *childs=[self childsObjectTreeNodes:source Level:1];

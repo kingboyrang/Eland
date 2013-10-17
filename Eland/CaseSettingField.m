@@ -15,4 +15,10 @@
     }
     return NO;
 }
+-(BOOL)isTextArea{
+    if (_Name&&([_Name isEqualToString:@"Location"]||[_Name isEqualToString:@"Description"]||[_Name isEqualToString:@"Memo"])) {
+        return YES;
+    }
+    return NO;
+}
 @end
