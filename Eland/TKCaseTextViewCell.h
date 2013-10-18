@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "GCPlaceholderTextView.h"
+#import "SVPlacemark.h"
 @interface TKCaseTextViewCell : UITableViewCell{
     CGFloat _cornerRadio;
 	UIColor *_borderColor;
@@ -20,6 +21,7 @@
 @property(nonatomic,readonly) BOOL hasValue;
 @property(nonatomic,assign) BOOL required;
 @property(nonatomic,copy) NSString *LabelName;
+@property(nonatomic,assign) id delegate;
 - (void)errorVerify;
 - (void)errorVerify:(CGFloat)radio
 		borderColor:(UIColor*)bColor
@@ -29,4 +31,6 @@
    lightBorderColor:(UIColor*)lbColor;
 - (void)removeVerify;
 - (void)exitKeyboard;
+
+-(void)finishedLocation:(SVPlacemark*)place;
 @end

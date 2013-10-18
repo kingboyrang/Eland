@@ -17,6 +17,7 @@
 #import "TKEmptyCell.h"
 #import "AlertHelper.h"
 #import "TkCaseImageCell.h"
+#import "TkCaseLocationCell.h"
 @interface BasicCaseViewController ()
 -(void)buttonOpenURL:(id)sender;
 @end
@@ -50,7 +51,7 @@
     cell2.field.enabled=NO;
     cell2.field.rightView=imageView;
     cell2.field.rightViewMode=UITextFieldViewModeAlways;
-    cell2.field.placeholder=@"choose category";
+    cell2.field.placeholder=@"請選擇案件分類";
     
     [result addObject:cell1];
     [result addObject:cell2];
@@ -66,7 +67,7 @@
         cell4.field.enabled=NO;
         cell4.field.rightView=imageView;
         cell4.field.rightViewMode=UITextFieldViewModeAlways;
-        cell4.field.placeholder=@"choose city";
+        cell4.field.placeholder=@"請選擇鄉鎮市別";
         cell4.LabelName=@"CityGuid";
         cell4.required=boo;
         
@@ -165,6 +166,26 @@
     [result addObject:cell2];
     return result;
 
+}
+-(NSMutableArray*)CaseCategoryLocationCells:(CaseSettingField*)entity{
+    NSMutableArray *result=[NSMutableArray array];
+    
+    TKCaseTextViewCell *cell2=[[[TKCaseTextViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    cell2.required=entity.isRequired;
+    cell2.textView.placeholder=[NSString stringWithFormat:@"請輸入%@",entity.Label];
+    cell2.LabelName=entity.Name;
+    if (entity.Text&&[entity.Text length]>0) {
+        cell2.textView.text=entity.Text;
+    }
+    cell2.delegate=self;
+    
+    TkCaseLocationCell *cell1=[[[TkCaseLocationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    [cell1 setLabelName:[NSString stringWithFormat:@"%@:",entity.Label] required:entity.isRequired];
+    cell1.controller=cell2;
+    
+    [result addObject:cell1];
+    [result addObject:cell2];
+    return result;
 }
 -(void)buttonCaseCityClick:(id)sender{
     if (!popoverCaseCity) {

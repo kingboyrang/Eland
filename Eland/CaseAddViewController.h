@@ -11,6 +11,7 @@
 #import "BasicCaseViewController.h"
 #import "CaseCategory.h"
 #import "CaseCity.h"
+#import "SVPlacemark.h"
 @interface CaseAddViewController : BasicCaseViewController<UITableViewDataSource,UITableViewDelegate>{
     UITableView *_tableView;
 }
@@ -20,4 +21,6 @@
 -(void)selectedCaseCategory:(CaseCategory*)category;
 //鄉鎮市別
 -(void)selectedVillageTown:(CaseCity*)city;
+//取得经纬度
+-(void)geographyLocation:(SVPlacemark*)place;
 @end

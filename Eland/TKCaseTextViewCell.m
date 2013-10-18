@@ -120,4 +120,10 @@
     [[self.textView layer] setShadowColor:nil];
 	[self.textView.layer setBorderColor:_borderColor.CGColor];
 }
+-(void)finishedLocation:(SVPlacemark*)place{
+    self.textView.text=place.formattedAddress;
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(geographyLocation:)]) {
+        [self.delegate performSelector:@selector(geographyLocation:) withObject:place];
+    }
+}
 @end

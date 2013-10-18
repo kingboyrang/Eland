@@ -25,6 +25,8 @@
 -(NSMutableArray*)CaseCategoryImagesCells:(CaseSetting*)entity;
 //案件瀏覽密码
 -(NSMutableArray*)CaseCategoryPWDCells;
+//位置描述
+-(NSMutableArray*)CaseCategoryLocationCells:(CaseSettingField*)entity;
 
 -(void)buttonCaseCategoryClick:(id)sender CaseCategoryGUID:(NSString*)guid;
 -(void)hidePopoverCaseCategory;

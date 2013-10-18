@@ -45,6 +45,7 @@
     
     CGRect frame=_button.frame;
     frame.origin.x=self.label.frame.origin.x+self.label.frame.size.width+5;
+    frame.origin.y=(self.bounds.size.height-frame.size.height)/2.0;
     _button.frame=frame;
     
     

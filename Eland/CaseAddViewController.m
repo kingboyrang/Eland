@@ -22,6 +22,9 @@
 @interface CaseAddViewController ()
 -(void)loadingFormFields;
 -(void)updateFormUI;
+-(BOOL)formValidate;
+-(CGFloat)scrollerToRowTotal:(int)index;
+-(void)buttonSubmit;
 @end
 
 @implementation CaseAddViewController
@@ -65,7 +68,11 @@
                 continue;
             }
             if ([item isTextArea]) {
-                [source addObjectsFromArray:[self CaseCategoryTextAreaCells:item]];
+                if ([item.Name isEqualToString:@"Location"]) {
+                    [source addObjectsFromArray:[self CaseCategoryLocationCells:item]];
+                }else{
+                   [source addObjectsFromArray:[self CaseCategoryTextAreaCells:item]];
+                }
                 continue;
             }
             [source addObjectsFromArray:[self CaseCategoryTextCells:item]];
@@ -74,6 +81,7 @@
     [source addObjectsFromArray:[self CaseCategoryPWDCells]];
     [source addObjectsFromArray:[self CaseCategoryImagesCells:self.Entity]];
     TKCaseButtonCell *cell=[[[TKCaseButtonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    [cell.button addTarget:self action:@selector(buttonSubmit) forControlEvents:UIControlEventTouchUpInside];
     [source addObject:cell];
     self.cells=source;
     [_tableView reloadData];
@@ -99,15 +107,73 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+-(CGFloat)scrollerToRowTotal:(int)index{
+    CGFloat total=0;
+    for (int i=0; i<index; i++) {
+        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:i inSection:0];
+        total+=[_tableView.delegate tableView:_tableView heightForRowAtIndexPath:indexPath];
+    }
+    return total;
+}
+//验证
+-(BOOL)formValidate{
+    for (id  item in self.cells) {
+        if ([item isKindOfClass:[TKCaseTextFieldCell class]]) {
+            TKCaseTextFieldCell *cell=(TKCaseTextFieldCell*)item;
+            if (cell.required&&!cell.hasValue) {
+                //滚动到指定位置
+                [_tableView scrollRectToVisible:CGRectMake(0, 0, self.view.bounds.size.width, [self scrollerToRowTotal:[self.cells indexOfObject:item]]) animated:YES];
+                [cell errorVerify];
+                [cell.field shake];
+                return NO;
+            }
+        }
+        if ([item isKindOfClass:[TKCaseTextViewCell class]]) {
+            TKCaseTextViewCell *cell=(TKCaseTextViewCell*)item;
+            if (cell.required&&!cell.hasValue) {
+                //滚动到指定位置
+                [_tableView scrollRectToVisible:CGRectMake(0, 0, self.view.bounds.size.width, [self scrollerToRowTotal:[self.cells indexOfObject:item]]) animated:YES];
+                [cell errorVerify];
+                [cell.textView shake];
+                return NO;
+            }
+        }
+    }
+    return YES;
+}
+//提交
+-(void)buttonSubmit{
+    if (![self formValidate]) {
+        return;
+    }
+}
 -(void)selectedCaseCategory:(CaseCategory*)category{
     [self hidePopoverCaseCategory];
     TKCaseTextFieldCell *cell=self.cells[1];
     cell.field.text=category.Name;
+    if (cell.required) {
+        [cell removeVerify];
+    }
+    
 }
 -(void)selectedVillageTown:(CaseCity*)city{
     [self hidePopoverCaseCity];
     TKCaseTextFieldCell *cell=self.cells[3];
     cell.field.text=city.Name;
+    if (cell.required) {
+        [cell removeVerify];
+    }
+}
+-(void)geographyLocation:(SVPlacemark*)place{
+    for (id  item in self.cells) {
+        if ([item isKindOfClass:[TKCaseTextFieldCell class]]) {
+            TKCaseTextFieldCell *cell=(TKCaseTextFieldCell*)item;
+            if ([cell.LabelName isEqualToString:@"LngLat"]) {
+                cell.field.text=[NSString stringWithFormat:@"%f~%f",place.location.coordinate.longitude,place.location.coordinate.latitude];
+                break;
+            }
+        }
+    }
 }
 #pragma mark -
 #pragma mark UITableViewDataSource Methods
