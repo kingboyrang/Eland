@@ -30,7 +30,7 @@
     push.UniqueCode=[[UIDevice currentDevice] uniqueDeviceIdentifier];
     push.AppCode=@"Eland";
     push.AppName=@"IOS施政互動";
-    push.AppType=DeviceIsPad?@"ipad":@"iphone";
+    push.AppType=@"ios";
     push.Flatbed=DeviceIsPad?@"1":@"2";
     
     ServiceArgs *args=[[[ServiceArgs alloc] init] autorelease];

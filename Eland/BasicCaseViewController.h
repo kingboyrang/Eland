@@ -23,6 +23,8 @@
 -(NSMutableArray*)CaseCategoryTextCells:(CaseSettingField*)entity;
 //案件图片
 -(NSMutableArray*)CaseCategoryImagesCells:(CaseSetting*)entity;
+//案件瀏覽密码
+-(NSMutableArray*)CaseCategoryPWDCells;
 
 -(void)buttonCaseCategoryClick:(id)sender CaseCategoryGUID:(NSString*)guid;
 -(void)hidePopoverCaseCategory;

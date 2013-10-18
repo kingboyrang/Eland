@@ -17,7 +17,7 @@
     UIEdgeInsets leftInsets = UIEdgeInsetsMake(5,10, 5, 10);
     leftImage=[leftImage resizableImageWithCapInsets:leftInsets resizingMode:UIImageResizingModeStretch];
     
-    _button=[[UIButton alloc] initWithFrame:CGRectMake(10, 0, self.bounds.size.width-10*2, 40)];
+    _button=[[UIButton alloc] initWithFrame:CGRectMake(10, 10, self.bounds.size.width-10*2, 40)];
     [_button setBackgroundImage:leftImage forState:UIControlStateNormal];
     _button.titleLabel.font=[UIFont boldSystemFontOfSize:16.0];
     [_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -32,8 +32,8 @@
 }
 - (void) layoutSubviews {
     [super layoutSubviews];
-    CGRect frame=CGRectInset(self.bounds, 10, 2);
-    frame.origin.y=(self.bounds.size.height-frame.size.height)/2.0;
+    CGRect frame=CGRectInset(self.bounds, 10, 12);
+    frame.origin.y=(64-frame.size.height)/2.0;
     _button.frame=frame;
     
    

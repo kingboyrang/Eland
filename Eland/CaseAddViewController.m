@@ -18,6 +18,7 @@
 #import "TKCaseButtonCell.h"
 #import "CaseSettingField.h"
 #import "UIColor+TPCategory.h"
+#import "TkCaseImageCell.h"
 @interface CaseAddViewController ()
 -(void)loadingFormFields;
 -(void)updateFormUI;
@@ -70,6 +71,8 @@
             [source addObjectsFromArray:[self CaseCategoryTextCells:item]];
         }
     }
+    [source addObjectsFromArray:[self CaseCategoryPWDCells]];
+    [source addObjectsFromArray:[self CaseCategoryImagesCells:self.Entity]];
     TKCaseButtonCell *cell=[[[TKCaseButtonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     [source addObject:cell];
     self.cells=source;
@@ -131,11 +134,11 @@
         if ([self.cells[indexPath.row] isKindOfClass:[TKCaseTextViewCell class]]) {
             return 120;
         }
-        if ([self.cells[indexPath.row] isKindOfClass:[TKEmptyCell class]]) {
+        if ([self.cells[indexPath.row] isKindOfClass:[TkCaseImageCell class]]) {
             return 300;
         }
     if ([self.cells[indexPath.row] isKindOfClass:[TKCaseButtonCell class]]) {
-        return 44.0;
+        return 64.0;
     }
         if (indexPath.row%2==0) {
             if (![self.cells[indexPath.row] isKindOfClass:[TKCaseLabelTextFieldCell class]]) {

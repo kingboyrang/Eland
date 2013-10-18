@@ -60,8 +60,8 @@
     //[self.view bringSubviewToFront:_menuBar];
   
    /***
-    NSString *path=[DocumentPath stringByAppendingPathComponent:@"ipad_load.png"];
-    UIImage *image=[UIImage imageNamed:@"ipad_load.jpg"];
+    NSString *path=[DocumentPath stringByAppendingPathComponent:@"arrow_right.png"];
+    UIImage *image=[[UIImage imageNamed:@"arrow_down.png"] imageRotatedByDegrees:-90];
     [image saveImage:path];
     NSLog(@"path=%@\n",path);
     

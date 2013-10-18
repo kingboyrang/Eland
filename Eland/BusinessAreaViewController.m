@@ -81,16 +81,19 @@
     
     TKLabelTextFieldCell *cell4=[[[TKLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     [cell4 setLabelName:@"帳號" required:NO];
-    cell4.field.placeholder=@"editable account";
+    cell4.field.placeholder=@"請輸入帳號";
     
     TKLabelTextFieldCell *cell5=[[[TKLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     [cell5 setLabelName:@"密碼" required:NO];
-    cell5.field.placeholder=@"editable pwd";
+    cell5.field.placeholder=@"請輸入密碼";
+    cell5.field.secureTextEntry=YES;
     
     
     self.cells =[NSMutableArray arrayWithObjects:cell1,cell2,cell3,cell4,cell5, nil];
     //[self checkSync];//取得名称
 	// Do any additional setup after loading the view.
+    
+    //4e8b9f229316617b2932743695a331589e0cdc8c42
 }
 -(void)checkSync{
     NSString *token=[[[UserSet sharedInstance] AppToken] Trim];
@@ -104,6 +107,7 @@
 #pragma mark -
 #pragma mark ServiceHelperDelegate Methods
 -(void)finishSoapRequest:(ServiceResult*)result{
+    
     if ([result.xmlString length]>0) {
          NSString *xml=[result.xmlString stringByReplacingOccurrencesOfString:@"xmlns=\"PushToken\"" withString:@""];
         [result.xmlParse setDataSource:xml];
@@ -115,6 +119,7 @@
     }
 }
 -(void)failedSoapRequest:(NSError*)error userInfo:(NSDictionary*)dic{
+   
 }
 -(void)relayout:(BOOL)isLand{
     if (isLand) {
@@ -145,6 +150,7 @@
     TKLabelTextFieldCell  *cell3=self.cells[3];
     TKLabelTextFieldCell  *cell4=self.cells[4];
     
+
     NSMutableArray *params=[NSMutableArray array];
     [params addObject:[NSDictionary dictionaryWithObjectsAndKeys:[[UserSet sharedInstance] AppToken],@"tokenGuid", nil]];
     [params addObject:[NSDictionary dictionaryWithObjectsAndKeys:cell2.field.text,@"appName", nil]];
@@ -157,7 +163,10 @@
     args.soapParams=params;
     [_serviceHelper asynService:args success:^(ServiceResult *result) {
         if (result.request.responseStatusCode==200) {
-            NSString *xml=[result.xmlString stringByReplacingOccurrencesOfString:@"xmlns=\"Result\"" withString:@""];
+            NSString *xml=[result.xmlString stringByReplacingOccurrencesOfString:result.xmlnsAttr withString:@""];
+            [result.xmlParse setDataSource:xml];
+            XmlNode *resultNode=[result.xmlParse soapXmlSelectSingleNode:@"//AccountBinderResult"];
+            xml=[resultNode.Value stringByReplacingOccurrencesOfString:@"xmlns=\"Result\"" withString:@""];
             [result.xmlParse setDataSource:xml];
             XmlNode *node=[result.xmlParse selectSingleNode:@"//Success"];
             if (node&&[node.Value isEqualToString:@"true"]) {

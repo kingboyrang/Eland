@@ -15,8 +15,10 @@
 #import "TKCaseTextViewCell.h"
 #import "TKCaseLabelTextFieldCell.h"
 #import "TKEmptyCell.h"
+#import "AlertHelper.h"
+#import "TkCaseImageCell.h"
 @interface BasicCaseViewController ()
-
+-(void)buttonOpenURL:(id)sender;
 @end
 
 @implementation BasicCaseViewController
@@ -44,6 +46,7 @@
     TKCaseTextFieldCell *cell2=[[[TKCaseTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     UIImage *img=[UIImage imageNamed:@"Open.png"];
     UIImageView *imageView=[[[UIImageView alloc] initWithImage:img] autorelease];
+    cell2.required=YES;
     cell2.field.enabled=NO;
     cell2.field.rightView=imageView;
     cell2.field.rightViewMode=UITextFieldViewModeAlways;
@@ -75,27 +78,25 @@
 -(NSMutableArray*)CaseCategoryImagesCells:(CaseSetting*)entity{
     NSMutableArray *result=[NSMutableArray array];
     
+    TkCaseImageCell *cell2=[[[TkCaseImageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    cell2.UpImgNum=entity.UpImgNum;
+    cell2.showInController=self;
+    
     TKCaseLabelTextFieldCell *cell1=[[[TKCaseLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     [cell1 setLabelName:@"案件圖片:" required:NO];
-    UIImage *img=[UIImage imageNamed:@"Open.png"];
-    UIImageView *imageView=[[[UIImageView alloc] initWithImage:img] autorelease];
-    cell1.field.enabled=NO;
-    cell1.field.rightView=imageView;
-    cell1.field.rightViewMode=UITextFieldViewModeAlways;
-    cell1.field.placeholder=[NSString stringWithFormat:@"最多上傳%@張圖片",entity.UpImgNum];
-    
-    
-    TKEmptyCell *cell2=[[[TKEmptyCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-    
+    cell1.showInController=self;
+    cell1.delegate=cell2;
+   
     [result addObject:cell1];
     [result addObject:cell2];
+    
     return result;
 }
 -(NSMutableArray*)CaseCategoryNoteCells:(CaseSettingField*)entity{
     NSMutableArray *result=[NSMutableArray array];
     
     TKCaseLabelCell *cell1=[[[TKCaseLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-    [cell1 setLabelName:entity.Label required:NO];
+    [cell1 setLabelName:[NSString stringWithFormat:@"%@:",entity.Label] required:NO];
     
     TKCaseTextCell *cell2=[[[TKCaseTextCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     cell2.label.text=entity.Text;
@@ -107,13 +108,26 @@
 -(NSMutableArray*)CaseCategoryTextCells:(CaseSettingField*)entity{
     NSMutableArray *result=[NSMutableArray array];
     TKCaseLabelCell *cell1=[[[TKCaseLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-    [cell1 setLabelName:entity.Label required:entity.isRequired];
+    [cell1 setLabelName:[NSString stringWithFormat:@"%@:",entity.Label] required:entity.isRequired];
     
     TKCaseTextFieldCell *cell2=[[[TKCaseTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     cell2.required=entity.isRequired;
     cell2.field.placeholder=[NSString stringWithFormat:@"請輸入%@",entity.Label];
     cell2.LabelName=entity.Name;
-    cell2.required=entity.isRequired;
+    if (entity.Text&&[entity.Text length]>0) {
+        cell2.field.text=entity.Text;
+    }
+    if ([entity.Name isEqualToString:@"Link"]) {
+        UIImage *img=[UIImage imageNamed:@"arrow_right.png"];
+        UIButton *btn=[UIButton buttonWithType:UIButtonTypeCustom];
+        btn.frame=CGRectMake(0, 0, img.size.width, img.size.height);
+        [btn setBackgroundImage:img forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(buttonOpenURL:) forControlEvents:UIControlEventTouchUpInside];
+        //UIImage *img=[UIImage imageNamed:@"arrow_right.png"];
+        //UIImageView *imageView=[[[UIImageView alloc] initWithImage:img] autorelease];
+        cell2.field.rightView=btn;
+        cell2.field.rightViewMode=UITextFieldViewModeAlways;
+    }
     
     [result addObject:cell1];
     [result addObject:cell2];
@@ -123,16 +137,34 @@
     NSMutableArray *result=[NSMutableArray array];
     
     TKCaseLabelCell *cell1=[[[TKCaseLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-    [cell1 setLabelName:entity.Label required:entity.isRequired];
+    [cell1 setLabelName:[NSString stringWithFormat:@"%@:",entity.Label] required:entity.isRequired];
     
     TKCaseTextViewCell *cell2=[[[TKCaseTextViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     cell2.required=entity.isRequired;
     cell2.textView.placeholder=[NSString stringWithFormat:@"請輸入%@",entity.Label];
     cell2.LabelName=entity.Name;
+    if (entity.Text&&[entity.Text length]>0) {
+        cell2.textView.text=entity.Text;
+    }
     
     [result addObject:cell1];
     [result addObject:cell2];
     return result;
+}
+-(NSMutableArray*)CaseCategoryPWDCells{
+    NSMutableArray *result=[NSMutableArray array];
+    TKCaseLabelCell *cell1=[[[TKCaseLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    [cell1 setLabelName:@"案件瀏覽密碼:" required:YES];
+    
+    TKCaseTextFieldCell *cell2=[[[TKCaseTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    cell2.required=YES;
+    cell2.field.placeholder=@"請輸入案件瀏覽密碼";
+    cell2.LabelName=@"PWD";
+    cell2.field.secureTextEntry=YES;
+    [result addObject:cell1];
+    [result addObject:cell2];
+    return result;
+
 }
 -(void)buttonCaseCityClick:(id)sender{
     if (!popoverCaseCity) {
@@ -167,6 +199,15 @@
 -(void)hidePopoverCaseCategory{
     if (popoverCaseCategory) {
         [popoverCaseCategory dismissPopoverAnimated:YES];
+    }
+}
+-(void)buttonOpenURL:(id)sender{
+    UIButton *btn=(UIButton*)sender;
+    UITextField *field=(UITextField*)[btn superview];
+    if ([field.text length]>0) {
+        [AlertHelper initWithTitle:@"提示" message:@"是否前往瀏覽?" cancelTitle:@"取消" cancelAction:nil confirmTitle:@"確認" confirmAction:^{
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:field.text]];//使用浏览器打开
+        }];
     }
 }
 - (void)didReceiveMemoryWarning
