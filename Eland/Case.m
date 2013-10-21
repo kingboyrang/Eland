@@ -19,6 +19,7 @@
     [xml appendFormat:@"<CaseCagegory2>%@</CaseCagegory2>",[self getPropertyValue:_CaseCagegory2]];
     [xml appendFormat:@"<CityGuid>%@</CityGuid>",[self getPropertyValue:_CityGuid]];
     [xml appendFormat:@"<Source>%@</Source>",[self getPropertyValue:_Source]];
+    [xml appendFormat:@"<ApplyDate>%@</ApplyDate>",[self getPropertyValue:_ApplyDate]];
     [xml appendFormat:@"<AppCode>%@</AppCode>",[self getPropertyValue:_AppCode]];
     if (_Extend!=nil) {
         [xml appendString:[_Extend XmlSerialize]];
@@ -27,9 +28,11 @@
         [xml appendString:[_Applicant XmlSerialize]];
     }
     if (_Images!=nil&&[_Images count]>0) {
+        [xml appendString:@"<Images>"];
         for (CaseImage *item in _Images) {
             [xml appendString:[item XmlSerialize]];
         }
+        [xml appendString:@"</Images>"];
     }
     [xml appendString:@"</Case>"];
     return xml;
@@ -93,5 +96,17 @@
         return [self.Applicant valueForKey:propertyname];
     }
     return @"";
+}
+-(void)objectValue:(id)value objectKey:(NSString *)name{
+    SEL sel=NSSelectorFromString(name);
+    if ([self respondsToSelector:sel]) {
+        [self setValue:value forKey:name];
+    }else if([self.Extend respondsToSelector:sel]){
+        [self.Extend setValue:value forKey:name];
+    }else if([self.Applicant respondsToSelector:sel]){
+        [self.Applicant setValue:value forKey:name];
+    }else{
+    
+    }
 }
 @end

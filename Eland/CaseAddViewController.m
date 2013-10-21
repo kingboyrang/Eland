@@ -19,6 +19,14 @@
 #import "CaseSettingField.h"
 #import "UIColor+TPCategory.h"
 #import "TkCaseImageCell.h"
+#import "CaseCategoryHelper.h"
+#import "UserSet.h"
+#import "NSString+TPCategory.h"
+#import "CaseImage.h"
+#import "UIImage+TPCategory.h"
+#import "ASIFormDataRequest.h"
+#import "NSDate+TPCategory.h"
+#import "XmlParseHelper.h"
 @interface CaseAddViewController ()
 -(void)loadingFormFields;
 -(void)updateFormUI;
@@ -31,6 +39,7 @@
 -(void)dealloc{
     [super dealloc];
     [_tableView release],_tableView=nil;
+    [_caseArgs release],_caseArgs=nil;
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -44,6 +53,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _caseArgs=[[Case alloc] init];
+    _caseArgs.Extend=[[CaseExtend alloc] init];
+    _caseArgs.Applicant=[[CaseApplicant alloc] init];
+    
     _tableView=[[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     _tableView.dataSource=self;
     _tableView.delegate=self;
@@ -52,8 +65,6 @@
     _tableView.bounces=NO;
     _tableView.backgroundColor=[UIColor clearColor];
     [self.view addSubview:_tableView];
-    
-    
     //self.cells=[self CaseCategoryAndCityCells:self.Entity];
 	[self loadingFormFields];
 }
@@ -121,8 +132,10 @@
         if ([item isKindOfClass:[TKCaseTextFieldCell class]]) {
             TKCaseTextFieldCell *cell=(TKCaseTextFieldCell*)item;
             if (cell.required&&!cell.hasValue) {
+                
+                
+                [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.cells indexOfObject:item] inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
                 //滚动到指定位置
-                [_tableView scrollRectToVisible:CGRectMake(0, 0, self.view.bounds.size.width, [self scrollerToRowTotal:[self.cells indexOfObject:item]]) animated:YES];
                 [cell errorVerify];
                 [cell.field shake];
                 return NO;
@@ -131,8 +144,8 @@
         if ([item isKindOfClass:[TKCaseTextViewCell class]]) {
             TKCaseTextViewCell *cell=(TKCaseTextViewCell*)item;
             if (cell.required&&!cell.hasValue) {
+                [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.cells indexOfObject:item] inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
                 //滚动到指定位置
-                [_tableView scrollRectToVisible:CGRectMake(0, 0, self.view.bounds.size.width, [self scrollerToRowTotal:[self.cells indexOfObject:item]]) animated:YES];
                 [cell errorVerify];
                 [cell.textView shake];
                 return NO;
@@ -146,20 +159,114 @@
     if (![self formValidate]) {
         return;
     }
+    for (id item in self.cells) {
+        if ([item isKindOfClass:[TKCaseTextFieldCell class]]) {
+            TKCaseTextFieldCell *cell=(TKCaseTextFieldCell*)item;
+            if ([cell.LabelName isEqualToString:@"CaseSettingGuid"]||[cell.LabelName isEqualToString:@"CityGuid"]||[cell.LabelName isEqualToString:@"LngLat"]) {
+                continue;
+            }
+            [_caseArgs objectValue:cell.field.text objectKey:cell.LabelName];
+        }
+        if ([item isKindOfClass:[TKCaseTextViewCell class]]) {
+            TKCaseTextViewCell *cell=(TKCaseTextViewCell*)item;
+            [_caseArgs objectValue:cell.textView.text objectKey:cell.LabelName];
+        }
+        if ([item isKindOfClass:[TkCaseImageCell class]]) {//案件图片
+            TkCaseImageCell *cell=(TkCaseImageCell*)item;
+            NSArray *arr=[cell.PhotoScroll sourceImages];
+            if (arr&&[arr count]>0) {
+                NSMutableArray *source=[NSMutableArray array];
+                for (UIImage *image in arr) {
+                    CaseImage *entity=[[[CaseImage alloc] init] autorelease];
+                    entity.Name=[NSString stringWithFormat:@"%@.jpg",[NSString createGUID]];
+                    entity.Content=[image imageBase64String];
+                    [source addObject:entity];
+                }
+                _caseArgs.Images=source;
+            }else{
+                _caseArgs.Images=[NSArray array];
+            }
+        }
+        
+    }
+    UserSet *user=[UserSet sharedInstance];
+    if ([_caseArgs.Applicant.Name isEqual:[NSNull null]]||[_caseArgs.Applicant.Name length]==0) {
+        _caseArgs.Applicant.Name=user.Name;
+    }
+    if ([_caseArgs.Applicant.Phone isEqual:[NSNull null]]||[_caseArgs.Applicant.Phone length]==0) {
+        _caseArgs.Applicant.Phone=user.Mobile;
+    }
+    if ([_caseArgs.Applicant.Email isEqual:[NSNull null]]||[_caseArgs.Applicant.Email length]==0) {
+        _caseArgs.Applicant.Email=user.Email;
+    }
+    if ([_caseArgs.Applicant.Nick isEqual:[NSNull null]]||[_caseArgs.Applicant.Nick length]==0) {
+        _caseArgs.Applicant.Nick=user.Nick;
+    }
+    _caseArgs.Source=@"ios";
+    NSString *time=[NSDate stringFromDate:[NSDate date] withFormat:@"yyyy-MM-dd HH:mm:ss"];
+    time=[time stringByReplacingOccurrencesOfString:@" " withString:@"T"];
+    _caseArgs.ApplyDate=time;
+    _caseArgs.AppCode=user.AppToken;
+    /***
+    if (!self.hasNetwork) {
+        [self showNoNetworkNotice:nil];
+        return;
+    }
+     ***/
+    [ZAActivityBar showWithStatus:@"正在提交..." forAction:@"caseAdd"];
+    //提交
+    ASIFormDataRequest *request=[ASIFormDataRequest requestWithURL:[NSURL URLWithString:AddCaseURL]];
+    [request setPostValue:[_caseArgs XmlSerialize] forKey:@"xml"];
+    [request setRequestMethod:@"POST"];
+    [request setCompletionBlock:^{
+        if (request.responseStatusCode==200) {
+            NSString *xml=[request.responseString stringByReplacingOccurrencesOfString:@"xmlns=\"CaseAddResult\"" withString:@""];
+            XmlParseHelper *parse=[[[XmlParseHelper alloc] initWithData:xml] autorelease];
+            XmlNode *node=[parse selectSingleNode:@"//Success"];
+            if ([node.Value isEqualToString:@"true"]) {
+                [ZAActivityBar showSuccessWithStatus:@"提交成功!" forAction:@"caseAdd"];
+                [self.navigationController popViewControllerAnimated:YES];
+                return;
+            }
+        }
+        [ZAActivityBar showErrorWithStatus:@"提交失敗!" forAction:@"caseAdd"];
+    }];
+    [request setFailedBlock:^{
+        [ZAActivityBar showErrorWithStatus:@"提交失敗!" forAction:@"caseAdd"];
+    }];
+    [request startAsynchronous];
 }
 -(void)selectedCaseCategory:(CaseCategory*)category{
     [self hidePopoverCaseCategory];
+    if ([category.Parent length]==0) {
+        _caseArgs.CaseSettingGuid=category.GUID;
+        _caseArgs.CaseCagegory1=@"";
+        _caseArgs.CaseCagegory2=@"";
+    }else{
+        CaseCategory *item=[CaseCategoryHelper getCaseCategoryEntity:category.Parent];
+        if ([item.Parent length]==0) {
+            _caseArgs.CaseSettingGuid=category.Parent;
+            _caseArgs.CaseCagegory1=category.GUID;
+            _caseArgs.CaseCagegory2=@"";
+        }else{
+            _caseArgs.CaseSettingGuid=item.GUID;
+            _caseArgs.CaseCagegory1=category.Parent;
+            _caseArgs.CaseCagegory2=category.GUID;
+        }
+    }
     TKCaseTextFieldCell *cell=self.cells[1];
     cell.field.text=category.Name;
     if (cell.required) {
         [cell removeVerify];
     }
     
+    
 }
 -(void)selectedVillageTown:(CaseCity*)city{
     [self hidePopoverCaseCity];
     TKCaseTextFieldCell *cell=self.cells[3];
     cell.field.text=city.Name;
+    _caseArgs.CityGuid=city.GUID;
     if (cell.required) {
         [cell removeVerify];
     }
@@ -170,8 +277,11 @@
             TKCaseTextFieldCell *cell=(TKCaseTextFieldCell*)item;
             if ([cell.LabelName isEqualToString:@"LngLat"]) {
                 cell.field.text=[NSString stringWithFormat:@"%f~%f",place.location.coordinate.longitude,place.location.coordinate.latitude];
+                _caseArgs.Extend.Lat=[NSString stringWithFormat:@"%f",place.location.coordinate.latitude];
+                _caseArgs.Extend.Lng=[NSString stringWithFormat:@"%f",place.location.coordinate.longitude];
                 break;
             }
+            
         }
     }
 }

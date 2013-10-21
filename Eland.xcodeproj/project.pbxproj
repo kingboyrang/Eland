@@ -155,6 +155,7 @@
 		01B023E718053C2B0018BF9A /* PushResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B023E618053C2B0018BF9A /* PushResult.m */; };
 		01B023EA180541670018BF9A /* PushDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B023E9180541670018BF9A /* PushDetailViewController.m */; };
 		01B023EE1805537D0018BF9A /* PushDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B023ED1805537D0018BF9A /* PushDetail.m */; };
+		01B298501814D8D100556F61 /* NSDate+TPCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B2984F1814D8D100556F61 /* NSDate+TPCategory.m */; };
 		01B38F7E17FBA4580011EE56 /* ScrollControls.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B38F7D17FBA4580011EE56 /* ScrollControls.m */; };
 		01B38F8117FBB35A0011EE56 /* PagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B38F8017FBB35A0011EE56 /* PagerViewController.m */; };
 		01B38F8517FBC7690011EE56 /* SearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B38F8417FBC7690011EE56 /* SearchField.m */; };
@@ -541,6 +542,8 @@
 		01B023E9180541670018BF9A /* PushDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushDetailViewController.m; sourceTree = "<group>"; };
 		01B023EC1805537D0018BF9A /* PushDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushDetail.h; sourceTree = "<group>"; };
 		01B023ED1805537D0018BF9A /* PushDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushDetail.m; sourceTree = "<group>"; };
+		01B2984E1814D8D100556F61 /* NSDate+TPCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+TPCategory.h"; sourceTree = "<group>"; };
+		01B2984F1814D8D100556F61 /* NSDate+TPCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+TPCategory.m"; sourceTree = "<group>"; };
 		01B38F7C17FBA4580011EE56 /* ScrollControls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollControls.h; sourceTree = "<group>"; };
 		01B38F7D17FBA4580011EE56 /* ScrollControls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollControls.m; sourceTree = "<group>"; };
 		01B38F7F17FBB35A0011EE56 /* PagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PagerViewController.h; sourceTree = "<group>"; };
@@ -1591,6 +1594,8 @@
 		01B5A61517E006B80076738C /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				01B2984E1814D8D100556F61 /* NSDate+TPCategory.h */,
+				01B2984F1814D8D100556F61 /* NSDate+TPCategory.m */,
 				26A5878517F7DD0200850DED /* UIDevice+TPCategory.h */,
 				26A5878617F7DD0200850DED /* UIDevice+TPCategory.m */,
 				26A5877217F7C6EC00850DED /* UINavigationItem+TPCategory.h */,
@@ -2049,6 +2054,7 @@
 				0104774517DF20CB00BDCCE0 /* XmlNode.m in Sources */,
 				0104774617DF20CB00BDCCE0 /* XmlParseHelper.m in Sources */,
 				0104775417DF233F00BDCCE0 /* Reachability.m in Sources */,
+				01B298501814D8D100556F61 /* NSDate+TPCategory.m in Sources */,
 				0104776C17DF25A800BDCCE0 /* ASIAuthenticationDialog.m in Sources */,
 				0104776D17DF25A800BDCCE0 /* ASIDataCompressor.m in Sources */,
 				0104776E17DF25A800BDCCE0 /* ASIDataDecompressor.m in Sources */,

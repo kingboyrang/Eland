@@ -10,6 +10,7 @@
 @implementation CaseImage
 -(NSString*)XmlSerialize{
     NSMutableString *xml=[NSMutableString stringWithFormat:@"<CaseImage>"];
+    [xml appendFormat:@"<Name>%@</Name>",[self getPropertyValue:_Name]];
     [xml appendFormat:@"<Content>%@</Content>",[self getPropertyValue:_Content]];
     [xml appendString:@"</CaseImage>"];
     return xml;

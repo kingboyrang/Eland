@@ -35,4 +35,6 @@
 +(Case*)xmlStringToCase:(NSString*)xml;
 -(NSString*)getFieldValue:(NSString*)propertyname;
 -(NSArray*)imageURLs;
+
+-(void)objectValue:(id)value objectKey:(NSString*)name;
 @end

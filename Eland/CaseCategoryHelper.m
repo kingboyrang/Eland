@@ -67,18 +67,25 @@
     return nil;
 }
 +(NSString*)getCategoryName:(NSString*)guid{
+    CaseCategory *item=[self getCaseCategoryEntity:guid];
+    if (item!=nil) {
+        return item.Name;
+    }
+   return @"";
+}
++(CaseCategory*)getCaseCategoryEntity:(NSString*)guid{
     NSArray *arr=[CacheHelper readCacheCaseCategorys];
     if (arr==nil||[arr count]==0) {
-        return @"";
+        return nil;
     }
     NSString *match=[NSString stringWithFormat:@"SELF.GUID =='%@'",guid];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:match];
     NSArray *results = [arr filteredArrayUsingPredicate:predicate];
     if (results&&[results count]>0) {
         CaseCategory *item=[results objectAtIndex:0];
-        return item.Name;
+        return item;
     }
-   return @"";
+    return nil;
 }
 -(NSString*)getParentCategoryName:(NSString*)guid{
     NSString *match=[NSString stringWithFormat:@"SELF.GUID =='%@'",guid];

@@ -16,6 +16,8 @@
 
 -(NSMutableArray*)sourceTreeNodes;
 +(NSString*)getCategoryName:(NSString*)guid;
+//获取父类别
++(CaseCategory*)getCaseCategoryEntity:(NSString*)guid;
 -(NSString*)getParentCategoryName:(NSString*)guid;
 +(NSString*)getParentCategoryName:(NSString*)guid withArray:(NSArray*)arr;
 //子类别

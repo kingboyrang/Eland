@@ -66,28 +66,28 @@
     
     TKLabelTextFieldCell *cell1=[[[TKLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     [cell1 setLabelName:@"姓名" required:NO];
-    cell1.field.placeholder=@"editable name";
+    cell1.field.placeholder=@"請輸入姓名";
     if ([entity.Name length]>0) {
         cell1.field.text=entity.Name;
     }
     
     TKLabelTextFieldCell *cell2=[[[TKLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     [cell2 setLabelName:@"手機號碼" required:NO];
-    cell2.field.placeholder=@"editable phone";
+    cell2.field.placeholder=@"請輸入手機號碼";
     if ([entity.Mobile length]>0) {
         cell2.field.text=entity.Mobile;
     }
     
     TKLabelTextFieldCell *cell3=[[[TKLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
      [cell3 setLabelName:@"Email" required:NO];
-    cell3.field.placeholder=@"editable Email";
+    cell3.field.placeholder=@"請輸入Email";
     if ([entity.Email length]>0) {
         cell3.field.text=entity.Email;
     }
     
     TKLabelTextFieldCell *cell4=[[[TKLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     [cell4 setLabelName:@"暱稱" required:NO];
-    cell4.field.placeholder=@"editable nick";
+    cell4.field.placeholder=@"請輸入暱稱";
     if ([entity.Nick length]>0) {
         cell4.field.text=entity.Nick;
     }

@@ -52,6 +52,7 @@
     cell2.field.rightView=imageView;
     cell2.field.rightViewMode=UITextFieldViewModeAlways;
     cell2.field.placeholder=@"請選擇案件分類";
+    cell2.LabelName=@"CaseSettingGuid";
     
     [result addObject:cell1];
     [result addObject:cell2];

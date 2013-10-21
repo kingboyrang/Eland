@@ -12,8 +12,10 @@
 #import "CaseCategory.h"
 #import "CaseCity.h"
 #import "SVPlacemark.h"
+#import "Case.h"
 @interface CaseAddViewController : BasicCaseViewController<UITableViewDataSource,UITableViewDelegate>{
     UITableView *_tableView;
+    Case *_caseArgs;
 }
 @property(nonatomic,strong) CaseSetting *Entity;
 @property(nonatomic,strong) NSMutableArray *cells;
