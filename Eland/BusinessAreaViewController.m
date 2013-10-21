@@ -149,8 +149,8 @@
     TKLabelTextFieldCell *cell2=self.cells[2];
     TKLabelTextFieldCell  *cell3=self.cells[3];
     TKLabelTextFieldCell  *cell4=self.cells[4];
-    
 
+    //[[UserSet sharedInstance] AppToken]
     NSMutableArray *params=[NSMutableArray array];
     [params addObject:[NSDictionary dictionaryWithObjectsAndKeys:[[UserSet sharedInstance] AppToken],@"tokenGuid", nil]];
     [params addObject:[NSDictionary dictionaryWithObjectsAndKeys:cell2.field.text,@"appName", nil]];
@@ -215,7 +215,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section==0&&indexPath.row==0) {
-        return self.isPad?44.0:65.0;
+        return self.isPad?44.0:85;
     }
     return 44.0;
 }
