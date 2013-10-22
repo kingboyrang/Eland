@@ -34,6 +34,7 @@
     [super dealloc];
     [_tableView release],_tableView=nil;
     [_searchField release],_searchField=nil;
+    [_shakeView release],_shakeView=nil;
     if (_helper) {
         [_helper clearDelegatesAndCancel];
         [_helper release];
@@ -54,8 +55,8 @@
 {
     [super viewDidLoad];
     
-    //CGFloat topY=[UIDevice IOSSystemVersion]>=7.0?44:0;
-   
+    _shakeView=[[ShakeView alloc] initWithFrame:CGRectMake(0, 0, 290, 300)];
+    _shakeView.delegated=self;
     
     CGFloat h=44*4;
     _searchField=[[SearchField alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, h)];
@@ -148,6 +149,12 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+-(void)showSuccessPassword:(LevelCase*)entity{
+    CaseDetailViewController *detail=[[CaseDetailViewController alloc] init];
+    detail.itemCase=entity;
+    [self.navigationController pushViewController:detail animated:YES];
+    [detail release];
+}
 #pragma mark -
 #pragma mark 密码验证
 -(void)showAlterViewPassword:(LevelCase*)entity success:(void (^)(void))completed{
@@ -194,6 +201,9 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     LevelCase *entity=(LevelCase*)[self.list objectAtIndex:indexPath.row];
+    _shakeView.Entity=entity;
+    [_shakeView show];
+    /***
     [self showAlterViewPassword:entity success:^{
         //表示成功了
         CaseDetailViewController *detail=[[CaseDetailViewController alloc] init];
@@ -201,6 +211,7 @@
         [self.navigationController pushViewController:detail animated:YES];
         [detail release];
     }];
+     ***/
 }
 #pragma mark -
 #pragma mark 加载数据
@@ -208,7 +219,6 @@
     _searchField.levevlCaseArgs.Pager.PageNumber++;
     [_helper clearDelegatesAndCancel];
     NSURL *url=[NSURL URLWithString:CaseSearchURL];
-    
     
     self.helper = [ASIFormDataRequest requestWithURL:url];
     [self.helper  setPostValue:[_searchField searchArgs] forKey:@"xml"];

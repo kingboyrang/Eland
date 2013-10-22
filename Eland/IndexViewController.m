@@ -38,7 +38,8 @@
     [super viewDidLoad];
     [self.navigationItem titleViewBackground];
     CGFloat h=DeviceIsPad?58:40;
-    CGFloat topY=self.IOSSystemVersion>=7.0?44.0:0.0;
+    //CGFloat topY=self.IOSSystemVersion>=7.0?44.0:0.0;
+    CGFloat topY=0.0;
     _menuBar=[[MenuBar alloc] initWithFrame:CGRectMake(0, topY, DeviceWidth, h)];
     _menuBar.controlers=self;
     _menuBar.autoresizesSubviews=YES;

@@ -31,8 +31,8 @@
 {
     [super viewDidLoad];
     CGFloat h=DeviceIsPad?58:40;
-    CGFloat topY=self.IOSSystemVersion>=7.0?h+44.0:h;
-
+    //CGFloat topY=self.IOSSystemVersion>=7.0?h+44.0:h;
+    CGFloat topY=h;
     
     self.scrollView=[[UIScrollView alloc] initWithFrame:CGRectMake(0, topY, self.view.bounds.size.width, self.view.bounds.size.height-topY)];
     self.scrollView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;

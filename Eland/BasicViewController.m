@@ -43,8 +43,6 @@
         [_netButton release],_netButton=nil;
     }
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-     //AppDelegate *delegated=[[UIApplication sharedApplication] delegate];
-    //[delegated removeObserver:self forKeyPath:@"hasConnect"];
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -65,11 +63,14 @@
     [self addCheckBarButton];
     //横竖屏检测
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(detectShowOrientation) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
-    //网络检测
-    AppDelegate *delegated=[[UIApplication sharedApplication] delegate];
-    [delegated addObserver:self forKeyPath:@"hasConnect" options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:nil];
+    
+   
     
 	// Do any additional setup after loading the view.
+}
+//检测是否有网络
+-(BOOL)hasNetwork{
+    return [[NetWorkConnection sharedInstance] hasNewWork];
 }
 -(float)IOSSystemVersion{
     NSString *version=[[UIDevice currentDevice] systemVersion];
@@ -150,18 +151,6 @@
 - (void) showSuccessNoticeWithTitle:(NSString*)title{
     WBSuccessNoticeView *notice = [WBSuccessNoticeView successNoticeInView:self.view title:title];
     [notice show];
-}
-#pragma mark 网络检测
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
-   if([keyPath isEqualToString:@"hasConnect"])
-   {
-       NSNumber *number1=[change objectForKey:@"new"];
-       NSNumber *number2=[change objectForKey:@"old"];
-       if ([number1 boolValue]!=[number2 boolValue]) {
-           _hasNetwork=[number1 boolValue];
-           [self updateNetworkImage:_hasNetwork];
-       }
-   }
 }
 #pragma mark 动画提示
 -(AnimateErrorView*) errorView {

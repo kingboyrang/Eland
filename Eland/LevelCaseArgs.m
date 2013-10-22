@@ -22,15 +22,16 @@
     [xml appendString:[self propertyToNode:_CaseSettingGuid nodeName:@"CaseSettingGuid"]];
     [xml appendString:[self propertyToNode:_CityGuid nodeName:@"CityGuid"]];
     [xml appendString:[self propertyToNode:_Nick nodeName:@"Nick"]];
-    if (_BApplyDate==nil) {
+    if (_BApplyDate&&[_BApplyDate length]>0) {
+        [xml appendFormat:@"<BApplyDate>%@</BApplyDate>",_BApplyDate];
+    }else{
         [xml appendString:@"<BApplyDate xsi:nil=\"true\"/>"];
-    }else{
-       [xml appendFormat:@"<BApplyDate>%@</BApplyDate>",_BApplyDate];
     }
-    if (_EApplyDate==nil) {
-        [xml appendString:@"<EApplyDate xsi:nil=\"true\"/>"];
-    }else{
+    if (_EApplyDate&&[_EApplyDate length]>0) {
         [xml appendFormat:@"<EApplyDate>%@</EApplyDate>",_EApplyDate];
+        
+    }else{
+        [xml appendString:@"<EApplyDate xsi:nil=\"true\"/>"];
     }
     [xml appendString:@"</LevelCaseArgs>"];
     return xml;

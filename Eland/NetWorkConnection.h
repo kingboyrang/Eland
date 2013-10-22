@@ -22,6 +22,7 @@ typedef void (^ListenerNetWorkResult)(NetworkStatus status,BOOL isConnection);
     ListenerNetWorkResult _listenerNetWorkResult;
 }
 @property(nonatomic,assign) id<NetWorkDelegate> delegate;
+@property(nonatomic,assign) BOOL hasNewWork;
 //单例模式
 + (NetWorkConnection *)sharedInstance;
 //实时监听连接

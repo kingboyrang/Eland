@@ -207,12 +207,11 @@
     time=[time stringByReplacingOccurrencesOfString:@" " withString:@"T"];
     _caseArgs.ApplyDate=time;
     _caseArgs.AppCode=user.AppToken;
-    /***
+   
     if (!self.hasNetwork) {
         [self showNoNetworkNotice:nil];
         return;
     }
-     ***/
     [ZAActivityBar showWithStatus:@"正在提交..." forAction:@"caseAdd"];
     //提交
     ASIFormDataRequest *request=[ASIFormDataRequest requestWithURL:[NSURL URLWithString:AddCaseURL]];

@@ -11,10 +11,12 @@
 #import "LevelCaseArgs.h"
 #import "LevelCase.h"
 #import "ASIFormDataRequest.h"
+#import "ShakeView.h"
 @interface CaseSearchViewController : UIViewController<PullingRefreshTableViewDelegate,UITableViewDataSource,UITableViewDelegate>
 {
   @private
     PullingRefreshTableView *_tableView;
+    ShakeView *_shakeView;
 }
 @property(nonatomic,strong) ASIFormDataRequest *helper;
 @property (nonatomic) BOOL refreshing;
@@ -22,4 +24,5 @@
 -(void)relayout:(BOOL)isLand;
 -(void)loadingSource;
 -(void)showAlterViewPassword:(LevelCase*)entity success:(void (^)(void))completed;
+-(void)showSuccessPassword:(LevelCase*)entity;
 @end

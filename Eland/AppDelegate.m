@@ -37,7 +37,19 @@
     UserSet *entity=[UserSet sharedInstance];
     if (![entity isRegisterToken]) {
         [ServiceHelper asynService:[PushToken registerTokenWithDeivceId:deviceId] success:^(ServiceResult *result) {
-            [entity registerAppToken:deviceId status:YES];
+            BOOL boo=NO;
+            if (result.request.responseStatusCode==200) {
+                NSString *xml=[result.xmlString stringByReplacingOccurrencesOfString:result.xmlnsAttr withString:@""];
+                [result.xmlParse setDataSource:xml];
+                XmlNode *node=[result.xmlParse soapXmlSelectSingleNode:@"//RegisterResult"];
+                xml=[node.Value stringByReplacingOccurrencesOfString:@"xmlns=\"Result\"" withString:@""];
+                [result.xmlParse setDataSource:xml];
+                XmlNode *resultNode=[result.xmlParse selectSingleNode:@"//Success"];
+                if ([resultNode.Value isEqualToString:@"true"]) {
+                    boo=YES;
+                }
+            }
+            [entity registerAppToken:deviceId status:boo];
             
         } failed:^(NSError *error, NSDictionary *userInfo) {
             [entity registerAppToken:deviceId status:NO];
@@ -53,7 +65,9 @@
     //a2dce1 3bafb9
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTintColor:[UIColor colorFromHexRGB:@"5cc2cb"]];
     //检测是否有网络
-    [[NetWorkConnection sharedInstance] dynamicListenerNetwork:^(NetworkStatus status, BOOL isConnection) {
+    NetWorkConnection *network=[NetWorkConnection sharedInstance];
+    [network dynamicListenerNetwork:^(NetworkStatus status, BOOL isConnection) {
+        network.hasNewWork=isConnection;
         self.hasConnect=isConnection;
     }];
     //背景任务

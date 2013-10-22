@@ -155,6 +155,7 @@
 		01B023E718053C2B0018BF9A /* PushResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B023E618053C2B0018BF9A /* PushResult.m */; };
 		01B023EA180541670018BF9A /* PushDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B023E9180541670018BF9A /* PushDetailViewController.m */; };
 		01B023EE1805537D0018BF9A /* PushDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B023ED1805537D0018BF9A /* PushDetail.m */; };
+		01B24BA218166C9000E29C0E /* ShakeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B24BA118166C8F00E29C0E /* ShakeView.m */; };
 		01B298501814D8D100556F61 /* NSDate+TPCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B2984F1814D8D100556F61 /* NSDate+TPCategory.m */; };
 		01B38F7E17FBA4580011EE56 /* ScrollControls.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B38F7D17FBA4580011EE56 /* ScrollControls.m */; };
 		01B38F8117FBB35A0011EE56 /* PagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B38F8017FBB35A0011EE56 /* PagerViewController.m */; };
@@ -170,8 +171,8 @@
 		01B38FA317FC0B5B0011EE56 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 01B38FA217FC0B5A0011EE56 /* back.png */; };
 		01B38FA617FC114D0011EE56 /* BasicNagigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B38FA517FC114B0011EE56 /* BasicNagigationController.m */; };
 		01B392341810C0540070909F /* arrow_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 01B392331810C0540070909F /* arrow_down.png */; };
-		01B392381810C5600070909F /* TKEmptyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B392371810C5600070909F /* TKEmptyView.m */; };
-		01B3923B1810C5940070909F /* TKGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B3923A1810C5940070909F /* TKGradientView.m */; };
+		01B392381810C5600070909F /* TKEmptyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B392371810C5600070909F /* TKEmptyView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		01B3923B1810C5940070909F /* TKGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B3923A1810C5940070909F /* TKGradientView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		01B3923E1810C70D0070909F /* TKGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B3923D1810C70D0070909F /* TKGlobal.m */; };
 		01B392411810C79F0070909F /* UIImage+TKCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B392401810C79F0070909F /* UIImage+TKCategory.m */; };
 		01B392441810C7AD0070909F /* UIView+TKCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B392431810C7AD0070909F /* UIView+TKCategory.m */; };
@@ -542,6 +543,8 @@
 		01B023E9180541670018BF9A /* PushDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushDetailViewController.m; sourceTree = "<group>"; };
 		01B023EC1805537D0018BF9A /* PushDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushDetail.h; sourceTree = "<group>"; };
 		01B023ED1805537D0018BF9A /* PushDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushDetail.m; sourceTree = "<group>"; };
+		01B24BA018166C8F00E29C0E /* ShakeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShakeView.h; sourceTree = "<group>"; };
+		01B24BA118166C8F00E29C0E /* ShakeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShakeView.m; sourceTree = "<group>"; };
 		01B2984E1814D8D100556F61 /* NSDate+TPCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+TPCategory.h"; sourceTree = "<group>"; };
 		01B2984F1814D8D100556F61 /* NSDate+TPCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+TPCategory.m"; sourceTree = "<group>"; };
 		01B38F7C17FBA4580011EE56 /* ScrollControls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollControls.h; sourceTree = "<group>"; };
@@ -1468,6 +1471,8 @@
 			children = (
 				01A563E11802638D004149BA /* Search */,
 				01A563E01802637D004149BA /* ShowCell */,
+				01B24BA018166C8F00E29C0E /* ShakeView.h */,
+				01B24BA118166C8F00E29C0E /* ShakeView.m */,
 			);
 			name = CaseSearchUI;
 			sourceTree = "<group>";
@@ -2219,6 +2224,7 @@
 				01B023E718053C2B0018BF9A /* PushResult.m in Sources */,
 				01B023EA180541670018BF9A /* PushDetailViewController.m in Sources */,
 				01B023EE1805537D0018BF9A /* PushDetail.m in Sources */,
+				01B24BA218166C9000E29C0E /* ShakeView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2246,7 +2252,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Henry Kuo (6WF37BSC83)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 澜洲 吴 (M3F85US4G2)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2261,7 +2267,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7595E23C-DFD9-4135-A1DA-319040222625";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8DD9AF1A-DA99-49C2-A6E4-C66DA74DB9C8";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2277,7 +2283,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Henry Kuo (6WF37BSC83)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 澜洲 吴 (M3F85US4G2)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2285,7 +2291,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7595E23C-DFD9-4135-A1DA-319040222625";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8DD9AF1A-DA99-49C2-A6E4-C66DA74DB9C8";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -2296,16 +2302,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 澜洲 吴 (M3F85US4G2)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Eland/Eland-Prefix.pch";
 				HEADER_SEARCH_PATHS = "${SDK_ROOT}/usr/include/libxml2";
 				INFOPLIST_FILE = "Eland/Eland-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7595E23C-DFD9-4135-A1DA-319040222625";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8DD9AF1A-DA99-49C2-A6E4-C66DA74DB9C8";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2315,16 +2320,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 澜洲 吴 (M3F85US4G2)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Eland/Eland-Prefix.pch";
 				HEADER_SEARCH_PATHS = "${SDK_ROOT}/usr/include/libxml2";
 				INFOPLIST_FILE = "Eland/Eland-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7595E23C-DFD9-4135-A1DA-319040222625";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8DD9AF1A-DA99-49C2-A6E4-C66DA74DB9C8";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2339,8 +2343,8 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Henry Kuo (6WF37BSC83)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Maxense Corp. (B9R2MVL97F)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Maxense Corp. (B9R2MVL97F)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2348,8 +2352,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "4F8854E3-C705-4682-83D7-DC6674B36CAE";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4F8854E3-C705-4682-83D7-DC6674B36CAE";
+				PROVISIONING_PROFILE = "562B12D9-A321-4434-8CF7-EF3CEAEB0CAD";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "562B12D9-A321-4434-8CF7-EF3CEAEB0CAD";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -2360,16 +2364,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Maxense Corp. (B9R2MVL97F)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Maxense Corp. (B9R2MVL97F)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Eland/Eland-Prefix.pch";
 				HEADER_SEARCH_PATHS = "${SDK_ROOT}/usr/include/libxml2";
 				INFOPLIST_FILE = "Eland/Eland-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4F8854E3-C705-4682-83D7-DC6674B36CAE";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4F8854E3-C705-4682-83D7-DC6674B36CAE";
+				PROVISIONING_PROFILE = "562B12D9-A321-4434-8CF7-EF3CEAEB0CAD";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "562B12D9-A321-4434-8CF7-EF3CEAEB0CAD";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

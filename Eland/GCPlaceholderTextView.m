@@ -7,7 +7,7 @@
 //
 
 #import "GCPlaceholderTextView.h"
-
+#import <QuartzCore/QuartzCore.h>
 #define toolBarH 44
 
 @interface GCPlaceholderTextView ()

@@ -34,10 +34,13 @@
     [self.view addSubview:imageView];
     [imageView release];
     //tableCell.backgroundColor=[UIColor clearColor];
+    
     CGRect rect=self.view.bounds;
+    /**
     if (self.IOSSystemVersion>=7.0) {
         rect.origin.y=44;
     }
+     **/
     
     AboutScrollView *scrollView=[[AboutScrollView alloc] initWithFrame:rect];
     [self.view addSubview:scrollView];
