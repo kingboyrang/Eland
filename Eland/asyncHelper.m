@@ -97,7 +97,7 @@
     [request startAsynchronous];
 }
 +(void)backgroundQueueLoad{
-    ServiceHelper *helper=[[[ServiceHelper alloc] init] autorelease];
+    ServiceHelper *helper=[[ServiceHelper alloc] init];
     ASIHTTPRequest *request=[ASIHTTPRequest requestWithURL:[NSURL URLWithString:CityDownURL]];
     [request setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"city",@"name", nil]];
     [helper addQueue:request];

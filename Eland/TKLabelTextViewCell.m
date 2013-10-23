@@ -30,7 +30,7 @@
  */
 
 #import "TKLabelTextViewCell.h"
-
+#import "NSString+TPCategory.h"
 @implementation TKLabelTextViewCell
 @synthesize hasValue;
 - (id) initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
@@ -58,6 +58,10 @@
 	CGRect r = CGRectInset(self.contentView.bounds, 8, 8);
 	r.origin.x += self.label.frame.size.width + 0;
 	r.size.width -= self.label.frame.size.width + 0;
+    CGSize size=[_textView.text textSize:[UIFont boldSystemFontOfSize:16.0] withWidth:r.size.width];
+    if (size.height>r.size.height) {
+        r.size.height=size.height;
+    }
 	_textView.frame = r;
 
 }

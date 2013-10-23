@@ -155,25 +155,18 @@
     button.selected=YES;
     CGRect frame=_silderView.frame;
     frame.origin.x=(button.tag-100)*frame.size.width;
-    [UIView animateWithDuration:0.2 animations:^{
-        
+    [UIView animateWithDuration:0.2f animations:^{
         _silderView.frame=frame;
-        [self updateSelectedStatus:button.tag-100 lastIndex:_prevSelectIndex];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [self updateSelectedStatus:button.tag-100 lastIndex:_prevSelectIndex];
+        }
     }];
     //判断是否是重复点击tab按钮
     if (button.tag == self.selectedIndex && button.tag == 0) {
        //[_homeCtrl autorefresh];
     }
     self.selectedIndex = button.tag-100;
-    
-    //重设布局
-    if (self.selectedIndex==0) {
-        UINavigationController *nav=(UINavigationController*)[self.viewControllers objectAtIndex:self.selectedIndex];
-        IndexViewController *index=(IndexViewController*)[nav.viewControllers objectAtIndex:0];
-        if (index) {
-            //[index reSubViewLayout];
-        }
-    }
     
 }
 - (void)setSelectedItemIndex:(int)index{

@@ -64,7 +64,7 @@
 }
 //通报时间
 -(NSString*)formatDataTw{
-    NSString *date=[self getPropertyValue:self.Created];
+    NSString *date=[self getPropertyValue:self.SendTime];
     if ([date length]==0) {return @"";}
     date=[date stringByReplacingOccurrencesOfString:@"T" withString:@" "];
     NSRange range = [date  rangeOfString:@":" options:NSBackwardsSearch];

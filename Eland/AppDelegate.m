@@ -16,6 +16,7 @@
 #import "PushToken.h"
 #import "NetWorkConnection.h"
 #import "asyncHelper.h"
+#import "AlertHelper.h"
 @implementation AppDelegate
 @synthesize hasConnect;
 @synthesize isLandscape;
@@ -50,7 +51,6 @@
                 }
             }
             [entity registerAppToken:deviceId status:boo];
-            
         } failed:^(NSError *error, NSDictionary *userInfo) {
             [entity registerAppToken:deviceId status:NO];
         }];
@@ -62,7 +62,6 @@
     self.isLandscape=NO;
     //横竖屏检测
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(detectShowOrientation) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
-    //a2dce1 3bafb9
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTintColor:[UIColor colorFromHexRGB:@"5cc2cb"]];
     //检测是否有网络
     NetWorkConnection *network=[NetWorkConnection sharedInstance];
@@ -76,7 +75,7 @@
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
+     application.applicationIconBadgeNumber=0;
     [self initParams];
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     UserSet *user=[UserSet sharedInstance];

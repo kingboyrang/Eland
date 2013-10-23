@@ -38,6 +38,7 @@
     NSArray *arr=[NSKeyedUnarchiver unarchiveObjectWithFile: path];
     return arr;
 }
+//推播信息
 +(void)cacheCasePushResult:(PushResult*)entity{
     if (entity) {
         NSArray *arr=[self readCacheCasePush];
@@ -52,26 +53,26 @@
         }else{
             [source addObject:entity];
         }
-        [CacheHelper cacheCaseSettingsFromArray:source];
+        [CacheHelper cacheCasePushFromArray:source];
     }
 }
 +(void)cacheCasePushArray:(NSArray*)results{
     if (results&&[results count]>0) {
-    NSMutableArray *source=[NSMutableArray array];
-    NSArray *arr=[self readCacheCasePush];
-    if (arr&&[arr count]>0) {
-        [source addObjectsFromArray:arr];
-    }
-    for (PushResult *item in results) {
-        int index;
-        BOOL boo=[PushResult existsPushResultWithGuid:item.GUID index:&index];
-        if (boo) {
-            [source replaceObjectAtIndex:index withObject:item];
-        }else{
-            [source addObject:item];
+        NSMutableArray *source=[NSMutableArray array];
+        NSArray *arr=[self readCacheCasePush];
+        if (arr&&[arr count]>0) {
+            [source addObjectsFromArray:arr];
         }
-    }
-    [CacheHelper cacheCaseSettingsFromArray:source];
+        for (PushResult *item in results) {
+            int index;
+            BOOL boo=[PushResult existsPushResultWithGuid:item.GUID index:&index];
+            if (boo) {
+                [source replaceObjectAtIndex:index withObject:item];
+            }else{
+                [source addObject:item];
+            }
+        }
+        [CacheHelper cacheCasePushFromArray:source];
    }
 }
 +(void)cacheCasePushFromArray:(NSArray*)results{

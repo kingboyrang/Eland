@@ -217,9 +217,11 @@
 	}
 }
 - (void)changePageIndex:(int)index{
+    /***
     if (_page==index) {
         return;
     }
+     ***/
     self.pageControl.currentPage=index;
     CGRect frame = self.scrollView.frame;
     frame.origin.x = frame.size.width * index;
@@ -235,6 +237,7 @@
 	// Set the boolean used when scrolls originate from the UIPageControl. See scrollViewDidScroll: above.
     _pageControlUsed = YES;
     _page=index;
+   
     
 }
 - (IBAction)changePage:(id)sender {

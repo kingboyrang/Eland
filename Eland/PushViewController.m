@@ -61,11 +61,13 @@
 }
 -(void)loadAndUpdatePush{
     NSString *token=[[UserSet sharedInstance] AppToken];
+    //NSString *token=@"6997eda072e4e60784a108bb9a98a777f737403caaaa2ed22f69580d14a411f5";
     if ([token length]==0)return;
     ServiceArgs *args=[[[ServiceArgs alloc] init] autorelease];
     args.methodName=@"GetMessages";
     args.soapParams=[NSArray arrayWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:token,@"token", nil], nil];
     [_helper asynService:args success:^(ServiceResult *result) {
+        
         if ([result.xmlString length]>0) {
             NSString *xml=[result.xmlString stringByReplacingOccurrencesOfString:result.xmlnsAttr withString:@""];
             [result.xmlParse setDataSource:xml];
@@ -76,6 +78,7 @@
             if (arr&&[arr count]>0) {
                 [CacheHelper cacheCasePushArray:arr];
                 [self reloadPushInfo];
+                
             }
         }
         
@@ -117,6 +120,7 @@
         detail.tag=100;
         [cell.contentView addSubview:detail];
         [detail release];
+        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     }
     PushResult *entity=[self.listData objectAtIndex:indexPath.row];
     PushDetail *pushDetail=(PushDetail*)[cell viewWithTag:100];

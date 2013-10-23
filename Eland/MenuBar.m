@@ -122,17 +122,14 @@
 -(void)selectedButton:(id)sender{
     UIButton *btn=(UIButton*)sender;
     btn.selected=YES;
-    if (btn.tag-100==_selectedIndex) {
+     _selectedIndex=btn.tag-100;
+    if (_selectedIndex!=_prevSelectedIndex) {
+        UIButton *btn1=(UIButton*)[_scrollView viewWithTag:_prevSelectedIndex+100];
+        btn1.selected=NO;
+    }else{
         return;
     }
-     _selectedIndex=btn.tag-100;
-    UIButton *btn1=(UIButton*)[_scrollView viewWithTag:_prevSelectedIndex+100];
-    btn1.selected=NO;
-    
     _prevSelectedIndex=btn.tag-100;
-    
-    [self handleAutoScrolling:YES];
-    
     if (self.controlers&&[self.controlers respondsToSelector:@selector(selectedMenuItemIndex:)]) {
         [self.controlers performSelector:@selector(selectedMenuItemIndex:) withObject:_selectedIndex];
     }

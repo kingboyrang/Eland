@@ -134,10 +134,9 @@
     
     CaseSetting *entity=[_sourceData objectAtIndex:indexPath.row];
     if ([[entity IconURLString] length]>0) {
-        UIImageView *imageView=[[UIImageView alloc] init];
+        UIImageView *imageView=[[[UIImageView alloc] init] autorelease];
         [imageView setImageWithURL:[NSURL URLWithString:entity.IconURLString] placeholderImage:[UIImage imageNamed:@"fk_08.jpg"]];
         cell.backgroundView = imageView;
-        [imageView release];
     }
     else{
         cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"fk_08.jpg"]];

@@ -61,7 +61,6 @@
     TKLabelTextViewCell *cell1=[[[TKLabelTextViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     [cell1 setLabelName:@"APP憑證" required:NO];
     cell1.textView.editable=NO;
-    cell1.textView.userInteractionEnabled=NO;
     cell1.textView.text=[[UserSet sharedInstance] AppToken];
     
     TKLabelTextFieldCell *cell2=[[[TKLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
@@ -72,6 +71,7 @@
         cell2.field.text=@"已同步";
     }else{
         cell2.field.text=@"未同步";
+        [self checkSync];//取得名称
     }
     
     TKLabelTextFieldCell *cell3=[[[TKLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
@@ -90,7 +90,7 @@
     
     
     self.cells =[NSMutableArray arrayWithObjects:cell1,cell2,cell3,cell4,cell5, nil];
-    //[self checkSync];//取得名称
+    
 	// Do any additional setup after loading the view.
     
     //4e8b9f229316617b2932743695a331589e0cdc8c42
@@ -99,7 +99,7 @@
     NSString *token=[[[UserSet sharedInstance] AppToken] Trim];
     if ([token length]>0) {
         ServiceArgs *args=[[[ServiceArgs alloc] init] autorelease];
-        args.methodName=@"FindToken";
+        args.methodName=@"IsBindAccount";
         args.soapParams=[NSArray arrayWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:token,@"tokenGuid", nil], nil];
         [_serviceHelper asynService:args delegate:self];
     }
@@ -109,12 +109,13 @@
 -(void)finishSoapRequest:(ServiceResult*)result{
     
     if ([result.xmlString length]>0) {
-         NSString *xml=[result.xmlString stringByReplacingOccurrencesOfString:@"xmlns=\"PushToken\"" withString:@""];
+        NSString *xml=[result.xmlString stringByReplacingOccurrencesOfString:result.xmlnsAttr withString:@""];
         [result.xmlParse setDataSource:xml];
-        XmlNode *node=[result.xmlParse selectSingleNode:@"//AppName"];
-        if (node&&[node.Value length]>0) {
-            TKLabelTextFieldCell *cell=self.cells[2];
-            cell.field.text=node.Value;
+        XmlNode *node=[result.xmlParse selectSingleNode:@"//IsBindAccountResult"];
+        if ([node.Value isEqualToString:@"true"]) {
+            TKLabelTextFieldCell *cell=self.cells[1];
+            cell.field.text=@"已同步";
+            [UserSet businessSync];
         }
     }
 }
@@ -215,7 +216,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section==0&&indexPath.row==0) {
-        return self.isPad?44.0:85;
+        return DeviceIsPad?44.0:120;
     }
     return 44.0;
 }

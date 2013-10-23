@@ -28,7 +28,7 @@
     PushToken *push=[[[PushToken alloc] init] autorelease];
     push.GUID=deviceId;
     push.UniqueCode=[[UIDevice currentDevice] uniqueDeviceIdentifier];
-    push.AppCode=@"Eland";
+    push.AppCode=@"ios.app.com.eland2.cases";
     push.AppName=@"IOS施政互動";
     push.AppType=@"ios";
     push.Flatbed=DeviceIsPad?@"1":@"2";

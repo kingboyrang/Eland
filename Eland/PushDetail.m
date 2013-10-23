@@ -36,8 +36,6 @@
 }
 -(void)loadControls{
     CGFloat fontSize=14,leftX=10;
-   //CGSize size=
-    
     _labSubject=[[UILabel alloc] initWithFrame:CGRectMake(leftX, 2, self.bounds.size.width,0)];
     _labSubject.font=[UIFont boldSystemFontOfSize:fontSize];
     _labSubject.textColor=[UIColor blackColor];
@@ -61,37 +59,36 @@
 }
 -(void)setDataSource:(PushResult*)args{
     
-    
     self.labSubject.text=args.Subject;
     self.labBody.text=args.Body;
     self.labApplyDate.text=[args formatDataTw];
     
-    [self setNeedsLayout];
-    
+    [self setNeedsDisplay];
 }
 -(void)layoutSubviews{
     [super layoutSubviews];
     
-    CGSize size=[_labApplyDate.text textSize:[UIFont boldSystemFontOfSize:14] withWidth:self.bounds.size.width];
-    CGRect frame=_labApplyDate.frame;
-    frame.origin.x=self.bounds.size.width-size.width-5;
+   CGSize  size=[_labSubject.text textSize:[UIFont boldSystemFontOfSize:14] withWidth:self.bounds.size.width];
+   CGRect  frame=[_labSubject frame];
     frame.size=size;
-    _labApplyDate.frame=frame;
-    
-     size=[_labSubject.text textSize:[UIFont boldSystemFontOfSize:14] withWidth:self.bounds.size.width];
-     frame=[_labSubject frame];
-    frame.size=size;
-    frame.size.width=self.bounds.size.width-_labApplyDate.frame.origin.x-2;
     _labSubject.frame=frame;
     
-    
-    
-    size=[_labBody.text textSize:[UIFont boldSystemFontOfSize:14] withWidth:self.bounds.size.width];
+    NSString *memo=[_labBody.text Trim];
+    size=[memo textSize:[UIFont boldSystemFontOfSize:14] withWidth:self.bounds.size.width-15];
     frame=_labBody.frame;
     frame.origin.y=_labSubject.frame.origin.y+_labSubject.frame.size.height+2;
     frame.size=size;
-    frame.size.width-=10;
-    _labBody.frame=frame;    
+    if (size.height>self.bounds.size.height-frame.origin.y) {
+        frame.size.height=self.bounds.size.height-frame.origin.y-2;
+    }
+    _labBody.frame=frame;
+    
+   
+    size=[_labApplyDate.text textSize:[UIFont boldSystemFontOfSize:14] withWidth:self.bounds.size.width];
+    frame=_labApplyDate.frame;
+    frame.origin.x=self.bounds.size.width-size.width-20;
+    frame.size=size;
+    _labApplyDate.frame=frame;
 }
 /*
 // Only override drawRect: if you perform custom drawing.

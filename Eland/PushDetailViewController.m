@@ -38,6 +38,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.navigationItem titleViewBackground];
     _labTitle=[[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 40)];
 	_labTitle.backgroundColor=[UIColor colorFromHexRGB:@"dfdfdf"];
     _labTitle.font=[UIFont boldSystemFontOfSize:16];
@@ -63,6 +64,9 @@
     CGSize size=[self.Entity.Subject textSize:[UIFont boldSystemFontOfSize:16] withWidth:self.view.bounds.size.width];
     CGRect frame=_labTitle.frame;
     frame.size.height=size.height;
+    if (size.height<40) {
+        frame.size.height=40;
+    }
     _labTitle.frame=frame;
     _labTitle.text=self.Entity.Subject;
     
