@@ -96,7 +96,7 @@
     }];
     [request startAsynchronous];
 }
-+(void)backgroundQueueLoad{
++(void)backgroundQueueLoad:(void(^)())completed{
     ServiceHelper *helper=[[ServiceHelper alloc] init];
     ASIHTTPRequest *request=[ASIHTTPRequest requestWithURL:[NSURL URLWithString:CityDownURL]];
     [request setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"city",@"name", nil]];
@@ -123,8 +123,13 @@
     } failed:^(NSError *error, NSDictionary *userInfo) {
         
     } complete:^{
-        
+        if (completed) {
+            completed();
+        }
     }];
+}
++(void)backgroundQueueLoad{
+    [self backgroundQueueLoad:nil];
 }
 #pragma mark private
 +(void)handlerCaseCity:(NSString*)xml{

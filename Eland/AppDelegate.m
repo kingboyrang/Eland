@@ -114,6 +114,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)app
 {
+    /***
     if ([[UIDevice currentDevice] respondsToSelector:@selector(isMultitaskingSupported)]) { //Check if our iOS version supports
         if ([[UIDevice currentDevice] isMultitaskingSupported]) { //Check if device supports mulitasking
             UIApplication *application = [UIApplication sharedApplication]; //Get the shared application instance
@@ -121,26 +122,24 @@
             __block UIBackgroundTaskIdentifier background_task; //Create a task object
             
             background_task = [application beginBackgroundTaskWithExpirationHandler: ^ {
-                /*
-                 当应用程序后台停留的时间为0时，会执行下面的操作（应用程序后台停留的时间为600s，可以通过backgroundTimeRemaining查看）
-                 */
+                 //当应用程序后台停留的时间为0时，会执行下面的操作（应用程序后台停留的时间为600s，可以通过backgroundTimeRemaining查看）
                 [application endBackgroundTask: background_task]; //Tell the system that we are done with the tasks
                 background_task = UIBackgroundTaskInvalid; //Set the task to be invalid
-                
                 //System will be shutting down the app at any point in time now
             }];
-            
             // Background tasks require you to use asyncrous tasks
-            
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 //Perform your tasks that your application requires
                 NSLog(@"time remain:%f", app.backgroundTimeRemaining);
-                
-                [application endBackgroundTask: background_task]; //End the task so the system knows that you are done with what you need to perform
-                background_task = UIBackgroundTaskInvalid; //Invalidate the background_task
+                [asyncHelper backgroundQueueLoad:^{
+                    [application endBackgroundTask: background_task]; //End the task so the system knows that you are done with what you need to perform
+                    background_task = UIBackgroundTaskInvalid; //Invalidate the background_task
+                }];
+               
             });
         }
     }
+     ***/
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application

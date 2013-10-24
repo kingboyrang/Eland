@@ -17,6 +17,7 @@
 #import "CaseDetailViewController.h"
 #import "WBSuccessNoticeView.h"
 #import "UIDevice+TPCategory.h"
+#import "NetWorkConnection.h"
 @interface CaseSearchViewController (){
     SearchField *_searchField;
 }
@@ -216,6 +217,12 @@
 #pragma mark -
 #pragma mark 加载数据
 -(void)loadData{
+    if (!self.hasNetwork) {
+        [_tableView tableViewDidFinishedLoading];
+        _tableView.reachedTheEnd  = NO;
+        [self showNoNetworkNotice:nil];
+        return;
+    }
     _searchField.levevlCaseArgs.Pager.PageNumber++;
     [_helper clearDelegatesAndCancel];
     NSURL *url=[NSURL URLWithString:CaseSearchURL];
@@ -263,7 +270,7 @@
                 [_tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationFade];
                 [_tableView endUpdates];
             }
-            WBSuccessNoticeView *successView=[WBSuccessNoticeView successNoticeInView:self.view title:[NSString stringWithFormat:@"當前更新%d數據!",result.count]];
+            WBSuccessNoticeView *successView=[WBSuccessNoticeView successNoticeInView:self.view title:[NSString stringWithFormat:@"當前更新%d筆數據!",result.count]];
             [successView show];
         }
     }];

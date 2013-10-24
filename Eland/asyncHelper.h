@@ -13,4 +13,5 @@
 +(void)asyncLoadCaseCategory:(void (^)(NSArray *result))completed;
 +(void)asyncLoadCaseSettings:(void (^)(NSArray *result))completed;
 +(void)backgroundQueueLoad;
++(void)backgroundQueueLoad:(void(^)())completed;
 @end

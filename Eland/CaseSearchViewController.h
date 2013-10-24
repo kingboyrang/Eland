@@ -12,7 +12,7 @@
 #import "LevelCase.h"
 #import "ASIFormDataRequest.h"
 #import "ShakeView.h"
-@interface CaseSearchViewController : UIViewController<PullingRefreshTableViewDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface CaseSearchViewController : BasicViewController<PullingRefreshTableViewDelegate,UITableViewDataSource,UITableViewDelegate>
 {
   @private
     PullingRefreshTableView *_tableView;

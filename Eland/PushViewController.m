@@ -43,6 +43,8 @@
     _tableView=[[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     _tableView.dataSource=self;
     _tableView.delegate=self;
+    _tableView.autoresizesSubviews=YES;
+    _tableView.autoresizingMask=UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:_tableView];
     _helper=[[ServiceHelper alloc] init];
    
