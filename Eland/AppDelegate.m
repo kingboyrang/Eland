@@ -56,6 +56,14 @@
         }];
     }
 }
+-(void)backgroundInitRequestTask{
+    //背景任务
+    [asyncHelper backgroundQueueLoad];
+}
+-(void)backgroundRequestTask{
+    [self registerAPNSToken:[[UserSet sharedInstance] AppToken]];
+    [self backgroundInitRequestTask];
+}
 -(void)initParams{
     [ZAActivityBar setLocationTabBar];
     [self registerAPNS];
@@ -70,8 +78,7 @@
         self.hasConnect=isConnection;
     }];
     //背景任务
-    [asyncHelper backgroundQueueLoad];
-    
+    [self performSelectorInBackground:@selector(backgroundInitRequestTask) withObject:nil];
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -144,9 +151,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    [self registerAPNSToken:[[UserSet sharedInstance] AppToken]];
-    //背景任务
-    [asyncHelper backgroundQueueLoad];
+    [self performSelectorInBackground:@selector(backgroundRequestTask) withObject:nil];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

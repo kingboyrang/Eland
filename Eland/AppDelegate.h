@@ -14,4 +14,6 @@
 -(void)registerAPNS;
 -(void)initParams;
 -(void)registerAPNSToken:(NSString*)deviceId;
+-(void)backgroundRequestTask;
+-(void)backgroundInitRequestTask;
 @end
