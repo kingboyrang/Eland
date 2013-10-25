@@ -76,7 +76,6 @@
     
     TKLabelTextFieldCell *cell3=[[[TKLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     [cell3 setLabelName:@"裝置名稱" required:NO];
-    cell3.field.userInteractionEnabled=NO;
     cell3.field.text=@"IOS施政互動";
     
     TKLabelTextFieldCell *cell4=[[[TKLabelTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
@@ -150,6 +149,10 @@
     TKLabelTextFieldCell *cell2=self.cells[2];
     TKLabelTextFieldCell  *cell3=self.cells[3];
     TKLabelTextFieldCell  *cell4=self.cells[4];
+    
+    [cell2.field resignFirstResponder];
+    [cell3.field resignFirstResponder];
+    [cell4.field resignFirstResponder];
 
     //[[UserSet sharedInstance] AppToken]
     NSMutableArray *params=[NSMutableArray array];
@@ -216,7 +219,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section==0&&indexPath.row==0) {
-        return DeviceIsPad?44.0:120;
+        return DeviceIsPad?60.0:120;
     }
     return 44.0;
 }

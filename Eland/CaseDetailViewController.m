@@ -89,10 +89,14 @@
 }
 -(void)updateSoureData{
     NSMutableArray *arr=[NSMutableArray array];
+    NSString *content=@"";
     for (CaseSettingField *item in self.entityCaseSetting.Fields) {
         TKShowLabelLabelCell *cell=[[TKShowLabelLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
         cell.label.text=[NSString stringWithFormat:@"%@:",item.Label];
-        cell.rightlabel.text=[self.entityCase getFieldValue:item.Name];
+        content=[self.entityCase getFieldValue:item.Name];
+        if([content length]==0&&item.Text&&[item Text]>0)
+            content=item.Text;
+        cell.rightlabel.text=content;
         [arr addObject:cell];
         [cell release];
     }
@@ -141,12 +145,12 @@
             Photos *photo=[[[Photos alloc] init] autorelease];
             [photo addImages:source];
             photo.photoScroll=photoScroll;
-            //photo.control=self;
             MKPhotoBrowser *browser=[[[MKPhotoBrowser alloc] initWithDataSource:photo andStartWithPhotoAtIndex:index] autorelease];
-            
+            browser.showTrashButton=NO;
+            browser.showShareButton=YES;
             UINavigationController *nav=[[[UINavigationController alloc] initWithRootViewController:browser] autorelease];
             [self presentViewController:nav animated:YES completion:nil];
-            [browser hideTrashButtonItem];
+            
         }
     }
 }

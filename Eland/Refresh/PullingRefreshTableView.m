@@ -158,7 +158,7 @@
             if (self.isAtTop) {
                 _stateLabel.text = NSLocalizedString(@"釋放刷新", @"");
             } else {
-                _stateLabel.text = NSLocalizedString(@"釋放加載更多", @"");
+                _stateLabel.text = NSLocalizedString(@"放開更新更多", @"");
             }
             
         } else if (_state == kPRStateNormal && !_loading){    //Reset

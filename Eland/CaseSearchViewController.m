@@ -270,8 +270,6 @@
                 [_tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationFade];
                 [_tableView endUpdates];
             }
-            WBSuccessNoticeView *successView=[WBSuccessNoticeView successNoticeInView:self.view title:[NSString stringWithFormat:@"當前更新%d筆數據!",result.count]];
-            [successView show];
         }
     }];
     [self.helper  setFailedBlock:^{

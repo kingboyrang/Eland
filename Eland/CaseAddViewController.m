@@ -69,11 +69,14 @@
 	[self loadingFormFields];
 }
 -(void)updateFormUI{
-    [self showLoadingSuccessStatus:@"加載完成!"];
+    [ZAActivityBar dismissForAction:@"loadFields"];
     NSMutableArray *source=[NSMutableArray array];
     [source addObjectsFromArray:[self CaseCategoryAndCityCells:self.Entity]];
     if (self.Entity.Fields&&[self.Entity.Fields count]>0) {
         for (CaseSettingField *item in self.Entity.Fields) {
+            if ([item.Name isEqualToString:@"LngLat"]) {
+                continue;
+            }
             if ([item.Name isEqualToString:@"Note"]) {
                 [source addObjectsFromArray:[self CaseCategoryNoteCells:item]];
                 continue;
@@ -98,7 +101,7 @@
     [_tableView reloadData];
 }
 -(void)loadingFormFields{
-    [self showLoadingStatus:@"正在加載..."];
+    [ZAActivityBar showWithStatus:@"正在加載..." forAction:@"loadFields"];
     NSString *url=[NSString stringWithFormat:SingleCaseSettingURL,self.Entity.GUID];
     ASIHTTPRequest *request=[ASIHTTPRequest requestWithURL:[NSURL URLWithString:url]];
     [request setCompletionBlock:^{
@@ -212,7 +215,7 @@
         [self showNoNetworkNotice:nil];
         return;
     }
-    [ZAActivityBar showWithStatus:@"正在提交..." forAction:@"caseAdd"];
+    [ZAActivityBar showWithStatus:@"正在送出..." forAction:@"caseAdd"];
     //提交
     ASIFormDataRequest *request=[ASIFormDataRequest requestWithURL:[NSURL URLWithString:AddCaseURL]];
     [request setPostValue:[_caseArgs XmlSerialize] forKey:@"xml"];
@@ -223,15 +226,15 @@
             XmlParseHelper *parse=[[[XmlParseHelper alloc] initWithData:xml] autorelease];
             XmlNode *node=[parse selectSingleNode:@"//Success"];
             if ([node.Value isEqualToString:@"true"]) {
-                [ZAActivityBar showSuccessWithStatus:@"提交成功!" forAction:@"caseAdd"];
+                [ZAActivityBar showSuccessWithStatus:@"送出成功!" forAction:@"caseAdd"];
                 [self.navigationController popViewControllerAnimated:YES];
                 return;
             }
         }
-        [ZAActivityBar showErrorWithStatus:@"提交失敗!" forAction:@"caseAdd"];
+        [ZAActivityBar showErrorWithStatus:@"送出失敗!" forAction:@"caseAdd"];
     }];
     [request setFailedBlock:^{
-        [ZAActivityBar showErrorWithStatus:@"提交失敗!" forAction:@"caseAdd"];
+        [ZAActivityBar showErrorWithStatus:@"送出失敗!" forAction:@"caseAdd"];
     }];
     [request startAsynchronous];
 }
@@ -271,18 +274,8 @@
     }
 }
 -(void)geographyLocation:(SVPlacemark*)place{
-    for (id  item in self.cells) {
-        if ([item isKindOfClass:[TKCaseTextFieldCell class]]) {
-            TKCaseTextFieldCell *cell=(TKCaseTextFieldCell*)item;
-            if ([cell.LabelName isEqualToString:@"LngLat"]) {
-                cell.field.text=[NSString stringWithFormat:@"%f~%f",place.location.coordinate.longitude,place.location.coordinate.latitude];
-                _caseArgs.Extend.Lat=[NSString stringWithFormat:@"%f",place.location.coordinate.latitude];
-                _caseArgs.Extend.Lng=[NSString stringWithFormat:@"%f",place.location.coordinate.longitude];
-                break;
-            }
-            
-        }
-    }
+    _caseArgs.Extend.Lat=[NSString stringWithFormat:@"%f",place.location.coordinate.latitude];
+    _caseArgs.Extend.Lng=[NSString stringWithFormat:@"%f",place.location.coordinate.longitude];
 }
 #pragma mark -
 #pragma mark UITableViewDataSource Methods

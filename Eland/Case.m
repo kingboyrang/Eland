@@ -85,6 +85,9 @@
     if ([propertyname isEqualToString:@"Images"]||[propertyname isEqualToString:@"ApprovalImages"]) {
         return @"";
     }
+    if ([propertyname isEqualToString:@"LngLat"]&&self.Extend) {
+        return [NSString stringWithFormat:@"%@~%@",self.Extend.Lng,self.Extend.Lat];
+    }
     SEL sel=NSSelectorFromString(propertyname);
     if ([self respondsToSelector:sel]) {//判断是否响应这个属性
         return [self valueForKey:propertyname];

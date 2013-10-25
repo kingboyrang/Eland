@@ -134,7 +134,7 @@
 -(void)buttonImageTap:(id)sender{
     UITapGestureRecognizer *tapGesture=(UITapGestureRecognizer*)sender;
     UIImageView *imageView=(UIImageView*)tapGesture.view;
-    int index=[self.scrollView.subviews indexOfObject:imageView];
+    int index=imageView.tag-101;
     if (self.delegate&&[self.delegate respondsToSelector:@selector(imageViewClick:imageIndex:)]) {
         [self.delegate imageViewClick:imageView imageIndex:index];
     }

@@ -132,17 +132,9 @@
     }
     CaseCategory *entity=[self getCaseCategoryWithGuid:parent];
     if (entity!=nil) {
-        TreeViewNode *node=[[[TreeViewNode alloc] init] autorelease];
-        node.nodeLevel = 0;
-        node.nodeObject =entity;
-        node.isExpanded = YES;
-        
         NSMutableArray *source=[self childsTreeNodes:parent];
-        NSMutableArray *childs=[self childsObjectTreeNodes:source Level:1];
-        if (childs&&[childs count]>0) {
-            node.nodeChildren=childs;
-        }
-        return [NSMutableArray arrayWithObjects:node, nil];
+        NSMutableArray *childs=[self childsObjectTreeNodes:source Level:0];
+        return childs;
     }
     return nil;
 }

@@ -227,7 +227,7 @@
     UIButton *btn=(UIButton*)sender;
     UITextField *field=(UITextField*)[btn superview];
     if ([field.text length]>0) {
-        [AlertHelper initWithTitle:@"提示" message:@"是否前往瀏覽?" cancelTitle:@"取消" cancelAction:nil confirmTitle:@"確認" confirmAction:^{
+        [AlertHelper initWithTitle:@"提示" message:@"是否瀏覽網頁?" cancelTitle:@"取消" cancelAction:nil confirmTitle:@"確認" confirmAction:^{
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:field.text]];//使用浏览器打开
         }];
     }

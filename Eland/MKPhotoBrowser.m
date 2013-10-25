@@ -40,6 +40,8 @@ const CGFloat ktkDefaultToolbarHeight = 44;
 @end
 
 @implementation MKPhotoBrowser
+@synthesize showShareButton;
+@synthesize showTrashButton;
 -(void)dealloc{
     [super dealloc];
     [_scrollView release],_scrollView=nil;
@@ -52,9 +54,9 @@ const CGFloat ktkDefaultToolbarHeight = 44;
     [_navigationBarBackgroundImageDefault release],_navigationBarBackgroundImageDefault=nil;
     [_navigationBarBackgroundImageLandscapePhone release],_navigationBarBackgroundImageLandscapePhone=nil;
     [_previousNavBarTintColor release],_previousNavBarTintColor=nil;
-    if (_previousViewControllerBackButton) {
-        [_previousViewControllerBackButton release],_previousViewControllerBackButton=nil;
-    }
+    //if (_previousViewControllerBackButton) {
+     //   [_previousViewControllerBackButton release],_previousViewControllerBackButton=nil;
+    //}
     if (_actionsSheet) {
         [_actionsSheet release],_actionsSheet=nil;
     }
@@ -119,13 +121,21 @@ const CGFloat ktkDefaultToolbarHeight = 44;
     _nextButton=[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"UIBarButtonItemArrowRight.png"] style:UIBarButtonItemStylePlain target:self action:@selector(nextPhoto)];
     UIBarButtonItem *flexSpaceMid=[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
     _trashButton=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(trashPhoto:)];
-    _toolBar.items=[NSArray arrayWithObjects:_actionButton,flexSpaceLeft,_previousButton,_nextButton,flexSpaceMid,_trashButton, nil];
+    
+    NSMutableArray *result=[NSMutableArray array];
+    if (self.showShareButton) {
+        [result addObject:_actionButton];
+    }
+    [result addObject:flexSpaceLeft];
+    [result addObject:_previousButton];
+    [result addObject:_nextButton];
+    [result addObject:flexSpaceMid];
+    if (self.showTrashButton) {
+        [result addObject:_trashButton];
+    }
+    _toolBar.items=result;
     [self.view addSubview:_toolBar];
-}
--(void)hideTrashButtonItem{
-    NSMutableArray *arr=[NSMutableArray arrayWithArray:_toolBar.items];
-    [arr removeLastObject];
-    _toolBar.items=arr;
+
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -401,15 +411,11 @@ const CGFloat ktkDefaultToolbarHeight = 44;
             }
             _actionsSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
         }
-            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-                [_actionsSheet showFromBarButtonItem:sender animated:YES];
-            } else {
-                [_actionsSheet showInView:self.view];
-            }
-    
-
-    
-   
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            [_actionsSheet showFromBarButtonItem:sender animated:YES];
+        } else {
+            [_actionsSheet showInView:self.view];
+        }
 }
 -(void)actionButtonPressed:(id)sender{
     if (!_actionsButtonSheet) {
@@ -548,19 +554,18 @@ const CGFloat ktkDefaultToolbarHeight = 44;
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (actionSheet == _actionsSheet) {
         // Actions
-        if (buttonIndex != 1) {
+        if (buttonIndex == 0) {
             if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
                 [self finishTransh];
             }else{
-            if (_dataSource) {
-                id currentPhotoView = [photoViews_ objectAtIndex:_currentIndex];
-                if ([currentPhotoView isKindOfClass:[MKPhotoView class]]) {
-                    CGRect frame=CGRectMake(self.view.bounds.size.width-22-5, self.view.bounds.size.height-22-5, 22, 22);
-                    [currentPhotoView trashPhotoTargetFrame:frame];
+                if (_dataSource) {
+                    id currentPhotoView = [photoViews_ objectAtIndex:_currentIndex];
+                    if ([currentPhotoView isKindOfClass:[MKPhotoView class]]) {
+                        CGRect frame=CGRectMake(self.view.bounds.size.width-22-5, self.view.bounds.size.height-22-5, 22, 22);
+                        [currentPhotoView trashPhotoTargetFrame:frame];
+                    }
+                    // TODO: Animate the deletion of the current photo.
                 }
-                // TODO: Animate the deletion of the current photo.
-                
-            }
             }
         }
     }

@@ -43,5 +43,6 @@
 }
 - (id)initWithDataSource:(id <MKPhotoBrowserDataSource>)dataSource andStartWithPhotoAtIndex:(NSUInteger)index;
 -(void)setDataSource:(id <MKPhotoBrowserDataSource>)dataSource;
--(void)hideTrashButtonItem;
+@property(nonatomic,assign) BOOL showTrashButton;
+@property(nonatomic,assign) BOOL showShareButton;
 @end

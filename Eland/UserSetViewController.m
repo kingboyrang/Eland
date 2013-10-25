@@ -12,9 +12,9 @@
 #import "UIColor+TPCategory.h"
 #import "SecrecyViewController.h"
 #import "UserSet.h"
-#import "WBSuccessNoticeView.h"
 #import "TKButtonButtonCell.h"
 #import "UIDevice+TPCategory.h"
+#import "AlertHelper.h"
 @interface UserSetViewController ()
 -(void)buttonSaveClick;
 -(void)buttonSecrecyClick;
@@ -132,11 +132,7 @@
     user.Email=cell3.field.text;
     user.Nick=cell4.field.text;
     [user save];
-    WBSuccessNoticeView *successView=[WBSuccessNoticeView successNoticeInView:self.view title:@"存儲成功!"];
-    [successView setDismissalBlock:^(BOOL dismissedInteractively) {
-        isSubmit=NO;
-    }];
-    [successView show];
+    [AlertHelper initWithTitle:@"提示" message:@"存儲成功!"];
 
 }
 - (void)didReceiveMemoryWarning

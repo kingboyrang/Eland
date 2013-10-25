@@ -51,14 +51,17 @@
 -(void)imageViewClick:(UIImageView*)imageView imageIndex:(int)index{
     if (_PhotoScroll) {
         NSArray *source=[_PhotoScroll sourceImages];
-        if (source) {
+        if (source&&[source count]>0) {
             Photos *photo=[[[Photos alloc] init] autorelease];
             [photo addImages:source];
             photo.photoScroll=_PhotoScroll;
             photo.control=self;
             MKPhotoBrowser *browser=[[[MKPhotoBrowser alloc] initWithDataSource:photo andStartWithPhotoAtIndex:index] autorelease];
+            browser.showShareButton=NO;
+            browser.showTrashButton=YES;
             UINavigationController *nav=[[[UINavigationController alloc] initWithRootViewController:browser] autorelease];
             [self.showInController presentViewController:nav animated:YES completion:nil];
+            
         }
     }
 }

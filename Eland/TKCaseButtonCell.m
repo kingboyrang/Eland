@@ -21,7 +21,7 @@
     [_button setBackgroundImage:leftImage forState:UIControlStateNormal];
     _button.titleLabel.font=[UIFont boldSystemFontOfSize:16.0];
     [_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_button setTitle:@"提交" forState:UIControlStateNormal];
+    [_button setTitle:@"送出" forState:UIControlStateNormal];
     [self.contentView addSubview:_button];
     
     return self;

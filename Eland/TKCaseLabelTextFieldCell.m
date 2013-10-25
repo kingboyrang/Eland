@@ -87,10 +87,10 @@
     imagePickerController.limitsMaximumNumberOfSelection=YES;
     imagePickerController.maximumNumberOfSelection=self.maxImageCount;
     
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
-    [self.showInController presentViewController:navigationController animated:YES completion:NULL];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
+    [self.showInController presentViewController:nav animated:YES completion:NULL];
     [imagePickerController release];
-    [navigationController release];
+    [nav release];
     
 }
 -(void)buttonCameraClick{

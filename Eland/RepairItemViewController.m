@@ -147,7 +147,7 @@
     CaseSetting *setting=self.sourceData[indexPath.row];
     if (setting.GUID&&[setting.GUID length]>0) {
         if (![UserSet emptyUser]) {
-            [AlertHelper initWithTitle:@"提示" message:@"使用者設定信息未填寫完整,是否前往填寫?" cancelTitle:@"取消" cancelAction:nil confirmTitle:@"前往" confirmAction:^{
+            [AlertHelper initWithTitle:@"提示" message:@"使用者應載明具體事項、真實姓名及聯絡方式(包括電話、住址或電子郵件位址等)，無具體內容、未具「真實姓名」或「聯絡方式」者，受理機關得依分層負責權限規定，得不予處理。" cancelTitle:@"取消" cancelAction:nil confirmTitle:@"確定" confirmAction:^{
                 MainViewController *main=(MainViewController*)self.tabBarController;
                 [main setSelectedItemIndex:1];
             }];
