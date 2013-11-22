@@ -82,7 +82,7 @@
                 continue;
             }
             if ([item isTextArea]) {
-                if ([item.Name isEqualToString:@"Location"]) {
+                if ([item.Name isEqualToString:@"Location"]) {//定位
                     [source addObjectsFromArray:[self CaseCategoryLocationCells:item]];
                 }else{
                    [source addObjectsFromArray:[self CaseCategoryTextAreaCells:item]];

@@ -27,6 +27,8 @@
 -(NSMutableArray*)CaseCategoryPWDCells;
 //位置描述
 -(NSMutableArray*)CaseCategoryLocationCells:(CaseSettingField*)entity;
+//路灯编号
+-(NSMutableArray*)CaseCategoryNumberCells:(CaseSettingField*)entity;
 
 -(void)buttonCaseCategoryClick:(id)sender CaseCategoryGUID:(NSString*)guid;
 -(void)hidePopoverCaseCategory;

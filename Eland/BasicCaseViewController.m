@@ -18,6 +18,7 @@
 #import "AlertHelper.h"
 #import "TkCaseImageCell.h"
 #import "TkCaseLocationCell.h"
+#import "TKCaseLightNumberCell.h"
 @interface BasicCaseViewController ()
 -(void)buttonOpenURL:(id)sender;
 @end
@@ -187,6 +188,30 @@
     [result addObject:cell1];
     [result addObject:cell2];
     return result;
+}
+-(NSMutableArray*)CaseCategoryNumberCells:(CaseSettingField*)entity{
+    NSMutableArray *result=[NSMutableArray array];
+    TKCaseLabelCell *cell1=[[[TKCaseLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    [cell1.label setText:@"<font size=16 color='#dd1100'>路燈編號和地址請擇一填寫:</font>"];
+    
+    
+    
+    TKCaseTextFieldCell *cell2=[[[TKCaseTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    cell2.required=entity.isRequired;
+    cell2.field.placeholder=[NSString stringWithFormat:@"請輸入%@",entity.Label];
+    cell2.LabelName=entity.Name;
+    if (entity.Text&&[entity.Text length]>0) {
+        cell2.field.text=entity.Text;
+    }
+    
+    TKCaseLightNumberCell *cell3=[[[TKCaseLightNumberCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+
+    [result addObject:cell1];
+    [result addObject:cell2];
+    [result addObject:cell3];
+    
+    return result;
+    
 }
 -(void)buttonCaseCityClick:(id)sender{
     if (!popoverCaseCity) {
