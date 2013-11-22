@@ -8,7 +8,7 @@
 
 #import "ShowPushDetail.h"
 #import "AlertHelper.h"
-
+#import "UIColor+TPCategory.h"
 @interface ShowPushDetail ()
 -(NSString*)filterContent:(NSString*)str;
 @end
@@ -24,7 +24,7 @@
         self.pagingEnabled=YES;
         self.autoresizesSubviews=YES;
         self.autoresizingMask=UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-        self.backgroundColor=[UIColor clearColor];
+        self.backgroundColor=[UIColor colorFromHexRGB:@"f4f4f4"];
         
         _label=[[RTLabel alloc] initWithFrame:self.bounds];
         _label.delegate=self;
