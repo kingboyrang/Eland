@@ -73,12 +73,14 @@
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTintColor:[UIColor colorFromHexRGB:@"5cc2cb"]];
     //检测是否有网络
     NetWorkConnection *network=[NetWorkConnection sharedInstance];
+    network.hasNewWork=YES;
     [network dynamicListenerNetwork:^(NetworkStatus status, BOOL isConnection) {
         network.hasNewWork=isConnection;
         self.hasConnect=isConnection;
     }];
     //背景任务
-    [self performSelectorInBackground:@selector(backgroundInitRequestTask) withObject:nil];
+    [self backgroundInitRequestTask];
+    //[self performSelectorInBackground:@selector(backgroundInitRequestTask) withObject:nil];
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -151,14 +153,13 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    [self performSelectorInBackground:@selector(backgroundRequestTask) withObject:nil];
+    //[self performSelectorInBackground:@selector(backgroundRequestTask) withObject:nil];
+    [self backgroundRequestTask];
 }
-
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
-
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.

@@ -12,9 +12,10 @@
 #import "CacheHelper.h"
 #import "UIColor+TPCategory.h"
 #import "NSString+TPCategory.h"
+#import "ShowPushDetail.h"
 @interface PushDetailViewController (){
     UILabel *_labTitle;
-    UITextView *_textView;
+    ShowPushDetail *_textView;
 }
 -(void)showErrorView;
 -(void)updateUIShow;
@@ -24,7 +25,6 @@
 -(void)dealloc{
     [super dealloc];
     [_labTitle release],_labTitle=nil;
-    [_textView release],_textView=nil;
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -45,11 +45,7 @@
     _labTitle.textColor=[UIColor colorFromHexRGB:@"3DB5C0"];
     [self.view addSubview:_labTitle];
     
-    _textView=[[UITextView alloc] initWithFrame:CGRectMake(0, 40, self.view.bounds.size.width, self.view.bounds.size.height-40)];
-    _textView.editable=NO;
-    _textView.backgroundColor=[UIColor colorFromHexRGB:@"f4f4f4"];
-    _textView.textColor=[UIColor blackColor];
-    _textView.font=[UIFont boldSystemFontOfSize:16];
+    _textView=[[ShowPushDetail alloc] initWithFrame:CGRectMake(0, 40, self.view.bounds.size.width, self.view.bounds.size.height-40)];
     [self.view addSubview:_textView];
     
     if (self.Entity) {
@@ -74,7 +70,8 @@
     frame.origin.y=_labTitle.frame.size.height;
     frame.size.height=self.view.bounds.size.height-_labTitle.frame.size.height;
     _textView.frame=frame;
-    _textView.text=self.Entity.Body;
+    
+    [_textView setTextContent:self.Entity.Body];
 }
 -(void)showErrorView{
     WBErrorNoticeView *errorView=[WBErrorNoticeView errorNoticeInView:self.view title:@"提示" message:@"資料加載失敗!"];

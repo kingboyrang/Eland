@@ -155,6 +155,7 @@
 		01B023E718053C2B0018BF9A /* PushResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B023E618053C2B0018BF9A /* PushResult.m */; };
 		01B023EA180541670018BF9A /* PushDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B023E9180541670018BF9A /* PushDetailViewController.m */; };
 		01B023EE1805537D0018BF9A /* PushDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B023ED1805537D0018BF9A /* PushDetail.m */; };
+		01B18AA8183F34B2005C9BFF /* ShowPushDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B18AA7183F34B2005C9BFF /* ShowPushDetail.m */; };
 		01B24BA218166C9000E29C0E /* ShakeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B24BA118166C8F00E29C0E /* ShakeView.m */; };
 		01B298501814D8D100556F61 /* NSDate+TPCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B2984F1814D8D100556F61 /* NSDate+TPCategory.m */; };
 		01B38F7E17FBA4580011EE56 /* ScrollControls.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B38F7D17FBA4580011EE56 /* ScrollControls.m */; };
@@ -543,6 +544,8 @@
 		01B023E9180541670018BF9A /* PushDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushDetailViewController.m; sourceTree = "<group>"; };
 		01B023EC1805537D0018BF9A /* PushDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushDetail.h; sourceTree = "<group>"; };
 		01B023ED1805537D0018BF9A /* PushDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushDetail.m; sourceTree = "<group>"; };
+		01B18AA6183F34B2005C9BFF /* ShowPushDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowPushDetail.h; sourceTree = "<group>"; };
+		01B18AA7183F34B2005C9BFF /* ShowPushDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowPushDetail.m; sourceTree = "<group>"; };
 		01B24BA018166C8F00E29C0E /* ShakeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShakeView.h; sourceTree = "<group>"; };
 		01B24BA118166C8F00E29C0E /* ShakeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShakeView.m; sourceTree = "<group>"; };
 		01B2984E1814D8D100556F61 /* NSDate+TPCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+TPCategory.h"; sourceTree = "<group>"; };
@@ -1462,6 +1465,8 @@
 			children = (
 				01B023EC1805537D0018BF9A /* PushDetail.h */,
 				01B023ED1805537D0018BF9A /* PushDetail.m */,
+				01B18AA6183F34B2005C9BFF /* ShowPushDetail.h */,
+				01B18AA7183F34B2005C9BFF /* ShowPushDetail.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -2225,6 +2230,7 @@
 				01E16BE8181A403E00CB60F3 /* QBImagePickerFooterView.m in Sources */,
 				01E16BE9181A403E00CB60F3 /* QBImagePickerGroupCell.m in Sources */,
 				01E16BEA181A403E00CB60F3 /* QBImagePickerVideoInfoView.m in Sources */,
+				01B18AA8183F34B2005C9BFF /* ShowPushDetail.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
