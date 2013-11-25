@@ -65,6 +65,18 @@
     }
     return NO;
 }
+-(CaseSettingField*)getEntityFieldWithName:(NSString*)name{
+    if (self.Fields&&[self.Fields count]>0) {
+        NSString *match=[NSString stringWithFormat:@"SELF.Name =='%@'",name];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:match];
+        NSArray *results = [self.Fields filteredArrayUsingPredicate:predicate];
+        if (results&&[results count]>0) {
+            CaseSettingField *entity=[results objectAtIndex:0];
+            return entity;
+        }
+    }
+    return nil;
+}
 +(CaseSetting*)xmlStringToCaseSetting:(NSString*)xml{
     CaseSetting *entity=[[[CaseSetting alloc] init] autorelease];
     

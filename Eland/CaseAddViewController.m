@@ -27,6 +27,7 @@
 #import "ASIFormDataRequest.h"
 #import "NSDate+TPCategory.h"
 #import "XmlParseHelper.h"
+#import "TKCaseLightNumberCell.h"
 @interface CaseAddViewController ()
 -(void)loadingFormFields;
 -(void)updateFormUI;
@@ -81,15 +82,33 @@
                 [source addObjectsFromArray:[self CaseCategoryNoteCells:item]];
                 continue;
             }
-            if ([item isTextArea]) {
-                if ([item.Name isEqualToString:@"Location"]) {//定位
-                    [source addObjectsFromArray:[self CaseCategoryLocationCells:item]];
-                }else{
-                   [source addObjectsFromArray:[self CaseCategoryTextAreaCells:item]];
+            if ([self.Entity.GUID isEqualToString:@"B"]) {
+                if ([item.Name isEqualToString:@"LightNumber"]) {
+                    continue;
                 }
-                continue;
+                if ([item isTextArea]) {
+                    if ([item.Name isEqualToString:@"Location"]) {//定位
+                        [source addObjectsFromArray:[self CaseCategoryNumberCells:[self.Entity getEntityFieldWithName:@"LightNumber"]]];
+                        //[source addObjectsFromArray:[self CaseCategoryLocationCells:item]];
+                    }else{
+                        [source addObjectsFromArray:[self CaseCategoryTextAreaCells:item]];
+                    }
+                    continue;
+                }
+                [source addObjectsFromArray:[self CaseCategoryTextCells:item]];
+                
+            }else{
+                if ([item isTextArea]) {
+                    if ([item.Name isEqualToString:@"Location"]) {//定位
+                        [source addObjectsFromArray:[self CaseCategoryLocationCells:item]];
+                    }else{
+                        [source addObjectsFromArray:[self CaseCategoryTextAreaCells:item]];
+                    }
+                    continue;
+                }
+                [source addObjectsFromArray:[self CaseCategoryTextCells:item]];
             }
-            [source addObjectsFromArray:[self CaseCategoryTextCells:item]];
+            
         }
     }
     [source addObjectsFromArray:[self CaseCategoryPWDCells]];
@@ -128,6 +147,68 @@
         total+=[_tableView.delegate tableView:_tableView heightForRowAtIndexPath:indexPath];
     }
     return total;
+}
+-(void)switchControlSelectedIndex:(NSInteger)index withObject:(id)sender{
+    id v=[sender superview];
+    while (![v isKindOfClass:[UITableViewCell class]]) {
+        v=[v superview];
+    }
+    TKCaseLightNumberCell *cell=(TKCaseLightNumberCell*)v;
+     NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
+    id  cell1=[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row+2 inSection:0]];
+    if ([cell1 isKindOfClass:[TKCaseTextFieldCell class]]&&index!=1) {
+        NSIndexPath *indexPath1=[NSIndexPath indexPathForRow:indexPath.row+1 inSection:0];
+        NSIndexPath *indexPath2=[NSIndexPath indexPathForRow:indexPath.row+2 inSection:0];
+        [_tableView beginUpdates];
+        [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath1,indexPath2, nil] withRowAnimation:UITableViewRowAnimationFade];
+        [_tableView endUpdates];
+        
+        CaseSettingField *entity=[self.Entity getEntityFieldWithName:@"Location"];
+        if (entity!=nil) {
+            NSMutableArray *arr=[self CaseCategoryLocationCells:entity];
+            NSMutableArray *indexPaths=[NSMutableArray arrayWithCapacity:arr.count];
+            for (int i=0; i<arr.count; i++) {
+                [self.cells replaceObjectAtIndex:indexPath.row+i+1 withObject:[arr objectAtIndex:i]];
+                NSIndexPath *cellIndexPath=[NSIndexPath indexPathForRow:indexPath.row+i+1 inSection:0];
+                [indexPaths addObject:cellIndexPath];
+            }
+            [_tableView beginUpdates];
+            [_tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+            [_tableView endUpdates];
+            
+        }else{
+            [self.cells removeObjectAtIndex:indexPath.row+1];
+            [self.cells removeObjectAtIndex:indexPath.row+1];
+        }
+        
+    }
+    
+    if ([cell1 isKindOfClass:[TKCaseTextViewCell class]]&&index!=2) {
+        NSIndexPath *indexPath1=[NSIndexPath indexPathForRow:indexPath.row+1 inSection:0];
+        NSIndexPath *indexPath2=[NSIndexPath indexPathForRow:indexPath.row+2 inSection:0];
+        [_tableView beginUpdates];
+        [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath1,indexPath2, nil] withRowAnimation:UITableViewRowAnimationFade];
+        [_tableView endUpdates];
+        
+        CaseSettingField *entity=[self.Entity getEntityFieldWithName:@"LightNumber"];
+        if (entity!=nil) {
+            NSMutableArray *arr=[self CaseCategoryLocationCells:entity];
+            NSMutableArray *indexPaths=[NSMutableArray arrayWithCapacity:arr.count];
+            for (int i=0; i<arr.count; i++) {
+                [self.cells replaceObjectAtIndex:indexPath.row+i+1 withObject:[arr objectAtIndex:i]];
+                NSIndexPath *cellIndexPath=[NSIndexPath indexPathForRow:indexPath.row+i+1 inSection:0];
+                [indexPaths addObject:cellIndexPath];
+            }
+            [_tableView beginUpdates];
+            [_tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+            [_tableView endUpdates];
+            
+        }else{
+            [self.cells removeObjectAtIndex:indexPath.row+1];
+            [self.cells removeObjectAtIndex:indexPath.row+1];
+        }
+
+    }
 }
 //验证
 -(BOOL)formValidate{

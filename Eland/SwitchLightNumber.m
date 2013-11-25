@@ -53,7 +53,7 @@
          _addressLabel.backgroundColor=[UIColor clearColor];
         _addressLabel.textColor=[UIColor colorWithRed:110/255.0 green:106/255.0 blue:97/255.0 alpha:1];
     }
-     self.currentIndex=2;
+     self.currentIndex=1;
     [self addSubview:_addressLabel];
 }
 -(void)addButton:(CGFloat)leftx height:(CGFloat)h index:(NSInteger)tag{
@@ -77,6 +77,9 @@
     btn.selected=YES;
     btn1.selected=NO;
     self.currentIndex=btn.tag==100?1:2;
+    if (self.controller&&[self.controller respondsToSelector:@selector(switchControlSelectedIndex:withObject:)]) {
+        [self.controller performSelector:@selector(switchControlSelectedIndex:withObject:) withObject:self.currentIndex withObject:self];
+    }
 }
 /*
 // Only override drawRect: if you perform custom drawing.

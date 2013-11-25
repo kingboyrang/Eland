@@ -60,7 +60,7 @@
 -(void)setDataSource:(PushResult*)args{
     
     self.labSubject.text=args.Subject;
-    self.labBody.text=args.Body;
+    self.labBody.text=args.HtmlBody;
     self.labApplyDate.text=[args formatDataTw];
     
     [self setNeedsDisplay];

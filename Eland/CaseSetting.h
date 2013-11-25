@@ -25,4 +25,6 @@
 +(NSArray*)xmlStringToCaseSettings:(NSString*)xml;
 //乡镇市是否必填
 -(BOOL)isRequiredShowCity;
+//获取一项设定
+-(CaseSettingField*)getEntityFieldWithName:(NSString*)name;
 @end

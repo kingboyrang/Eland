@@ -22,6 +22,8 @@
 @property(nonatomic,copy) NSString *SendTime;//發送時間
 @property(nonatomic,copy) NSString *StartTime;//希望發送時間
 @property(nonatomic,copy) NSString *AuthToken;//客户Token
+
+@property(nonatomic,readonly) NSString *HtmlBody;//
 -(NSString*)formatDataTw;
 +(PushResult*)PushResultWithGuid:(NSString*)guid;
 //判断当前这笔资料是否已存在

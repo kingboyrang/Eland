@@ -16,4 +16,5 @@
     
 }
 @property(nonatomic,assign) NSInteger currentIndex;
+@property(nonatomic,assign) id controller;
 @end

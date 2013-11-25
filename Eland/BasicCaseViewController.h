@@ -34,4 +34,6 @@
 -(void)hidePopoverCaseCategory;
 -(void)buttonCaseCityClick:(id)sender;
 -(void)hidePopoverCaseCity;
+
+
 @end

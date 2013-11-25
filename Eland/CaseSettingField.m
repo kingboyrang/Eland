@@ -21,4 +21,10 @@
     }
     return NO;
 }
+-(UIColor*)NoteColor{
+    if (_TextColor&&[_TextColor isEqualToString:@"1"]) {
+        return [UIColor redColor];
+    }
+    return [UIColor blackColor];
+}
 @end

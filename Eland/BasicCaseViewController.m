@@ -103,6 +103,7 @@
     
     TKCaseTextCell *cell2=[[[TKCaseTextCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     cell2.label.text=entity.Text;
+    cell2.label.textColor=[entity NoteColor];
     
     [result addObject:cell1];
     [result addObject:cell2];
@@ -194,25 +195,31 @@
     TKCaseLabelCell *cell1=[[[TKCaseLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     [cell1.label setText:@"<font size=16 color='#dd1100'>路燈編號和地址請擇一填寫:</font>"];
     
+    TKCaseLightNumberCell *cell3=[[[TKCaseLightNumberCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    cell3.lightNumber.controller=self;
     
+    TKCaseLabelCell *cell4=[[[TKCaseLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    [cell1 setLabelName:[NSString stringWithFormat:@"%@:",entity.Label] required:YES];
     
     TKCaseTextFieldCell *cell2=[[[TKCaseTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-    cell2.required=entity.isRequired;
+    cell2.required=YES;
     cell2.field.placeholder=[NSString stringWithFormat:@"請輸入%@",entity.Label];
     cell2.LabelName=entity.Name;
     if (entity.Text&&[entity.Text length]>0) {
         cell2.field.text=entity.Text;
     }
     
-    TKCaseLightNumberCell *cell3=[[[TKCaseLightNumberCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    
 
     [result addObject:cell1];
-    [result addObject:cell2];
     [result addObject:cell3];
+    [result addObject:cell4];
+    [result addObject:cell2];
     
     return result;
     
 }
+
 -(void)buttonCaseCityClick:(id)sender{
     if (!popoverCaseCity) {
         VillageTownViewController *controller=[[[VillageTownViewController alloc] init] autorelease];

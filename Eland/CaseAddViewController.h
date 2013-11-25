@@ -25,4 +25,6 @@
 -(void)selectedVillageTown:(CaseCity*)city;
 //取得经纬度
 -(void)geographyLocation:(SVPlacemark*)place;
+
+-(void)switchControlSelectedIndex:(NSInteger)index withObject:(id)sender;
 @end
