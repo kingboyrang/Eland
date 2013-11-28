@@ -16,6 +16,7 @@
 @interface CaseAddViewController : BasicCaseViewController<UITableViewDataSource,UITableViewDelegate>{
     UITableView *_tableView;
     Case *_caseArgs;
+    int  _hrType;
 }
 @property(nonatomic,strong) CaseSetting *Entity;
 @property(nonatomic,strong) NSMutableArray *cells;
@@ -25,6 +26,6 @@
 -(void)selectedVillageTown:(CaseCity*)city;
 //取得经纬度
 -(void)geographyLocation:(SVPlacemark*)place;
-
+//路灯编号与地址之间的切换
 -(void)switchControlSelectedIndex:(NSInteger)index withObject:(id)sender;
 @end

@@ -232,6 +232,7 @@
 		01BB48DF17FE5C0900928E0B /* FPPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB48DB17FE5C0900928E0B /* FPPopoverView.m */; };
 		01BB48E017FE5C0900928E0B /* FPTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB48DD17FE5C0900928E0B /* FPTouchView.m */; };
 		01BB48E417FE5CE800928E0B /* VillageTownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB48E317FE5CE800928E0B /* VillageTownViewController.m */; };
+		01BCBCE318459E1100C61350 /* TKCaseCalendarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BCBCE218459E1100C61350 /* TKCaseCalendarCell.m */; };
 		01C1B9DF180F6E7B0023972E /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 01C1B9DD180F6E7B0023972E /* Default-Portrait@2x~ipad.png */; };
 		01C1B9E1180F6ED80023972E /* Default~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 01C1B9E0180F6ED80023972E /* Default~ipad.png */; };
 		01C1B9E3180F6FB20023972E /* Default~ipad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 01C1B9E2180F6FB20023972E /* Default~ipad@2x.png */; };
@@ -676,6 +677,8 @@
 		01BB48DD17FE5C0900928E0B /* FPTouchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FPTouchView.m; sourceTree = "<group>"; };
 		01BB48E217FE5CE800928E0B /* VillageTownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VillageTownViewController.h; sourceTree = "<group>"; };
 		01BB48E317FE5CE800928E0B /* VillageTownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VillageTownViewController.m; sourceTree = "<group>"; };
+		01BCBCE118459E1100C61350 /* TKCaseCalendarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKCaseCalendarCell.h; sourceTree = "<group>"; };
+		01BCBCE218459E1100C61350 /* TKCaseCalendarCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKCaseCalendarCell.m; sourceTree = "<group>"; };
 		01C1B9DD180F6E7B0023972E /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
 		01C1B9E0180F6ED80023972E /* Default~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default~ipad.png"; sourceTree = "<group>"; };
 		01C1B9E2180F6FB20023972E /* Default~ipad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default~ipad@2x.png"; sourceTree = "<group>"; };
@@ -1469,6 +1472,8 @@
 				01B3927018110EEE0070909F /* TkCaseLocationCell.m */,
 				01EA09AC183F55B800F42D9E /* TKCaseLightNumberCell.h */,
 				01EA09AD183F55B800F42D9E /* TKCaseLightNumberCell.m */,
+				01BCBCE118459E1100C61350 /* TKCaseCalendarCell.h */,
+				01BCBCE218459E1100C61350 /* TKCaseCalendarCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -2173,6 +2178,7 @@
 				01E16BEA181A403E00CB60F3 /* QBImagePickerVideoInfoView.m in Sources */,
 				01B18AA8183F34B2005C9BFF /* ShowPushDetail.m in Sources */,
 				01B18ABE183F4703005C9BFF /* SwitchLightNumber.m in Sources */,
+				01BCBCE318459E1100C61350 /* TKCaseCalendarCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -19,6 +19,7 @@
 #import "TkCaseImageCell.h"
 #import "TkCaseLocationCell.h"
 #import "TKCaseLightNumberCell.h"
+#import "TKCaseCalendarCell.h"
 @interface BasicCaseViewController ()
 -(void)buttonOpenURL:(id)sender;
 @end
@@ -195,29 +196,66 @@
     TKCaseLabelCell *cell1=[[[TKCaseLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     [cell1.label setText:@"<font size=16 color='#dd1100'>路燈編號和地址請擇一填寫:</font>"];
     
-    TKCaseLightNumberCell *cell3=[[[TKCaseLightNumberCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-    cell3.lightNumber.controller=self;
+    TKCaseLightNumberCell *cell2=[[[TKCaseLightNumberCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    cell2.lightNumber.controller=self;
     
-    TKCaseLabelCell *cell4=[[[TKCaseLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-    [cell1 setLabelName:[NSString stringWithFormat:@"%@:",entity.Label] required:YES];
+    TKCaseLabelCell *cell3=[[[TKCaseLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    [cell3 setLabelName:[NSString stringWithFormat:@"%@:",entity.Label] required:YES];
     
-    TKCaseTextFieldCell *cell2=[[[TKCaseTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-    cell2.required=YES;
-    cell2.field.placeholder=[NSString stringWithFormat:@"請輸入%@",entity.Label];
-    cell2.LabelName=entity.Name;
+    TKCaseTextFieldCell *cell4=[[[TKCaseTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    cell4.required=YES;
+    cell4.field.placeholder=[NSString stringWithFormat:@"請輸入%@",entity.Label];
+    cell4.LabelName=entity.Name;
     if (entity.Text&&[entity.Text length]>0) {
-        cell2.field.text=entity.Text;
+        cell4.field.text=entity.Text;
     }
     
     
 
     [result addObject:cell1];
+    [result addObject:cell2];
     [result addObject:cell3];
     [result addObject:cell4];
-    [result addObject:cell2];
+    
     
     return result;
     
+}
+-(NSMutableArray*)CaseCategoryLightNumberCells:(CaseSettingField*)entity{
+     NSMutableArray *result=[NSMutableArray array];
+    TKCaseLabelCell *cell3=[[[TKCaseLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    [cell3 setLabelName:[NSString stringWithFormat:@"%@:",entity.Label] required:YES];
+    
+    TKCaseTextFieldCell *cell4=[[[TKCaseTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    cell4.required=YES;
+    cell4.field.placeholder=[NSString stringWithFormat:@"請輸入%@",entity.Label];
+    cell4.LabelName=entity.Name;
+    if (entity.Text&&[entity.Text length]>0) {
+        cell4.field.text=entity.Text;
+    }
+    [result addObject:cell3];
+    [result addObject:cell4];
+    return result;
+}
+-(NSMutableArray*)CaseCategoryLostDateCells:(CaseSettingField*)entity{
+    NSMutableArray *result=[NSMutableArray array];
+    TKCaseLabelCell *cell1=[[[TKCaseLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    [cell1 setLabelName:[NSString stringWithFormat:@"%@:",entity.Label] required:entity.isRequired];
+    
+    TKCaseCalendarCell *cell2=[[[TKCaseCalendarCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    cell2.LabelText=entity.Label;
+    cell2.required=entity.isRequired;
+    cell2.lostCalendar.popoverText.popoverTextField.placeholder=[NSString stringWithFormat:@"請輸入%@",entity.Label];
+    cell2.LabelName=entity.Name;
+    if (entity.Text&&[entity.Text length]>0) {
+        cell2.lostCalendar.popoverText.popoverTextField.text=entity.Text;
+    }
+    
+    
+    [result addObject:cell1];
+    [result addObject:cell2];
+    return result;
+
 }
 
 -(void)buttonCaseCityClick:(id)sender{

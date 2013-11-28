@@ -67,9 +67,13 @@
     [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
     [self.view addSubview:_collectionView];
     [flowlayout release];
+    
+  // Do any additional setup after loading the view.
+}
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     //加载项目
     [self loadRepairItem];
-  // Do any additional setup after loading the view.
 }
 -(void)updateSourceUI:(NSArray*)arr{
     NSMutableArray *_source=[NSMutableArray arrayWithArray:arr];

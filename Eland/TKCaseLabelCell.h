@@ -10,5 +10,6 @@
 #import "RTLabel.h"
 @interface TKCaseLabelCell : UITableViewCell
 @property (nonatomic,strong) RTLabel *label;
+@property (nonatomic,copy) NSString *labelText;
 - (void)setLabelName:(NSString*)title required:(BOOL)required;
 @end

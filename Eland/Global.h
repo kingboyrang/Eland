@@ -49,6 +49,5 @@
 //图片浏览地址
 #define CaseImageViewURL @"http://60.251.51.217/Cases.Admin/%@"
 
-//http://192.168.123.141:8081/
 
 

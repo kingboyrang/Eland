@@ -9,7 +9,7 @@
 #import "CaseCategoryViewController.h"
 #import "TreeViewNode.h"
 #import "TheProjectCell.h"
-#import "CaseCategory.h"
+
 #import "CacheHelper.h"
 #import "CaseCategoryHelper.h"
 #import "asyncHelper.h"
@@ -223,9 +223,10 @@
         }
         indentation=newRow;
     }
+    TreeViewNode *node = [self.displayArray objectAtIndex:indexPath.row];
+    CaseCategory *entity=(CaseCategory*)node.nodeObject;
+    //self.selectedCaseCategory=entity;
     if (self.delegate&&[self.delegate respondsToSelector:@selector(selectedCaseCategory:)]) {
-        TreeViewNode *node = [self.displayArray objectAtIndex:indexPath.row];
-        CaseCategory *entity=(CaseCategory*)node.nodeObject;
         SEL sel = NSSelectorFromString(@"selectedCaseCategory:");
         [self.delegate performSelector:sel withObject:entity];
     }

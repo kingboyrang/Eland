@@ -65,7 +65,7 @@
     [btn1 setImage:image forState:UIControlStateNormal];
     [btn1 setImage:imageSelect forState:UIControlStateSelected];
     [btn1 addTarget:self action:@selector(buttonClickTap:) forControlEvents:UIControlEventTouchUpInside];
-    if (tag==101) {
+    if (tag==100) {
         btn1.selected=YES;
     }
     [self addSubview:btn1];

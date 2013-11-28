@@ -26,6 +26,7 @@
     return self;
 }
 -(void)setLabelName:(NSString *)title required:(BOOL)required{
+    self.labelText=title;
     NSString *showTitle=[NSString stringWithFormat:@"<font face='HelveticaNeue-CondensedBold' size=16 color='#3DB5C0'>%@</font>",title];
     NSString *requiredTitle=@"";
     if (required) {
@@ -44,9 +45,12 @@
 	CGRect frame = [self.label frame];
     frame.size.width=optimumSize.width;
 	frame.size.height = (int)optimumSize.height + 5;
-    frame.origin.y=(30-frame.size.height)/2.0;
+    //frame.origin.y=(30-frame.size.height)/2.0;
+    frame.origin.y=(self.frame.size.height-frame.size.height)/2.0;
     frame.origin.x=10;
 	[self.label setFrame:frame];
+    
+   
     
 }
 @end

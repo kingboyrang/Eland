@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
+#import "CaseCategory.h"
 @interface CaseCategoryViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate>{
    MBProgressHUD *HUD;
 }
 @property (nonatomic, retain) NSMutableArray *displayArray;
 @property(nonatomic,assign) id delegate;
 @property(nonatomic,copy) NSString *ParentGUID;
+
+//@property(nonatomic,strong) CaseCategory *selectedCaseCategory;
 @end

@@ -29,6 +29,9 @@
 -(NSMutableArray*)CaseCategoryLocationCells:(CaseSettingField*)entity;
 //路灯编号
 -(NSMutableArray*)CaseCategoryNumberCells:(CaseSettingField*)entity;
+-(NSMutableArray*)CaseCategoryLightNumberCells:(CaseSettingField*)entity;
+//走失时间 
+-(NSMutableArray*)CaseCategoryLostDateCells:(CaseSettingField*)entity;
 
 -(void)buttonCaseCategoryClick:(id)sender CaseCategoryGUID:(NSString*)guid;
 -(void)hidePopoverCaseCategory;

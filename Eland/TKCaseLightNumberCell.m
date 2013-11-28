@@ -10,7 +10,7 @@
 @implementation TKCaseLightNumberCell
 - (id) initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if(!(self=[super initWithStyle:style reuseIdentifier:reuseIdentifier])) return nil;
-    _lightNumber=[[SwitchLightNumber alloc] initWithFrame:CGRectMake(15,0, 300, 44)];
+    _lightNumber=[[SwitchLightNumber alloc] initWithFrame:CGRectMake(0,0, 300, 30)];
 	[self.contentView addSubview:_lightNumber];
     return self;
 }

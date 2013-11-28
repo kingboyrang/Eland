@@ -28,6 +28,10 @@
 #import "NSDate+TPCategory.h"
 #import "XmlParseHelper.h"
 #import "TKCaseLightNumberCell.h"
+#import "TkCaseLocationCell.h"
+#import "TKCaseCalendarCell.h"
+#import "AlertHelper.h"
+#import "TKCaseLightNumberCell.h"
 @interface CaseAddViewController ()
 -(void)loadingFormFields;
 -(void)updateFormUI;
@@ -54,6 +58,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    _hrType=-1;
+    
     _caseArgs=[[Case alloc] init];
     _caseArgs.Extend=[[CaseExtend alloc] init];
     _caseArgs.Applicant=[[CaseApplicant alloc] init];
@@ -82,13 +89,18 @@
                 [source addObjectsFromArray:[self CaseCategoryNoteCells:item]];
                 continue;
             }
-            if ([self.Entity.GUID isEqualToString:@"B"]) {
+            if ([item.Name isEqualToString:@"PetDate"]) {//走失时间
+                [source addObjectsFromArray:[self CaseCategoryLostDateCells:item]];
+                continue;
+            }
+            if ([self.Entity.GUID isEqualToString:@"Light"]) {//路灯报修处理
                 if ([item.Name isEqualToString:@"LightNumber"]) {
+                    [source addObjectsFromArray:[self CaseCategoryNumberCells:[self.Entity getEntityFieldWithName:@"LightNumber"]]];
                     continue;
                 }
                 if ([item isTextArea]) {
                     if ([item.Name isEqualToString:@"Location"]) {//定位
-                        [source addObjectsFromArray:[self CaseCategoryNumberCells:[self.Entity getEntityFieldWithName:@"LightNumber"]]];
+                        
                         //[source addObjectsFromArray:[self CaseCategoryLocationCells:item]];
                     }else{
                         [source addObjectsFromArray:[self CaseCategoryTextAreaCells:item]];
@@ -156,19 +168,25 @@
     TKCaseLightNumberCell *cell=(TKCaseLightNumberCell*)v;
      NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
     id  cell1=[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row+2 inSection:0]];
+    
     if ([cell1 isKindOfClass:[TKCaseTextFieldCell class]]&&index!=1) {
+        [self.cells removeObjectAtIndex:indexPath.row+1];
+        [self.cells removeObjectAtIndex:indexPath.row+1];
+        
         NSIndexPath *indexPath1=[NSIndexPath indexPathForRow:indexPath.row+1 inSection:0];
         NSIndexPath *indexPath2=[NSIndexPath indexPathForRow:indexPath.row+2 inSection:0];
         [_tableView beginUpdates];
         [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath1,indexPath2, nil] withRowAnimation:UITableViewRowAnimationFade];
         [_tableView endUpdates];
+       
+        
         
         CaseSettingField *entity=[self.Entity getEntityFieldWithName:@"Location"];
         if (entity!=nil) {
             NSMutableArray *arr=[self CaseCategoryLocationCells:entity];
             NSMutableArray *indexPaths=[NSMutableArray arrayWithCapacity:arr.count];
             for (int i=0; i<arr.count; i++) {
-                [self.cells replaceObjectAtIndex:indexPath.row+i+1 withObject:[arr objectAtIndex:i]];
+                [self.cells insertObject:[arr objectAtIndex:i] atIndex:indexPath.row+i+1];
                 NSIndexPath *cellIndexPath=[NSIndexPath indexPathForRow:indexPath.row+i+1 inSection:0];
                 [indexPaths addObject:cellIndexPath];
             }
@@ -176,26 +194,28 @@
             [_tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
             [_tableView endUpdates];
             
-        }else{
-            [self.cells removeObjectAtIndex:indexPath.row+1];
-            [self.cells removeObjectAtIndex:indexPath.row+1];
         }
         
     }
-    
+    //LightNumber
     if ([cell1 isKindOfClass:[TKCaseTextViewCell class]]&&index!=2) {
+        [self.cells removeObjectAtIndex:indexPath.row+1];
+        [self.cells removeObjectAtIndex:indexPath.row+1];
+        
         NSIndexPath *indexPath1=[NSIndexPath indexPathForRow:indexPath.row+1 inSection:0];
         NSIndexPath *indexPath2=[NSIndexPath indexPathForRow:indexPath.row+2 inSection:0];
         [_tableView beginUpdates];
         [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath1,indexPath2, nil] withRowAnimation:UITableViewRowAnimationFade];
         [_tableView endUpdates];
         
+        
+        
         CaseSettingField *entity=[self.Entity getEntityFieldWithName:@"LightNumber"];
         if (entity!=nil) {
-            NSMutableArray *arr=[self CaseCategoryLocationCells:entity];
+            NSMutableArray *arr=[self CaseCategoryLightNumberCells:entity];
             NSMutableArray *indexPaths=[NSMutableArray arrayWithCapacity:arr.count];
             for (int i=0; i<arr.count; i++) {
-                [self.cells replaceObjectAtIndex:indexPath.row+i+1 withObject:[arr objectAtIndex:i]];
+                [self.cells insertObject:[arr objectAtIndex:i] atIndex:indexPath.row+i+1];
                 NSIndexPath *cellIndexPath=[NSIndexPath indexPathForRow:indexPath.row+i+1 inSection:0];
                 [indexPaths addObject:cellIndexPath];
             }
@@ -203,9 +223,6 @@
             [_tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
             [_tableView endUpdates];
             
-        }else{
-            [self.cells removeObjectAtIndex:indexPath.row+1];
-            [self.cells removeObjectAtIndex:indexPath.row+1];
         }
 
     }
@@ -235,6 +252,18 @@
                 return NO;
             }
         }
+        if ([item isKindOfClass:[TKCaseCalendarCell class]]) {
+            TKCaseCalendarCell *cell=(TKCaseCalendarCell*)item;
+            if (cell.required&&!cell.hasValue) {
+                [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.cells indexOfObject:item] inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                //滚动到指定位置
+                [AlertHelper initWithTitle:@"提示" message:[NSString stringWithFormat:@"%@不為空!",cell.LabelText]];
+                return NO;
+            }
+        }
+        
+
+        
     }
     return YES;
 }
@@ -250,6 +279,10 @@
                 continue;
             }
             [_caseArgs objectValue:cell.field.text objectKey:cell.LabelName];
+        }
+        if ([item isKindOfClass:[TKCaseCalendarCell class]]) {
+            TKCaseCalendarCell *cell=(TKCaseCalendarCell*)item;
+            [_caseArgs objectValue:cell.lostCalendar.popoverText.popoverTextField.text objectKey:cell.LabelName];
         }
         if ([item isKindOfClass:[TKCaseTextViewCell class]]) {
             TKCaseTextViewCell *cell=(TKCaseTextViewCell*)item;
@@ -342,7 +375,23 @@
     if (cell.required) {
         [cell removeVerify];
     }
-    
+    //户政预约
+    if ([self.Entity.GUID isEqualToString:@"HR"]) {
+        if ([category.Name isEqualToString:@"出生登記"]&&_hrType!=1) {
+            _hrType=1;
+            NSLog(@"1");
+            
+        }
+        if ([category.Name isEqualToString:@"結婚登記"]&&_hrType!=2) {
+            _hrType=2;
+            NSLog(@"2");
+            
+        }
+        if ([category.Name isEqualToString:@"死亡登記"]&&_hrType!=3) {
+            _hrType=3;
+            NSLog(@"3");
+        }
+    }
     
 }
 -(void)selectedVillageTown:(CaseCity*)city{
@@ -386,10 +435,30 @@
         if ([self.cells[indexPath.row] isKindOfClass:[TkCaseImageCell class]]) {
             return 300;
         }
-    if ([self.cells[indexPath.row] isKindOfClass:[TKCaseButtonCell class]]) {
-        return 64.0;
+       if ([self.cells[indexPath.row] isKindOfClass:[TkCaseLocationCell class]]) {
+           TkCaseLocationCell *cell=self.cells[indexPath.row];
+           CGRect r=cell.label.frame;
+           r.size.width=self.view.bounds.size.width-112;
+           cell.label.frame=r;
+           return [cell.label optimumSize].height+5+9;
+       }
+    if ([self.cells[indexPath.row] isKindOfClass:[TKCaseLightNumberCell class]]) {
+        return 40.0;
     }
-        if (indexPath.row%2==0) {
+       if ([self.cells[indexPath.row] isKindOfClass:[TKCaseButtonCell class]]) {
+          return 64.0;
+       }
+    /***
+      if ([self.cells[indexPath.row] isKindOfClass:[TKCaseLabelCell class]]) {
+          TKCaseLabelCell *cell=self.cells[indexPath.row];
+          CGRect r=cell.label.frame;
+          r.size.width=self.view.bounds.size.width-20;
+          cell.label.frame=r;
+          return [cell.label optimumSize].height+5+6;
+      }
+     ***/
+    
+       if (indexPath.row%2==0) {
             if (![self.cells[indexPath.row] isKindOfClass:[TKCaseLabelTextFieldCell class]]) {
                 return 30;
             }

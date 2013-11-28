@@ -48,6 +48,16 @@
     frame.origin.y=(self.bounds.size.height-frame.size.height)/2.0;
     _button.frame=frame;
     
+    if (frame.origin.x+frame.size.width>self.bounds.size.width) {
+        
+        frame.origin.x=self.bounds.size.width-frame.size.width-10;
+        _button.frame=frame;
+       
+        r.size.width=frame.origin.x-r.origin.x-2;
+        r.origin.y=(self.frame.size.height-r.size.height)/2.0;
+        self.label.frame=r;
+    }
+    
     
 }
 //定位
