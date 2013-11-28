@@ -9,6 +9,13 @@
 #import "CaseSetting.h"
 #import "XmlParseHelper.h"
 #import "GDataXMLNode.h"
+
+@interface CaseSetting (){
+    NSArray *_hrFields;
+}
+-(BOOL)existsArrayElement:(NSString*)name;
+@end
+
 @implementation CaseSetting
 - (void)encodeWithCoder:(NSCoder *)encoder{
     [encoder encodeObject:self.GUID forKey:@"GUID"];
@@ -110,5 +117,29 @@
    xml=[xml stringByReplacingOccurrencesOfString:@"xmlns=\"CaseSetting[]\"" withString:@""];
    XmlParseHelper *_parse=[[[XmlParseHelper alloc] initWithData:xml] autorelease];
    return [_parse selectNodes:@"//CaseSetting" className:@"CaseSetting"];
+}
+-(BOOL)existsArrayElement:(NSString*)name{
+    NSString *match=[NSString stringWithFormat:@"SELF =='%@'",name];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:match];
+    NSArray *results = [_hrFields filteredArrayUsingPredicate:predicate];
+    if (results&&[results count]>0) {
+        
+        return YES;
+    }
+    return NO;
+
+}
+-(BOOL)hrExistFieldName:(NSString*)name{
+    if (!_hrFields) {
+        NSString *path=[[NSBundle mainBundle] pathForResource:@"HRFields" ofType:@"plist"];
+        _hrFields=[[NSArray arrayWithContentsOfFile:path] retain];
+    }
+    return [self existsArrayElement:name];
+}
+-(void)dealloc{
+    [super dealloc];
+    if (_hrFields) {
+        [_hrFields release];
+    }
 }
 @end

@@ -27,4 +27,6 @@
 -(BOOL)isRequiredShowCity;
 //获取一项设定
 -(CaseSettingField*)getEntityFieldWithName:(NSString*)name;
+
+-(BOOL)hrExistFieldName:(NSString*)name;
 @end

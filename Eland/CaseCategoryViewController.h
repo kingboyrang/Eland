@@ -16,5 +16,6 @@
 @property(nonatomic,assign) id delegate;
 @property(nonatomic,copy) NSString *ParentGUID;
 
+-(void)setSelectedCategoryIndex:(int)index;
 //@property(nonatomic,strong) CaseCategory *selectedCaseCategory;
 @end

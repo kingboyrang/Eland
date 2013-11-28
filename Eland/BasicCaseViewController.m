@@ -20,6 +20,7 @@
 #import "TkCaseLocationCell.h"
 #import "TKCaseLightNumberCell.h"
 #import "TKCaseCalendarCell.h"
+#import "TKCaseRadioCell.h"
 @interface BasicCaseViewController ()
 -(void)buttonOpenURL:(id)sender;
 @end
@@ -45,11 +46,11 @@
     NSMutableArray *result=[NSMutableArray array];
     
     TKCaseLabelCell *cell1=[[[TKCaseLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-    [cell1 setLabelName:@"案件分類:" required:YES];
+    [cell1 setLabelName:@"案件分類:" required:NO];
     TKCaseTextFieldCell *cell2=[[[TKCaseTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     UIImage *img=[UIImage imageNamed:@"Open.png"];
     UIImageView *imageView=[[[UIImageView alloc] initWithImage:img] autorelease];
-    cell2.required=YES;
+    cell2.required=NO;
     cell2.field.enabled=NO;
     cell2.field.rightView=imageView;
     cell2.field.rightViewMode=UITextFieldViewModeAlways;
@@ -257,7 +258,78 @@
     return result;
 
 }
+-(NSMutableArray*)CaseCategoryRadioCells:(CaseSettingField*)entity{
+    NSMutableArray *result=[NSMutableArray array];
+    TKCaseLabelCell *cell1=[[[TKCaseLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    [cell1 setLabelName:[NSString stringWithFormat:@"%@:",entity.Label] required:entity.isRequired];
+    
+    TKCaseRadioCell *cell2=[[[TKCaseRadioCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    cell2.required=entity.isRequired;
+    cell2.LabelName=entity.Name;
+    if (entity.Text&&[entity.Text length]>0) {
+        [cell2 setSelectedItemText:entity.Text];
+    }
+    
+    
+    [result addObject:cell1];
+    [result addObject:cell2];
+    return result;
 
+}
+-(NSMutableArray*)CaseCategoryHRCells:(CaseSetting*)entity hrType:(int)type{
+    NSMutableArray *result=[NSMutableArray array];
+    if (type==1) {
+        CaseSettingField *field=[entity getEntityFieldWithName:@"Note1"];
+        if(field!=nil){
+           [result addObjectsFromArray:[self CaseCategoryNoteCells:field]];
+        }
+        field=[entity getEntityFieldWithName:@"NewbornRelation"];
+        if (field!=nil) {
+            [result addObjectsFromArray:[self CaseCategoryTextCells:field]];
+        }
+    }else if (type==2)
+    {
+        CaseSettingField *field=[entity getEntityFieldWithName:@"Note2"];
+        if(field!=nil){
+            [result addObjectsFromArray:[self CaseCategoryNoteCells:field]];
+        }
+        field=[entity getEntityFieldWithName:@"ManName"];
+        if(field!=nil){
+            [result addObjectsFromArray:[self CaseCategoryTextCells:field]];
+        }
+        field=[entity getEntityFieldWithName:@"WoManName"];
+        if(field!=nil){
+            [result addObjectsFromArray:[self CaseCategoryTextCells:field]];
+        }
+        field=[entity getEntityFieldWithName:@"ManAddress"];
+        if(field!=nil){
+            [result addObjectsFromArray:[self CaseCategoryTextAreaCells:field]];
+        }
+        field=[entity getEntityFieldWithName:@"WoManAddress"];
+        if(field!=nil){
+            [result addObjectsFromArray:[self CaseCategoryTextAreaCells:field]];
+        }
+    }else{
+        CaseSettingField *field=[entity getEntityFieldWithName:@"Note3"];
+        if(field!=nil){
+            [result addObjectsFromArray:[self CaseCategoryNoteCells:field]];
+        }
+        field=[entity getEntityFieldWithName:@"DeadRelation"];
+        if(field!=nil){
+            [result addObjectsFromArray:[self CaseCategoryTextCells:field]];
+        }
+        field=[entity getEntityFieldWithName:@"DeadName"];
+        if(field!=nil){
+            [result addObjectsFromArray:[self CaseCategoryTextCells:field]];
+        }
+         field=[entity getEntityFieldWithName:@"DeadAddress"];
+        if(field!=nil){
+            [result addObjectsFromArray:[self CaseCategoryTextAreaCells:field]];
+        }
+        
+    }
+    return result;
+}
 -(void)buttonCaseCityClick:(id)sender{
     if (!popoverCaseCity) {
         VillageTownViewController *controller=[[[VillageTownViewController alloc] init] autorelease];
@@ -281,6 +353,9 @@
         controller.title=@"案件分類";
         controller.delegate=self;
         controller.ParentGUID=guid;
+        if ([guid isEqualToString:@"HR"]) {
+            [controller setSelectedCategoryIndex:0];
+        }
         popoverCaseCategory = [[FPPopoverController alloc] initWithViewController:controller];
         popoverCaseCategory.tint=FPPopoverLightGrayTint;
         popoverCaseCategory.contentSize = CGSizeMake(300, 300);

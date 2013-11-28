@@ -138,4 +138,22 @@
     }
     return nil;
 }
++(CaseCategory*)getHRFirstChildWithGuid:(NSString*)guid{
+    CaseCategory *entity=[self getCaseCategoryEntity:guid];
+    if(entity!=nil)
+    {
+        NSArray *arr=[CacheHelper readCacheCaseCategorys];
+        if (arr==nil||[arr count]==0) {
+            return nil;
+        }
+        NSString *match=[NSString stringWithFormat:@"SELF.Parent =='%@'",entity.GUID];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:match];
+        NSArray *results = [arr filteredArrayUsingPredicate:predicate];
+        if (results&&[results count]>0) {
+            return [results objectAtIndex:0];
+        }
+        
+    }
+    return nil;
+}
 @end

@@ -32,6 +32,10 @@
 -(NSMutableArray*)CaseCategoryLightNumberCells:(CaseSettingField*)entity;
 //走失时间 
 -(NSMutableArray*)CaseCategoryLostDateCells:(CaseSettingField*)entity;
+//单选
+-(NSMutableArray*)CaseCategoryRadioCells:(CaseSettingField*)entity;
+//1,出生登记,2结婚登记,3，死亡登记
+-(NSMutableArray*)CaseCategoryHRCells:(CaseSetting*)entity hrType:(int)type;
 
 -(void)buttonCaseCategoryClick:(id)sender CaseCategoryGUID:(NSString*)guid;
 -(void)hidePopoverCaseCategory;

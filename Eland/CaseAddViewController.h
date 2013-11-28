@@ -17,6 +17,7 @@
     UITableView *_tableView;
     Case *_caseArgs;
     int  _hrType;
+    int  _prvHrTypeCount;
 }
 @property(nonatomic,strong) CaseSetting *Entity;
 @property(nonatomic,strong) NSMutableArray *cells;

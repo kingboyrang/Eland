@@ -23,4 +23,6 @@
 //子类别
 -(CaseCategory*)getCaseCategoryWithGuid:(NSString*)guid;
 -(NSMutableArray*)fillCategoryTreeNodes:(NSString*)parent;
+//取得户政府预约第一个子类别
++(CaseCategory*)getHRFirstChildWithGuid:(NSString*)guid;
 @end

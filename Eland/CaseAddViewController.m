@@ -32,12 +32,14 @@
 #import "TKCaseCalendarCell.h"
 #import "AlertHelper.h"
 #import "TKCaseLightNumberCell.h"
+#import "TKCaseRadioCell.h"
 @interface CaseAddViewController ()
 -(void)loadingFormFields;
 -(void)updateFormUI;
 -(BOOL)formValidate;
 -(CGFloat)scrollerToRowTotal:(int)index;
 -(void)buttonSubmit;
+-(void)insertAndRemoveRows;
 @end
 
 @implementation CaseAddViewController
@@ -60,6 +62,7 @@
     [super viewDidLoad];
     
     _hrType=-1;
+    _prvHrTypeCount=0;
     
     _caseArgs=[[Case alloc] init];
     _caseArgs.Extend=[[CaseExtend alloc] init];
@@ -75,6 +78,8 @@
     [self.view addSubview:_tableView];
     //self.cells=[self CaseCategoryAndCityCells:self.Entity];
 	[self loadingFormFields];
+    
+    
 }
 -(void)updateFormUI{
     [ZAActivityBar dismissForAction:@"loadFields"];
@@ -93,6 +98,15 @@
                 [source addObjectsFromArray:[self CaseCategoryLostDateCells:item]];
                 continue;
             }
+            if ([item.Name isEqualToString:@"IsAgree"]||[item.Name isEqualToString:@"IsPublic"]||[item.Name isEqualToString:@"IsHistory"]) {//单选
+                [source addObjectsFromArray:[self CaseCategoryRadioCells:item]];
+                continue;
+            }
+            if ([self.Entity.GUID isEqualToString:@"HR"]) {//戶政預約处理
+                if ([self.Entity hrExistFieldName:item.Name]) {
+                    continue;
+                }
+            }
             if ([self.Entity.GUID isEqualToString:@"Light"]) {//路灯报修处理
                 if ([item.Name isEqualToString:@"LightNumber"]) {
                     [source addObjectsFromArray:[self CaseCategoryNumberCells:[self.Entity getEntityFieldWithName:@"LightNumber"]]];
@@ -101,7 +115,6 @@
                 if ([item isTextArea]) {
                     if ([item.Name isEqualToString:@"Location"]) {//定位
                         
-                        //[source addObjectsFromArray:[self CaseCategoryLocationCells:item]];
                     }else{
                         [source addObjectsFromArray:[self CaseCategoryTextAreaCells:item]];
                     }
@@ -124,12 +137,21 @@
         }
     }
     [source addObjectsFromArray:[self CaseCategoryPWDCells]];
-    [source addObjectsFromArray:[self CaseCategoryImagesCells:self.Entity]];
+    if (self.Entity.showImage) {//是否显示上传图片
+        [source addObjectsFromArray:[self CaseCategoryImagesCells:self.Entity]];
+    }
     TKCaseButtonCell *cell=[[[TKCaseButtonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     [cell.button addTarget:self action:@selector(buttonSubmit) forControlEvents:UIControlEventTouchUpInside];
     [source addObject:cell];
     self.cells=source;
     [_tableView reloadData];
+    
+    if (self.Entity&&[self.Entity.GUID isEqualToString:@"HR"]) {
+        CaseCategory *entity=[CaseCategoryHelper getHRFirstChildWithGuid:self.Entity.GUID];
+        if (entity!=nil) {
+            [self selectedCaseCategory:entity];
+        }
+    }
 }
 -(void)loadingFormFields{
     [ZAActivityBar showWithStatus:@"正在加載..." forAction:@"loadFields"];
@@ -284,6 +306,10 @@
             TKCaseCalendarCell *cell=(TKCaseCalendarCell*)item;
             [_caseArgs objectValue:cell.lostCalendar.popoverText.popoverTextField.text objectKey:cell.LabelName];
         }
+        if ([item isKindOfClass:[TKCaseRadioCell class]]) {//单选
+            TKCaseRadioCell *cell=(TKCaseRadioCell*)item;
+            [_caseArgs objectValue:cell.radioView.radioValue objectKey:cell.LabelName];
+        }
         if ([item isKindOfClass:[TKCaseTextViewCell class]]) {
             TKCaseTextViewCell *cell=(TKCaseTextViewCell*)item;
             [_caseArgs objectValue:cell.textView.text objectKey:cell.LabelName];
@@ -352,6 +378,7 @@
     }];
     [request startAsynchronous];
 }
+
 -(void)selectedCaseCategory:(CaseCategory*)category{
     [self hidePopoverCaseCategory];
     if ([category.Parent length]==0) {
@@ -379,19 +406,52 @@
     if ([self.Entity.GUID isEqualToString:@"HR"]) {
         if ([category.Name isEqualToString:@"出生登記"]&&_hrType!=1) {
             _hrType=1;
-            NSLog(@"1");
+            [self insertAndRemoveRows];
             
         }
         if ([category.Name isEqualToString:@"結婚登記"]&&_hrType!=2) {
             _hrType=2;
-            NSLog(@"2");
-            
+            [self insertAndRemoveRows];
         }
         if ([category.Name isEqualToString:@"死亡登記"]&&_hrType!=3) {
             _hrType=3;
-            NSLog(@"3");
+            [self insertAndRemoveRows];
         }
     }
+    
+}
+-(void)insertAndRemoveRows{
+    NSMutableArray *insertRows=[self CaseCategoryHRCells:self.Entity hrType:_hrType];
+    if (insertRows.count==0) {
+        _prvHrTypeCount=0;
+        return;
+    }
+    int startIndex=2;
+    if (self.Entity.showCityDown) {
+        startIndex=4;
+    }
+    if (_prvHrTypeCount!=0) {
+        [self.cells removeObjectsInRange:NSMakeRange(startIndex, _prvHrTypeCount)];
+        NSMutableArray *indexPaths=[NSMutableArray arrayWithCapacity:_prvHrTypeCount];
+        for (int i=0; i<_prvHrTypeCount; i++) {
+            NSIndexPath *indexPath=[NSIndexPath indexPathForRow:startIndex+i inSection:0];
+            [indexPaths addObject:indexPath];
+        }
+        [_tableView beginUpdates];
+        [_tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+        [_tableView endUpdates];
+    }
+    NSMutableArray *insertIndexPaths=[NSMutableArray arrayWithCapacity:insertRows.count];
+    for (int i=0; i<insertRows.count; i++) {
+        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:startIndex+i inSection:0];
+        [insertIndexPaths addObject:indexPath];
+        [self.cells insertObject:[insertRows objectAtIndex:i] atIndex:startIndex+i];
+    }
+    [_tableView beginUpdates];
+    [_tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationFade];
+    [_tableView endUpdates];
+    
+    _prvHrTypeCount=insertRows.count;
     
 }
 -(void)selectedVillageTown:(CaseCity*)city{
@@ -444,6 +504,9 @@
        }
     if ([self.cells[indexPath.row] isKindOfClass:[TKCaseLightNumberCell class]]) {
         return 40.0;
+    }
+    if ([self.cells[indexPath.row] isKindOfClass:[TKCaseRadioCell class]]) {
+        return 30.0;
     }
        if ([self.cells[indexPath.row] isKindOfClass:[TKCaseButtonCell class]]) {
           return 64.0;
