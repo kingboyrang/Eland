@@ -251,6 +251,8 @@
 		01C2EA7A180B904000220F16 /* CaseSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C2EA79180B904000220F16 /* CaseSetting.m */; };
 		01C2EA7E180BA13800220F16 /* TKShowLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C2EA7D180BA13800220F16 /* TKShowLabelCell.m */; };
 		01C2EA82180BC3BF00220F16 /* TKShowLabelLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C2EA81180BC3BF00220F16 /* TKShowLabelLabelCell.m */; };
+		01C4E9431857FDD6005A0871 /* TKCaseDropListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C4E9421857FDD6005A0871 /* TKCaseDropListCell.m */; };
+		01C4E94618580011005A0871 /* CVUISelect.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C4E94518580011005A0871 /* CVUISelect.m */; };
 		01E16BE3181A403E00CB60F3 /* QBAssetCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E16BD2181A403E00CB60F3 /* QBAssetCollectionViewController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		01E16BE4181A403E00CB60F3 /* QBImagePickerAssetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E16BD5181A403E00CB60F3 /* QBImagePickerAssetCell.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		01E16BE5181A403E00CB60F3 /* QBImagePickerAssetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E16BD8181A403E00CB60F3 /* QBImagePickerAssetView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -714,6 +716,10 @@
 		01C2EA7D180BA13800220F16 /* TKShowLabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKShowLabelCell.m; sourceTree = "<group>"; };
 		01C2EA80180BC3BF00220F16 /* TKShowLabelLabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKShowLabelLabelCell.h; sourceTree = "<group>"; };
 		01C2EA81180BC3BF00220F16 /* TKShowLabelLabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKShowLabelLabelCell.m; sourceTree = "<group>"; };
+		01C4E9411857FDD6005A0871 /* TKCaseDropListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKCaseDropListCell.h; sourceTree = "<group>"; };
+		01C4E9421857FDD6005A0871 /* TKCaseDropListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKCaseDropListCell.m; sourceTree = "<group>"; };
+		01C4E94418580010005A0871 /* CVUISelect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVUISelect.h; sourceTree = "<group>"; };
+		01C4E94518580011005A0871 /* CVUISelect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVUISelect.m; sourceTree = "<group>"; };
 		01E16BD1181A403E00CB60F3 /* QBAssetCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBAssetCollectionViewController.h; sourceTree = "<group>"; };
 		01E16BD2181A403E00CB60F3 /* QBAssetCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBAssetCollectionViewController.m; sourceTree = "<group>"; };
 		01E16BD3181A403E00CB60F3 /* QBAssetCollectionViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBAssetCollectionViewControllerDelegate.h; sourceTree = "<group>"; };
@@ -1484,6 +1490,8 @@
 				01BCBCE218459E1100C61350 /* TKCaseCalendarCell.m */,
 				01BBC1B21847180D000E070C /* TKCaseRadioCell.h */,
 				01BBC1B31847180D000E070C /* TKCaseRadioCell.m */,
+				01C4E9411857FDD6005A0871 /* TKCaseDropListCell.h */,
+				01C4E9421857FDD6005A0871 /* TKCaseDropListCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -1712,6 +1720,8 @@
 		01C1B9E7180F84320023972E /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				01C4E94418580010005A0871 /* CVUISelect.h */,
+				01C4E94518580011005A0871 /* CVUISelect.m */,
 				01B18ABC183F4703005C9BFF /* SwitchLightNumber.h */,
 				01B18ABD183F4703005C9BFF /* SwitchLightNumber.m */,
 				01BBC1AF1847172E000E070C /* ChooseRadioView.h */,
@@ -2195,6 +2205,8 @@
 				01BCBCE318459E1100C61350 /* TKCaseCalendarCell.m in Sources */,
 				01BBC1B11847172E000E070C /* ChooseRadioView.m in Sources */,
 				01BBC1B41847180D000E070C /* TKCaseRadioCell.m in Sources */,
+				01C4E9431857FDD6005A0871 /* TKCaseDropListCell.m in Sources */,
+				01C4E94618580011005A0871 /* CVUISelect.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2237,7 +2249,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8DD9AF1A-DA99-49C2-A6E4-C66DA74DB9C8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AFAD1E1F-F07A-4C04-9879-DD6C044EC22A";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2261,7 +2273,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8DD9AF1A-DA99-49C2-A6E4-C66DA74DB9C8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AFAD1E1F-F07A-4C04-9879-DD6C044EC22A";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -2280,7 +2292,7 @@
 				INFOPLIST_FILE = "Eland/Eland-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8DD9AF1A-DA99-49C2-A6E4-C66DA74DB9C8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AFAD1E1F-F07A-4C04-9879-DD6C044EC22A";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2298,7 +2310,7 @@
 				INFOPLIST_FILE = "Eland/Eland-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8DD9AF1A-DA99-49C2-A6E4-C66DA74DB9C8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AFAD1E1F-F07A-4C04-9879-DD6C044EC22A";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2322,8 +2334,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "562B12D9-A321-4434-8CF7-EF3CEAEB0CAD";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "562B12D9-A321-4434-8CF7-EF3CEAEB0CAD";
+				PROVISIONING_PROFILE = "B67C00A9-05D7-4345-A05E-4E5E67859B45";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B67C00A9-05D7-4345-A05E-4E5E67859B45";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -2342,8 +2354,8 @@
 				INFOPLIST_FILE = "Eland/Eland-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "562B12D9-A321-4434-8CF7-EF3CEAEB0CAD";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "562B12D9-A321-4434-8CF7-EF3CEAEB0CAD";
+				PROVISIONING_PROFILE = "B67C00A9-05D7-4345-A05E-4E5E67859B45";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B67C00A9-05D7-4345-A05E-4E5E67859B45";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

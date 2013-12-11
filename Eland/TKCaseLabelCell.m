@@ -34,6 +34,10 @@
     }
     [_label setText:[NSString stringWithFormat:@"%@%@",showTitle,requiredTitle]];
 }
+-(void)setShowName:(NSString*)title required:(BOOL)required{
+    [self setLabelName:title required:required];
+    [self layoutSubviews];
+}
 - (id) initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier {
 	self = [self initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
 	return self;

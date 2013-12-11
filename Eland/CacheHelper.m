@@ -9,6 +9,11 @@
 #import "CacheHelper.h"
 #import "FileHelper.h"
 #import "PushResult.h"
+
+@interface CacheHelper ()
++(BOOL)existsPushGuid:(NSString*)guid;
+@end
+
 @implementation CacheHelper
 +(void)cacheCityFromArray:(NSArray*)citys{
     if (citys&&[citys count]>0) {
@@ -41,6 +46,9 @@
 //推播信息
 +(void)cacheCasePushResult:(PushResult*)entity{
     if (entity) {
+        if ([CacheHelper existsPushGuid:entity.GUID]) {
+            return;
+        }
         NSArray *arr=[self readCacheCasePush];
         NSMutableArray *source=[NSMutableArray array];
         if (arr&&[arr count]>0) {
@@ -64,6 +72,9 @@
             [source addObjectsFromArray:arr];
         }
         for (PushResult *item in results) {
+            if ([CacheHelper existsPushGuid:item.GUID]) {
+                continue;
+            }
             int index;
             BOOL boo=[PushResult existsPushResultWithGuid:item.GUID index:&index];
             if (boo) {
@@ -88,6 +99,36 @@
     }
     NSArray *arr=[NSKeyedUnarchiver unarchiveObjectWithFile: path];
     return arr;
+}
+#pragma mark 推播信息的删除
++(void)cacheDeletePushWithGuid:(NSString*)guid{
+    NSArray *arr=[CacheHelper readDeleteCasePush];
+    NSMutableArray *result=[NSMutableArray array];
+    if (arr&&[arr count]>0) {
+        [result addObjectsFromArray:arr];
+    }
+    [result addObject:guid];
+    NSString *path=[DocumentPath stringByAppendingPathComponent:@"CacheDeletePush"];
+    [result writeToFile:path atomically:YES];
+}
++(NSArray*)readDeleteCasePush{
+    NSString *path=[DocumentPath stringByAppendingPathComponent:@"CacheDeletePush"];
+    if(![FileHelper existsFilePath:path]){ //如果不存在
+        return nil;
+    }
+    return [NSArray arrayWithContentsOfFile:path];
+}
++(BOOL)existsPushGuid:(NSString*)guid{
+    NSArray *arr=[CacheHelper readDeleteCasePush];
+    if (arr&&[arr count]>0) {
+        NSString *match=[NSString stringWithFormat:@"SELF =='%@'",guid];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:match];
+        NSArray *results = [arr filteredArrayUsingPredicate:predicate];
+        if (results&&[results count]>0) {
+            return YES;
+        }
+    }
+    return NO;
 }
 +(void)cacheCaseSettingsFromArray:(NSArray*)settings{
     if (settings&&[settings count]>0) {

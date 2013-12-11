@@ -21,6 +21,9 @@
 +(void)cacheCasePushArray:(NSArray*)results;
 +(void)cacheCasePushFromArray:(NSArray*)results;
 +(NSArray*)readCacheCasePush;
+//保存已删除的推播信息
++(void)cacheDeletePushWithGuid:(NSString*)guid;
++(NSArray*)readDeleteCasePush;
 //项目设定
 +(void)cacheCaseSettingsFromArray:(NSArray*)settings;
 +(NSArray*)readCacheCaseSettings;

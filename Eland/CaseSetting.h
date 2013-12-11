@@ -21,6 +21,8 @@
 @property(nonatomic,readonly) BOOL showImage;
 @property(nonatomic,readonly) BOOL showCityDown;
 @property(nonatomic,readonly) NSString *IconURLString;
+@property(nonatomic,readonly) NSArray *sortFields;
+
 +(CaseSetting*)xmlStringToCaseSetting:(NSString*)xml;
 +(NSArray*)xmlStringToCaseSettings:(NSString*)xml;
 //乡镇市是否必填

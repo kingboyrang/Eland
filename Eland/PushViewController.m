@@ -11,6 +11,7 @@
 #import "PushDetail.h"
 #import "PushDetailViewController.h"
 #import "UserSet.h"
+#import "AlertHelper.h"
 @interface PushViewController (){
     UITableView *_tableView;
 }
@@ -132,23 +133,26 @@
 //默认编辑模式为删除
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    /***
+    
     NSInteger deleteRow=indexPath.row;
-    [AlterMessage initWithTip:@"確定是否刪除?" confirmMessage:@"確定" cancelMessage:@"取消" confirmAction:^(){
+    [AlertHelper initWithTitle:@"確定是否刪除?" message:nil cancelTitle:@"取消" cancelAction:nil confirmTitle:@"確定" confirmAction:^{
+        PushResult *entity=[[self.listData objectAtIndex:deleteRow] retain];
+        [CacheHelper cacheDeletePushWithGuid:entity.GUID];
+        [entity release];
         //删除绑定数据
         [self.listData removeObjectAtIndex:deleteRow];
         //重新写入文件中
-        [FileHelper ContentToFile:self.listData withFileName:@"Push.plist"];
+        [CacheHelper cacheCasePushFromArray:self.listData];
         //行的删除
         NSMutableArray *indexPaths = [NSMutableArray array];
         [indexPaths addObject:[NSIndexPath indexPathForRow:deleteRow inSection:0]];
-        [self.tableView beginUpdates];
-        [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
-        [self.tableView endUpdates];
-        [AlterMessage initWithMessage:@"刪除成功!"];
-        
+        [_tableView beginUpdates];
+        [_tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+        [_tableView endUpdates];
+        [AlertHelper initWithTitle:@"提示" message:@"刪除成功!"];
     }];
-     ***/
+  
+    
     
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

@@ -10,4 +10,5 @@
 
 @interface FileHelper : NSObject
 +(BOOL)existsFilePath:(NSString*)path;
+
 @end

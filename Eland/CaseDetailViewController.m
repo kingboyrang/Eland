@@ -90,7 +90,13 @@
 -(void)updateSoureData{
     NSMutableArray *arr=[NSMutableArray array];
     NSString *content=@"";
-    for (CaseSettingField *item in self.entityCaseSetting.Fields) {
+    NSArray *fields=[self.entityCaseSetting sortFields];
+    for (CaseSettingField *item in fields) {
+        
+        if ([item.Name startWithString:@"Note"]||[item.Name isEqualToString:@"LngLat"]) {
+            continue;
+        }
+        
         TKShowLabelLabelCell *cell=[[TKShowLabelLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
         cell.label.text=[NSString stringWithFormat:@"%@:",item.Label];
         content=[self.entityCase getFieldValue:item.Name];

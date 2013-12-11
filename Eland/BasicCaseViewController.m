@@ -21,6 +21,7 @@
 #import "TKCaseLightNumberCell.h"
 #import "TKCaseCalendarCell.h"
 #import "TKCaseRadioCell.h"
+#import "TKCaseDropListCell.h"
 @interface BasicCaseViewController ()
 -(void)buttonOpenURL:(id)sender;
 @end
@@ -246,11 +247,17 @@
     TKCaseCalendarCell *cell2=[[[TKCaseCalendarCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     cell2.LabelText=entity.Label;
     cell2.required=entity.isRequired;
-    cell2.lostCalendar.popoverText.popoverTextField.placeholder=[NSString stringWithFormat:@"請輸入%@",entity.Label];
+    cell2.lostCalendar.popoverText.popoverTextField.placeholder=[NSString stringWithFormat:@"請選擇%@",entity.Label];
     cell2.LabelName=entity.Name;
     if (entity.Text&&[entity.Text length]>0) {
         cell2.lostCalendar.popoverText.popoverTextField.text=entity.Text;
     }
+    
+    UIImage *img=[UIImage imageNamed:@"Open.png"];
+    UIImageView *imageView=[[[UIImageView alloc] initWithImage:img] autorelease];
+    cell2.lostCalendar.popoverText.popoverTextField.enabled=NO;
+    cell2.lostCalendar.popoverText.popoverTextField.rightView=imageView;
+    cell2.lostCalendar.popoverText.popoverTextField.rightViewMode=UITextFieldViewModeAlways;
     
     
     [result addObject:cell1];
@@ -268,6 +275,21 @@
     cell2.LabelName=entity.Name;
     if (entity.Text&&[entity.Text length]>0) {
         [cell2 setSelectedItemText:entity.Text];
+    }
+    if([entity.Name isEqualToString:@"PetSterilization"])
+    {
+        [cell2.radioView setIndexWithTitle:@"有" withIndex:0];
+        [cell2.radioView setIndexWithTitle:@"無" withIndex:1];
+    }
+    if([entity.Name isEqualToString:@"PetGender"])
+    {
+        [cell2.radioView setIndexWithTitle:@"公" withIndex:0];
+        [cell2.radioView setIndexWithTitle:@"母" withIndex:1];
+    }
+    if([entity.Name isEqualToString:@"PetChip"])
+    {
+        [cell2.radioView setIndexWithTitle:@"無" withIndex:0];
+        [cell2.radioView setIndexWithTitle:@"有" withIndex:1];
     }
     
     
@@ -328,6 +350,41 @@
         }
         
     }
+    return result;
+}
+-(NSMutableArray*)CaseCategoryDropCells:(CaseSettingField*)entity{
+    NSMutableArray *result=[NSMutableArray array];
+    TKCaseLabelCell *cell1=[[[TKCaseLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    [cell1 setLabelName:[NSString stringWithFormat:@"%@:",entity.Label] required:entity.isRequired];
+    
+    TKCaseDropListCell *cell2=[[[TKCaseDropListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    cell2.required=entity.isRequired;
+    cell2.select.popoverText.popoverTextField.placeholder=[NSString stringWithFormat:@"請選擇%@",entity.Label];
+    cell2.LabelName=entity.Name;
+    if (entity.Text&&[entity.Text length]>0) {
+        cell2.select.popoverText.popoverTextField.text=entity.Text;
+    }
+    cell2.LabelText=entity.Label;
+    
+    UIImage *img=[UIImage imageNamed:@"Open.png"];
+    UIImageView *imageView=[[[UIImageView alloc] initWithImage:img] autorelease];
+    cell2.select.popoverText.popoverTextField.enabled=NO;
+    cell2.select.popoverText.popoverTextField.rightView=imageView;
+    cell2.select.popoverText.popoverTextField.rightViewMode=UITextFieldViewModeAlways;
+    
+    cell2.select.popoverView.popoverTitle=entity.Label;
+    
+    NSMutableArray *saveArr=[NSMutableArray array];
+    for (int i=1; i<12; i++) {
+        [saveArr addObject:[NSString stringWithFormat:@"%d 個月",i]];
+    }
+    for (int i=1; i<=20; i++) {
+        [saveArr addObject:[NSString stringWithFormat:@"%d 年",i]];
+    }
+    [cell2.select setDataSourceForArray:saveArr];
+       
+    [result addObject:cell1];
+    [result addObject:cell2];
     return result;
 }
 -(void)buttonCaseCityClick:(id)sender{

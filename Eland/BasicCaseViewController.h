@@ -36,6 +36,8 @@
 -(NSMutableArray*)CaseCategoryRadioCells:(CaseSettingField*)entity;
 //1,出生登记,2结婚登记,3，死亡登记
 -(NSMutableArray*)CaseCategoryHRCells:(CaseSetting*)entity hrType:(int)type;
+//年龄==>下拉选单
+-(NSMutableArray*)CaseCategoryDropCells:(CaseSettingField*)entity;
 
 -(void)buttonCaseCategoryClick:(id)sender CaseCategoryGUID:(NSString*)guid;
 -(void)hidePopoverCaseCategory;

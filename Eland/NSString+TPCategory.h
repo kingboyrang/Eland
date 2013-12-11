@@ -21,6 +21,7 @@
  @return 查找到字符串的位置,否则返回-1
  */
 -(NSInteger)lastIndexOf:(NSString*)search;
+-(BOOL)startWithString:(NSString*)search;
 /** 去除字符串前后空格.
  @return 去除字符串前后空格的字符串
  */

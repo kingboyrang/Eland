@@ -12,4 +12,5 @@
 @property (nonatomic,strong) RTLabel *label;
 @property (nonatomic,copy) NSString *labelText;
 - (void)setLabelName:(NSString*)title required:(BOOL)required;
+-(void)setShowName:(NSString*)title required:(BOOL)required;
 @end

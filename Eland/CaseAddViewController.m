@@ -33,6 +33,7 @@
 #import "AlertHelper.h"
 #import "TKCaseLightNumberCell.h"
 #import "TKCaseRadioCell.h"
+#import "TKCaseDropListCell.h"
 @interface CaseAddViewController ()
 -(void)loadingFormFields;
 -(void)updateFormUI;
@@ -40,6 +41,7 @@
 -(CGFloat)scrollerToRowTotal:(int)index;
 -(void)buttonSubmit;
 -(void)insertAndRemoveRows;
+-(void)updateCaseCityShowWithType:(int)type;
 @end
 
 @implementation CaseAddViewController
@@ -67,6 +69,7 @@
     _caseArgs=[[Case alloc] init];
     _caseArgs.Extend=[[CaseExtend alloc] init];
     _caseArgs.Applicant=[[CaseApplicant alloc] init];
+    _caseArgs.CaseSettingGuid=self.Entity.GUID;
     
     _tableView=[[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     _tableView.dataSource=self;
@@ -85,20 +88,24 @@
     [ZAActivityBar dismissForAction:@"loadFields"];
     NSMutableArray *source=[NSMutableArray array];
     [source addObjectsFromArray:[self CaseCategoryAndCityCells:self.Entity]];
-    if (self.Entity.Fields&&[self.Entity.Fields count]>0) {
-        for (CaseSettingField *item in self.Entity.Fields) {
+    
+    NSArray *sortfields=[self.Entity sortFields];
+    
+    if ([sortfields count]>0) {
+        for (CaseSettingField *item in sortfields) {
             if ([item.Name isEqualToString:@"LngLat"]) {
                 continue;
             }
-            if ([item.Name isEqualToString:@"Note"]) {
-                [source addObjectsFromArray:[self CaseCategoryNoteCells:item]];
+            
+            if ([item.Name isEqualToString:@"PetAge"]) {
+                [source addObjectsFromArray:[self CaseCategoryDropCells:item]];
                 continue;
             }
             if ([item.Name isEqualToString:@"PetDate"]) {//走失时间
                 [source addObjectsFromArray:[self CaseCategoryLostDateCells:item]];
                 continue;
             }
-            if ([item.Name isEqualToString:@"IsAgree"]||[item.Name isEqualToString:@"IsPublic"]||[item.Name isEqualToString:@"IsHistory"]) {//单选
+            if ([item.Name isEqualToString:@"IsAgree"]||[item.Name isEqualToString:@"IsPublic"]||[item.Name isEqualToString:@"IsHistory"]||[item.Name isEqualToString:@"PetSterilization"]||[item.Name isEqualToString:@"PetGender"]||[item.Name isEqualToString:@"PetChip"]) {//单选
                 [source addObjectsFromArray:[self CaseCategoryRadioCells:item]];
                 continue;
             }
@@ -106,6 +113,10 @@
                 if ([self.Entity hrExistFieldName:item.Name]) {
                     continue;
                 }
+            }
+            if ([item.Name startWithString:@"Note"]) {
+                [source addObjectsFromArray:[self CaseCategoryNoteCells:item]];
+                continue;
             }
             if ([self.Entity.GUID isEqualToString:@"Light"]) {//路灯报修处理
                 if ([item.Name isEqualToString:@"LightNumber"]) {
@@ -255,8 +266,6 @@
         if ([item isKindOfClass:[TKCaseTextFieldCell class]]) {
             TKCaseTextFieldCell *cell=(TKCaseTextFieldCell*)item;
             if (cell.required&&!cell.hasValue) {
-                
-                
                 [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.cells indexOfObject:item] inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
                 //滚动到指定位置
                 [cell errorVerify];
@@ -280,6 +289,15 @@
                 [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.cells indexOfObject:item] inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
                 //滚动到指定位置
                 [AlertHelper initWithTitle:@"提示" message:[NSString stringWithFormat:@"%@不為空!",cell.LabelText]];
+                return NO;
+            }
+        }
+        if ([item isKindOfClass:[TKCaseDropListCell class]]) {
+            TKCaseDropListCell *cell=(TKCaseDropListCell*)item;
+            if (cell.required&&!cell.hasValue) {
+                [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.cells indexOfObject:item] inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                //滚动到指定位置
+                [AlertHelper initWithTitle:@"提示" message:[NSString stringWithFormat:@"請選擇%@!",cell.LabelText]];
                 return NO;
             }
         }
@@ -308,7 +326,11 @@
         }
         if ([item isKindOfClass:[TKCaseRadioCell class]]) {//单选
             TKCaseRadioCell *cell=(TKCaseRadioCell*)item;
-            [_caseArgs objectValue:cell.radioView.radioValue objectKey:cell.LabelName];
+            [_caseArgs objectValue:[NSString stringWithFormat:@"%d",cell.radioView.currentIndex] objectKey:cell.LabelName];
+        }
+        if ([item isKindOfClass:[TKCaseDropListCell class]]) {//下拉选单
+            TKCaseDropListCell *cell=(TKCaseDropListCell*)item;
+            [_caseArgs objectValue:cell.select.popoverText.popoverTextField.text objectKey:cell.LabelName];
         }
         if ([item isKindOfClass:[TKCaseTextViewCell class]]) {
             TKCaseTextViewCell *cell=(TKCaseTextViewCell*)item;
@@ -361,6 +383,7 @@
     [request setPostValue:[_caseArgs XmlSerialize] forKey:@"xml"];
     [request setRequestMethod:@"POST"];
     [request setCompletionBlock:^{
+        //NSLog(@"xml=%@",request.responseString);
         if (request.responseStatusCode==200) {
             NSString *xml=[request.responseString stringByReplacingOccurrencesOfString:@"xmlns=\"CaseAddResult\"" withString:@""];
             XmlParseHelper *parse=[[[XmlParseHelper alloc] initWithData:xml] autorelease];
@@ -374,6 +397,7 @@
         [ZAActivityBar showErrorWithStatus:@"送出失敗!" forAction:@"caseAdd"];
     }];
     [request setFailedBlock:^{
+        //NSLog(@"error=%@",request.error.description);
         [ZAActivityBar showErrorWithStatus:@"送出失敗!" forAction:@"caseAdd"];
     }];
     [request startAsynchronous];
@@ -406,19 +430,29 @@
     if ([self.Entity.GUID isEqualToString:@"HR"]) {
         if ([category.Name isEqualToString:@"出生登記"]&&_hrType!=1) {
             _hrType=1;
+            [self updateCaseCityShowWithType:1];
             [self insertAndRemoveRows];
-            
         }
         if ([category.Name isEqualToString:@"結婚登記"]&&_hrType!=2) {
             _hrType=2;
+            [self updateCaseCityShowWithType:2];
             [self insertAndRemoveRows];
         }
         if ([category.Name isEqualToString:@"死亡登記"]&&_hrType!=3) {
             _hrType=3;
+            [self updateCaseCityShowWithType:3];
             [self insertAndRemoveRows];
         }
     }
     
+}
+-(void)updateCaseCityShowWithType:(int)type{
+    TKCaseLabelCell *cell=self.cells[2];
+    if (type==1) {
+        [cell setShowName:@"新生兒預約設籍之戶政事務所:" required:[self.Entity isRequiredShowCity]];
+    }else{
+        [cell setShowName:@"預約戶籍地之戶政事務所:" required:[self.Entity isRequiredShowCity]];
+    }
 }
 -(void)insertAndRemoveRows{
     NSMutableArray *insertRows=[self CaseCategoryHRCells:self.Entity hrType:_hrType];

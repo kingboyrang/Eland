@@ -18,4 +18,5 @@
 @property(nonatomic,assign) NSInteger currentIndex;
 @property(nonatomic,readonly) NSString *radioValue;
 -(void)setSelectedIndex:(int)index;
+-(void)setIndexWithTitle:(NSString*)title withIndex:(int)index;
 @end

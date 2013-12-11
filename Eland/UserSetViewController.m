@@ -132,7 +132,7 @@
     user.Email=cell3.field.text;
     user.Nick=cell4.field.text;
     [user save];
-    [AlertHelper initWithTitle:@"提示" message:@"存儲成功!"];
+    [AlertHelper initWithTitle:@"提示" message:@"儲存成功!"];
 
 }
 - (void)didReceiveMemoryWarning
@@ -165,7 +165,7 @@
     }else{
         TKButtonButtonCell *cell=[[TKButtonButtonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
-        [cell.leftButton setTitle:@"存儲" forState:UIControlStateNormal];
+        [cell.leftButton setTitle:@"儲存" forState:UIControlStateNormal];
         [cell.leftButton addTarget:self action:@selector(buttonSaveClick) forControlEvents:UIControlEventTouchUpInside];
         [cell.rightButton setTitle:@"隱私及資訊安全保護政策" forState:UIControlStateNormal];
         [cell.rightButton addTarget:self action:@selector(buttonSecrecyClick) forControlEvents:UIControlEventTouchUpInside];

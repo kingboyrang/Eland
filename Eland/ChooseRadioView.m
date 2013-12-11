@@ -57,6 +57,15 @@
     self.currentIndex=1;
     [self addSubview:_addressLabel];
 }
+-(void)setIndexWithTitle:(NSString*)title withIndex:(int)index{
+    int pos=100+index;
+    if(pos==100)
+    {
+        _lightLabel.text=title;
+    }else{
+        _addressLabel.text=title;
+    }
+}
 -(void)addButton:(CGFloat)leftx height:(CGFloat)h index:(NSInteger)tag{
     UIImage *image=[UIImage imageNamed:@"checkbox.png"];
     UIImage *imageSelect=[UIImage imageNamed:@"checkbox-checked.png"];

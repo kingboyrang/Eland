@@ -72,6 +72,14 @@
     }
     return NO;
 }
+-(NSArray*)sortFields{
+    if (self.Fields&&[self.Fields count]>0) {
+        NSSortDescriptor *_sorter  = [[NSSortDescriptor alloc] initWithKey:@"Sort" ascending:YES];
+        NSArray *sortArr=[self.Fields sortedArrayUsingDescriptors:[NSArray arrayWithObjects:_sorter, nil]];
+        return sortArr;
+    }
+    return [NSArray array];
+}
 -(CaseSettingField*)getEntityFieldWithName:(NSString*)name{
     if (self.Fields&&[self.Fields count]>0) {
         NSString *match=[NSString stringWithFormat:@"SELF.Name =='%@'",name];
