@@ -71,6 +71,8 @@
     _caseArgs.Applicant=[[CaseApplicant alloc] init];
     _caseArgs.CaseSettingGuid=self.Entity.GUID;
     
+    //NSLog(@"GUID=%@",self.Entity.GUID);
+    
     _tableView=[[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     _tableView.dataSource=self;
     _tableView.delegate=self;
@@ -93,6 +95,7 @@
     
     if ([sortfields count]>0) {
         for (CaseSettingField *item in sortfields) {
+            //NSLog(@"name=%@,label=%@,sort=%@\n",item.Name,item.Label,item.Sort);
             if ([item.Name isEqualToString:@"LngLat"]) {
                 continue;
             }

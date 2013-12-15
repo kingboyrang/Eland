@@ -74,9 +74,25 @@
 }
 -(NSArray*)sortFields{
     if (self.Fields&&[self.Fields count]>0) {
-        NSSortDescriptor *_sorter  = [[NSSortDescriptor alloc] initWithKey:@"Sort" ascending:YES];
-        NSArray *sortArr=[self.Fields sortedArrayUsingDescriptors:[NSArray arrayWithObjects:_sorter, nil]];
-        return sortArr;
+        NSComparator cmptr = ^(id obj1, id obj2){
+            CaseSettingField *field1=(CaseSettingField*)obj1;
+            CaseSettingField *field2=(CaseSettingField*)obj2;
+            if ([field1.Sort integerValue] > [field2.Sort integerValue]) {
+                return (NSComparisonResult)NSOrderedDescending;
+            }
+            
+            if ([field1.Sort integerValue] < [field2.Sort integerValue]) {
+                return (NSComparisonResult)NSOrderedAscending;
+            }
+            return (NSComparisonResult)NSOrderedSame;  
+        };
+        //第一种排序
+        return  [self.Fields sortedArrayUsingComparator:cmptr];
+        
+        
+       // NSSortDescriptor *_sorter  = [[NSSortDescriptor alloc] initWithKey:@"Sort" ascending:YES];
+       // NSArray *sortArr=[self.Fields sortedArrayUsingDescriptors:[NSArray arrayWithObjects:_sorter, nil]];
+       // return sortArr;
     }
     return [NSArray array];
 }
