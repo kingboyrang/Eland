@@ -121,7 +121,7 @@
                 [source addObjectsFromArray:[self CaseCategoryNoteCells:item]];
                 continue;
             }
-            if ([self.Entity.GUID isEqualToString:@"Light"]) {//路灯报修处理
+                       if ([self.Entity.GUID isEqualToString:@"Light"]) {//路灯报修处理
                 if ([item.Name isEqualToString:@"LightNumber"]) {
                     [source addObjectsFromArray:[self CaseCategoryNumberCells:[self.Entity getEntityFieldWithName:@"LightNumber"]]];
                     continue;
@@ -316,14 +316,14 @@
         return;
     }
     for (id item in self.cells) {
-        if ([item isKindOfClass:[TKCaseTextFieldCell class]]) {
+        if ([item isKindOfClass:[TKCaseTextFieldCell class]]) {//单行文本
             TKCaseTextFieldCell *cell=(TKCaseTextFieldCell*)item;
             if ([cell.LabelName isEqualToString:@"CaseSettingGuid"]||[cell.LabelName isEqualToString:@"CityGuid"]||[cell.LabelName isEqualToString:@"LngLat"]) {
                 continue;
             }
             [_caseArgs objectValue:cell.field.text objectKey:cell.LabelName];
         }
-        if ([item isKindOfClass:[TKCaseCalendarCell class]]) {
+        if ([item isKindOfClass:[TKCaseCalendarCell class]]) {//日期
             TKCaseCalendarCell *cell=(TKCaseCalendarCell*)item;
             [_caseArgs objectValue:cell.lostCalendar.popoverText.popoverTextField.text objectKey:cell.LabelName];
         }
@@ -335,7 +335,7 @@
             TKCaseDropListCell *cell=(TKCaseDropListCell*)item;
             [_caseArgs objectValue:cell.select.popoverText.popoverTextField.text objectKey:cell.LabelName];
         }
-        if ([item isKindOfClass:[TKCaseTextViewCell class]]) {
+        if ([item isKindOfClass:[TKCaseTextViewCell class]]) {//多行文本
             TKCaseTextViewCell *cell=(TKCaseTextViewCell*)item;
             [_caseArgs objectValue:cell.textView.text objectKey:cell.LabelName];
         }

@@ -307,7 +307,7 @@
         }
         field=[entity getEntityFieldWithName:@"NewbornRelation"];
         if (field!=nil) {
-            [result addObjectsFromArray:[self CaseCategoryTextCells:field]];
+            [result addObjectsFromArray:[self CaseCategoryBornRelationCells:field]];
         }
     }else if (type==2)
     {
@@ -338,7 +338,7 @@
         }
         field=[entity getEntityFieldWithName:@"DeadRelation"];
         if(field!=nil){
-            [result addObjectsFromArray:[self CaseCategoryTextCells:field]];
+            [result addObjectsFromArray:[self CaseCategoryDeadRelationCells:field]];
         }
         field=[entity getEntityFieldWithName:@"DeadName"];
         if(field!=nil){
@@ -383,6 +383,74 @@
     }
     [cell2.select setDataSourceForArray:saveArr];
        
+    [result addObject:cell1];
+    [result addObject:cell2];
+    return result;
+}
+-(NSMutableArray*)CaseCategoryBornRelationCells:(CaseSettingField*)entity{
+    NSMutableArray *result=[NSMutableArray array];
+    TKCaseLabelCell *cell1=[[[TKCaseLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    [cell1 setLabelName:[NSString stringWithFormat:@"%@:",entity.Label] required:entity.isRequired];
+    
+    TKCaseDropListCell *cell2=[[[TKCaseDropListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    cell2.required=entity.isRequired;
+    cell2.select.popoverText.popoverTextField.placeholder=[NSString stringWithFormat:@"請選擇%@",entity.Label];
+    cell2.LabelName=entity.Name;
+    if (entity.Text&&[entity.Text length]>0) {
+        cell2.select.popoverText.popoverTextField.text=entity.Text;
+    }
+    cell2.LabelText=entity.Label;
+    
+    UIImage *img=[UIImage imageNamed:@"Open.png"];
+    UIImageView *imageView=[[[UIImageView alloc] initWithImage:img] autorelease];
+    cell2.select.popoverText.popoverTextField.enabled=NO;
+    cell2.select.popoverText.popoverTextField.rightView=imageView;
+    cell2.select.popoverText.popoverTextField.rightViewMode=UITextFieldViewModeAlways;
+    
+    cell2.select.popoverView.popoverTitle=entity.Label;
+    
+    NSMutableArray *arr=[NSMutableArray array];
+    [arr addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"父母",@"key", nil]];
+    [arr addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"祖父母",@"key", nil]];
+    [arr addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"戶長", @"key",nil]];
+    [arr addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"同居人",@"key", nil]];
+    [cell2.select setDataSourceForArray:arr dataTextName:@"key" dataValueName:@"key"];
+    //[cell2.select setDataSourceForArray:saveArr];
+    
+    [result addObject:cell1];
+    [result addObject:cell2];
+    return result;
+}
+-(NSMutableArray*)CaseCategoryDeadRelationCells:(CaseSettingField*)entity{
+    NSMutableArray *result=[NSMutableArray array];
+    TKCaseLabelCell *cell1=[[[TKCaseLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    [cell1 setLabelName:[NSString stringWithFormat:@"%@:",entity.Label] required:entity.isRequired];
+    
+    TKCaseDropListCell *cell2=[[[TKCaseDropListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    cell2.required=entity.isRequired;
+    cell2.select.popoverText.popoverTextField.placeholder=[NSString stringWithFormat:@"請選擇%@",entity.Label];
+    cell2.LabelName=entity.Name;
+    if (entity.Text&&[entity.Text length]>0) {
+        cell2.select.popoverText.popoverTextField.text=entity.Text;
+    }
+    cell2.LabelText=entity.Label;
+    
+    UIImage *img=[UIImage imageNamed:@"Open.png"];
+    UIImageView *imageView=[[[UIImageView alloc] initWithImage:img] autorelease];
+    cell2.select.popoverText.popoverTextField.enabled=NO;
+    cell2.select.popoverText.popoverTextField.rightView=imageView;
+    cell2.select.popoverText.popoverTextField.rightViewMode=UITextFieldViewModeAlways;
+    
+    cell2.select.popoverView.popoverTitle=entity.Label;
+    
+    NSMutableArray *arr=[NSMutableArray array];
+    [arr addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"配偶",@"key", nil]];
+    [arr addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"親屬",@"key", nil]];
+    [arr addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"戶長", @"key",nil]];
+    [arr addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"同居人",@"key", nil]];
+    [cell2.select setDataSourceForArray:arr dataTextName:@"key" dataValueName:@"key"];
+    //[cell2.select setDataSourceForArray:saveArr];
+    
     [result addObject:cell1];
     [result addObject:cell2];
     return result;

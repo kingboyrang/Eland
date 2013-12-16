@@ -38,6 +38,10 @@
 -(NSMutableArray*)CaseCategoryHRCells:(CaseSetting*)entity hrType:(int)type;
 //年龄==>下拉选单
 -(NSMutableArray*)CaseCategoryDropCells:(CaseSettingField*)entity;
+//申請人與新生兒之關係
+-(NSMutableArray*)CaseCategoryBornRelationCells:(CaseSettingField*)entity;
+//申請人與往生者之關係
+-(NSMutableArray*)CaseCategoryDeadRelationCells:(CaseSettingField*)entity;
 
 -(void)buttonCaseCategoryClick:(id)sender CaseCategoryGUID:(NSString*)guid;
 -(void)hidePopoverCaseCategory;

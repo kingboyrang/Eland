@@ -45,5 +45,26 @@
 @property(nonatomic,copy) NSString *DeadName;
 @property(nonatomic,copy) NSString *DeadAddress;
 @property(nonatomic,copy) NSString *ImageMemo;
+@property(nonatomic,copy) NSString *Note1;
+@property(nonatomic,copy) NSString *Note2;
+@property(nonatomic,copy) NSString *Note3;
+@property(nonatomic,copy) NSString *Note4;
+@property(nonatomic,copy) NSString *Note5;
+@property(nonatomic,copy) NSString *Note6;
+@property(nonatomic,copy) NSString *Note7;
+@property(nonatomic,copy) NSString *Note8;
+@property(nonatomic,copy) NSString *Note9;
+@property(nonatomic,copy) NSString *Note10;
+@property(nonatomic,copy) NSString *Custom1;
+@property(nonatomic,copy) NSString *Custom2;
+@property(nonatomic,copy) NSString *Custom3;
+@property(nonatomic,copy) NSString *Custom4;
+@property(nonatomic,copy) NSString *Custom5;
+@property(nonatomic,copy) NSString *Custom6;
+@property(nonatomic,copy) NSString *Custom7;
+@property(nonatomic,copy) NSString *Custom8;
+@property(nonatomic,copy) NSString *Custom9;
+@property(nonatomic,copy) NSString *Custom10;
+
 -(NSString*)XmlSerialize;
 @end

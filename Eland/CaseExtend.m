@@ -44,6 +44,30 @@
     [xml appendFormat:@"<DeadName>%@</DeadName>",[self getPropertyValue:_DeadName]];
     [xml appendFormat:@"<DeadAddress>%@</DeadAddress>",[self getPropertyValue:_DeadAddress]];
     [xml appendFormat:@"<ImageMemo>%@</ImageMemo>",[self getPropertyValue:_ImageMemo]];
+    
+    [xml appendFormat:@"<Note1>%@</Note1>",[self getPropertyValue:_Note1]];
+    [xml appendFormat:@"<Note2>%@</Note2>",[self getPropertyValue:_Note2]];
+    [xml appendFormat:@"<Note3>%@</Note3>",[self getPropertyValue:_Note3]];
+    [xml appendFormat:@"<Note4>%@</Note4>",[self getPropertyValue:_Note4]];
+    [xml appendFormat:@"<Note5>%@</Note5>",[self getPropertyValue:_Note5]];
+    [xml appendFormat:@"<Note6>%@</Note6>",[self getPropertyValue:_Note6]];
+    [xml appendFormat:@"<Note7>%@</Note7>",[self getPropertyValue:_Note7]];
+    [xml appendFormat:@"<Note8>%@</Note8>",[self getPropertyValue:_Note8]];
+    [xml appendFormat:@"<Note9>%@</Note9>",[self getPropertyValue:_Note9]];
+    [xml appendFormat:@"<Note10>%@</Note10>",[self getPropertyValue:_Note10]];
+    
+    [xml appendFormat:@"<Custom1>%@</Custom1>",[self getPropertyValue:_Custom1]];
+    [xml appendFormat:@"<Custom2>%@</Custom2>",[self getPropertyValue:_Custom2]];
+    [xml appendFormat:@"<Custom3>%@</Custom3>",[self getPropertyValue:_Custom3]];
+    [xml appendFormat:@"<Custom4>%@</Custom4>",[self getPropertyValue:_Custom4]];
+    [xml appendFormat:@"<Custom5>%@</Custom5>",[self getPropertyValue:_Custom5]];
+    [xml appendFormat:@"<Custom6>%@</Custom6>",[self getPropertyValue:_Custom6]];
+    [xml appendFormat:@"<Custom7>%@</Custom7>",[self getPropertyValue:_Custom7]];
+    [xml appendFormat:@"<Custom8>%@</Custom8>",[self getPropertyValue:_Custom8]];
+    [xml appendFormat:@"<Custom9>%@</Custom9>",[self getPropertyValue:_Custom9]];
+    [xml appendFormat:@"<Custom10>%@</Custom10>",[self getPropertyValue:_Custom10]];
+
+    
     [xml appendString:@"</Extend>"];
     return xml;
 }
