@@ -12,7 +12,7 @@
 -(NSString*)paramsFormatString:(NSArray*)params;
 @end
 
-static NSString *defaultWebServiceUrl=PushWebserviceURL;
+//static NSString *defaultWebServiceUrl=PushWebserviceURL;
 static NSString *defaultWebServiceNameSpace=PushNameSpace;
 
 @implementation ServiceArgs
@@ -24,10 +24,12 @@ static NSString *defaultWebServiceNameSpace=PushNameSpace;
 
 +(void)setWebServiceURL:(NSString*)url
 {
+    /***
     if (defaultWebServiceUrl!=url) {
         [defaultWebServiceUrl release];
         defaultWebServiceUrl=[url retain];
     }
+     ***/
 }
 +(void)setNameSapce:(NSString*)space
 {
@@ -52,7 +54,7 @@ static NSString *defaultWebServiceNameSpace=PushNameSpace;
     if (serviceURL) {
         return serviceURL;
     }
-    return defaultWebServiceUrl;
+    return PushWebserviceURL;
 }
 -(NSString*)serviceNameSpace{
     if (serviceNameSpace) {

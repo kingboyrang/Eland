@@ -12,10 +12,12 @@
 #import "CacheHelper.h"
 #import "ServiceHelper.h"
 #import "CaseSetting.h"
+#import "AdminURL.h"
 @interface asyncHelper ()
 +(void)handlerCaseCity:(NSString*)xml;
 +(void)handlerCaseCategory:(NSString*)xml;
 +(void)handlerCaseSetting:(NSString*)xml;
++(void)handlerAccess:(NSString*)xml;
 @end
 
 @implementation asyncHelper
@@ -110,14 +112,20 @@
     [request2 setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"CaseSetting",@"name", nil]];
     [helper addQueue:request2];
     
+    ASIHTTPRequest *request3=[ASIHTTPRequest requestWithURL:[NSURL URLWithString:DataAccessURL]];
+    [request3 setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"accessurl",@"name", nil]];
+    [helper addQueue:request3];
+    
     [helper startQueue:^(ServiceResult *result) {
         NSString *requestName=[result.userInfo objectForKey:@"name"];
         if ([requestName isEqualToString:@"city"]) {
             [self handlerCaseCity:result.xmlString];
         }else if([requestName isEqualToString:@"CaseCategory"]){
             [self handlerCaseCategory:result.xmlString];
-        }else{//项目设定
+        }else if([requestName isEqualToString:@"CaseSetting"]){//项目设定
             [self handlerCaseSetting:result.xmlString];
+        }else{//访问接口处理
+            [self handlerAccess:result.xmlString];
         }
         
     } failed:^(NSError *error, NSDictionary *userInfo) {
@@ -161,6 +169,26 @@
     NSArray *arr=[CaseSetting xmlStringToCaseSettings:xml];
     if (arr&&[arr count]>0) {
         [CacheHelper cacheCaseSettingsFromArray:arr];
+    }
+}
++(void)handlerAccess:(NSString*)xml{
+    if ([xml length]==0) {
+        return;
+    }
+    xml=[xml stringByReplacingOccurrencesOfString:@"xmlns=\"AdminURL[]\"" withString:@""];
+    XmlParseHelper *parse=[[[XmlParseHelper alloc] initWithData:xml] autorelease];
+    NSArray *source=[parse selectNodes:@"//AdminURL" className:@"AdminURL"];
+    NSMutableArray *arr=[NSMutableArray arrayWithArray:DataServicesSource];
+    if (source&&[source count]>0) {
+        for (AdminURL *item in source) {
+            if ([item.name isEqualToString:@"casesadminurl"]&&[item.url length]>0) {
+                arr[0]=item.url;
+            }
+            if ([item.name isEqualToString:@"pushsadminurl"]&&[item.url length]>0) {
+                arr[1]=item.url;
+            }
+        }
+        [arr writeToFile:DataWebPath atomically:YES];
     }
 }
 @end

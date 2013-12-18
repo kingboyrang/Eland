@@ -83,6 +83,7 @@
 		0151213A180D30B400594D95 /* UIBarButtonItemArrowLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 01512136180D30B400594D95 /* UIBarButtonItemArrowLeft@2x.png */; };
 		0151213B180D30B400594D95 /* UIBarButtonItemArrowRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 01512137180D30B400594D95 /* UIBarButtonItemArrowRight.png */; };
 		0151213C180D30B400594D95 /* UIBarButtonItemArrowRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 01512138180D30B400594D95 /* UIBarButtonItemArrowRight@2x.png */; };
+		018988E7186055260073B253 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 018988E6186055260073B253 /* Config.plist */; };
 		0191799B17FAAFAF000188BD /* btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 0191799A17FAAFAF000188BD /* btn.png */; };
 		0191799E17FAB5B9000188BD /* MenuBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0191799D17FAB5B8000188BD /* MenuBar.m */; };
 		019179A917FAB638000188BD /* repair_select.png in Resources */ = {isa = PBXBuildFile; fileRef = 019179A117FAB637000188BD /* repair_select.png */; };
@@ -267,6 +268,7 @@
 		01EA095B183F482900F42D9E /* checkbox-checked.png in Resources */ = {isa = PBXBuildFile; fileRef = 01EA0959183F482900F42D9E /* checkbox-checked.png */; };
 		01EA095C183F482900F42D9E /* checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 01EA095A183F482900F42D9E /* checkbox.png */; };
 		01EA09AE183F55B800F42D9E /* TKCaseLightNumberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01EA09AD183F55B800F42D9E /* TKCaseLightNumberCell.m */; };
+		01F3FCF318617297003EAE0D /* AdminURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 01F3FCF218617297003EAE0D /* AdminURL.m */; };
 		26A0ECD517EF2B8D009AF735 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A0ECD417EF2B8D009AF735 /* MainViewController.m */; };
 		26A0ECDF17EF2E9B009AF735 /* about_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 26A0ECD717EF2E9B009AF735 /* about_normal.png */; };
 		26A0ECE017EF2E9B009AF735 /* about_select.png in Resources */ = {isa = PBXBuildFile; fileRef = 26A0ECD817EF2E9B009AF735 /* about_select.png */; };
@@ -440,6 +442,7 @@
 		01512136180D30B400594D95 /* UIBarButtonItemArrowLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UIBarButtonItemArrowLeft@2x.png"; sourceTree = "<group>"; };
 		01512137180D30B400594D95 /* UIBarButtonItemArrowRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UIBarButtonItemArrowRight.png; sourceTree = "<group>"; };
 		01512138180D30B400594D95 /* UIBarButtonItemArrowRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UIBarButtonItemArrowRight@2x.png"; sourceTree = "<group>"; };
+		018988E6186055260073B253 /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		0191799A17FAAFAF000188BD /* btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn.png; sourceTree = "<group>"; };
 		0191799C17FAB5B8000188BD /* MenuBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuBar.h; sourceTree = "<group>"; };
 		0191799D17FAB5B8000188BD /* MenuBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuBar.m; sourceTree = "<group>"; };
@@ -748,6 +751,8 @@
 		01EA095A183F482900F42D9E /* checkbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox.png; sourceTree = "<group>"; };
 		01EA09AC183F55B800F42D9E /* TKCaseLightNumberCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKCaseLightNumberCell.h; sourceTree = "<group>"; };
 		01EA09AD183F55B800F42D9E /* TKCaseLightNumberCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKCaseLightNumberCell.m; sourceTree = "<group>"; };
+		01F3FCF118617297003EAE0D /* AdminURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdminURL.h; sourceTree = "<group>"; };
+		01F3FCF218617297003EAE0D /* AdminURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdminURL.m; sourceTree = "<group>"; };
 		26A0ECD317EF2B8D009AF735 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		26A0ECD417EF2B8D009AF735 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		26A0ECD717EF2E9B009AF735 /* about_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = about_normal.png; sourceTree = "<group>"; };
@@ -1003,6 +1008,8 @@
 				01C2EA76180B8CC700220F16 /* CaseSettingField.m */,
 				01C2EA78180B904000220F16 /* CaseSetting.h */,
 				01C2EA79180B904000220F16 /* CaseSetting.m */,
+				01F3FCF118617297003EAE0D /* AdminURL.h */,
+				01F3FCF218617297003EAE0D /* AdminURL.m */,
 			);
 			name = Modle;
 			sourceTree = "<group>";
@@ -1864,6 +1871,7 @@
 				26A5877517F7C8CD00850DED /* Privacy.txt */,
 				26A5BA5C17F072AC00A13AC6 /* aboutUs.txt */,
 				01BBC1B518473213000E070C /* HRFields.plist */,
+				018988E6186055260073B253 /* Config.plist */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -1928,6 +1936,7 @@
 				010476E517DF1A0A00BDCCE0 /* InfoPlist.strings in Resources */,
 				0104772917DF1EF600BDCCE0 /* NoticeView.bundle in Resources */,
 				01A7F5A4180E811300B49B2A /* Icon-120.png in Resources */,
+				018988E7186055260073B253 /* Config.plist in Resources */,
 				01A7F57F180E5E8800B49B2A /* iphone_bussiness_normal.png in Resources */,
 				01B392341810C0540070909F /* arrow_down.png in Resources */,
 				0104775817DF243D00BDCCE0 /* ReadMe.rtf in Resources */,
@@ -2207,6 +2216,7 @@
 				01BBC1B41847180D000E070C /* TKCaseRadioCell.m in Sources */,
 				01C4E9431857FDD6005A0871 /* TKCaseDropListCell.m in Sources */,
 				01C4E94618580011005A0871 /* CVUISelect.m in Sources */,
+				01F3FCF318617297003EAE0D /* AdminURL.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -70,6 +70,8 @@
     _caseArgs.Extend=[[CaseExtend alloc] init];
     _caseArgs.Applicant=[[CaseApplicant alloc] init];
     _caseArgs.CaseSettingGuid=self.Entity.GUID;
+    _caseArgs.CityGuid=@"宜蘭縣";
+   
     
     //NSLog(@"GUID=%@",self.Entity.GUID);
     

@@ -81,6 +81,7 @@
     //背景任务
     [self backgroundInitRequestTask];
     //[self performSelectorInBackground:@selector(backgroundInitRequestTask) withObject:nil];
+    
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

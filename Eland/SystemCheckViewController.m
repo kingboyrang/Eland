@@ -166,9 +166,9 @@
         if (finished) {
             if (![cell1.label.text isEqualToString:@"未定位"]&&![cell2.label.text isEqualToString:@"未定位"]) {
                 if ([cell1.label.text isEqualToString:cell2.label.text]) {
-                    [cell3 setLabelValue:@"定位正常" normal:YES];
+                    [cell3 setLabelValue:@"定位異常" normal:YES];
                 }else{
-                    [cell3 setLabelValue:@"定位異常" normal:NO];
+                    [cell3 setLabelValue:@"定位正常" normal:NO];
                 }
             }
         }
