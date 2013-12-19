@@ -13,6 +13,8 @@
 #import "ServiceHelper.h"
 #import "CaseSetting.h"
 #import "AdminURL.h"
+#import "AppDelegate.h"
+#import "UserSet.h"
 @interface asyncHelper ()
 +(void)handlerCaseCity:(NSString*)xml;
 +(void)handlerCaseCategory:(NSString*)xml;
@@ -180,13 +182,23 @@
     NSArray *source=[parse selectNodes:@"//AdminURL" className:@"AdminURL"];
     NSMutableArray *arr=[NSMutableArray arrayWithArray:DataServicesSource];
     if (source&&[source count]>0) {
+        NSString *pushUrl=@"";
         for (AdminURL *item in source) {
             if ([item.name isEqualToString:@"casesadminurl"]&&[item.url length]>0) {
                 arr[0]=item.url;
             }
             if ([item.name isEqualToString:@"pushsadminurl"]&&[item.url length]>0) {
-                arr[1]=item.url;
+                pushUrl=item.url;
             }
+        }
+        if ([pushUrl length]>0&&![pushUrl isEqualToString:arr[1]]) {
+            arr[1]=pushUrl;
+            UserSet *entity=[UserSet sharedInstance];
+            entity.isRegisterToken=NO;
+            [entity save];
+            AppDelegate *app=[[UIApplication sharedApplication] delegate];
+            [app registerAPNSToken:[[UserSet sharedInstance] AppToken]];
+            //重新注册
         }
         [arr writeToFile:DataWebPath atomically:YES];
     }

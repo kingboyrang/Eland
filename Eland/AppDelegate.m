@@ -17,6 +17,7 @@
 #import "NetWorkConnection.h"
 #import "asyncHelper.h"
 #import "AlertHelper.h"
+#import "AppDelegate.h"
 @implementation AppDelegate
 @synthesize hasConnect;
 @synthesize isLandscape;
