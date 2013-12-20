@@ -9,6 +9,8 @@
 #import "Case.h"
 #import "GDataXMLNode.h"
 #import "XmlParseHelper.h"
+#import "CaseCategoryHelper.h"
+#import "CaseCategory.h"
 @implementation Case
 -(NSString*)XmlSerialize{
    NSMutableString *xml=[NSMutableString stringWithFormat:@"<?xml version=\"1.0\"?>"];
@@ -48,6 +50,57 @@
     }
     return nil;
 }
+-(NSString*)StatusText{
+    if (_Status&&[_Status length]>0) {
+        if ([_Status isEqualToString:@"1"]) return @"辦理中";
+        if ([_Status isEqualToString:@"2"]) return @"已完成";
+        if ([_Status isEqualToString:@"3"]) return @"已刪除";
+    }
+    return @"";
+}
+-(NSString*)CaseCagegoryName{
+    NSMutableArray *arr=[NSMutableArray array];
+    if (_CaseSettingGuid&&[_CaseSettingGuid length]>0) {
+        CaseCategory *entity1=[CaseCategoryHelper getCaseCategoryEntity:_CaseSettingGuid];
+        if (entity1!=nil) {
+            [arr addObject:entity1.Name];
+        }
+    }
+    if (_CaseCagegory1&&[_CaseCagegory1 length]>0) {
+        CaseCategory *entity2=[CaseCategoryHelper getCaseCategoryEntity:_CaseCagegory1];
+        if (entity2!=nil) {
+            [arr addObject:entity2.Name];
+        }
+    }
+    if (_CaseCagegory2&&[_CaseCagegory2 length]>0) {
+        CaseCategory *entity3=[CaseCategoryHelper getCaseCategoryEntity:_CaseCagegory2];
+        if (entity3!=nil) {
+            [arr addObject:entity3.Name];
+        }
+    }
+    if ([arr count]>0) {
+        return [arr componentsJoinedByString:@">"];
+    }
+    return @"";
+}
+-(NSString*)ApplyDateText{
+    if (_ApplyDate&&[_ApplyDate length]>0) {
+        return [_ApplyDate stringByReplacingOccurrencesOfString:@"T" withString:@" "];
+    }
+    return @"";
+}
+-(NSString*)HandlerMemo{
+    NSMutableString *str=[NSMutableString stringWithString:@""];
+    if(_Approval&&_Approval.SignMemo&&[_Approval.SignMemo length]>0)
+        [str appendString:_Approval.SignMemo];
+    if (_Status&&[_Status length]>0&&[_Status isEqualToString:@"1"]) {
+        [str appendString:@"案件已送交，由負責人員辦理中"];
+    }
+    if ([str length]>0) {
+        return str;
+    }
+    return @"案件已送交，由負責人員辦理中";
+}
 +(Case*)xmlStringToCase:(NSString*)xml{
     Case *entity=[[[Case alloc] init] autorelease];
     xml=[xml stringByReplacingOccurrencesOfString:@"xmlns=\"Case\"" withString:@""];
@@ -67,6 +120,10 @@
         }
         if ([item.name isEqualToString:@"Images"]) {//案件图片资料
             entity.Images=[_parse nodesChildsNodesToObjects:item objectName:@"CaseImage"];
+            continue;
+        }
+        if ([item.name isEqualToString:@"Approval"]) {//审核资料
+            entity.Approval=[_parse childsNodeToObject:item objectName:@"CaseApproval"];
             continue;
         }
         if ([item.name isEqualToString:@"ApprovalImages"]) {//审核图片资料

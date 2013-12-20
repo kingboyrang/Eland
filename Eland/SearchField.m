@@ -78,6 +78,7 @@
     _levevlCaseArgs.Pager.PageNumber=0;
     _levevlCaseArgs.Pager.PageSize=DeviceIsPad?20:10;
     _levevlCaseArgs.Pager.TotalItemsCount=0;
+    _levevlCaseArgs.Pager.TotalPageCount=0;
 }
 -(void)selectedCaseCategory:(CaseCategory*)category{
     TKSearchDoubleFieldCell *cell=self.cells[1];
@@ -102,7 +103,7 @@
 -(NSString*)searchArgs{
     TKSearchTextFieldCell *cell1=self.cells[0];
     _levevlCaseArgs.GUID=cell1.field.text;
-    
+        
     TKSearchCalendarCell *cell2=self.cells[2];
     _levevlCaseArgs.BApplyDate=cell2.startCalendar.popoverText.popoverTextField.text;
     _levevlCaseArgs.EApplyDate=cell2.endCalendar.popoverText.popoverTextField.text;

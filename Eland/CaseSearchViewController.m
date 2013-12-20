@@ -109,9 +109,6 @@
         }];
     }else{
         btn.selected=NO;
-        
-        
-        
         CGRect frame=_searchField.frame;
         frame.origin.y=0;
         
@@ -204,15 +201,6 @@
     LevelCase *entity=(LevelCase*)[self.list objectAtIndex:indexPath.row];
     _shakeView.Entity=entity;
     [_shakeView show];
-    /***
-    [self showAlterViewPassword:entity success:^{
-        //表示成功了
-        CaseDetailViewController *detail=[[CaseDetailViewController alloc] init];
-        detail.itemCase=entity;
-        [self.navigationController pushViewController:detail animated:YES];
-        [detail release];
-    }];
-     ***/
 }
 #pragma mark -
 #pragma mark 加载数据
@@ -223,6 +211,13 @@
         [self showNoNetworkNotice:nil];
         return;
     }
+    if ([self.list count]==_searchField.levevlCaseArgs.Pager.TotalItemsCount&&_searchField.levevlCaseArgs.Pager.TotalItemsCount>0)
+    {
+        [_tableView tableViewDidFinishedLoadingWithMessage:@"沒有了哦..."];
+        _tableView.reachedTheEnd  = YES;
+        return;
+    }
+    
     _searchField.levevlCaseArgs.Pager.PageNumber++;
     [_helper clearDelegatesAndCancel];
     NSURL *url=[NSURL URLWithString:CaseSearchURL];
@@ -240,17 +235,36 @@
             return;
         }
         NSString *xmlStr=[self.helper.responseString stringByReplacingOccurrencesOfString:@"xmlns=\"LevelCase[]\"" withString:@""];
-        NSArray *strArr=[xmlStr componentsSeparatedByString:@"<;>"];
-        NSString *xml=[strArr objectAtIndex:1];
-        int itemCount=[strArr[0] intValue];
+        NSString *xml=@"";
+        int itemCount=0;
+        if ([xmlStr length]>0) {
+            NSArray *strArr=[xmlStr componentsSeparatedByString:@"<;>"];
+            if (strArr[1]!=[NSNull null]) {
+                xml=[strArr objectAtIndex:1];
+            }
+            if ([strArr objectAtIndex:0]) {
+                itemCount=[strArr[0] intValue];
+            }
+        }
         _searchField.levevlCaseArgs.Pager.TotalItemsCount=itemCount;
         if (self.refreshing) {
             self.refreshing = NO;
         }
-        if (_searchField.levevlCaseArgs.Pager.PageNumber>=_searchField.levevlCaseArgs.Pager.TotalPageCount) {
+        if ( _searchField.levevlCaseArgs.Pager.TotalItemsCount==0) {
+            _searchField.levevlCaseArgs.Pager.PageNumber--;
             [_tableView tableViewDidFinishedLoadingWithMessage:@"沒有了哦..."];
             _tableView.reachedTheEnd  = YES;
+            self.list=[NSArray array];
+            [_tableView reloadData];
         } else {
+            if ([xml length]==0) {
+                [_tableView tableViewDidFinishedLoading];
+                _tableView.reachedTheEnd  = NO;
+                _searchField.levevlCaseArgs.Pager.PageNumber--;
+                WBInfoNoticeView *info=[WBInfoNoticeView infoNoticeInView:self.view title:@"服務沒有返回數據!"];
+                [info show];
+                return;
+            }
             [_tableView tableViewDidFinishedLoading];
             _tableView.reachedTheEnd  = NO;
             XmlParseHelper *parse=[[[XmlParseHelper alloc] initWithData:xml] autorelease];

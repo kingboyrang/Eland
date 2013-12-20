@@ -25,4 +25,6 @@
 -(NSMutableArray*)fillCategoryTreeNodes:(NSString*)parent;
 //取得户政府预约第一个子类别
 +(CaseCategory*)getHRFirstChildWithGuid:(NSString*)guid;
+//是否有子元素
++(BOOL)hasChildWithGuid:(NSString*)guid;
 @end

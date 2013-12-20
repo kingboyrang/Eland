@@ -156,4 +156,18 @@
     }
     return nil;
 }
++(BOOL)hasChildWithGuid:(NSString*)guid{
+    
+    NSArray *arr=[CacheHelper readCacheCaseCategorys];
+    if (arr==nil||[arr count]==0) {
+        return NO;
+    }
+    NSString *match=[NSString stringWithFormat:@"SELF.Parent =='%@'",guid];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:match];
+    NSArray *results = [arr filteredArrayUsingPredicate:predicate];
+    if (results&&[results count]>0) {
+        return YES;
+    }
+    return NO;
+}
 @end

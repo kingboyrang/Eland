@@ -43,6 +43,8 @@
     [super viewDidLoad];
     
     CGRect rect=self.view.bounds;
+    rect.size.height-=44*2+(self.isPad?58:40);
+    
     UICollectionViewFlowLayout *flowlayout=[[UICollectionViewFlowLayout alloc] init];
     CGFloat h=204*(DeviceWidth/3.0)/240;
     flowlayout.itemSize=CGSizeMake(DeviceWidth/3.0, h);
@@ -56,7 +58,7 @@
     _collectionView.delegate=self;
     _collectionView.bounces=NO;
     if (self.isPad) {
-        _collectionView.scrollEnabled=NO;
+        //_collectionView.scrollEnabled=NO;
     }
     
     _collectionView.showsVerticalScrollIndicator=NO;
@@ -76,6 +78,7 @@
     [self loadRepairItem];
 }
 -(void)updateSourceUI:(NSArray*)arr{
+    
     NSMutableArray *_source=[NSMutableArray arrayWithArray:arr];
     if (_source.count%3!=0) {
         int len=(_source.count/3+1)*3-_source.count;
@@ -89,17 +92,22 @@
     CGFloat h=flowlayout.itemSize.height;
     
     int total=_source.count/3;
-    CGFloat surplus=DeviceHeight-total*h-44*3;
-    int row=surplus/h>1?(surplus/h+1):surplus/h;
-    if (surplus<h) {
-        row=1;
-    }
-    for (int i=1; i<=row*3; i++) {
-        CaseSetting *entity=[[CaseSetting alloc] init];
-        [_source addObject:entity];
-        [entity release];
+    CGFloat surplus=_collectionView.frame.size.height-total*h;
+    if (surplus>0) {
+        int row=surplus/h>1?(surplus/h+1):surplus/h;
+        if (surplus<h) {
+            row=1;
+        }
+        for (int i=1; i<=row*3; i++) {
+            CaseSetting *entity=[[CaseSetting alloc] init];
+            [_source addObject:entity];
+            [entity release];
+        }
     }
     self.sourceData=_source;
+    total=_source.count/3;
+
+    _collectionView.contentSize=CGSizeMake(self.view.bounds.size.width, total*h);
     [_collectionView reloadData];
     
    

@@ -126,10 +126,7 @@
     return [regExPredicate evaluateWithObject:[self lowercaseString]];
 }
 -(BOOL)startWithString:(NSString*)search{
-    NSString *emailRegEx =[NSString stringWithFormat:@"^%@",search];
-    NSPredicate *regExPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegEx];
-    return [regExPredicate evaluateWithObject:[self lowercaseString]];
-
+    return [self hasPrefix:search];
 }
 - (NSString *) escapeHTML{
 	NSMutableString *s = [NSMutableString string];

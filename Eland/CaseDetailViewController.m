@@ -88,11 +88,53 @@
     }];
 }
 -(void)updateSoureData{
-    NSMutableArray *arr=[NSMutableArray array];
+    NSMutableArray *applicantSource=[NSMutableArray array];
+    if (self.entityCase) {
+        NSString *memo=@"";
+        if (self.entityCase.Applicant) {
+            if (self.entityCase.Applicant.Nick&&[self.entityCase.Applicant.Nick length]>0) {
+                memo=self.entityCase.Applicant.Nick;
+            }
+        }
+        TKShowLabelLabelCell *cell3=[[TKShowLabelLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        cell3.label.text=@"暱稱:";
+        cell3.rightlabel.text=memo;
+        [applicantSource addObject:cell3];
+        [cell3 release];
+        
+        TKShowLabelLabelCell *cell4=[[TKShowLabelLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        cell4.label.text=@"辦理情形:";
+        cell4.rightlabel.text=[self.entityCase HandlerMemo];
+        [applicantSource addObject:cell4];
+        [cell4 release];
+        
+        TKShowLabelLabelCell *cell=[[TKShowLabelLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        cell.label.text=@"狀態:";
+        cell.rightlabel.text=[self.entityCase StatusText];
+        cell.rightlabel.textColor=[UIColor redColor];
+        [applicantSource addObject:cell];
+        [cell release];
+        
+        TKShowLabelLabelCell *cell1=[[TKShowLabelLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        cell1.label.text=@"項目分類:";
+        cell1.rightlabel.text=[self.entityCase CaseCagegoryName];
+        [applicantSource addObject:cell1];
+        [cell1 release];
+       
+        TKShowLabelLabelCell *cell2=[[TKShowLabelLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        cell2.label.text=@"通報日期:";
+        cell2.rightlabel.text=[self.entityCase ApplyDateText];
+        [applicantSource addObject:cell2];
+        [cell2 release];
+
+    }
+    
+    
+    NSMutableArray *arr=[NSMutableArray arrayWithArray:applicantSource];
     NSString *content=@"";
     NSArray *fields=[self.entityCaseSetting sortFields];
     for (CaseSettingField *item in fields) {
-        
+        //NSLog(@"name=%@,label=%@,sort=%@\n",item.Name,item.Label,item.Sort);
         if ([item.Name startWithString:@"Note"]||[item.Name isEqualToString:@"LngLat"]) {
             continue;
         }

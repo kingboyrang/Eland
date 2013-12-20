@@ -11,6 +11,7 @@
 #import "CaseExtend.h"
 #import "CaseApplicant.h"
 #import "CaseImage.h"
+#import "CaseApproval.h"
 @interface Case : BasicModle
 @property(nonatomic,copy) NSString *ID;
 @property(nonatomic,copy) NSString *GUID;
@@ -29,8 +30,14 @@
 @property(nonatomic,copy) NSString *AppCode;
 @property(nonatomic,strong) CaseExtend *Extend;
 @property(nonatomic,strong) CaseApplicant *Applicant;
+@property(nonatomic,strong) CaseApproval *Approval;
 @property(nonatomic,strong) NSArray *Images;
 @property(nonatomic,strong) NSArray *ApprovalImages;
+
+@property(nonatomic,readonly) NSString *StatusText;//状态
+@property(nonatomic,readonly) NSString *CaseCagegoryName;//项目分类名称
+@property(nonatomic,readonly) NSString *ApplyDateText;//通报日期
+@property(nonatomic,readonly) NSString *HandlerMemo;//办理情形
 -(NSString*)XmlSerialize;
 +(Case*)xmlStringToCase:(NSString*)xml;
 -(NSString*)getFieldValue:(NSString*)propertyname;

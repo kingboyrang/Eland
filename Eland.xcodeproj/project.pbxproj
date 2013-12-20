@@ -237,6 +237,7 @@
 		01BBC1B41847180D000E070C /* TKCaseRadioCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BBC1B31847180D000E070C /* TKCaseRadioCell.m */; };
 		01BBC1B618473213000E070C /* HRFields.plist in Resources */ = {isa = PBXBuildFile; fileRef = 01BBC1B518473213000E070C /* HRFields.plist */; };
 		01BCBCE318459E1100C61350 /* TKCaseCalendarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BCBCE218459E1100C61350 /* TKCaseCalendarCell.m */; };
+		01BF9EA11864459000A9F9E5 /* CaseApproval.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF9EA01864458F00A9F9E5 /* CaseApproval.m */; };
 		01C1B9DF180F6E7B0023972E /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 01C1B9DD180F6E7B0023972E /* Default-Portrait@2x~ipad.png */; };
 		01C1B9E1180F6ED80023972E /* Default~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 01C1B9E0180F6ED80023972E /* Default~ipad.png */; };
 		01C1B9E3180F6FB20023972E /* Default~ipad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 01C1B9E2180F6FB20023972E /* Default~ipad@2x.png */; };
@@ -692,6 +693,8 @@
 		01BBC1B518473213000E070C /* HRFields.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HRFields.plist; sourceTree = "<group>"; };
 		01BCBCE118459E1100C61350 /* TKCaseCalendarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKCaseCalendarCell.h; sourceTree = "<group>"; };
 		01BCBCE218459E1100C61350 /* TKCaseCalendarCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKCaseCalendarCell.m; sourceTree = "<group>"; };
+		01BF9E9F1864458F00A9F9E5 /* CaseApproval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaseApproval.h; sourceTree = "<group>"; };
+		01BF9EA01864458F00A9F9E5 /* CaseApproval.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaseApproval.m; sourceTree = "<group>"; };
 		01C1B9DD180F6E7B0023972E /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
 		01C1B9E0180F6ED80023972E /* Default~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default~ipad.png"; sourceTree = "<group>"; };
 		01C1B9E2180F6FB20023972E /* Default~ipad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default~ipad@2x.png"; sourceTree = "<group>"; };
@@ -1010,6 +1013,8 @@
 				01C2EA79180B904000220F16 /* CaseSetting.m */,
 				01F3FCF118617297003EAE0D /* AdminURL.h */,
 				01F3FCF218617297003EAE0D /* AdminURL.m */,
+				01BF9E9F1864458F00A9F9E5 /* CaseApproval.h */,
+				01BF9EA01864458F00A9F9E5 /* CaseApproval.m */,
 			);
 			name = Modle;
 			sourceTree = "<group>";
@@ -2217,6 +2222,7 @@
 				01C4E9431857FDD6005A0871 /* TKCaseDropListCell.m in Sources */,
 				01C4E94618580011005A0871 /* CVUISelect.m in Sources */,
 				01F3FCF318617297003EAE0D /* AdminURL.m in Sources */,
+				01BF9EA11864459000A9F9E5 /* CaseApproval.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -63,6 +63,8 @@
 {
     [super viewDidLoad];
     
+    
+    
     _hrType=-1;
     _prvHrTypeCount=0;
     

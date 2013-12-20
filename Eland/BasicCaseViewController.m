@@ -22,6 +22,7 @@
 #import "TKCaseCalendarCell.h"
 #import "TKCaseRadioCell.h"
 #import "TKCaseDropListCell.h"
+#import "CaseCategoryHelper.h"
 @interface BasicCaseViewController ()
 -(void)buttonOpenURL:(id)sender;
 @end
@@ -45,21 +46,24 @@
 }
 -(NSMutableArray*)CaseCategoryAndCityCells:(CaseSetting*)entity{
     NSMutableArray *result=[NSMutableArray array];
+    BOOL boo=[CaseCategoryHelper hasChildWithGuid:entity.GUID];
+    if (boo) {
+        TKCaseLabelCell *cell1=[[[TKCaseLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+        [cell1 setLabelName:@"案件分類:" required:NO];
+        TKCaseTextFieldCell *cell2=[[[TKCaseTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+        UIImage *img=[UIImage imageNamed:@"Open.png"];
+        UIImageView *imageView=[[[UIImageView alloc] initWithImage:img] autorelease];
+        cell2.required=NO;
+        cell2.field.enabled=NO;
+        cell2.field.rightView=imageView;
+        cell2.field.rightViewMode=UITextFieldViewModeAlways;
+        cell2.field.placeholder=@"請選擇案件分類";
+        cell2.LabelName=@"CaseSettingGuid";
+        
+        [result addObject:cell1];
+        [result addObject:cell2];
+    }
     
-    TKCaseLabelCell *cell1=[[[TKCaseLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-    [cell1 setLabelName:@"案件分類:" required:NO];
-    TKCaseTextFieldCell *cell2=[[[TKCaseTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-    UIImage *img=[UIImage imageNamed:@"Open.png"];
-    UIImageView *imageView=[[[UIImageView alloc] initWithImage:img] autorelease];
-    cell2.required=NO;
-    cell2.field.enabled=NO;
-    cell2.field.rightView=imageView;
-    cell2.field.rightViewMode=UITextFieldViewModeAlways;
-    cell2.field.placeholder=@"請選擇案件分類";
-    cell2.LabelName=@"CaseSettingGuid";
-    
-    [result addObject:cell1];
-    [result addObject:cell2];
     
     if (entity.showCityDown) {
         BOOL boo=[entity isRequiredShowCity];
