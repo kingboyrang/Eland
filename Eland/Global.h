@@ -22,8 +22,13 @@
 //数据源
 #define DataWebPath [[NSBundle mainBundle] pathForResource:@"Config" ofType:@"plist"]
 #define DataServicesSource [NSArray arrayWithContentsOfFile:DataWebPath]
-#define DataCaseUrlPre [DataServicesSource objectAtIndex:0] 
-#define DataPushUrlPre [DataServicesSource objectAtIndex:1]
+#define DataCaseUrlPre @"http://cir.e-land.gov.tw:8080/admin2/" 
+#define DataPushUrlPre @"http://cir.e-land.gov.tw:8080/pushs/"
+
+//#define DataCaseUrlPre [DataServicesSource objectAtIndex:0]
+//#define DataPushUrlPre [DataServicesSource objectAtIndex:1]
+
+//
 
 //设备
 #define DeviceIsPad UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad

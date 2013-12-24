@@ -34,6 +34,7 @@
 #import "TKCaseLightNumberCell.h"
 #import "TKCaseRadioCell.h"
 #import "TKCaseDropListCell.h"
+#import "AlertHelper.h"
 @interface CaseAddViewController ()
 -(void)loadingFormFields;
 -(void)updateFormUI;
@@ -389,8 +390,8 @@
     ASIFormDataRequest *request=[ASIFormDataRequest requestWithURL:[NSURL URLWithString:AddCaseURL]];
     [request setPostValue:[_caseArgs XmlSerialize] forKey:@"xml"];
     [request setRequestMethod:@"POST"];
+    [request setTimeOutSeconds:60.0];//表示30秒请求超时
     [request setCompletionBlock:^{
-        //NSLog(@"xml=%@",request.responseString);
         if (request.responseStatusCode==200) {
             NSString *xml=[request.responseString stringByReplacingOccurrencesOfString:@"xmlns=\"CaseAddResult\"" withString:@""];
             XmlParseHelper *parse=[[[XmlParseHelper alloc] initWithData:xml] autorelease];
@@ -404,7 +405,6 @@
         [ZAActivityBar showErrorWithStatus:@"送出失敗!" forAction:@"caseAdd"];
     }];
     [request setFailedBlock:^{
-        //NSLog(@"error=%@",request.error.description);
         [ZAActivityBar showErrorWithStatus:@"送出失敗!" forAction:@"caseAdd"];
     }];
     [request startAsynchronous];

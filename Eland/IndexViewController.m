@@ -14,6 +14,7 @@
 @interface IndexViewController (){
     MenuBar *_menuBar;
     CaseSearchViewController *_caseSearch;
+    
 }
 - (void)addSearch:(int)tag;
 @end
@@ -23,6 +24,7 @@
     [super dealloc];
     [_menuBar release],_menuBar=nil;
     [_caseSearch release],_caseSearch=nil;
+   
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

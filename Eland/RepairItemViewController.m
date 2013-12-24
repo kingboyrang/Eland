@@ -18,7 +18,7 @@
 #import "AlertHelper.h"
 #import "MainViewController.h"
 @interface RepairItemViewController ()
--(void)loadRepairItem;
+
 -(void)updateSourceUI:(NSArray*)arr;
 @end
 

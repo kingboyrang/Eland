@@ -57,6 +57,7 @@
         }];
     }else{
         self.listData=[CaseCityHelper sourceFromArray:arr];
+        [_tableView reloadData];
     }
 	// Do any additional setup after loading the view.
 }
