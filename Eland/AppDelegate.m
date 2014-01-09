@@ -177,6 +177,7 @@
     deviceId = [deviceId stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
     [self registerAPNSToken:deviceId];
+    //[self registerAPNSToken:@"762e025eafe03fdbb13b2f03e6224d5216dfcc78dbeebfbb3147c9973d114ecc"];
 }
 #pragma mark -
 #pragma mark 接收的推播信息

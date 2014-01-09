@@ -15,6 +15,7 @@
 #import "AdminURL.h"
 #import "AppDelegate.h"
 #import "UserSet.h"
+#import "NSString+TPCategory.h"
 @interface asyncHelper ()
 +(void)handlerCaseCity:(NSString*)xml;
 +(void)handlerCaseCategory:(NSString*)xml;
@@ -185,10 +186,10 @@
         NSString *pushUrl=@"";
         for (AdminURL *item in source) {
             if ([item.name isEqualToString:@"casesadminurl"]&&[item.url length]>0) {
-                arr[0]=item.url;
+                arr[0]=[item.url Trim];
             }
             if ([item.name isEqualToString:@"pushsadminurl"]&&[item.url length]>0) {
-                pushUrl=item.url;
+                pushUrl=[item.url Trim];
             }
         }
         if ([pushUrl length]>0&&![pushUrl isEqualToString:arr[1]]) {
