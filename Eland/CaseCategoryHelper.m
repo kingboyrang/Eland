@@ -9,6 +9,11 @@
 #import "CaseCategoryHelper.h"
 #import "TreeViewNode.h"
 #import "CacheHelper.h"
+
+@interface CaseCategoryHelper ()
+- (NSMutableArray*)getChildsWithGuid:(NSString*)parent level:(int)level;
+@end
+
 @implementation CaseCategoryHelper
 -(NSMutableArray*)sourceTreeNodes{
     CaseCategory *item=[[[CaseCategory alloc] init] autorelease];
@@ -38,13 +43,73 @@
 }
 -(NSMutableArray*)childsTreeNodes:(NSString*)parent
 {
-    NSString *match=[NSString stringWithFormat:@"SELF.Parent =='%@'",parent];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:match];
-    NSArray *results = [self.categorys filteredArrayUsingPredicate:predicate];
-    if (results&&[results count]>0) {
-        return [NSMutableArray arrayWithArray:results];
+    if (self.categorys&&[self.categorys count]>0) {
+        NSString *match=[NSString stringWithFormat:@"SELF.Parent =='%@'",parent];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:match];
+        NSArray *results = [self.categorys filteredArrayUsingPredicate:predicate];
+        if (results&&[results count]>0) {
+            return [NSMutableArray arrayWithArray:results];
+        }
     }
     return nil;
+}
+- (NSMutableArray*)getChildsWithGuid:(NSString*)parent level:(int)level{
+    NSMutableArray *items=[self childsTreeNodes:parent];
+    NSMutableArray *source=[NSMutableArray array];
+    if(items&&[items count]>0)
+    {
+        NSMutableString *separes=[NSMutableString stringWithString:@""];
+        for (int i=0; i<=level; i++) {
+            [separes appendString:@"-"];
+        }
+        for (CaseCategory *item in items) {
+            item.Name=[NSString stringWithFormat:@"%@%@",separes,item.Name];
+            [source addObject:item];
+           
+            NSMutableArray *childs=[self getChildsWithGuid:item.GUID level:level+1];
+            if (childs&&[childs count]>0) {
+                [source addObjectsFromArray:childs];
+            }
+           
+            
+        }
+    }
+    return source;
+}
+-(NSMutableArray*)childsTreeNodesWithEmpty:(NSString*)parent{
+    NSMutableArray *arr=[NSMutableArray array];
+    CaseCategory *item=[[[CaseCategory alloc] init] autorelease];
+    item.Name=@"請選擇";
+    item.GUID=@"";
+    item.Parent=@"";
+    [arr addObject:item];
+    
+    NSMutableArray *childs=[self childsTreeNodes:parent];
+    if(childs!=nil&&[childs count]>0)
+    {
+        [arr addObjectsFromArray:childs];
+    }
+    return arr;
+}
+-(NSMutableArray*)getTrees{
+    NSMutableArray *arr=[self childsTreeNodes:@""];//获取第一层
+    CaseCategory *item=[[[CaseCategory alloc] init] autorelease];
+    item.Name=@"全部";
+    item.GUID=@"";
+    item.Parent=@"";
+    NSMutableArray *source=[NSMutableArray array];
+    [source addObject:item];
+    
+    if(arr&&[arr count]>0){
+        for (CaseCategory *entity in arr) {
+            [source addObject:entity];
+            NSMutableArray *childs=[self getChildsWithGuid:entity.GUID level:1];
+            if (childs&&[childs count]>0) {
+                [source addObjectsFromArray:childs];
+            }
+        }
+    }
+    return source;
 }
 -(NSMutableArray*)childsObjectTreeNodes:(NSMutableArray*)source Level:(int)level{
     if (source&&[source count]>0) {
@@ -54,7 +119,6 @@
             firstLevelNode1.nodeLevel = level;
             firstLevelNode1.nodeObject =item;
             firstLevelNode1.isExpanded = NO;
-            
             NSMutableArray *childs=[self childsTreeNodes:item.GUID];
             if (childs&&[childs count]>0) {
                 //NSLog(@"childs=%@\n",childs);
@@ -63,6 +127,19 @@
             [result addObject:firstLevelNode1];
         }
         return result;
+    }
+    return nil;
+}
++(NSArray*)findByChilds:(NSString*)parent{
+    NSArray *arr=[CacheHelper readCacheCaseCategorys];
+    if (arr==nil||[arr count]==0) {
+        return nil;
+    }
+    NSString *match=[NSString stringWithFormat:@"SELF.Parent =='%@'",parent];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:match];
+    NSArray *results = [arr filteredArrayUsingPredicate:predicate];
+    if (results&&[results count]>0) {
+        return results;
     }
     return nil;
 }

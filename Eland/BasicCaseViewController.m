@@ -23,6 +23,8 @@
 #import "TKCaseRadioCell.h"
 #import "TKCaseDropListCell.h"
 #import "CaseCategoryHelper.h"
+#import "TKCaseDownListCell.h"
+#import "DownListViewController.h"
 @interface BasicCaseViewController ()
 -(void)buttonOpenURL:(id)sender;
 @end
@@ -50,6 +52,14 @@
     if (boo) {
         TKCaseLabelCell *cell1=[[[TKCaseLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
         [cell1 setLabelName:@"案件分類:" required:NO];
+        
+        TKCaseDownListCell *cell2=[[[TKCaseDownListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+        cell2.LabelName=@"CaseSettingGuid";
+        cell2.required=NO;
+        cell2.ParentGUID=entity.GUID;
+        cell2.delegate=self;
+        [cell2 fillNodesArray];
+        /***
         TKCaseTextFieldCell *cell2=[[[TKCaseTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
         UIImage *img=[UIImage imageNamed:@"Open.png"];
         UIImageView *imageView=[[[UIImageView alloc] initWithImage:img] autorelease];
@@ -59,6 +69,7 @@
         cell2.field.rightViewMode=UITextFieldViewModeAlways;
         cell2.field.placeholder=@"請選擇案件分類";
         cell2.LabelName=@"CaseSettingGuid";
+         ***/
         
         [result addObject:cell1];
         [result addObject:cell2];
@@ -478,9 +489,10 @@
 }
 -(void)buttonCaseCategoryClick:(id)sender CaseCategoryGUID:(NSString*)guid{
     if (!popoverCaseCategory) {
-        CaseCategoryViewController *controller=[[[CaseCategoryViewController alloc] init] autorelease];
+        DownListViewController *controller=[[[DownListViewController alloc] init] autorelease];
         controller.title=@"案件分類";
         controller.delegate=self;
+        controller.popoverControl=sender;
         controller.ParentGUID=guid;
         if ([guid isEqualToString:@"HR"]) {
             [controller setSelectedCategoryIndex:0];

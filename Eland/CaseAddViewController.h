@@ -22,6 +22,7 @@
 @property(nonatomic,strong) CaseSetting *Entity;
 @property(nonatomic,strong) NSMutableArray *cells;
 //案件分类
+//-(void)selectedCaseCategory:(CaseCategory*)category;
 -(void)selectedCaseCategory:(CaseCategory*)category;
 //鄉鎮市別
 -(void)selectedVillageTown:(CaseCity*)city;

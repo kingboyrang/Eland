@@ -171,7 +171,9 @@
 {
     return _contentView.tint;
 }
-
+- (UIViewController*)popupController{
+    return _viewController;
+}
 #pragma mark - View lifecycle
 
 -(void)setupView

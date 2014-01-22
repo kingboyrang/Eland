@@ -39,4 +39,5 @@
 -(void)setDataSourceForArray:(NSArray*)source dataTextName:(NSString*)textName dataValueName:(NSString*)valueName;
 -(void)setDataSourceForDictionary:(NSDictionary*)source;
 -(void)setDataSourceForDictionary:(NSDictionary*)source dataTextName:(NSString*)textName dataValueName:(NSString*)valueName;
+-(void)unBindSource;
 @end

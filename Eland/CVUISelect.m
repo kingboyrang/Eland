@@ -10,9 +10,7 @@
 
 @interface CVUISelect()
 -(void)findByName:(NSString*)search searchName:(NSString*)name;
--(void)unBindSource;
 @end
-
 
 @implementation CVUISelect
 @synthesize popoverView,picker;
@@ -118,7 +116,6 @@
       self.itemData=nil;
       self.popoverText.popoverTextField.text=@"";
     }
-    
 }
 #pragma mark -
 #pragma mark UIPickerView DataSource Methods

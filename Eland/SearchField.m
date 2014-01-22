@@ -14,6 +14,7 @@
 #import "VillageTownViewController.h"
 #import "CaseCategoryViewController.h"
 #import "TKSearchEmptyCell.h"
+#import "DownListViewController.h"
 @implementation SearchField
 @synthesize cells=_cells;
 @synthesize levevlCaseArgs=_levevlCaseArgs;
@@ -129,12 +130,20 @@
     TKSearchDoubleFieldCell *cell=self.cells[1];
     if (cell.leftField==sender) {
         if (!popoverCategory) {
+            DownListViewController *controller=[[[DownListViewController alloc] init] autorelease];
+            controller.delegate=self;
+            popoverCategory = [[FPPopoverController alloc] initWithViewController:controller];
+            popoverCategory.tint=FPPopoverLightGrayTint;
+            popoverCategory.contentSize = CGSizeMake(300, 300);
+            popoverCategory.arrowDirection = FPPopoverArrowDirectionAny;
+            /***
             CaseCategoryViewController *controller=[[[CaseCategoryViewController alloc] init] autorelease];
             controller.delegate=self;
             popoverCategory = [[FPPopoverController alloc] initWithViewController:controller];
             popoverCategory.tint=FPPopoverLightGrayTint;
             popoverCategory.contentSize = CGSizeMake(300, 300);
             popoverCategory.arrowDirection = FPPopoverArrowDirectionAny;
+             ***/
         }
         [popoverCategory presentPopoverFromView:view];
     }

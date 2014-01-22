@@ -75,14 +75,14 @@
             UITableViewCell *cell=[_tableView cellForRowAtIndexPath:indexPath];
             cell.accessoryType=UITableViewCellAccessoryCheckmark;
             
-             NSLog(@"bb");
+             
             //NSIndexPath *indexPath1=[NSIndexPath indexPathForRow:indentation inSection:0];
             //UITableViewCell *cell1=[_tableView cellForRowAtIndexPath:indexPath1];
             //cell1.accessoryType=UITableViewCellAccessoryNone;
         }
     }
     indentation=index;
-    NSLog(@"aa");
+    
 }
 -(void)showLoading{
     HUD = [[MBProgressHUD alloc] initWithView:self.view];

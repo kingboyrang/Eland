@@ -14,6 +14,9 @@
 -(NSMutableArray*)childsTreeNodes:(NSString*)parent;
 -(NSMutableArray*)childsObjectTreeNodes:(NSMutableArray*)source Level:(int)level;
 
+-(NSMutableArray*)childsTreeNodesWithEmpty:(NSString*)parent;
+-(NSMutableArray*)getTrees;
+
 -(NSMutableArray*)sourceTreeNodes;
 +(NSString*)getCategoryName:(NSString*)guid;
 //获取父类别
@@ -23,6 +26,9 @@
 //子类别
 -(CaseCategory*)getCaseCategoryWithGuid:(NSString*)guid;
 -(NSMutableArray*)fillCategoryTreeNodes:(NSString*)parent;
+
+//取得子元素集合 
++(NSArray*)findByChilds:(NSString*)parent;
 //取得户政府预约第一个子类别
 +(CaseCategory*)getHRFirstChildWithGuid:(NSString*)guid;
 //是否有子元素

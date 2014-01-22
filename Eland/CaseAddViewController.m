@@ -35,6 +35,7 @@
 #import "TKCaseRadioCell.h"
 #import "TKCaseDropListCell.h"
 #import "AlertHelper.h"
+#import "TKCaseDownListCell.h"
 @interface CaseAddViewController ()
 -(void)loadingFormFields;
 -(void)updateFormUI;
@@ -73,6 +74,8 @@
     _caseArgs.Extend=[[CaseExtend alloc] init];
     _caseArgs.Applicant=[[CaseApplicant alloc] init];
     _caseArgs.CaseSettingGuid=self.Entity.GUID;
+    _caseArgs.CaseCagegory1=@"";
+    _caseArgs.CaseCagegory2=@"";
     _caseArgs.CityGuid=@"宜蘭縣";
    
     
@@ -321,6 +324,11 @@
         return;
     }
     for (id item in self.cells) {
+        if ([item isKindOfClass:[TKCaseDownListCell class]]) {//案件分类
+             TKCaseDownListCell *cell=(TKCaseDownListCell*)item;
+            _caseArgs.CaseCagegory1=[cell.field1 value];
+            _caseArgs.CaseCagegory2=[cell.field2 value];
+        }
         if ([item isKindOfClass:[TKCaseTextFieldCell class]]) {//单行文本
             TKCaseTextFieldCell *cell=(TKCaseTextFieldCell*)item;
             if ([cell.LabelName isEqualToString:@"CaseSettingGuid"]||[cell.LabelName isEqualToString:@"CityGuid"]||[cell.LabelName isEqualToString:@"LngLat"]) {
@@ -362,6 +370,7 @@
         }
         
     }
+    
     UserSet *user=[UserSet sharedInstance];
     if ([_caseArgs.Applicant.Name isEqual:[NSNull null]]||[_caseArgs.Applicant.Name length]==0) {
         _caseArgs.Applicant.Name=user.Name;
@@ -409,9 +418,31 @@
     }];
     [request startAsynchronous];
 }
-
+-(void)selectedCaseCategory:(CaseCategory*)category{
+    
+    //户政预约
+    if ([self.Entity.GUID isEqualToString:@"HR"]) {
+        if ([category.Name isEqualToString:@"出生登記"]&&_hrType!=1) {
+            _hrType=1;
+            [self updateCaseCityShowWithType:1];
+            [self insertAndRemoveRows];
+        }
+        if ([category.Name isEqualToString:@"結婚登記"]&&_hrType!=2) {
+            _hrType=2;
+            [self updateCaseCityShowWithType:2];
+            [self insertAndRemoveRows];
+        }
+        if ([category.Name isEqualToString:@"死亡登記"]&&_hrType!=3) {
+            _hrType=3;
+            [self updateCaseCityShowWithType:3];
+            [self insertAndRemoveRows];
+        }
+    }
+}
+  /***
 -(void)selectedCaseCategory:(CaseCategory*)category{
     [self hidePopoverCaseCategory];
+  
     if ([category.Parent length]==0) {
         _caseArgs.CaseSettingGuid=category.GUID;
         _caseArgs.CaseCagegory1=@"";
@@ -428,10 +459,10 @@
             _caseArgs.CaseCagegory2=category.GUID;
         }
     }
-    TKCaseTextFieldCell *cell=self.cells[1];
-    cell.field.text=category.Name;
+    
+    TKCaseDownListCell *cell=self.cells[1];
     if (cell.required) {
-        [cell removeVerify];
+       // [cell removeVerify];
     }
     //户政预约
     if ([self.Entity.GUID isEqualToString:@"HR"]) {
@@ -453,6 +484,7 @@
     }
     
 }
+    ***/
 -(void)updateCaseCityShowWithType:(int)type{
     TKCaseLabelCell *cell=self.cells[2];
     if (type==1) {
@@ -543,6 +575,9 @@
            cell.label.frame=r;
            return [cell.label optimumSize].height+5+9;
        }
+    if ([self.cells[indexPath.row] isKindOfClass:[TKCaseDownListCell class]]) {
+        return 102.0;
+    }
     if ([self.cells[indexPath.row] isKindOfClass:[TKCaseLightNumberCell class]]) {
         return 40.0;
     }
@@ -571,8 +606,8 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
         if (indexPath.row==1) {
-            TKCaseTextFieldCell *cell=self.cells[1];
-            [self buttonCaseCategoryClick:cell CaseCategoryGUID:self.Entity.GUID];
+            //TKCaseDownListCell *cell=self.cells[1];
+            //[self buttonCaseCategoryClick:cell.field1 CaseCategoryGUID:self.Entity.GUID];
         }
         if (indexPath.row==3) {
             if (self.Entity.showCityDown) {

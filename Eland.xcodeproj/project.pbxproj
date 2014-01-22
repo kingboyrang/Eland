@@ -83,6 +83,8 @@
 		0151213A180D30B400594D95 /* UIBarButtonItemArrowLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 01512136180D30B400594D95 /* UIBarButtonItemArrowLeft@2x.png */; };
 		0151213B180D30B400594D95 /* UIBarButtonItemArrowRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 01512137180D30B400594D95 /* UIBarButtonItemArrowRight.png */; };
 		0151213C180D30B400594D95 /* UIBarButtonItemArrowRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 01512138180D30B400594D95 /* UIBarButtonItemArrowRight@2x.png */; };
+		017F2C48188E53A00067E4C6 /* DownListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 017F2C47188E53A00067E4C6 /* DownListViewController.m */; };
+		017F2C4B188E64560067E4C6 /* TKCaseDownListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 017F2C4A188E64550067E4C6 /* TKCaseDownListCell.m */; };
 		018988E7186055260073B253 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 018988E6186055260073B253 /* Config.plist */; };
 		0191799B17FAAFAF000188BD /* btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 0191799A17FAAFAF000188BD /* btn.png */; };
 		0191799E17FAB5B9000188BD /* MenuBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0191799D17FAB5B8000188BD /* MenuBar.m */; };
@@ -443,6 +445,10 @@
 		01512136180D30B400594D95 /* UIBarButtonItemArrowLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UIBarButtonItemArrowLeft@2x.png"; sourceTree = "<group>"; };
 		01512137180D30B400594D95 /* UIBarButtonItemArrowRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UIBarButtonItemArrowRight.png; sourceTree = "<group>"; };
 		01512138180D30B400594D95 /* UIBarButtonItemArrowRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UIBarButtonItemArrowRight@2x.png"; sourceTree = "<group>"; };
+		017F2C46188E53A00067E4C6 /* DownListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownListViewController.h; sourceTree = "<group>"; };
+		017F2C47188E53A00067E4C6 /* DownListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownListViewController.m; sourceTree = "<group>"; };
+		017F2C49188E64550067E4C6 /* TKCaseDownListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKCaseDownListCell.h; sourceTree = "<group>"; };
+		017F2C4A188E64550067E4C6 /* TKCaseDownListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKCaseDownListCell.m; sourceTree = "<group>"; };
 		018988E6186055260073B253 /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		0191799A17FAAFAF000188BD /* btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn.png; sourceTree = "<group>"; };
 		0191799C17FAB5B8000188BD /* MenuBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuBar.h; sourceTree = "<group>"; };
@@ -1504,6 +1510,8 @@
 				01BBC1B31847180D000E070C /* TKCaseRadioCell.m */,
 				01C4E9411857FDD6005A0871 /* TKCaseDropListCell.h */,
 				01C4E9421857FDD6005A0871 /* TKCaseDropListCell.m */,
+				017F2C49188E64550067E4C6 /* TKCaseDownListCell.h */,
+				017F2C4A188E64550067E4C6 /* TKCaseDownListCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -1725,6 +1733,8 @@
 				01BB48E317FE5CE800928E0B /* VillageTownViewController.m */,
 				0120FDD517FE9296004B12B8 /* CaseCategoryViewController.h */,
 				0120FDD617FE9296004B12B8 /* CaseCategoryViewController.m */,
+				017F2C46188E53A00067E4C6 /* DownListViewController.h */,
+				017F2C47188E53A00067E4C6 /* DownListViewController.m */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -2223,6 +2233,8 @@
 				01C4E94618580011005A0871 /* CVUISelect.m in Sources */,
 				01F3FCF318617297003EAE0D /* AdminURL.m in Sources */,
 				01BF9EA11864459000A9F9E5 /* CaseApproval.m in Sources */,
+				017F2C48188E53A00067E4C6 /* DownListViewController.m in Sources */,
+				017F2C4B188E64560067E4C6 /* TKCaseDownListCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2265,7 +2277,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AFAD1E1F-F07A-4C04-9879-DD6C044EC22A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9A546CAF-0445-4DA4-9273-52FD2C3F234E";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2289,7 +2301,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AFAD1E1F-F07A-4C04-9879-DD6C044EC22A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9A546CAF-0445-4DA4-9273-52FD2C3F234E";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -2308,7 +2320,7 @@
 				INFOPLIST_FILE = "Eland/Eland-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AFAD1E1F-F07A-4C04-9879-DD6C044EC22A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9A546CAF-0445-4DA4-9273-52FD2C3F234E";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2326,7 +2338,7 @@
 				INFOPLIST_FILE = "Eland/Eland-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AFAD1E1F-F07A-4C04-9879-DD6C044EC22A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9A546CAF-0445-4DA4-9273-52FD2C3F234E";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2350,8 +2362,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "B67C00A9-05D7-4345-A05E-4E5E67859B45";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B67C00A9-05D7-4345-A05E-4E5E67859B45";
+				PROVISIONING_PROFILE = "514535C9-CC30-4A5F-8805-1731603797B9";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "514535C9-CC30-4A5F-8805-1731603797B9";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -2370,8 +2382,8 @@
 				INFOPLIST_FILE = "Eland/Eland-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "B67C00A9-05D7-4345-A05E-4E5E67859B45";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B67C00A9-05D7-4345-A05E-4E5E67859B45";
+				PROVISIONING_PROFILE = "514535C9-CC30-4A5F-8805-1731603797B9";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "514535C9-CC30-4A5F-8805-1731603797B9";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

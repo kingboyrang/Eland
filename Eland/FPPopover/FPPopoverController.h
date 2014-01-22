@@ -40,6 +40,7 @@
  **/
 
 /** @brief allow reading in order to integrate other open-source **/
+@property(nonatomic,readonly) UIViewController* popupController;
 @property(nonatomic,readonly) FPTouchView* touchView;
 @property(nonatomic,readonly) FPPopoverView* contentView;
 
