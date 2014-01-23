@@ -274,6 +274,15 @@
 //验证
 -(BOOL)formValidate{
     for (id  item in self.cells) {
+        if ([item isKindOfClass:[TKCaseDownListCell class]]) {//案件分类
+            TKCaseDownListCell *cell=(TKCaseDownListCell*)item;
+            if (cell.required&&!cell.hasValue) {
+                [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.cells indexOfObject:item] inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                [AlertHelper initWithTitle:@"提示" message:@"請選擇案件分類!"];
+                 return NO;
+            }
+        }
+        
         if ([item isKindOfClass:[TKCaseTextFieldCell class]]) {
             TKCaseTextFieldCell *cell=(TKCaseTextFieldCell*)item;
             if (cell.required&&!cell.hasValue) {
@@ -576,7 +585,11 @@
            return [cell.label optimumSize].height+5+9;
        }
     if ([self.cells[indexPath.row] isKindOfClass:[TKCaseDownListCell class]]) {
-        return 102.0;
+        TKCaseDownListCell *cell=(TKCaseDownListCell*)self.cells[indexPath.row];
+        if (cell.field2.hidden) {
+            return 44;
+        }
+        return 90.0;
     }
     if ([self.cells[indexPath.row] isKindOfClass:[TKCaseLightNumberCell class]]) {
         return 40.0;

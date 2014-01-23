@@ -53,6 +53,7 @@
     _field2.popoverText.popoverTextField.rightViewMode=UITextFieldViewModeAlways;
     _field2.popoverText.popoverTextField.placeholder=@"請選擇案件分類2";
 	[self.contentView addSubview:_field2];
+    _field2.hidden=YES;
     
     isLoad=NO;
     
@@ -63,6 +64,9 @@
 	return self;
 }
 - (BOOL)hasValue{
+    if ([_field1.value length]==0&&[_field2.value length]==0) {
+        return NO;
+    }
     return YES;
 }
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
@@ -76,14 +80,27 @@
             if ([_field1.value length]>0) {
                 NSArray *source=[CaseCategoryHelper findByChilds:_field1.value];
                 NSArray *results=[self objectsToDictionarys:source];
+                [self showSelect:results.count>0?NO:YES];
                 [_field2 setDataSourceForArray:results dataTextName:@"Name" dataValueName:@"GUID"];
             }else{
                 NSMutableArray *results=[NSMutableArray array];
                 [_field2 setDataSourceForArray:results dataTextName:@"Name" dataValueName:@"GUID"];
+                [self showSelect:YES];
             }
             [_field2 unBindSource];
         }
     }
+}
+//显示或隐藏层级
+- (void)showSelect:(BOOL)show{
+    _field2.hidden=show;
+    id v=[self superview];
+    while (![v isKindOfClass:[UITableView class]]) {
+        v=[v superview];
+    }
+    UITableView *tableView=(UITableView*)v;
+    NSIndexPath *indexPath=[tableView indexPathForCell:self];
+    [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
 }
 #pragma mark CVUISelectDelegate Methods
 -(void)closeSelect:(id)sender{
@@ -110,6 +127,10 @@
                source=[_helper childsTreeNodesWithEmpty:self.ParentGUID];//取得子项
             }
             NSArray *results=[self objectsToDictionarys:source];
+            //如果有子项，则必填
+            if ([results count]>0) {
+                self.required=YES;
+            }
             //绑定数据源
             [_field1 setDataSourceForArray:results dataTextName:@"Name" dataValueName:@"GUID"];
             [_field1 unBindSource];
