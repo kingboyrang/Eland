@@ -166,7 +166,8 @@
             return;
         }
         if (!self.hasNetwork) {
-            [self showNoNetworkNotice:nil];
+            [AlertHelper initWithTitle:@"提示" message:@"網絡連接發生異常,請檢查網絡連接."];
+            //[self showNoNetworkNotice:nil];
             return;
         }
         CaseAddViewController *controller=[[CaseAddViewController alloc] init];
