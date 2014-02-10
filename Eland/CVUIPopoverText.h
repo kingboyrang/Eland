@@ -13,9 +13,10 @@
 -(void)doneShowPopoverView:(id)sender senderView:(id)view;
 @end
 
-@interface CVUIPopoverText : UIView{
-@private UIButton *buttonTap;
-}
+@interface CVUIPopoverText : UIView
+
 @property(nonatomic,retain) UITextField *popoverTextField;
+@property(nonatomic,retain)  UIButton *buttonTap;
 @property(nonatomic,assign) id<CVUIPopoverTextDelegate> delegate;
+- (void)resetEventTap;
 @end

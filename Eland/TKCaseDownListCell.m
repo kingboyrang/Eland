@@ -17,6 +17,7 @@
 }
 - (NSArray*)objectsToDictionarys:(NSArray*)source;
 - (CaseCategory*)dictionaryToCaseCategory:(NSDictionary*)dic;
+- (void)showSelect:(BOOL)show;
 @end
 
 @implementation TKCaseDownListCell
@@ -30,11 +31,9 @@
     
     _field1 = [[CVUISelect alloc] initWithFrame:CGRectZero];
 	_field1.popoverText.popoverTextField.borderStyle=UITextBorderStyleRoundedRect;
-    _field1.popoverText.popoverTextField.contentVerticalAlignment=UIControlContentVerticalAlignmentCenter;
     _field1.popoverText.popoverTextField.font = [UIFont boldSystemFontOfSize:16.0];
     UIImage *img=[UIImage imageNamed:@"Open.png"];
     UIImageView *imageView=[[[UIImageView alloc] initWithImage:img] autorelease];
-    _field1.popoverText.popoverTextField.enabled=NO;
     _field1.popoverText.popoverTextField.rightView=imageView;
     _field1.popoverText.popoverTextField.rightViewMode=UITextFieldViewModeAlways;
     _field1.popoverText.popoverTextField.placeholder=@"請選擇案件分類1";
@@ -44,17 +43,15 @@
     
     _field2 = [[CVUISelect alloc] initWithFrame:CGRectZero];
 	_field2.popoverText.popoverTextField.borderStyle=UITextBorderStyleRoundedRect;
-    _field2.popoverText.popoverTextField.contentVerticalAlignment=UIControlContentVerticalAlignmentCenter;
     _field2.popoverText.popoverTextField.font = [UIFont boldSystemFontOfSize:16.0];
     UIImage *img1=[UIImage imageNamed:@"Open.png"];
     UIImageView *imageView1=[[[UIImageView alloc] initWithImage:img1] autorelease];
-    _field2.popoverText.popoverTextField.enabled=NO;
     _field2.popoverText.popoverTextField.rightView=imageView1;
     _field2.popoverText.popoverTextField.rightViewMode=UITextFieldViewModeAlways;
     _field2.popoverText.popoverTextField.placeholder=@"請選擇案件分類2";
 	[self.contentView addSubview:_field2];
     _field2.hidden=YES;
-    
+    _hasClilds=YES;
     isLoad=NO;
     
     return self;
@@ -72,28 +69,30 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
     if ([keyPath isEqualToString:@"text"]) {
         if (![[change objectForKey:@"new"] isEqualToString:[change objectForKey:@"old"]]) {
-            if (isLoad) {
+            if (isLoad) {//户政预约
                 if (self.delegate&&[self.delegate respondsToSelector:@selector(selectedCaseCategory:)]) {
                     [self.delegate performSelector:@selector(selectedCaseCategory:) withObject:[self dictionaryToCaseCategory:_field1.itemData]];
                 }
             }
+            BOOL boo=YES;
             if ([_field1.value length]>0) {
                 NSArray *source=[CaseCategoryHelper findByChilds:_field1.value];
                 NSArray *results=[self objectsToDictionarys:source];
-                [self showSelect:results.count>0?NO:YES];
+                boo=results.count>0?NO:YES;
                 [_field2 setDataSourceForArray:results dataTextName:@"Name" dataValueName:@"GUID"];
             }else{
                 NSMutableArray *results=[NSMutableArray array];
                 [_field2 setDataSourceForArray:results dataTextName:@"Name" dataValueName:@"GUID"];
-                [self showSelect:YES];
             }
             [_field2 unBindSource];
+            [self showSelect:boo];//显示或隐藏
         }
     }
 }
 //显示或隐藏层级
 - (void)showSelect:(BOOL)show{
     _field2.hidden=show;
+    _hasClilds=show;
     id v=[self superview];
     while (![v isKindOfClass:[UITableView class]]) {
         v=[v superview];
@@ -118,6 +117,7 @@
     CaseCategoryHelper *_helper=[[[CaseCategoryHelper alloc] init] autorelease];
     NSArray *arr=[CacheHelper readCacheCaseCategorys];
     if (arr&&[arr count]>0) {
+         
         _helper.categorys=[NSMutableArray arrayWithArray:arr];
         if (self.ParentGUID&&[self.ParentGUID length]>0) {
             NSArray *source;
@@ -136,9 +136,13 @@
             [_field1 unBindSource];
             
             if ([self.ParentGUID isEqualToString:@"HR"]){//设置选中项
-                [_field1 setIndex:0];
                 isLoad=YES;
+                [_field1 setIndex:0];
             }
+        }
+        //判断第一层案件分类是否加载完成
+        if (self.delegate&&[self.delegate respondsToSelector:@selector(finishLoadCategory)]) {
+            [self.delegate performSelector:@selector(finishLoadCategory)];
         }
     }else{
         [asyncHelper asyncLoadCaseCategory:^(NSArray *result) {
@@ -155,6 +159,10 @@
         //绑定数据源
         [_field1 setDataSourceForArray:results dataTextName:@"Name" dataValueName:@"GUID"];
         [_field1 unBindSource];
+    }
+    //判断第一层案件分类是否加载完成
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(finishLoadCategory)]) {
+        [self.delegate performSelector:@selector(finishLoadCategory)];
     }
 }
 - (NSArray*)objectsToDictionarys:(NSArray*)source{

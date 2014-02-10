@@ -58,7 +58,7 @@
         cell2.required=NO;
         cell2.ParentGUID=entity.GUID;
         cell2.delegate=self;
-        [cell2 fillNodesArray];
+        //[cell2 fillNodesArray];
         /***
         TKCaseTextFieldCell *cell2=[[[TKCaseTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
         UIImage *img=[UIImage imageNamed:@"Open.png"];

@@ -42,6 +42,8 @@
 {
     if (isNormal) {
         _rightLabel.textColor=[UIColor colorFromHexRGB:@"666666"];
+    }else{
+        _rightLabel.textColor=[UIColor redColor];
     }
     _rightLabel.text=title;
     

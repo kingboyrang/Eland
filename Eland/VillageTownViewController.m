@@ -16,6 +16,7 @@
 -(void)updateSourceData:(NSArray*)source;
 -(void)showLoading;
 -(void)hideLoading;
+- (NSArray*)filterSourceArray:(NSArray*)source;
 @end
 
 @implementation VillageTownViewController
@@ -56,10 +57,26 @@
             [self performSelectorOnMainThread:@selector(updateSourceData:) withObject:result waitUntilDone:NO];
         }];
     }else{
-        self.listData=[CaseCityHelper sourceFromArray:arr];
+        //self.listData=[CaseCityHelper sourceFromArray:arr];
+        self.listData=[self filterSourceArray:arr];
         [_tableView reloadData];
     }
 	// Do any additional setup after loading the view.
+}
+//排除宜蘭縣
+- (NSArray*)filterSourceArray:(NSArray*)source{
+    if (source&&[source count]>0) {
+        NSMutableArray *arr=[NSMutableArray arrayWithArray:source];
+        NSString *match=[NSString stringWithFormat:@"SELF.Name =='%@'",@"宜蘭縣"];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:match];
+        NSArray *results = [arr filteredArrayUsingPredicate:predicate];
+        if (results&&[results count]>0) {
+            int index=[arr indexOfObject:[results objectAtIndex:0]];
+            [arr removeObjectAtIndex:index];
+            return arr;
+        }
+    }
+    return source;
 }
 -(void)showLoading{
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
@@ -83,7 +100,8 @@
         hud.removeFromSuperViewOnHide = YES;
         [hud hide:YES afterDelay:3];
     }
-    self.listData=[CaseCityHelper sourceFromArray:source];
+    //self.listData=[CaseCityHelper sourceFromArray:source];
+    self.listData=[self filterSourceArray:source];
     [_tableView reloadData];
 }
 - (void)didReceiveMemoryWarning

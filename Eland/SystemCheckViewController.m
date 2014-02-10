@@ -13,6 +13,7 @@
 #import "NetWorkConnection.h"
 #import "TKCheckLabelCell.h"
 #import "TKCheckButtonCell.h"
+#import "ASIHTTPRequest.h"
 @interface SystemCheckViewController ()
 - (void)buttonLocation:(id)sender;
 - (void)buttonCompare;
@@ -20,6 +21,9 @@
 - (void)addGpsSorce;
 - (void)checkNetConnection;
 - (void)checkGPSConnection;
+- (void)checkServiceWithURL:(NSString*)url completed:(void(^)(BOOL connection))finished;
+- (void)updateStatus1:(NSNumber*)num;
+- (void)updateStatus2:(NSNumber*)num;
 @end
 
 @implementation SystemCheckViewController
@@ -47,6 +51,43 @@
     [self checkGPSConnection];
     
 }
+- (void)checkServiceWithURL:(NSString*)url completed:(void(^)(BOOL connection))finished{
+    ASIHTTPRequest *request=[ASIHTTPRequest requestWithURL:[NSURL URLWithString:url]];
+    [request setCompletionBlock:^{
+        BOOL boo=NO;
+        if (request.responseStatusCode==200) {
+            boo=YES;
+        }
+        if (finished) {
+            finished(boo);
+        }
+    }];
+    [request setFailedBlock:^{
+        if (finished) {
+            finished(NO);
+        }
+    }];
+    [request startAsynchronous];
+}
+- (void)updateStatus1:(NSNumber*)num{
+    BOOL connection=[num boolValue];
+    TKCheckLabelCell *cell3=(TKCheckLabelCell*)self.checkcells[2];
+    [cell3 setLabelValue:connection?@"正常連接":@"連接異常" normal:connection];
+    
+    NSIndexPath *indexPath=[_tableView indexPathForCell:cell3];
+    [_tableView beginUpdates];
+    [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+    [_tableView endUpdates];
+}
+- (void)updateStatus2:(NSNumber*)num{
+    BOOL connection=[num boolValue];
+    TKCheckLabelCell *cell4=(TKCheckLabelCell*)self.checkcells[3];
+    [cell4 setLabelValue:connection?@"正常連接":@"連接異常" normal:connection];
+    NSIndexPath *indexPath=[_tableView indexPathForCell:cell4];
+    [_tableView beginUpdates];
+    [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+    [_tableView endUpdates];
+}
 - (void)checkNetConnection{
     BOOL is3G=[NetWorkConnection IsEnable3G];
     TKCheckLabelCell *cell1=(TKCheckLabelCell*)self.checkcells[0];
@@ -56,13 +97,24 @@
     TKCheckLabelCell *cell2=(TKCheckLabelCell*)self.checkcells[1];
     [cell2 setLabelValue:isConnection?@"正常連接":@"連接異常" normal:isConnection];
     
-    BOOL isEland=[NetWorkConnection isEnabledAccessURL:CityDownURL];
+    //BOOL isEland=[NetWorkConnection isEnabledAccessURL:CityDownURL];
     TKCheckLabelCell *cell3=(TKCheckLabelCell*)self.checkcells[2];
-    [cell3 setLabelValue:isEland?@"正常連接":@"連接異常" normal:isEland];
+    [cell3 setLabelValue:@"檢測中..." normal:NO];
     
-    BOOL isPush=[NetWorkConnection isEnabledAccessURL:PushWebserviceURL];
+    
+    [self checkServiceWithURL:AddCaseURL completed:^(BOOL connection) {
+        [self performSelectorOnMainThread:@selector(updateStatus1:) withObject:[NSNumber numberWithBool:connection] waitUntilDone:NO];
+    }];
+    
+    
+//    BOOL isPush=[NetWorkConnection isEnabledAccessURL:PushWebserviceURL];
     TKCheckLabelCell *cell4=(TKCheckLabelCell*)self.checkcells[3];
-    [cell4 setLabelValue:isPush?@"正常連接":@"連接異常" normal:isPush];
+    [cell4 setLabelValue:@"檢測中..." normal:NO];
+    
+    
+    [self checkServiceWithURL:PushWebserviceURL completed:^(BOOL connection) {
+       [self performSelectorOnMainThread:@selector(updateStatus2:) withObject:[NSNumber numberWithBool:connection] waitUntilDone:NO];
+    }];
 }
 - (void)checkGPSConnection{
     BOOL is3G=[NetWorkConnection locationServicesEnabled];

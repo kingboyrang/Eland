@@ -52,6 +52,7 @@
 }
 +(void)asyncLoadCaseCategory:(void (^)(NSArray *result))completed{
     ASIHTTPRequest *request=[ASIHTTPRequest requestWithURL:[NSURL URLWithString:CaseCategoryURL]];
+    [request setTimeOutSeconds:50.0];//表示30秒请求超时
     [request setCompletionBlock:^{
         if (request.responseStatusCode==200) {
             NSString *xml=[request.responseString stringByReplacingOccurrencesOfString:@"xmlns=\"CaseCategory[]\"" withString:@""];

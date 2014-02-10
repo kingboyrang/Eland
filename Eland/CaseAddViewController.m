@@ -95,12 +95,11 @@
     
 }
 -(void)updateFormUI{
+    
     [ZAActivityBar dismissForAction:@"loadFields"];
     NSMutableArray *source=[NSMutableArray array];
     [source addObjectsFromArray:[self CaseCategoryAndCityCells:self.Entity]];
-    
     NSArray *sortfields=[self.Entity sortFields];
-    
     if ([sortfields count]>0) {
         for (CaseSettingField *item in sortfields) {
             //NSLog(@"name=%@,label=%@,sort=%@\n",item.Name,item.Label,item.Sort);
@@ -168,6 +167,17 @@
     self.cells=source;
     [_tableView reloadData];
     
+    //CaseSettingGuid
+    //加载第一层分类 
+    if([self.cells[1] isKindOfClass:[TKCaseDownListCell class]])
+    {
+        TKCaseDownListCell *select=(TKCaseDownListCell*)self.cells[1];
+        [select fillNodesArray];
+    }
+    
+   
+}
+-(void)finishLoadCategory{
     if (self.Entity&&[self.Entity.GUID isEqualToString:@"HR"]) {
         CaseCategory *entity=[CaseCategoryHelper getHRFirstChildWithGuid:self.Entity.GUID];
         if (entity!=nil) {
@@ -180,6 +190,7 @@
     NSString *url=[NSString stringWithFormat:SingleCaseSettingURL,self.Entity.GUID];
     ASIHTTPRequest *request=[ASIHTTPRequest requestWithURL:[NSURL URLWithString:url]];
     [request setCompletionBlock:^{
+       
         if (request.responseStatusCode==200) {
             self.Entity=[CaseSetting xmlStringToCaseSetting:request.responseString];
         }
@@ -589,6 +600,11 @@
         if (cell.field2.hidden) {
             return 44;
         }
+        /***
+        if (cell.hasClilds) {
+            return 44.0;
+        }
+          ***/
         return 90.0;
     }
     if ([self.cells[indexPath.row] isKindOfClass:[TKCaseLightNumberCell class]]) {

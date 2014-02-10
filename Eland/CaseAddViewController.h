@@ -24,6 +24,8 @@
 //案件分类
 //-(void)selectedCaseCategory:(CaseCategory*)category;
 -(void)selectedCaseCategory:(CaseCategory*)category;
+//完成第一层案件分类加载
+-(void)finishLoadCategory;
 //鄉鎮市別
 -(void)selectedVillageTown:(CaseCity*)city;
 //取得经纬度

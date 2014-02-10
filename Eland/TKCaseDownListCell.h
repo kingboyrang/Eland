@@ -10,6 +10,7 @@
 #import "CVUISelect.h"
 @interface TKCaseDownListCell : UITableViewCell<CVUISelectDelegate>
 @property(nonatomic,readonly) BOOL hasValue;
+@property(nonatomic,assign) BOOL hasClilds;
 @property(nonatomic,assign) BOOL required;
 @property(nonatomic,copy) NSString *LabelName;
 @property(nonatomic,assign) id delegate;
