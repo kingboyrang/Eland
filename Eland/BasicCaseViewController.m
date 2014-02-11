@@ -135,6 +135,7 @@
     TKCaseTextFieldCell *cell2=[[[TKCaseTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     cell2.required=entity.isRequired;
     cell2.field.placeholder=[NSString stringWithFormat:@"請輸入%@",entity.Label];
+    cell2.field.delegate=self;
     cell2.LabelName=entity.Name;
     if (entity.Text&&[entity.Text length]>0) {
         cell2.field.text=entity.Text;
@@ -164,6 +165,7 @@
     TKCaseTextViewCell *cell2=[[[TKCaseTextViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     cell2.required=entity.isRequired;
     cell2.textView.placeholder=[NSString stringWithFormat:@"請輸入%@",entity.Label];
+    cell2.textView.delegate=self;
     cell2.LabelName=entity.Name;
     if (entity.Text&&[entity.Text length]>0) {
         cell2.textView.text=entity.Text;
@@ -181,6 +183,7 @@
     TKCaseTextFieldCell *cell2=[[[TKCaseTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     cell2.required=YES;
     cell2.field.placeholder=@"請輸入案件瀏覽密碼";
+    cell2.field.delegate=self;
     cell2.LabelName=@"PWD";
     cell2.field.secureTextEntry=YES;
     [result addObject:cell1];
@@ -194,6 +197,7 @@
     TKCaseTextViewCell *cell2=[[[TKCaseTextViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     cell2.required=entity.isRequired;
     cell2.textView.placeholder=[NSString stringWithFormat:@"請輸入%@",entity.Label];
+    cell2.textView.delegate=self;
     cell2.LabelName=entity.Name;
     if (entity.Text&&[entity.Text length]>0) {
         cell2.textView.text=entity.Text;
@@ -222,6 +226,7 @@
     TKCaseTextFieldCell *cell4=[[[TKCaseTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     cell4.required=YES;
     cell4.field.placeholder=[NSString stringWithFormat:@"請輸入%@",entity.Label];
+    cell4.field.delegate=self;
     cell4.LabelName=entity.Name;
     if (entity.Text&&[entity.Text length]>0) {
         cell4.field.text=entity.Text;
@@ -246,6 +251,7 @@
     TKCaseTextFieldCell *cell4=[[[TKCaseTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     cell4.required=YES;
     cell4.field.placeholder=[NSString stringWithFormat:@"請輸入%@",entity.Label];
+    cell4.field.delegate=self;
     cell4.LabelName=entity.Name;
     if (entity.Text&&[entity.Text length]>0) {
         cell4.field.text=entity.Text;

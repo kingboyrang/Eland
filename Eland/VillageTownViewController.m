@@ -58,7 +58,12 @@
         }];
     }else{
         //self.listData=[CaseCityHelper sourceFromArray:arr];
-        self.listData=[self filterSourceArray:arr];
+        NSArray *source=[self filterSourceArray:arr];
+        if (self.showAll) {//显示全部
+            self.listData=[CaseCityHelper sourceFromArray:source];
+        }else{
+            self.listData=source;
+        }
         [_tableView reloadData];
     }
 	// Do any additional setup after loading the view.
@@ -101,7 +106,12 @@
         [hud hide:YES afterDelay:3];
     }
     //self.listData=[CaseCityHelper sourceFromArray:source];
-    self.listData=[self filterSourceArray:source];
+    NSArray *source1=[self filterSourceArray:source];
+    if (self.showAll) {
+        self.listData=[CaseCityHelper sourceFromArray:source1];
+    }else{
+        self.listData=source1;
+    }
     [_tableView reloadData];
 }
 - (void)didReceiveMemoryWarning

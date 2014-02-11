@@ -26,6 +26,7 @@
 @property(nonatomic,copy) NSString *doneButtonTitle;
 @property(nonatomic,copy) NSString *clearButtonTitle;
 @property(nonatomic,assign) id<CVUIPopoverViewDelegate> delegate;
+@property(nonatomic,assign) BOOL showClearButton;//是否显示清空按钮
 -(void)addChildView:(UIView*)view;
 -(void)show:(UIView*)popView;
 -(void)hide;

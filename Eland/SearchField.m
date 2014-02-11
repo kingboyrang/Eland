@@ -152,6 +152,7 @@
         if (!popoverCity) {
             VillageTownViewController *controller=[[[VillageTownViewController alloc] init] autorelease];
             controller.delegate=self;
+            controller.showAll=YES;//显示全部
             popoverCity = [[FPPopoverController alloc] initWithViewController:controller];
             popoverCity.tint=FPPopoverLightGrayTint;
             popoverCity.contentSize = CGSizeMake(200, 300);

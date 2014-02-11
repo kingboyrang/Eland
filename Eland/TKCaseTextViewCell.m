@@ -36,7 +36,7 @@
     _textView.layer.borderWidth=2.0;
     _textView.layer.cornerRadius=5.0;
     _textView.layer.borderColor=[UIColor colorFromHexRGB:@"959595"].CGColor;
-    _textView.controller=self;
+    //_textView.controller=self;
     [self.contentView addSubview:_textView];
     
     _cornerRadio=5.0;
@@ -62,6 +62,7 @@
 	[self.textView setFrame:r];
     
 }
+/**
 - (void)exitKeyboard{
     if (self.required) {
         if (self.hasValue) {
@@ -71,6 +72,7 @@
         }
     }
 }
+ ***/
 -(BOOL)hasValue{
     NSString *str=[self.textView.text Trim];
     if ([str length]>0) {

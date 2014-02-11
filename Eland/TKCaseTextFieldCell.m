@@ -32,7 +32,7 @@
     if(!(self=[super initWithStyle:style reuseIdentifier:reuseIdentifier])) return nil;
     
     
-    _field = [[EMKeyboardBarTextField alloc] initWithFrame:CGRectZero];
+    _field = [[UITextField alloc] initWithFrame:CGRectZero];
 	_field.borderStyle=UITextBorderStyleRoundedRect;
     _field.textAlignment = NSTextAlignmentLeft;
     _field.contentVerticalAlignment=UIControlContentVerticalAlignmentCenter;

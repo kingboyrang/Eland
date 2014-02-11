@@ -36,6 +36,7 @@
 #import "TKCaseDropListCell.h"
 #import "AlertHelper.h"
 #import "TKCaseDownListCell.h"
+#import "UITextField+TPCategory.h"
 @interface CaseAddViewController ()
 -(void)loadingFormFields;
 -(void)updateFormUI;
@@ -44,6 +45,7 @@
 -(void)buttonSubmit;
 -(void)insertAndRemoveRows;
 -(void)updateCaseCityShowWithType:(int)type;
+-(CGRect)fieldToRect:(UITextField*)field;
 @end
 
 @implementation CaseAddViewController
@@ -282,6 +284,67 @@
 
     }
 }
+#pragma mark UITextViewDelegate Methods
+- (void)textViewDidBeginEditing:(UITextView *)textView{
+    id v=[textView superview];
+    while (![v isKindOfClass:[UITableViewCell class]]) {
+        v=[v superview];
+    }
+    UITableViewCell *cell=(UITableViewCell*)v;
+    NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
+    CGRect r=[_tableView rectForRowAtIndexPath:indexPath];
+    r.origin.y+=120;
+    
+    if (r.origin.y+216>self.view.frame.size.height) {//往上移动
+        [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+    }
+}
+#pragma mark UITextFieldDelegate Methods
+-(void)textFieldDidBeginEditing:(UITextField *)textField {
+    
+     CGRect frame = [self fieldToRect:textField];
+    //NSLog(@"frame=%@",NSStringFromCGRect(frame));
+     int offset = frame.origin.y- (self.view.frame.size.height - 216.0);//键盘高度216
+    
+     
+     NSTimeInterval animationDuration = 0.30f;
+     [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+     [UIView setAnimationDuration:animationDuration];
+     
+     //将视图的Y坐标向上移动offset个单位，以使下面腾出地方用于软键盘的显示
+     if(offset > 0)
+     {
+        self.view.frame = CGRectMake(0.0f, -offset, self.view.frame.size.width, self.view.frame.size.height);
+     }
+     [UIView commitAnimations];
+    
+}
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+    NSTimeInterval animationDuration = 0.30f;
+    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+    [UIView setAnimationDuration:animationDuration];
+    
+    //将视图的Y坐标向上移动offset个单位，以使下面腾出地方用于软键盘的显示
+    self.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
+    [UIView commitAnimations];
+    return YES;
+}
+//计算输入框与顶部的高度
+- (CGRect)fieldToRect:(UITextField*)field{
+    id v=[field superview];
+    while (![v isKindOfClass:[UITableViewCell class]]) {
+        v=[v superview];
+    }
+    UITableViewCell *cell=(UITableViewCell*)v;
+    CGRect r=[self.view convertRect:cell.frame fromView:_tableView];//计算当前cell距离顶部的高度
+    //CGRect r1=[cell convertRect:field.frame fromView:cell];
+    r.origin.y+=field.frame.origin.y;
+    //[self tableView:_tableView heightForRowAtIndexPath:[_tableView indexPathForCell:cell]];
+    r.origin.x=field.frame.origin.x;
+    
+    return r;
+}
 //验证
 -(BOOL)formValidate{
     for (id  item in self.cells) {
@@ -297,8 +360,9 @@
         if ([item isKindOfClass:[TKCaseTextFieldCell class]]) {
             TKCaseTextFieldCell *cell=(TKCaseTextFieldCell*)item;
             if (cell.required&&!cell.hasValue) {
-                [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.cells indexOfObject:item] inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                //[_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.cells indexOfObject:item] inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
                 //滚动到指定位置
+                [cell.field becomeFirstResponder];
                 [cell errorVerify];
                 [cell.field shake];
                 return NO;
@@ -640,6 +704,19 @@
         }
         if (indexPath.row==3) {
             if (self.Entity.showCityDown) {
+                //隐藏键盘
+                for (id v in self.cells) {
+                    if ([v isKindOfClass:[TKCaseTextFieldCell class]]) {
+                        TKCaseTextFieldCell *cell=(TKCaseTextFieldCell*)v;
+                        //[cell.field resignFirstResponder];
+                        [self textFieldShouldReturn:cell.field];
+                    }
+                    if ([v isKindOfClass:[TKCaseTextViewCell class]]) {
+                        TKCaseTextViewCell *cell=(TKCaseTextViewCell*)v;
+                        [cell.textView resignFirstResponder];
+                    }
+                }
+                
                 TKCaseTextFieldCell *cell=self.cells[3];
                 [self buttonCaseCityClick:cell];
             }

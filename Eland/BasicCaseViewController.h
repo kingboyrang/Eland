@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "FPPopoverController.h"
 #import "CaseSetting.h"
-@interface BasicCaseViewController : BasicViewController{
+@interface BasicCaseViewController : BasicViewController<UITextFieldDelegate,UITextViewDelegate>{
 @private
     FPPopoverController *popoverCaseCategory;
     FPPopoverController *popoverCaseCity;

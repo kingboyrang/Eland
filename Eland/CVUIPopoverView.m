@@ -218,9 +218,11 @@
         
         //[contentView addSubview:self.datePicker];
         
-        CGFloat topY=49,w=227,h=35,leftX=(320-w)/2;
+        CGFloat topY=44,w=227,h=35,leftX=(320-w)/2;
         
         //清空
+    if (self.showClearButton) {
+        topY+=5;
         NVUIGradientButton *clearBtn=[[NVUIGradientButton alloc] initWithFrame:CGRectMake(leftX, topY, w, h)];
         clearBtn.text=@"清空";
         //clearBtn.textColor=[UIColor whiteColor];
@@ -228,9 +230,8 @@
         [clearBtn addTarget:self action:@selector(buttonClearClick) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:clearBtn];
         [clearBtn release];
-        
         topY+=h+5;
-        
+    }
         CGFloat viewY=screenRect.size.height+topY;
         if ([self isIPad]) {
             viewY=0;
@@ -238,6 +239,33 @@
         self.frame=CGRectMake(0, viewY, 320, topY);
     
     
+}
+- (void)setShowClearButton:(BOOL)show{
+    _showClearButton=show;
+    if (show) {
+        CGFloat topY=self.frame.size.height,w=227,h=35,leftX=(320-w)/2;
+        topY+=5;
+        NVUIGradientButton *clearBtn=[[NVUIGradientButton alloc] initWithFrame:CGRectMake(leftX, topY, w, h)];
+        clearBtn.text=@"清空";
+        //clearBtn.textColor=[UIColor whiteColor];
+        clearBtn.textShadowColor=[UIColor darkGrayColor];
+        [clearBtn addTarget:self action:@selector(buttonClearClick) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:clearBtn];
+        [clearBtn release];
+        topY+=h+5;
+        CGFloat viewY=screenRect.size.height+topY;
+        if ([self isIPad]) {
+            viewY=0;
+        }
+        self.frame=CGRectMake(0, viewY, 320, topY);
+    }else{
+        for (UIView *v in self.subviews) {
+            if ([v isKindOfClass:[NVUIGradientButton class]]) {
+                [v removeFromSuperview];
+                break;
+            }
+        }
+    }
 }
 -(void)setControlTitle:(NSString*)title withIndex:(int)tag{
     if (self.toolBar&&[self.toolBar.items objectAtIndex:tag]) {

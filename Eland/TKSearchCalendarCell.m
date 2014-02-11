@@ -21,6 +21,7 @@
     
     
     _startCalendar = [[CVUICalendar alloc] initWithFrame:CGRectZero];
+    _startCalendar.popoverView.showClearButton=YES;
     _startCalendar.popoverText.popoverTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     _startCalendar.popoverText.popoverTextField.borderStyle=UITextBorderStyleBezel;
     _startCalendar.popoverText.popoverTextField.backgroundColor = [UIColor whiteColor];
@@ -29,6 +30,7 @@
     
     
     _endCalendar = [[CVUICalendar alloc] initWithFrame:CGRectZero];
+    _endCalendar.popoverView.showClearButton=YES;
     _endCalendar.popoverText.popoverTextField.borderStyle=UITextBorderStyleBezel;
     _endCalendar.popoverText.popoverTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     _endCalendar.popoverText.popoverTextField.backgroundColor = [UIColor whiteColor];

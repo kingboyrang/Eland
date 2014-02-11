@@ -18,6 +18,7 @@
 - (NSArray*)objectsToDictionarys:(NSArray*)source;
 - (CaseCategory*)dictionaryToCaseCategory:(NSDictionary*)dic;
 - (void)showSelect:(BOOL)show;
+- (void)bindSecondDataSource;
 @end
 
 @implementation TKCaseDownListCell
@@ -74,18 +75,7 @@
                     [self.delegate performSelector:@selector(selectedCaseCategory:) withObject:[self dictionaryToCaseCategory:_field1.itemData]];
                 }
             }
-            BOOL boo=YES;
-            if ([_field1.value length]>0) {
-                NSArray *source=[CaseCategoryHelper findByChilds:_field1.value];
-                NSArray *results=[self objectsToDictionarys:source];
-                boo=results.count>0?NO:YES;
-                [_field2 setDataSourceForArray:results dataTextName:@"Name" dataValueName:@"GUID"];
-            }else{
-                NSMutableArray *results=[NSMutableArray array];
-                [_field2 setDataSourceForArray:results dataTextName:@"Name" dataValueName:@"GUID"];
-            }
-            [_field2 unBindSource];
-            [self showSelect:boo];//显示或隐藏
+            [self bindSecondDataSource];//绑定第二层级数据源
         }
     }
 }
@@ -100,6 +90,37 @@
     UITableView *tableView=(UITableView*)v;
     NSIndexPath *indexPath=[tableView indexPathForCell:self];
     [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+}
+//绑定第二层级数据源
+- (void)bindSecondDataSource{
+    BOOL boo=YES;
+    if ([_field1.value length]>0) {
+        NSArray *source=[CaseCategoryHelper findByChilds:_field1.value];
+        NSArray *results=[self objectsToDictionarys:source];
+        boo=results.count>0?NO:YES;
+        
+        NSMutableDictionary *dic=[NSMutableDictionary dictionary];
+        [dic setValue:@"請選擇" forKey:@"Name"];
+        [dic setValue:@"" forKey:@"GUID"];
+        [dic setValue:@"" forKey:@"Parent"];
+        
+        NSMutableArray *source1=[NSMutableArray array];
+        [source1 addObject:dic];
+        if (results.count>0) {
+            [source1 addObjectsFromArray:results];
+        }
+        [_field2 setDataSourceForArray:source1 dataTextName:@"Name" dataValueName:@"GUID"];
+    }else{
+        NSMutableDictionary *dic=[NSMutableDictionary dictionary];
+        [dic setValue:@"請選擇" forKey:@"Name"];
+        [dic setValue:@"" forKey:@"GUID"];
+        [dic setValue:@"" forKey:@"Parent"];
+        NSMutableArray *results=[NSMutableArray array];
+        [results addObject:dic];
+        [_field2 setDataSourceForArray:results dataTextName:@"Name" dataValueName:@"GUID"];
+    }
+    [_field2 unBindSource];
+    [self showSelect:boo];//显示或隐藏
 }
 #pragma mark CVUISelectDelegate Methods
 -(void)closeSelect:(id)sender{

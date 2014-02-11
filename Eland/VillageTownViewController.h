@@ -16,5 +16,5 @@
 }
 @property(nonatomic,retain) NSArray *listData;
 @property(nonatomic,assign) id delegate;
-
+@property(nonatomic,assign) BOOL showAll;//是否显示全部
 @end

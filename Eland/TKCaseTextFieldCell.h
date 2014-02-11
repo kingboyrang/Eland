@@ -16,7 +16,7 @@
 	CGFloat _lightSize;
 	UIColor *_lightBorderColor;
 }
-@property(nonatomic,strong) EMKeyboardBarTextField *field;
+@property(nonatomic,strong) UITextField *field;
 @property(nonatomic,readonly) BOOL hasValue;
 @property(nonatomic,assign) BOOL required;
 @property(nonatomic,copy) NSString *LabelName;
