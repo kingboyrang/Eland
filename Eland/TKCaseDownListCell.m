@@ -217,7 +217,15 @@
     CGRect r=CGRectInset(self.bounds, 10, 4);
     r.size.height=36;
 	_field1.frame=r;
-    
+    if (!_field2.hidden) {
+        CGRect r1=self.frame;
+        r1.size.height=90;
+        self.frame=r1;
+    }else{
+        CGRect r1=self.frame;
+        r1.size.height=44;
+        self.frame=r1;
+    }
     r.origin.y=_field1.frame.origin.y+_field1.frame.size.height+10;
     _field2.frame=r;
 }
