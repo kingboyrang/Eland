@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "PushResult.h"
-@interface PushDetailViewController : BasicViewController
+#import "ServiceHelper.h"
+@interface PushDetailViewController : BasicViewController{
+    ServiceHelper *_helper;
+}
 -(void)loadPushDetail:(NSString*)guid;
 @property(nonatomic,strong) PushResult *Entity;
 @end

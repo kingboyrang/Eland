@@ -55,6 +55,7 @@
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [self updateGpsImage];
+    [self updateNetworkImage:[self hasNetwork]];
 }
 - (void)viewDidLoad
 {
@@ -70,7 +71,8 @@
 }
 //检测是否有网络
 -(BOOL)hasNetwork{
-    return [[NetWorkConnection sharedInstance] hasNewWork];
+    return [NetWorkConnection isEnabledAccessURL:@"http://www.apple.com"];
+    //return [[NetWorkConnection sharedInstance] hasNewWork];
 }
 -(float)IOSSystemVersion{
     NSString *version=[[UIDevice currentDevice] systemVersion];

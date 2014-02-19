@@ -25,6 +25,7 @@
 -(void)dealloc{
     [super dealloc];
     [_labTitle release],_labTitle=nil;
+    [_helper release];
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -39,6 +40,7 @@
 {
     [super viewDidLoad];
     [self.navigationItem titleViewBackground];
+    _helper=[[ServiceHelper alloc] init];
     _labTitle=[[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 40)];
 	_labTitle.backgroundColor=[UIColor colorFromHexRGB:@"dfdfdf"];
     _labTitle.font=[UIFont boldSystemFontOfSize:16];
@@ -74,15 +76,19 @@
     [_textView setTextContent:self.Entity.Body];
 }
 -(void)showErrorView{
-    WBErrorNoticeView *errorView=[WBErrorNoticeView errorNoticeInView:self.view title:@"提示" message:@"資料加載失敗!"];
+    [ZAActivityBar dismissForAction:@"pushdetail"];
+    WBErrorNoticeView *errorView=[WBErrorNoticeView errorNoticeInView:self.view title:@"提示" message:@"信息加載失敗!"];
     [errorView show];
 }
 -(void)loadPushDetail:(NSString*)guid{
+    [ZAActivityBar showWithStatus:@"正在加載..." forAction:@"pushdetail"];
     ServiceArgs *args=[[[ServiceArgs alloc] init] autorelease];
     args.methodName=@"GetMessage";
     args.soapParams=[NSArray arrayWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:guid,@"guid", nil], nil];
-    
-    [ServiceHelper asynService:args success:^(ServiceResult *result) {
+    [_helper asynService:args success:^(ServiceResult *result) {
+        [ZAActivityBar dismissForAction:@"pushdetail"];
+        BOOL boo=NO;
+        NSString *memo=@"信息加載失敗!";
         if ([result.xmlString length]>0) {
             NSString *xml=[result.xmlString stringByReplacingOccurrencesOfString:result.xmlnsAttr withString:@""];
             [result.xmlParse setDataSource:xml];
@@ -91,14 +97,20 @@
             [result.xmlParse setDataSource:xml];
             NSArray *arr=[result.xmlParse selectNodes:@"//Entity" className:@"PushResult"];
             if ([arr count]>0) {
+                boo=YES;
                 self.Entity=[arr objectAtIndex:0];
                 [CacheHelper cacheCasePushResult:self.Entity];
                 [self updateUIShow];
             }else{
-               [self showErrorView];
+                NSArray *errors=[result.xmlParse selectNodes:@"//string"];
+                if (errors&&[errors count]>0) {
+                    memo=[[errors objectAtIndex:0] objectForKey:@"text"];
+                }
             }
-        }else{
-            [self showErrorView];
+        }
+        if (!boo) {
+            WBErrorNoticeView *errorView=[WBErrorNoticeView errorNoticeInView:self.view title:@"提示" message:memo];
+            [errorView show];
         }
     } failed:^(NSError *error, NSDictionary *userInfo) {
         [self showErrorView];

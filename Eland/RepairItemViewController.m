@@ -17,6 +17,7 @@
 #import "AppDelegate.h"
 #import "AlertHelper.h"
 #import "MainViewController.h"
+#import "NetWorkConnection.h"
 @interface RepairItemViewController ()
 
 -(void)updateSourceUI:(NSArray*)arr;
@@ -165,7 +166,8 @@
             }];
             return;
         }
-        if (!self.hasNetwork) {
+        NSString *url=[NSString stringWithFormat:SingleCaseSettingURL,setting.GUID];
+        if (![NetWorkConnection isEnabledAccessURL:url]) {
             [AlertHelper initWithTitle:@"提示" message:@"網絡連接發生異常,請檢查網絡連接."];
             //[self showNoNetworkNotice:nil];
             return;

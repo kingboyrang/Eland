@@ -53,6 +53,7 @@
     [super dealloc];
     [_tableView release],_tableView=nil;
     [_caseArgs release],_caseArgs=nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -66,7 +67,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     
     
     _hrType=-1;
@@ -92,9 +92,85 @@
     _tableView.backgroundColor=[UIColor clearColor];
     [self.view addSubview:_tableView];
     //self.cells=[self CaseCategoryAndCityCells:self.Entity];
+    
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(done:)];
+    tapGestureRecognizer.numberOfTapsRequired =1;
+    tapGestureRecognizer.cancelsTouchesInView =NO;
+    [_tableView addGestureRecognizer:tapGestureRecognizer];  //只需要点击非文字输入区域就会响应hideKeyBoard
+    [tapGestureRecognizer release];
+    
 	[self loadingFormFields];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleKeyboardWillShowHideNotification:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleKeyboardWillShowHideNotification:)
+                                                 name:UIKeyboardDidHideNotification
+                                               object:nil];
+    
+    
+}
+#pragma mark - Notifications
+- (void)handleKeyboardWillShowHideNotification:(NSNotification *)notification
+{
+    NSDictionary *info = [notification userInfo];
+    //取得键盘的大小
+    //CGRect kbFrame = [[info valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    if ([notification.name isEqualToString:UIKeyboardDidShowNotification]) {//显示键盘
+       /***
+        id v=[self getFocusCellRow];
+        
+        CGRect frame = [self scrolToViewWithCell:v];
+        //NSLog(@"frame=%@",NSStringFromCGRect(frame));
+        int offset = frame.origin.y- (self.view.frame.size.height - kbFrame.size.height);//键盘高度216
+        
+        
+        NSTimeInterval animationDuration = 0.30f;
+        [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+        [UIView setAnimationDuration:animationDuration];
+        
+        //将视图的Y坐标向上移动offset个单位，以使下面腾出地方用于软键盘的显示
+        if(offset > 0)
+        {
+            self.view.frame = CGRectMake(0.0f, -offset, self.view.frame.size.width, self.view.frame.size.height);
+        }
+        [UIView commitAnimations];
+        ***/
+        
+    }
+    else if ([notification.name isEqualToString:UIKeyboardDidHideNotification]) {//隐藏键盘
+        NSTimeInterval animationDuration = [[info valueForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+        [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+        [UIView setAnimationDuration:animationDuration];
+        
+        //将视图的Y坐标向上移动offset个单位，以使下面腾出地方用于软键盘的显示
+        self.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
+        [UIView commitAnimations];
+    }
+}
+
+-(void)done:(id)sender
+{
+    
+    for (id v in self.cells) {
+        if ([v isKindOfClass:[TKCaseTextFieldCell class]]) {
+            TKCaseTextFieldCell *cell=(TKCaseTextFieldCell*)v;
+            if (cell.field.becomeFirstResponder) {
+                [cell.field resignFirstResponder];
+                break;
+            }
+        }
+        if ([v isKindOfClass:[TKCaseTextViewCell class]]) {
+            TKCaseTextViewCell *cell=(TKCaseTextViewCell*)v;
+            if (cell.textView.becomeFirstResponder) {
+                [cell.textView resignFirstResponder];
+                break;
+            }
+        }
+    }
 }
 -(void)updateFormUI{
     
@@ -286,6 +362,7 @@
 }
 #pragma mark UITextViewDelegate Methods
 - (void)textViewDidBeginEditing:(UITextView *)textView{
+   
     id v=[textView superview];
     while (![v isKindOfClass:[UITableViewCell class]]) {
         v=[v superview];
@@ -298,9 +375,11 @@
     if (r.origin.y+216>self.view.frame.size.height) {//往上移动
         [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
     }
+   
 }
 #pragma mark UITextFieldDelegate Methods
 -(void)textFieldDidBeginEditing:(UITextField *)textField {
+    
     
      CGRect frame = [self fieldToRect:textField];
     //NSLog(@"frame=%@",NSStringFromCGRect(frame));
@@ -318,16 +397,10 @@
      }
      [UIView commitAnimations];
     
+    
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
-    NSTimeInterval animationDuration = 0.30f;
-    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
-    [UIView setAnimationDuration:animationDuration];
-    
-    //将视图的Y坐标向上移动offset个单位，以使下面腾出地方用于软键盘的显示
-    self.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
-    [UIView commitAnimations];
     return YES;
 }
 //计算输入框与顶部的高度

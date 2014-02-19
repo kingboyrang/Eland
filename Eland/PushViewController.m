@@ -48,7 +48,7 @@
     _tableView.autoresizingMask=UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:_tableView];
     _helper=[[ServiceHelper alloc] init];
-   
+    
 	// Do any additional setup after loading the view.
 }
 -(void)reloadPushInfo{
@@ -161,6 +161,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     PushDetailViewController *controller=[[PushDetailViewController alloc] init];
     controller.Entity=[self.listData objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:controller animated:YES];

@@ -107,6 +107,7 @@
         MainViewController *main=[[[MainViewController alloc] init] autorelease];
         self.window.rootViewController = main;
     }
+    self.window.backgroundColor=[UIColor colorFromHexRGB:@"F1F4F2"];
     [self.window makeKeyAndVisible];
     return YES;
 }
