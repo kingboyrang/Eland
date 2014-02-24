@@ -31,4 +31,11 @@
     
     [self initWithTitle:inTitle message:inMessage cancelButtonItem:cancel otherButtonItems:confirm];
 }
++(void)initWithTitle:(NSString *)inTitle message:(NSString *)inMessage  confirmTitle:(NSString*)confirmTitle confirmAction:(void (^)(void))confirmAction{
+    
+    RIButtonItem *button=[RIButtonItem item];
+    button.label=confirmTitle;
+    button.action=confirmAction;
+    [self initWithTitle:inTitle message:inMessage cancelButtonItem:nil otherButtonItems:button];
+}
 @end

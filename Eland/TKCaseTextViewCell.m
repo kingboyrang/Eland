@@ -62,8 +62,9 @@
 	[self.textView setFrame:r];
     
 }
-/**
+
 - (void)exitKeyboard{
+    /***
     if (self.required) {
         if (self.hasValue) {
             [self removeVerify];
@@ -71,8 +72,8 @@
             [self errorVerify];
         }
     }
+     ***/
 }
- ***/
 -(BOOL)hasValue{
     NSString *str=[self.textView.text Trim];
     if ([str length]>0) {

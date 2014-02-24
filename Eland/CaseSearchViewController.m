@@ -254,7 +254,7 @@
             _searchField.levevlCaseArgs.Pager.PageNumber--;
             [_tableView tableViewDidFinishedLoadingWithMessage:@"沒有了哦..."];
             _tableView.reachedTheEnd  = YES;
-            self.list=[NSArray array];
+            self.list=[NSMutableArray array];
             [_tableView reloadData];
         } else {
             if ([xml length]==0) {

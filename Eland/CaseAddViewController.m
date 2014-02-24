@@ -38,6 +38,8 @@
 #import "TKCaseDownListCell.h"
 #import "UITextField+TPCategory.h"
 @interface CaseAddViewController ()
+@property (nonatomic,assign) CGRect orginFrame;
+@property (nonatomic,assign) CGRect tableFrame;
 -(void)loadingFormFields;
 -(void)updateFormUI;
 -(BOOL)formValidate;
@@ -67,7 +69,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.orginFrame=self.view.frame;
+    NSLog(@"frame=%@",NSStringFromCGRect(self.view.frame));
     
     _hrType=-1;
     _prvHrTypeCount=0;
@@ -82,14 +85,15 @@
    
     
     //NSLog(@"GUID=%@",self.Entity.GUID);
-    
-    _tableView=[[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    CGRect r=self.view.bounds;
+    _tableView=[[UITableView alloc] initWithFrame:r style:UITableViewStylePlain];
     _tableView.dataSource=self;
     _tableView.delegate=self;
     _tableView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     _tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
     _tableView.bounces=NO;
     _tableView.backgroundColor=[UIColor clearColor];
+    self.tableFrame=_tableView.frame;
     [self.view addSubview:_tableView];
     //self.cells=[self CaseCategoryAndCityCells:self.Entity];
     
@@ -118,8 +122,9 @@
 {
     NSDictionary *info = [notification userInfo];
     //取得键盘的大小
-    //CGRect kbFrame = [[info valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGRect kbFrame = [[info valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     if ([notification.name isEqualToString:UIKeyboardDidShowNotification]) {//显示键盘
+        NSLog(@"height=%f",kbFrame.size.height);
        /***
         id v=[self getFocusCellRow];
         
@@ -142,12 +147,22 @@
         
     }
     else if ([notification.name isEqualToString:UIKeyboardDidHideNotification]) {//隐藏键盘
+
         NSTimeInterval animationDuration = [[info valueForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
         [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
         [UIView setAnimationDuration:animationDuration];
         
         //将视图的Y坐标向上移动offset个单位，以使下面腾出地方用于软键盘的显示
-        self.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
+        //self.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
+        self.view.frame = self.orginFrame;
+#ifdef __IPHONE_7_0
+        if ([[UIDevice currentDevice].systemVersion floatValue] >= 7.0) {
+            CGRect r=self.tableFrame;
+            r.origin.y=44;
+            r.size.height-=r.origin.y;
+            _tableView.frame=r;
+        }
+#endif
         [UIView commitAnimations];
     }
 }
@@ -379,8 +394,15 @@
 }
 #pragma mark UITextFieldDelegate Methods
 -(void)textFieldDidBeginEditing:(UITextField *)textField {
-    
-    
+     /***
+    id v=[textField superview];
+    while (![v isKindOfClass:[UITableViewCell class]]) {
+        v=[v superview];
+    }
+    UITableViewCell *cell=(UITableViewCell*)v;
+    NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
+    [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+   ***/
      CGRect frame = [self fieldToRect:textField];
     //NSLog(@"frame=%@",NSStringFromCGRect(frame));
      int offset = frame.origin.y- (self.view.frame.size.height - 216.0);//键盘高度216
@@ -393,7 +415,7 @@
      //将视图的Y坐标向上移动offset个单位，以使下面腾出地方用于软键盘的显示
      if(offset > 0)
      {
-        self.view.frame = CGRectMake(0.0f, -offset, self.view.frame.size.width, self.view.frame.size.height);
+        self.view.frame = CGRectMake(0.0f, -offset, self.orginFrame.size.width, self.orginFrame.size.height);
      }
      [UIView commitAnimations];
     

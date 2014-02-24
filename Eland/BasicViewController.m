@@ -60,6 +60,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+#ifdef __IPHONE_7_0
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 7.0) {
+        self.extendedLayoutIncludesOpaqueBars = NO;
+        self.edgesForExtendedLayout = UIRectEdgeBottom|UIRectEdgeLeft|UIRectEdgeRight;
+    }
+#endif
     self.view.backgroundColor=[UIColor colorFromHexRGB:@"F1F4F2"];
     [self addCheckBarButton];
     //横竖屏检测
@@ -142,7 +149,7 @@
 }
 #pragma mark 网络未连接提示
 - (void) showNoNetworkNotice:(void (^)(void))dismissError{
-    WBErrorNoticeView *notice = [WBErrorNoticeView errorNoticeInView:self.view title:@"網絡錯誤" message:@"請檢查您的網絡連接."];
+    WBErrorNoticeView *notice = [WBErrorNoticeView errorNoticeInView:self.view title:@"網路錯誤" message:@"請檢查您的網路連接."];
     [notice setDismissalBlock:^(BOOL dismissedInteractively) {
         if (dismissError) {
             dismissError();

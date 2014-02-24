@@ -77,7 +77,7 @@
 }
 -(void)showErrorView{
     [ZAActivityBar dismissForAction:@"pushdetail"];
-    WBErrorNoticeView *errorView=[WBErrorNoticeView errorNoticeInView:self.view title:@"提示" message:@"信息加載失敗!"];
+    WBErrorNoticeView *errorView=[WBErrorNoticeView errorNoticeInView:self.view title:@"提示" message:@"訊息加載失敗!"];
     [errorView show];
 }
 -(void)loadPushDetail:(NSString*)guid{
@@ -88,7 +88,7 @@
     [_helper asynService:args success:^(ServiceResult *result) {
         [ZAActivityBar dismissForAction:@"pushdetail"];
         BOOL boo=NO;
-        NSString *memo=@"信息加載失敗!";
+        NSString *memo=@"訊息加載失敗!";
         if ([result.xmlString length]>0) {
             NSString *xml=[result.xmlString stringByReplacingOccurrencesOfString:result.xmlnsAttr withString:@""];
             [result.xmlParse setDataSource:xml];

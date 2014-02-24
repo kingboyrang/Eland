@@ -12,4 +12,5 @@
 +(void)initWithTitle:(NSString *)inTitle message:(NSString *)inMessage cancelButtonItem:(RIButtonItem *)inCancelButtonItem otherButtonItems:(RIButtonItem *)inOtherButtonItems, ...;
 +(void)initWithTitle:(NSString *)inTitle message:(NSString *)inMessage;
 +(void)initWithTitle:(NSString *)inTitle message:(NSString *)inMessage cancelTitle:(NSString*)cancelTitle cancelAction:(void (^)(void))cancelAction confirmTitle:(NSString*)confirmTitle confirmAction:(void (^)(void))confirmAction;
++(void)initWithTitle:(NSString *)inTitle message:(NSString *)inMessage  confirmTitle:(NSString*)confirmTitle confirmAction:(void (^)(void))confirmAction;
 @end

@@ -18,9 +18,13 @@
 #import "AlertHelper.h"
 #import "MainViewController.h"
 #import "NetWorkConnection.h"
+#import "ASIHTTPRequest.h"
+#import "NSString+TPCategory.h"
 @interface RepairItemViewController ()
 
 -(void)updateSourceUI:(NSArray*)arr;
+-(void)checAccessWithURL:(NSString*)url complete:(void(^)(BOOL success))completed;
+-(UIView*)getHelperView;
 @end
 
 @implementation RepairItemViewController
@@ -78,6 +82,24 @@
     //加载项目
     [self loadRepairItem];
 }
+-(void)checAccessWithURL:(NSString*)url complete:(void(^)(BOOL success))completed{
+    ASIHTTPRequest *request=[ASIHTTPRequest requestWithURL:[NSURL URLWithString:url]];
+    [request setCompletionBlock:^{
+        BOOL boo=NO;
+        if (request.responseStatusCode==200) {
+            boo=YES;
+        }
+        if (completed) {
+            completed(boo);
+        }
+    }];
+    [request setFailedBlock:^{
+        if (completed) {
+            completed(NO);
+        }
+    }];
+    [request startAsynchronous];
+}
 -(void)updateSourceUI:(NSArray*)arr{
     
     NSMutableArray *_source=[NSMutableArray arrayWithArray:arr];
@@ -134,6 +156,28 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+-(UIView*)getHelperView{
+        UIView *bgView=[[UIView alloc] initWithFrame:DeviceRect];
+        bgView.backgroundColor=[UIColor grayColor];
+        bgView.alpha=0.3;
+        
+        NSString *memo=@"網路檢測中...";
+        CGSize size=[memo textSize:[UIFont boldSystemFontOfSize:16] withWidth:bgView.frame.size.width];
+        UILabel *label=[[UILabel alloc] initWithFrame:CGRectMake((bgView.frame.size.width-size.width)/2, (bgView.frame.size.height-3*44-size.height)/2, size.width, size.height)];
+        label.backgroundColor=[UIColor clearColor];
+        label.text=memo;
+        label.font=[UIFont boldSystemFontOfSize:16];
+        [bgView addSubview:label];
+        
+        UIActivityIndicatorView  *_activityIndicatorView=[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        _activityIndicatorView.frame=CGRectMake(label.frame.origin.x-2-30,(bgView.frame.size.height-3*44-30)/2, 30, 30);
+        [bgView addSubview:_activityIndicatorView];
+        [_activityIndicatorView startAnimating];
+        [_activityIndicatorView release];
+        [label release];
+    
+    return [bgView autorelease];
+}
 #pragma mark -
 #pragma mark UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
@@ -167,15 +211,46 @@
             return;
         }
         NSString *url=[NSString stringWithFormat:SingleCaseSettingURL,setting.GUID];
-        if (![NetWorkConnection isEnabledAccessURL:url]) {
-            [AlertHelper initWithTitle:@"提示" message:@"網絡連接發生異常,請檢查網絡連接."];
-            //[self showNoNetworkNotice:nil];
-            return;
+        __block UIView *bgView=nil;
+        if (bgView==nil) {
+            bgView=[self getHelperView];
+            /***
+             bgView=[[UIView alloc] initWithFrame:DeviceRect];
+            bgView.backgroundColor=[UIColor grayColor];
+            bgView.alpha=0.3;
+            
+            NSString *memo=@"網路檢測中...";
+            CGSize size=[memo textSize:[UIFont boldSystemFontOfSize:16] withWidth:bgView.frame.size.width];
+            UILabel *label=[[UILabel alloc] initWithFrame:CGRectMake((bgView.frame.size.width-size.width)/2, (bgView.frame.size.height-3*44-size.height)/2, size.width, size.height)];
+            label.backgroundColor=[UIColor clearColor];
+            label.text=memo;
+            label.font=[UIFont boldSystemFontOfSize:16];
+            [bgView addSubview:label];
+            
+           UIActivityIndicatorView  *_activityIndicatorView=[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+            _activityIndicatorView.frame=CGRectMake(label.frame.origin.x-2-30,(bgView.frame.size.height-3*44-30)/2, 30, 30);
+            [bgView addSubview:_activityIndicatorView];
+            [_activityIndicatorView startAnimating];
+            [_activityIndicatorView release];
+            [label release];
+           ***/
+
+            [self.view addSubview:bgView];
         }
-        CaseAddViewController *controller=[[CaseAddViewController alloc] init];
-        controller.Entity=setting;
-        [self.navigationController pushViewController:controller animated:YES];
-        [controller release];
+        [self checAccessWithURL:url complete:^(BOOL success) {
+            [bgView removeFromSuperview];
+            [bgView release],bgView=nil;
+            if (!success) {
+                [AlertHelper initWithTitle:@"提示" message:@"網路連接發生異常,請檢查網路連接."];
+                //[self showNoNetworkNotice:nil];
+                return;
+            }
+            CaseAddViewController *controller=[[CaseAddViewController alloc] init];
+            controller.Entity=setting;
+            [self.navigationController pushViewController:controller animated:YES];
+            [controller release];
+        }];
+       
     }
 }
 /***
