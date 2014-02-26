@@ -17,9 +17,15 @@
 #import "Photos.h"
 #import "MKPhotoBrowser.h"
 #import "TKShowImageCell.h"
+
+#define birthArray [NSArray arrayWithObjects:@"Note1",@"NewbornRelation", nil]
+#define marryArray [NSArray arrayWithObjects:@"Note2",@"ManName",@"WoManName",@"ManAddress",@"WoManAddress", nil]
+#define dieArray [NSArray arrayWithObjects:@"Note3",@"DeadRelation",@"DeadName",@"DeadAddress", nil]
+
 @interface CaseDetailViewController ()
 -(void)loadAsyncDetail;
 -(void)updateSoureData;
+-(BOOL)existsArrayWithName:(NSString*)name HRType:(int)type;
 @end
 
 @implementation CaseDetailViewController
@@ -38,6 +44,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        
     }
     return self;
 }
@@ -96,6 +103,12 @@
                 memo=self.entityCase.Applicant.Nick;
             }
         }
+        TKShowLabelLabelCell *cell0=[[TKShowLabelLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        cell0.label.text=@"案件編號:";
+        cell0.rightlabel.text=self.entityCase.GUID;
+        [applicantSource addObject:cell0];
+        [cell0 release];
+        
         TKShowLabelLabelCell *cell3=[[TKShowLabelLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
         cell3.label.text=@"暱稱:";
         cell3.rightlabel.text=memo;
@@ -133,15 +146,26 @@
     NSMutableArray *arr=[NSMutableArray arrayWithArray:applicantSource];
     NSString *content=@"";
     NSArray *fields=[self.entityCaseSetting sortFields];
+    int type=[self.entityCase HRType];
     for (CaseSettingField *item in fields) {
-        //NSLog(@"name=%@,label=%@,sort=%@\n",item.Name,item.Label,item.Sort);
         if ([item.Name startWithString:@"Note"]||[item.Name isEqualToString:@"LngLat"]) {
             continue;
         }
-        
+        if ([self.entityCaseSetting.GUID isEqualToString:@"HR"]) {//户政预约
+            if (type==1&&[item.Name isEqualToString:@"CityGuid"]) {//出生登記
+                item.Label=@"新生兒預約設籍之戶政事務所";
+            }
+            if (type!=1&&[item.Name isEqualToString:@"CityGuid"]) {//出生登記
+                item.Label=@"預約戶籍地之戶政事務所";
+            }
+            if ([self existsArrayWithName:item.Name HRType:type]) {
+                continue;
+            }
+        }
+        //NSLog(@"filed=%@,name=%@,sort=%@",item.Name,item.Label,item.Sort);
         TKShowLabelLabelCell *cell=[[TKShowLabelLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
         cell.label.text=[NSString stringWithFormat:@"%@:",item.Label];
-        content=[self.entityCase getFieldValue:item.Name];
+        content=[self.entityCase getCaseFieldValue:item.Name];
         if([content length]==0&&item.Text&&[item Text]>0)
             content=item.Text;
         cell.rightlabel.text=content;
@@ -176,6 +200,26 @@
     }
      ***/
     //
+}
+-(BOOL)existsArrayWithName:(NSString*)name HRType:(int)type{
+    NSMutableArray *source=[NSMutableArray array];
+    if (type==1) {//出生登记
+        [source addObjectsFromArray:marryArray];
+        [source addObjectsFromArray:dieArray];
+    }else if(type==2){//結婚登記
+        [source addObjectsFromArray:birthArray];
+        [source addObjectsFromArray:dieArray];
+    }else{//死亡登記
+        [source addObjectsFromArray:birthArray];
+        [source addObjectsFromArray:marryArray];
+    }
+    NSString *match=[NSString stringWithFormat:@"SELF =='%@'",name];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:match];
+    NSArray *results = [source filteredArrayUsingPredicate:predicate];
+    if (results&&[results count]>0) {
+        return YES;
+    }
+    return NO;
 }
 - (void)didReceiveMemoryWarning
 {

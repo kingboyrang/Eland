@@ -11,6 +11,7 @@
 #import "XmlParseHelper.h"
 #import "CaseCategoryHelper.h"
 #import "CaseCategory.h"
+#import "NSDate+TPCategory.h"
 @implementation Case
 -(NSString*)XmlSerialize{
    NSMutableString *xml=[NSMutableString stringWithFormat:@"<?xml version=\"1.0\"?>"];
@@ -58,6 +59,20 @@
     }
     return @"";
 }
+- (int)HRType{
+    if (_CaseCagegory1&&[_CaseCagegory1 length]>0) {
+        CaseCategory *entity2=[CaseCategoryHelper getCaseCategoryEntity:_CaseCagegory1];
+        if (entity2!=nil) {
+            if ([entity2.Name isEqualToString:@"出生登記"]) {
+                return 1;
+            }
+            if ([entity2.Name isEqualToString:@"結婚登記"]) {
+                return 2;
+            }
+        }
+    }
+    return 3;
+}
 -(NSString*)CaseCagegoryName{
     NSMutableArray *arr=[NSMutableArray array];
     if (_CaseSettingGuid&&[_CaseSettingGuid length]>0) {
@@ -85,7 +100,10 @@
 }
 -(NSString*)ApplyDateText{
     if (_ApplyDate&&[_ApplyDate length]>0) {
-        return [_ApplyDate stringByReplacingOccurrencesOfString:@"T" withString:@" "];
+        NSString *time=[_ApplyDate stringByReplacingOccurrencesOfString:@"T" withString:@" "];
+        NSDate *date=[NSDate dateFromString:time withFormat:@"yyyy-MM-dd HH:mm:ss"];
+        return [date dateToTW:@"yyyy-MM-dd HH:mm"];
+        //return [_ApplyDate stringByReplacingOccurrencesOfString:@"T" withString:@" "];
     }
     return @"";
 }
@@ -137,6 +155,64 @@
     }
     [document release];
     return entity;
+}
+-(NSString*)getCaseFieldValue:(NSString*)fieldName{
+    NSString *str=[self getFieldValue:fieldName];
+    if ([fieldName isEqualToString:@"PetSterilization"]) {
+        if ([str isEqualToString:@"0"]) {
+            return @"有";
+        }
+        if ([str isEqualToString:@"1"]) {
+            return @"無";
+        }
+    }
+    if ([fieldName isEqualToString:@"PetGender"]) {
+        if ([str isEqualToString:@"0"]) {
+            return @"公";
+        }
+        if ([str isEqualToString:@"1"]) {
+            return @"母";
+        }
+    }
+    if ([fieldName isEqualToString:@"PetChip"]) {
+        if ([str isEqualToString:@"0"]) {
+            return @"無";
+        }
+        if ([str isEqualToString:@"1"]) {
+            return @"有";
+        }
+    }
+    if ([fieldName isEqualToString:@"IsAgree"]) {
+        if ([str isEqualToString:@"1"]) {
+            return @"是";
+        }
+        if ([str isEqualToString:@"2"]) {
+            return @"否";
+        }
+    }
+    if ([fieldName isEqualToString:@"IsPublic"]) {
+        if ([str isEqualToString:@"1"]) {
+            return @"是";
+        }
+        if ([str isEqualToString:@"2"]) {
+            return @"否";
+        }
+    }
+    if ([fieldName isEqualToString:@"IsHistory"]) {
+        if ([str isEqualToString:@"1"]) {
+            return @"是";
+        }
+        if ([str isEqualToString:@"2"]) {
+            return @"否";
+        }
+    }
+    if ([fieldName isEqualToString:@"PetDate"]) {//走失时间
+        if ([str length]>0) {
+            NSDate *date=[NSDate dateFromString:str withFormat:@"yyyy-MM-dd"];
+            return [date dateToTW:@"yyyy-MM-dd"];
+        }
+    }
+    return str;
 }
 -(NSString*)getFieldValue:(NSString*)propertyname{
     if ([propertyname isEqualToString:@"Images"]||[propertyname isEqualToString:@"ApprovalImages"]) {

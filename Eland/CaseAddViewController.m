@@ -70,7 +70,7 @@
 {
     [super viewDidLoad];
     self.orginFrame=self.view.frame;
-    NSLog(@"frame=%@",NSStringFromCGRect(self.view.frame));
+
     
     _hrType=-1;
     _prvHrTypeCount=0;
@@ -122,65 +122,35 @@
 {
     NSDictionary *info = [notification userInfo];
     //取得键盘的大小
-    CGRect kbFrame = [[info valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    //CGRect kbFrame = [[info valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     if ([notification.name isEqualToString:UIKeyboardDidShowNotification]) {//显示键盘
-        NSLog(@"height=%f",kbFrame.size.height);
-       /***
-        id v=[self getFocusCellRow];
-        
-        CGRect frame = [self scrolToViewWithCell:v];
-        //NSLog(@"frame=%@",NSStringFromCGRect(frame));
-        int offset = frame.origin.y- (self.view.frame.size.height - kbFrame.size.height);//键盘高度216
-        
-        
-        NSTimeInterval animationDuration = 0.30f;
-        [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
-        [UIView setAnimationDuration:animationDuration];
-        
-        //将视图的Y坐标向上移动offset个单位，以使下面腾出地方用于软键盘的显示
-        if(offset > 0)
-        {
-            self.view.frame = CGRectMake(0.0f, -offset, self.view.frame.size.width, self.view.frame.size.height);
-        }
-        [UIView commitAnimations];
-        ***/
-        
+               
     }
     else if ([notification.name isEqualToString:UIKeyboardDidHideNotification]) {//隐藏键盘
 
         NSTimeInterval animationDuration = [[info valueForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
         [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
         [UIView setAnimationDuration:animationDuration];
-        
         //将视图的Y坐标向上移动offset个单位，以使下面腾出地方用于软键盘的显示
-        //self.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
-        self.view.frame = self.orginFrame;
-#ifdef __IPHONE_7_0
-        if ([[UIDevice currentDevice].systemVersion floatValue] >= 7.0) {
-            CGRect r=self.tableFrame;
-            r.origin.y=44;
-            r.size.height-=r.origin.y;
-            _tableView.frame=r;
-        }
-#endif
+        _tableView.contentInset=UIEdgeInsetsZero;
         [UIView commitAnimations];
     }
 }
 
 -(void)done:(id)sender
 {
-    
+   
     for (id v in self.cells) {
         if ([v isKindOfClass:[TKCaseTextFieldCell class]]) {
             TKCaseTextFieldCell *cell=(TKCaseTextFieldCell*)v;
-            if (cell.field.becomeFirstResponder) {
+            if (cell.field.isFirstResponder) {
                 [cell.field resignFirstResponder];
                 break;
             }
         }
         if ([v isKindOfClass:[TKCaseTextViewCell class]]) {
             TKCaseTextViewCell *cell=(TKCaseTextViewCell*)v;
-            if (cell.textView.becomeFirstResponder) {
+            if (cell.textView.isFirstResponder) {
                 [cell.textView resignFirstResponder];
                 break;
             }
@@ -385,40 +355,73 @@
     UITableViewCell *cell=(UITableViewCell*)v;
     NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
     CGRect r=[_tableView rectForRowAtIndexPath:indexPath];
-    r.origin.y+=120;
+    r.origin.y+=textView.frame.origin.y*2+textView.frame.size.height;
     
-    if (r.origin.y+216>self.view.frame.size.height) {//往上移动
-        [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+    
+    
+    CGFloat h=r.origin.y+216+10;
+    if (h>_tableView.frame.size.height&&h<_tableView.contentSize.height) {
+        [_tableView setContentOffset:CGPointMake(0,h-_tableView.frame.size.height) animated:YES];
     }
-   
+    if (h>_tableView.contentSize.height) {
+        int offset=r.origin.y-(_tableView.frame.size.height-216);
+        if (offset>0) {
+            [UIView animateWithDuration:0.3f animations:^{
+                _tableView.contentInset=UIEdgeInsetsMake(-offset, 0, 0, 0);
+            }];
+            
+        }
+    }
+    /***
+    if (_tableView.frame.size.height-216-10>r.origin.y) {
+        [_tableView setContentOffset:CGPointMake(0, r.origin.y) animated:YES];
+    }else{
+        int offset=r.origin.y-(_tableView.frame.size.height-216);
+        if (offset>0) {
+            _tableView.contentInset=UIEdgeInsetsMake(-offset, 0, 0, 0);
+        }
+    }
+     ***/
 }
 #pragma mark UITextFieldDelegate Methods
 -(void)textFieldDidBeginEditing:(UITextField *)textField {
-     /***
+    
     id v=[textField superview];
     while (![v isKindOfClass:[UITableViewCell class]]) {
         v=[v superview];
     }
     UITableViewCell *cell=(UITableViewCell*)v;
     NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
-    [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-   ***/
-     CGRect frame = [self fieldToRect:textField];
-    //NSLog(@"frame=%@",NSStringFromCGRect(frame));
-     int offset = frame.origin.y- (self.view.frame.size.height - 216.0);//键盘高度216
+    CGRect r=[_tableView rectForRowAtIndexPath:indexPath];
+    r.origin.y+=textField.frame.origin.y*2+textField.frame.size.height;
     
-     
-     NSTimeInterval animationDuration = 0.30f;
-     [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
-     [UIView setAnimationDuration:animationDuration];
-     
-     //将视图的Y坐标向上移动offset个单位，以使下面腾出地方用于软键盘的显示
-     if(offset > 0)
-     {
-        self.view.frame = CGRectMake(0.0f, -offset, self.orginFrame.size.width, self.orginFrame.size.height);
-     }
-     [UIView commitAnimations];
     
+    CGFloat h=r.origin.y+216+10;
+    if (h>_tableView.frame.size.height&&h<_tableView.contentSize.height) {
+        [_tableView setContentOffset:CGPointMake(0,h-_tableView.frame.size.height) animated:YES];
+    }
+    if (h>_tableView.contentSize.height) {
+        int offset=r.origin.y-(_tableView.frame.size.height-216);
+        if (offset>0) {
+            [UIView animateWithDuration:0.3f animations:^{
+                _tableView.contentInset=UIEdgeInsetsMake(-offset, 0, 0, 0);
+            }];
+            
+        }
+    }
+
+    /***
+    if (r.origin.y+216+10>_tableView.frame.size.height) {
+        if (_tableView.frame.size.height-216-10>r.origin.y) {
+            [_tableView setContentOffset:CGPointMake(0, r.origin.y) animated:YES];
+        }else{
+            int offset=r.origin.y-(_tableView.frame.size.height-216);
+            if (offset>0) {
+                _tableView.contentInset=UIEdgeInsetsMake(-offset, 0, 0, 0);
+            }
+        }
+    }
+    ***/
     
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{

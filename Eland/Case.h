@@ -38,9 +38,11 @@
 @property(nonatomic,readonly) NSString *CaseCagegoryName;//项目分类名称
 @property(nonatomic,readonly) NSString *ApplyDateText;//通报日期
 @property(nonatomic,readonly) NSString *HandlerMemo;//办理情形
+@property(nonatomic,readonly) int HRType;
 -(NSString*)XmlSerialize;
 +(Case*)xmlStringToCase:(NSString*)xml;
 -(NSString*)getFieldValue:(NSString*)propertyname;
+-(NSString*)getCaseFieldValue:(NSString*)fieldName;
 -(NSArray*)imageURLs;
 
 -(void)objectValue:(id)value objectKey:(NSString*)name;
