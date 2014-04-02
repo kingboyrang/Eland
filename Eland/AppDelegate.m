@@ -46,6 +46,7 @@
                 XmlNode *node=[result.xmlParse soapXmlSelectSingleNode:@"//RegisterResult"];
                 xml=[node.Value stringByReplacingOccurrencesOfString:@"xmlns=\"Result\"" withString:@""];
                 [result.xmlParse setDataSource:xml];
+                NSLog(@"xml=%@",xml);
                 XmlNode *resultNode=[result.xmlParse selectSingleNode:@"//Success"];
                 if ([resultNode.Value isEqualToString:@"true"]) {
                     boo=YES;

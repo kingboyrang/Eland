@@ -8,6 +8,8 @@
 
 #import "ServiceArgs.h"
 
+#define defaultSoap12Message @"<?xml version=\"1.0\" encoding=\"utf-8\"?><soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\"><soap12:Body>%@</soap12:Body></soap12:Envelope>"
+
 @interface ServiceArgs()
 -(NSString*)paramsFormatString:(NSArray*)params;
 @end
@@ -42,10 +44,13 @@ static NSString *defaultWebServiceNameSpace=PushNameSpace;
 #pragma mark -
 #pragma mark 属性重写
 -(NSString*)defaultSoapMesage{
+    return defaultSoap12Message;
+    /***
     NSString *soapBody=@"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
     "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
     "<soap:Body>%@</soap:Body></soap:Envelope>";
     return soapBody;
+     ***/
 }
 -(NSURL*)webURL{
     return [NSURL URLWithString:[self serviceURL]];

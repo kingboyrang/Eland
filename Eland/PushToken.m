@@ -36,7 +36,6 @@
     ServiceArgs *args=[[[ServiceArgs alloc] init] autorelease];
     args.methodName=@"Register";
     args.soapParams=[NSArray arrayWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:[push XmlSerialize],@"xml", nil], nil];
-    
     return args;
 }
 @end

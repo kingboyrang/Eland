@@ -36,7 +36,7 @@
 
 //推播中心WebService的URL地址
 #define PushWebserviceURL [NSString stringWithFormat:@"%@WebServices/Push.asmx",DataPushUrlPre]
-#define PushNameSpace @"http://tempuri.org/"
+#define PushNameSpace @"http://CIRMSG.e-land.gov.tw/"
 
 //数据请求地址
 // 取得項目鄉鎮市 - GET
