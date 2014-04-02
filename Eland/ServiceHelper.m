@@ -50,10 +50,10 @@
 	
     //以下对请求信息添加属性前四句是必有的，第五句是soap信息。
 	[request addRequestHeader:@"Host" value:[args.webURL host]];
-    [request addRequestHeader:@"Content-Type" value:@"application/soap+xml; charset=utf-8"];
-    //[request addRequestHeader:@"Content-Type" value:@"text/xml; charset=utf-8"];
+    //[request addRequestHeader:@"Content-Type" value:@"application/soap+xml; charset=utf-8"];
+    [request addRequestHeader:@"Content-Type" value:@"text/xml; charset=utf-8"];
 	[request addRequestHeader:@"Content-Length" value:msgLength];
-    //[request addRequestHeader:@"SOAPAction" value:[self soapAction:args.serviceNameSpace methodName:args.methodName]];
+    [request addRequestHeader:@"SOAPAction" value:[self soapAction:args.serviceNameSpace methodName:args.methodName]];
     [request setRequestMethod:@"POST"];
     //设置用户信息
     //[request setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:args.methodName,@"name", nil]];
@@ -82,10 +82,10 @@
 	
     //以下对请求信息添加属性前四句是必有的，第五句是soap信息。
 	[self.httpRequest addRequestHeader:@"Host" value:[args.webURL host]];
-    [self.httpRequest addRequestHeader:@"Content-Type" value:@"application/soap+xml; charset=utf-8"];
-    //[self.httpRequest addRequestHeader:@"Content-Type" value:@"text/xml; charset=utf-8"];
+    //[self.httpRequest addRequestHeader:@"Content-Type" value:@"application/soap+xml; charset=utf-8"];
+    [self.httpRequest addRequestHeader:@"Content-Type" value:@"text/xml; charset=utf-8"];
 	[self.httpRequest addRequestHeader:@"Content-Length" value:msgLength];
-    //[self.httpRequest addRequestHeader:@"SOAPAction" value:[self soapAction:args.serviceNameSpace methodName:args.methodName]];
+    [self.httpRequest addRequestHeader:@"SOAPAction" value:[self soapAction:args.serviceNameSpace methodName:args.methodName]];
     [self.httpRequest setRequestMethod:@"POST"];
     //设置用户信息
     [self.httpRequest setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:args.methodName,@"name", nil]];
@@ -143,10 +143,10 @@
 
     //以下对请求信息添加属性前四句是必有的，第五句是soap信息。
 	[self.httpRequest addRequestHeader:@"Host" value:[args.webURL host]];
-    [self.httpRequest addRequestHeader:@"Content-Type" value:@"application/soap+xml; charset=utf-8"];
-    //[self.httpRequest addRequestHeader:@"Content-Type" value:@"text/xml; charset=utf-8"];
+    //[self.httpRequest addRequestHeader:@"Content-Type" value:@"application/soap+xml; charset=utf-8"];
+    [self.httpRequest addRequestHeader:@"Content-Type" value:@"text/xml; charset=utf-8"];
 	[self.httpRequest addRequestHeader:@"Content-Length" value:msgLength];
-    //[self.httpRequest addRequestHeader:@"SOAPAction" value:[self soapAction:args.serviceNameSpace methodName:args.methodName]];
+    [self.httpRequest addRequestHeader:@"SOAPAction" value:[self soapAction:args.serviceNameSpace methodName:args.methodName]];
     [self.httpRequest setRequestMethod:@"POST"];
     //设置用户信息
     //[self.httpRequest setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:args.methodName,@"name", nil]];
