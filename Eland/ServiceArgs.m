@@ -44,13 +44,12 @@ static NSString *defaultWebServiceNameSpace=PushNameSpace;
 #pragma mark -
 #pragma mark 属性重写
 -(NSString*)defaultSoapMesage{
-    return defaultSoap12Message;
-    /***
+    //return defaultSoap12Message;
+
     NSString *soapBody=@"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
     "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
     "<soap:Body>%@</soap:Body></soap:Envelope>";
     return soapBody;
-     ***/
 }
 -(NSURL*)webURL{
     return [NSURL URLWithString:[self serviceURL]];
