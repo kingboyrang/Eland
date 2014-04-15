@@ -48,6 +48,7 @@
 -(void)insertAndRemoveRows;
 -(void)updateCaseCityShowWithType:(int)type;
 -(CGRect)fieldToRect:(UITextField*)field;
+- (NSInteger)getCityDownRowCell;
 @end
 
 @implementation CaseAddViewController
@@ -796,29 +797,39 @@
         return 44.0;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-        if (indexPath.row==1) {
-            //TKCaseDownListCell *cell=self.cells[1];
-            //[self buttonCaseCategoryClick:cell.field1 CaseCategoryGUID:self.Entity.GUID];
-        }
-        if (indexPath.row==3) {
-            if (self.Entity.showCityDown) {
-                //隐藏键盘
-                for (id v in self.cells) {
-                    if ([v isKindOfClass:[TKCaseTextFieldCell class]]) {
-                        TKCaseTextFieldCell *cell=(TKCaseTextFieldCell*)v;
-                        //[cell.field resignFirstResponder];
-                        [self textFieldShouldReturn:cell.field];
-                    }
-                    if ([v isKindOfClass:[TKCaseTextViewCell class]]) {
-                        TKCaseTextViewCell *cell=(TKCaseTextViewCell*)v;
-                        [cell.textView resignFirstResponder];
-                    }
-                }
-                
-                TKCaseTextFieldCell *cell=self.cells[3];
-                [self buttonCaseCityClick:cell];
+    NSInteger index=[self getCityDownRowCell];
+    if (index==indexPath.row) {
+        //隐藏键盘
+        for (id v in self.cells) {
+            if ([v isKindOfClass:[TKCaseTextFieldCell class]]) {
+                TKCaseTextFieldCell *cell=(TKCaseTextFieldCell*)v;
+                //[cell.field resignFirstResponder];
+                [self textFieldShouldReturn:cell.field];
+            }
+            if ([v isKindOfClass:[TKCaseTextViewCell class]]) {
+                TKCaseTextViewCell *cell=(TKCaseTextViewCell*)v;
+                [cell.textView resignFirstResponder];
             }
         }
+        
+        TKCaseTextFieldCell *cell=self.cells[index];
+        [self buttonCaseCityClick:cell];
+    }
     
+}
+- (NSInteger)getCityDownRowCell{
+   if (self.Entity.showCityDown) {
+       NSInteger index=0;
+        for (id v in self.cells) {
+            if ([v isKindOfClass:[TKCaseTextFieldCell class]]) {
+                TKCaseTextFieldCell *cell=(TKCaseTextFieldCell*)v;
+                if ([cell.LabelName isEqualToString:@"CityGuid"]) {
+                    return index;
+                }
+            }
+            index++;
+        }
+   }
+   return -1;
 }
 @end
