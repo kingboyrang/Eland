@@ -87,6 +87,7 @@
     
     //NSLog(@"GUID=%@",self.Entity.GUID);
     CGRect r=self.view.bounds;
+    //r.size.height-=44;
     _tableView=[[UITableView alloc] initWithFrame:r style:UITableViewStylePlain];
     _tableView.dataSource=self;
     _tableView.delegate=self;
@@ -153,7 +154,7 @@
     //如果键盘是显示状态，不用做重复的操作
     if (keyboardShown)
         return;
-    
+    NSLog(@"textView 键盘显示2");
     //获得键盘通知的用户信息字典
     NSDictionary* info = [aNotification userInfo];
     
@@ -177,8 +178,9 @@
     oldContentOffsetValue = [_tableView contentOffset].y;
     
     //计算textField滚动到的适当位置
-    CGFloat value = (textFieldRect.origin.y+_tableView.frame.origin.y+textFieldRect.size.height - self.view.frame.size.height + keyboardSize.height)+2.0f;
+    CGFloat value = (textFieldRect.origin.y+_tableView.frame.origin.y+textFieldRect.size.height - self.view.bounds.size.height + keyboardSize.height)+2.0f;
     
+    NSLog(@"textView 键盘显示3 value=%f",value);
     //value>0则表示需要滚动，小于0表示当前textField没有被挡住，不需要滚动
     if (value > 0) {
         //使textField滚动到适当位置
@@ -420,6 +422,7 @@
 #pragma mark UITextViewDelegate Methods
 - (void)textViewDidBeginEditing:(UITextView *)textView{
     self.activeView=textView;
+    NSLog(@"textView 得到焦点1");
 }
 #pragma mark UITextFieldDelegate Methods
 -(void)textFieldDidBeginEditing:(UITextField *)textField {
@@ -741,7 +744,6 @@
 #pragma mark -
 #pragma mark UITableViewDelegate Methods
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-   
         if ([self.cells[indexPath.row] isKindOfClass:[TKCaseTextCell class]]) {
             TKCaseTextCell *cell=self.cells[indexPath.row];
             CGSize size=[cell.label.text textSize:[UIFont boldSystemFontOfSize:16.0] withWidth:self.view.bounds.size.width-2*10];

@@ -33,7 +33,7 @@
 - (void) layoutSubviews {
     [super layoutSubviews];
     CGRect frame=CGRectInset(self.bounds, 10, 12);
-    frame.origin.y=(64-frame.size.height)/2.0;
+    frame.origin.y=(self.frame.size.height-frame.size.height)/2.0;
     _button.frame=frame;
     
    

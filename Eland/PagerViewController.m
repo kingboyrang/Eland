@@ -35,7 +35,7 @@
     CGFloat topY=h;
     
     self.scrollView=[[UIScrollView alloc] initWithFrame:CGRectMake(0, topY, self.view.bounds.size.width, self.view.bounds.size.height-topY)];
-    self.scrollView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    //self.scrollView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     self.scrollView.backgroundColor=[UIColor clearColor];
 	// Do any additional setup after loading the view, typically from a nib.
 	[self.scrollView setPagingEnabled:NO];
@@ -49,6 +49,8 @@
     
     [self.view addSubview:self.scrollView];
     [self.view addSubview:self.pageControl];
+    
+    NSLog(@"scrollView frame=%@",NSStringFromCGRect(self.scrollView.frame));
 }
 #pragma mark 旋转处理
 - (BOOL)automaticallyForwardAppearanceAndRotationMethodsToChildViewControllers {
@@ -238,6 +240,7 @@
     _pageControlUsed = YES;
     _page=index;
    
+     NSLog(@"changePageIndex scrollView frame=%@",NSStringFromCGRect(self.scrollView.frame));
     
 }
 - (IBAction)changePage:(id)sender {

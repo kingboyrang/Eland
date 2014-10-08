@@ -72,7 +72,13 @@
     self.isLandscape=NO;
     //横竖屏检测
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(detectShowOrientation) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
-    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTintColor:[UIColor colorFromHexRGB:@"5cc2cb"]];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue]<7.0) {
+         [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTintColor:[UIColor colorFromHexRGB:@"5cc2cb"]];
+    }else{
+       [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTintColor:[UIColor whiteColor]];
+    }
+    
+   
     //检测是否有网络
     NetWorkConnection *network=[NetWorkConnection sharedInstance];
     network.hasNewWork=YES;
