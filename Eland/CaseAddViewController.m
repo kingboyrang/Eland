@@ -107,56 +107,127 @@
 	[self loadingFormFields];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleKeyboardWillShowHideNotification:)
+                                             selector:@selector(handleKeyboardWillShowNotification:)
                                                  name:UIKeyboardDidShowNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleKeyboardWillShowHideNotification:)
+                                             selector:@selector(handleKeyboardWillHideNotification:)
                                                  name:UIKeyboardDidHideNotification
                                                object:nil];
     
     
 }
-#pragma mark - Notifications
-- (void)handleKeyboardWillShowHideNotification:(NSNotification *)notification
-{
-    NSDictionary *info = [notification userInfo];
-    //取得键盘的大小
-    //CGRect kbFrame = [[info valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    if ([notification.name isEqualToString:UIKeyboardDidShowNotification]) {//显示键盘
-               
+- (CGRect)getActiveFrame{
+    if (self.activeView) {
+        if ([self.activeView isKindOfClass:[UITextField class]]) {
+            UITextField *field=(UITextField*)self.activeView;
+            id v=[field superview];
+            while (![v isKindOfClass:[UITableViewCell class]]) {
+                v=[v superview];
+            }
+            UITableViewCell *cell=(UITableViewCell*)v;
+            NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
+            CGRect r=[_tableView rectForRowAtIndexPath:indexPath];
+            //r.size.height+=field.frame.origin.y;
+            return r;
+            //return field.frame;
+        }
+        if ([self.activeView isKindOfClass:[UITextView class]]) {
+            UITextView *field=(UITextView*)self.activeView;
+            id v=[field superview];
+            while (![v isKindOfClass:[UITableViewCell class]]) {
+                v=[v superview];
+            }
+            UITableViewCell *cell=(UITableViewCell*)v;
+            NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
+            return [_tableView rectForRowAtIndexPath:indexPath];
+            //return field.frame;
+        }
     }
-    else if ([notification.name isEqualToString:UIKeyboardDidHideNotification]) {//隐藏键盘
-
-        NSTimeInterval animationDuration = [[info valueForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-        [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
-        [UIView setAnimationDuration:animationDuration];
-        //将视图的Y坐标向上移动offset个单位，以使下面腾出地方用于软键盘的显示
-        _tableView.contentInset=UIEdgeInsetsZero;
-        [UIView commitAnimations];
-    }
+    return CGRectZero;
 }
+#pragma mark - Notifications
+- (void)handleKeyboardWillShowNotification:(NSNotification *)aNotification
+{
+    //如果键盘是显示状态，不用做重复的操作
+    if (keyboardShown)
+        return;
+    
+    //获得键盘通知的用户信息字典
+    NSDictionary* info = [aNotification userInfo];
+    
+    // 取得键盘尺寸.
+    NSValue* aValue = [info objectForKey:UIKeyboardBoundsUserInfoKey];
+    CGSize keyboardSize = [aValue CGRectValue].size;
+    
+    // 重新设置scrollView的size
+    CGRect viewFrame = [_tableView frame];
+    viewFrame.size.height -= keyboardSize.height;
+    _tableView.frame = viewFrame;
+    
+    
+    // 把当前被挡住的text field滚动到view中适当的可见位置.
+    CGRect textFieldRect = [self getActiveFrame];
+    NSLog(@"textFieldRect frame=%@",NSStringFromCGRect(textFieldRect));
+    [_tableView scrollRectToVisible:textFieldRect animated:YES];
+    
+    
+    //记录当前textField的偏移量，方便隐藏键盘时，恢复textField到原来位置
+    oldContentOffsetValue = [_tableView contentOffset].y;
+    
+    //计算textField滚动到的适当位置
+    CGFloat value = (textFieldRect.origin.y+_tableView.frame.origin.y+textFieldRect.size.height - self.view.frame.size.height + keyboardSize.height)+2.0f;
+    
+    //value>0则表示需要滚动，小于0表示当前textField没有被挡住，不需要滚动
+    if (value > 0) {
+        //使textField滚动到适当位置
+        [_tableView setContentOffset:CGPointMake(0, value) animated:YES];
+        isNeedSetOffset = YES;//更改状态标志为需要滚动
+    }
+    
+    //更改键盘状态标志为已显示
+    keyboardShown = YES;
 
+}
+- (void)handleKeyboardWillHideNotification:(NSNotification *)aNotification{
+    NSDictionary* info = [aNotification userInfo];
+    
+    // Get the size of the keyboard.
+    CGRect kbFrame = [[info valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    //NSValue* aValue = [info objectForKey:UIKeyboardBoundsUserInfoKey];
+    CGSize keyboardSize = kbFrame.size;
+    
+    // Reset the height of the scroll view to its original value
+    CGRect viewFrame = [_tableView frame];
+    viewFrame.size.height += keyboardSize.height;
+    _tableView.frame = viewFrame;
+    
+    //如果状态标志为需要滚动，则要执行textFiled复位操作
+    if (isNeedSetOffset) {
+        //oldContentOffsetValue记录了textField原来的位置，复位即可
+        [_tableView setContentOffset:CGPointMake(0, oldContentOffsetValue) animated:YES];
+    }
+    
+    //复位状态标志
+    isNeedSetOffset = NO;
+    keyboardShown = NO;
+    self.activeView=nil;
+}
 -(void)done:(id)sender
 {
    
-    for (id v in self.cells) {
-        if ([v isKindOfClass:[TKCaseTextFieldCell class]]) {
-            TKCaseTextFieldCell *cell=(TKCaseTextFieldCell*)v;
-            if (cell.field.isFirstResponder) {
-                [cell.field resignFirstResponder];
-                break;
-            }
+    if (self.activeView) {
+        if ([self.activeView isKindOfClass:[UITextField class]]) {
+            UITextField *field=(UITextField*)self.activeView;
+            [field resignFirstResponder];
         }
-        if ([v isKindOfClass:[TKCaseTextViewCell class]]) {
-            TKCaseTextViewCell *cell=(TKCaseTextViewCell*)v;
-            if (cell.textView.isFirstResponder) {
-                [cell.textView resignFirstResponder];
-                break;
-            }
+        if ([self.activeView isKindOfClass:[UITextView class]]) {
+            UITextView *field=(UITextView*)self.activeView;
+            [field resignFirstResponder];
         }
     }
+    self.activeView=nil;
 }
 -(void)updateFormUI{
     
@@ -348,82 +419,11 @@
 }
 #pragma mark UITextViewDelegate Methods
 - (void)textViewDidBeginEditing:(UITextView *)textView{
-   
-    id v=[textView superview];
-    while (![v isKindOfClass:[UITableViewCell class]]) {
-        v=[v superview];
-    }
-    UITableViewCell *cell=(UITableViewCell*)v;
-    NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
-    CGRect r=[_tableView rectForRowAtIndexPath:indexPath];
-    r.origin.y+=textView.frame.origin.y*2+textView.frame.size.height;
-    
-    
-    
-    CGFloat h=r.origin.y+216+10;
-    if (h>_tableView.frame.size.height&&h<_tableView.contentSize.height) {
-        [_tableView setContentOffset:CGPointMake(0,h-_tableView.frame.size.height) animated:YES];
-    }
-    if (h>_tableView.contentSize.height) {
-        int offset=r.origin.y-(_tableView.frame.size.height-216);
-        if (offset>0) {
-            [UIView animateWithDuration:0.3f animations:^{
-                _tableView.contentInset=UIEdgeInsetsMake(-offset, 0, 0, 0);
-            }];
-            
-        }
-    }
-    /***
-    if (_tableView.frame.size.height-216-10>r.origin.y) {
-        [_tableView setContentOffset:CGPointMake(0, r.origin.y) animated:YES];
-    }else{
-        int offset=r.origin.y-(_tableView.frame.size.height-216);
-        if (offset>0) {
-            _tableView.contentInset=UIEdgeInsetsMake(-offset, 0, 0, 0);
-        }
-    }
-     ***/
+    self.activeView=textView;
 }
 #pragma mark UITextFieldDelegate Methods
 -(void)textFieldDidBeginEditing:(UITextField *)textField {
-    
-    id v=[textField superview];
-    while (![v isKindOfClass:[UITableViewCell class]]) {
-        v=[v superview];
-    }
-    UITableViewCell *cell=(UITableViewCell*)v;
-    NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
-    CGRect r=[_tableView rectForRowAtIndexPath:indexPath];
-    r.origin.y+=textField.frame.origin.y*2+textField.frame.size.height;
-    
-    
-    CGFloat h=r.origin.y+216+10;
-    if (h>_tableView.frame.size.height&&h<_tableView.contentSize.height) {
-        [_tableView setContentOffset:CGPointMake(0,h-_tableView.frame.size.height) animated:YES];
-    }
-    if (h>_tableView.contentSize.height) {
-        int offset=r.origin.y-(_tableView.frame.size.height-216);
-        if (offset>0) {
-            [UIView animateWithDuration:0.3f animations:^{
-                _tableView.contentInset=UIEdgeInsetsMake(-offset, 0, 0, 0);
-            }];
-            
-        }
-    }
-
-    /***
-    if (r.origin.y+216+10>_tableView.frame.size.height) {
-        if (_tableView.frame.size.height-216-10>r.origin.y) {
-            [_tableView setContentOffset:CGPointMake(0, r.origin.y) animated:YES];
-        }else{
-            int offset=r.origin.y-(_tableView.frame.size.height-216);
-            if (offset>0) {
-                _tableView.contentInset=UIEdgeInsetsMake(-offset, 0, 0, 0);
-            }
-        }
-    }
-    ***/
-    
+    self.activeView=textField;
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
@@ -582,8 +582,9 @@
     ASIFormDataRequest *request=[ASIFormDataRequest requestWithURL:[NSURL URLWithString:AddCaseURL]];
     [request setPostValue:[_caseArgs XmlSerialize] forKey:@"xml"];
     [request setRequestMethod:@"POST"];
-    [request setTimeOutSeconds:60.0];//表示30秒请求超时
+    [request setTimeOutSeconds:120.0];//表示30秒请求超时
     [request setCompletionBlock:^{
+        NSLog(@"responseString=%@",request.responseString);
         if (request.responseStatusCode==200) {
             NSString *xml=[request.responseString stringByReplacingOccurrencesOfString:@"xmlns=\"CaseAddResult\"" withString:@""];
             XmlParseHelper *parse=[[[XmlParseHelper alloc] initWithData:xml] autorelease];
@@ -597,6 +598,7 @@
         [ZAActivityBar showErrorWithStatus:@"送出失敗!" forAction:@"caseAdd"];
     }];
     [request setFailedBlock:^{
+        NSLog(@"送出失敗=%@",request.error.description);
         [ZAActivityBar showErrorWithStatus:@"送出失敗!" forAction:@"caseAdd"];
     }];
     [request startAsynchronous];

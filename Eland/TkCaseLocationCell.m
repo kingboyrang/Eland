@@ -63,6 +63,11 @@
 //定位
 -(void)buttonLocationClick{
     if (isLoading){return;}
+    //判断定位是否启用
+    if (![CLLocationManager locationServicesEnabled]) {
+        [AlertHelper initWithTitle:@"提示" message:@"定位未開啓，請在設置->隱私->定位服務->施政互動啓用!"];
+        return;
+    }
     isLoading=YES;
     [ZAActivityBar showWithStatus:@"正在定位..." forAction:@"caselocation"];
     [[LocationGPS sharedInstance] startLocation:^(SVPlacemark *place) {

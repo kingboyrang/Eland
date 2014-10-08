@@ -2,35 +2,37 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>6357E5BC-5A13-48E8-BD0E-B2FE829C22CD</string>
 	<key>IDESourceControlProjectName</key>
 	<string>Eland</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>716919A8-58DE-4FE5-A5C8-E48C94CA7260</key>
+		<key>1CFF84AA6EA102B9EE1206F94251FB6D02B12A12</key>
 		<string>https://github.com/kingboyrang/Eland.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Eland.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>716919A8-58DE-4FE5-A5C8-E48C94CA7260</key>
+		<key>1CFF84AA6EA102B9EE1206F94251FB6D02B12A12</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/kingboyrang/Eland.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>716919A8-58DE-4FE5-A5C8-E48C94CA7260</string>
+	<string>1CFF84AA6EA102B9EE1206F94251FB6D02B12A12</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>716919A8-58DE-4FE5-A5C8-E48C94CA7260</string>
+			<string>1CFF84AA6EA102B9EE1206F94251FB6D02B12A12</string>
 			<key>IDESourceControlWCCName</key>
 			<string>Eland</string>
 		</dict>

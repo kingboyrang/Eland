@@ -11,6 +11,8 @@
 #import "UIColor+TPCategory.h"
 #import "LocationGPS.h"
 #import "ZAActivityBar.h"
+#import "AlertHelper.h"
+#import <CoreLocation/CoreLocation.h>
 @implementation TKButtonLabelCell
 
 - (id) initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -47,6 +49,11 @@
 BOOL isLoading=NO;
 -(void)startLocation{
     if (isLoading){return;}
+    //判断定位是否启用
+    if (![CLLocationManager locationServicesEnabled]) {
+        [AlertHelper initWithTitle:@"提示" message:@"定位未開啓，請在設置->隱私->定位服務->施政互動啓用!"];
+        return;
+    }
     isLoading=YES;
     [ZAActivityBar showWithStatus:@"正在定位..." forAction:@"checklocation"];
     [[LocationGPS sharedInstance] startLocation:^(SVPlacemark *place) {

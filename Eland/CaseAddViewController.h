@@ -18,9 +18,16 @@
     Case *_caseArgs;
     int  _hrType;
     int  _prvHrTypeCount;
+    
+    //键盘处理
+    BOOL keyboardShown;
+    BOOL isNeedSetOffset;
+    CGFloat oldContentOffsetValue;
 }
 @property(nonatomic,strong) CaseSetting *Entity;
 @property(nonatomic,strong) NSMutableArray *cells;
+
+@property (nonatomic,assign) id activeView;
 //案件分类
 //-(void)selectedCaseCategory:(CaseCategory*)category;
 -(void)selectedCaseCategory:(CaseCategory*)category;
