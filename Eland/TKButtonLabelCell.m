@@ -56,14 +56,17 @@ BOOL isLoading=NO;
     }
     isLoading=YES;
     [ZAActivityBar showWithStatus:@"正在定位..." forAction:@"checklocation"];
-    [[LocationGPS sharedInstance] startLocation:^(SVPlacemark *place) {
+    LocationGPS *gps=[[LocationGPS alloc] init];
+    [gps startLocation:^(CLPlacemark *place) {
         [ZAActivityBar showSuccessWithStatus:@"定位成功!" forAction:@"checklocation"];
         _label.text=[NSString stringWithFormat:@"%f~%f",place.location.coordinate.longitude,place.location.coordinate.latitude];
         isLoading=NO;
+        
     } failed:^(NSError *error) {
         [ZAActivityBar showErrorWithStatus:@"定位失敗!" forAction:@"checklocation"];
         isLoading=NO;
     }];
+    
 }
 - (void) layoutSubviews {
     [super layoutSubviews];

@@ -123,10 +123,73 @@
     [[self.textView layer] setShadowColor:nil];
 	[self.textView.layer setBorderColor:_borderColor.CGColor];
 }
--(void)finishedLocation:(SVPlacemark*)place{
-    self.textView.text=place.formattedAddress;
-    if (self.delegate&&[self.delegate respondsToSelector:@selector(geographyLocation:)]) {
-        [self.delegate performSelector:@selector(geographyLocation:) withObject:place];
-    }
+-(void)finishedLocation:(CLPlacemark*)place{
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [geocoder reverseGeocodeLocation:place.location completionHandler:^(NSArray *array, NSError *error) {
+        if (array.count > 0) {
+            
+            CLPlacemark *placemark = [array objectAtIndex:0];
+            //country==> administrativeArea ==> locality==> subLocality=> thoroughfare
+            NSMutableString *address=[NSMutableString stringWithString:placemark.country];
+            if (placemark.administrativeArea) {
+                [address appendString:placemark.administrativeArea];
+            }
+            if (placemark.locality) {
+                [address appendString:placemark.locality];
+            }
+            if (placemark.subLocality) {
+                [address appendString:placemark.subLocality];
+            }
+            if (placemark.thoroughfare) {
+                [address appendString:placemark.thoroughfare];
+            }else if (placemark.name){
+                [address appendString:placemark.name];
+            }
+            
+            self.textView.text=address;
+            /***
+             @property (nonatomic, readonly) NSString *name; // eg. Apple Inc.
+             @property (nonatomic, readonly) NSString *thoroughfare; // street address, eg. 1 Infinite Loop
+             @property (nonatomic, readonly) NSString *subThoroughfare; // eg. 1
+             @property (nonatomic, readonly) NSString *locality; // city, eg. Cupertino
+             @property (nonatomic, readonly) NSString *subLocality; // neighborhood, common name, eg. Mission District
+             @property (nonatomic, readonly) NSString *administrativeArea; // state, eg. CA
+             @property (nonatomic, readonly) NSString *subAdministrativeArea; // county, eg. Santa Clara
+             @property (nonatomic, readonly) NSString *postalCode; // zip code, eg. 95014
+             @property (nonatomic, readonly) NSString *ISOcountryCode; // eg. US
+             @property (nonatomic, readonly) NSString *country; // eg. United States
+             @property (nonatomic, readonly) NSString *inlandWater; // eg. Lake Tahoe
+             @property (nonatomic, readonly) NSString *ocean; // eg. Pacific Ocean
+             @property (nonatomic, readonly) NSArray *areasOfInterest;
+             ***/
+            
+            NSLog(@"name=%@",placemark.name);
+            NSLog(@"thoroughfare=%@",placemark.thoroughfare);
+            NSLog(@"subThoroughfare=%@",placemark.subThoroughfare);
+            NSLog(@"locality=%@",placemark.locality);
+            NSLog(@"subLocality=%@",placemark.subLocality);
+            NSLog(@"administrativeArea=%@",placemark.administrativeArea);
+            
+            NSLog(@"subAdministrativeArea=%@",placemark.subAdministrativeArea);
+            NSLog(@"postalCode=%@",placemark.postalCode);
+            NSLog(@"ISOcountryCode=%@",placemark.ISOcountryCode);
+            NSLog(@"country=%@",placemark.country);
+            NSLog(@"inlandWater=%@",placemark.inlandWater);
+            
+            NSLog(@"ocean=%@",placemark.ocean);
+            NSLog(@"areasOfInterest=%@",placemark.areasOfInterest);
+            
+           
+            
+          
+            
+            if (self.delegate&&[self.delegate respondsToSelector:@selector(geographyLocation:)]) {
+                [self.delegate performSelector:@selector(geographyLocation:) withObject:placemark];
+            }
+        }
+    }];
+    
+    
+    
 }
 @end

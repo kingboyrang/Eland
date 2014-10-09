@@ -194,7 +194,6 @@
 		01B831A617FCFC6C00EDB870 /* systemcheckbg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 01B831A517FCFC6C00EDB870 /* systemcheckbg.jpg */; };
 		01B831AA17FD03C700EDB870 /* TKButtonLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B831A917FD03C700EDB870 /* TKButtonLabelCell.m */; };
 		01B831AE17FD0C0D00EDB870 /* NetWorkConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B831AD17FD0C0D00EDB870 /* NetWorkConnection.m */; };
-		01B831B217FD123100EDB870 /* LocationGPS.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B831B117FD123100EDB870 /* LocationGPS.m */; };
 		01B831B817FD126000EDB870 /* SVGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B831B517FD126000EDB870 /* SVGeocoder.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		01B831B917FD126000EDB870 /* SVPlacemark.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B831B717FD126000EDB870 /* SVPlacemark.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		01B831BB17FD127D00EDB870 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01B831BA17FD127C00EDB870 /* CoreLocation.framework */; };
@@ -287,6 +286,7 @@
 		26A5BA5D17F072AC00A13AC6 /* aboutUs.txt in Resources */ = {isa = PBXBuildFile; fileRef = 26A5BA5C17F072AC00A13AC6 /* aboutUs.txt */; };
 		26A5BA6217F079A800A13AC6 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26A5BA6117F079A800A13AC6 /* CoreText.framework */; };
 		26A5BA6717F0887900A13AC6 /* RTLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A5BA6617F0887900A13AC6 /* RTLabel.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		26A789D319E6CE7900368CFE /* LocationGPS.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A789D219E6CE7900368CFE /* LocationGPS.m */; };
 		3E19397F19E62AFC00B9A589 /* ViewPagerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E19397E19E62AFC00B9A589 /* ViewPagerController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		3E19398219E62BBA00B9A589 /* HostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E19398119E62BBA00B9A589 /* HostViewController.m */; };
 		3E9260A619E52E4300B13327 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E92608619E52E4300B13327 /* MKAnnotationView+WebCache.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -615,8 +615,6 @@
 		01B831A917FD03C700EDB870 /* TKButtonLabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKButtonLabelCell.m; sourceTree = "<group>"; };
 		01B831AC17FD0C0D00EDB870 /* NetWorkConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetWorkConnection.h; sourceTree = "<group>"; };
 		01B831AD17FD0C0D00EDB870 /* NetWorkConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetWorkConnection.m; sourceTree = "<group>"; };
-		01B831B017FD123100EDB870 /* LocationGPS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationGPS.h; sourceTree = "<group>"; };
-		01B831B117FD123100EDB870 /* LocationGPS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationGPS.m; sourceTree = "<group>"; };
 		01B831B417FD126000EDB870 /* SVGeocoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVGeocoder.h; sourceTree = "<group>"; };
 		01B831B517FD126000EDB870 /* SVGeocoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVGeocoder.m; sourceTree = "<group>"; };
 		01B831B617FD126000EDB870 /* SVPlacemark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPlacemark.h; sourceTree = "<group>"; };
@@ -781,6 +779,8 @@
 		26A5BA6117F079A800A13AC6 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		26A5BA6517F0887900A13AC6 /* RTLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTLabel.h; sourceTree = "<group>"; };
 		26A5BA6617F0887900A13AC6 /* RTLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTLabel.m; sourceTree = "<group>"; };
+		26A789D119E6CE7900368CFE /* LocationGPS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationGPS.h; sourceTree = "<group>"; };
+		26A789D219E6CE7900368CFE /* LocationGPS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationGPS.m; sourceTree = "<group>"; };
 		3E19397D19E62AFC00B9A589 /* ViewPagerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewPagerController.h; sourceTree = "<group>"; };
 		3E19397E19E62AFC00B9A589 /* ViewPagerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewPagerController.m; sourceTree = "<group>"; };
 		3E19398019E62BBA00B9A589 /* HostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostViewController.h; sourceTree = "<group>"; };
@@ -1657,9 +1657,9 @@
 		01B831AF17FD122000EDB870 /* Location */ = {
 			isa = PBXGroup;
 			children = (
+				26A789D119E6CE7900368CFE /* LocationGPS.h */,
+				26A789D219E6CE7900368CFE /* LocationGPS.m */,
 				01B831B317FD125400EDB870 /* SVGeocoder */,
-				01B831B017FD123100EDB870 /* LocationGPS.h */,
-				01B831B117FD123100EDB870 /* LocationGPS.m */,
 			);
 			name = Location;
 			sourceTree = "<group>";
@@ -2172,7 +2172,6 @@
 				01C1B9E6180F748D0023972E /* CaseAddViewController.m in Sources */,
 				01B831AA17FD03C700EDB870 /* TKButtonLabelCell.m in Sources */,
 				01B831AE17FD0C0D00EDB870 /* NetWorkConnection.m in Sources */,
-				01B831B217FD123100EDB870 /* LocationGPS.m in Sources */,
 				01A7F575180E26FC00B49B2A /* TKShowImageCell.m in Sources */,
 				01B831B817FD126000EDB870 /* SVGeocoder.m in Sources */,
 				01B831B917FD126000EDB870 /* SVPlacemark.m in Sources */,
@@ -2219,6 +2218,7 @@
 				01A563D518024C4B004149BA /* WBInfoNoticeView.m in Sources */,
 				01EA09AE183F55B800F42D9E /* TKCaseLightNumberCell.m in Sources */,
 				01A563DC18025C89004149BA /* LevelCase.m in Sources */,
+				26A789D319E6CE7900368CFE /* LocationGPS.m in Sources */,
 				01A563DF1802600F004149BA /* CircularDetail.m in Sources */,
 				01A563E4180263BD004149BA /* TPSearchCell.m in Sources */,
 				01C1B9F0180FB48C0023972E /* TKCaseTextFieldCell.m in Sources */,

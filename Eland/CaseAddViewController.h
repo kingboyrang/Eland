@@ -36,7 +36,7 @@
 //鄉鎮市別
 -(void)selectedVillageTown:(CaseCity*)city;
 //取得经纬度
--(void)geographyLocation:(SVPlacemark*)place;
+-(void)geographyLocation:(CLPlacemark*)place;
 //路灯编号与地址之间的切换
 -(void)switchControlSelectedIndex:(NSInteger)index withObject:(id)sender;
 @end

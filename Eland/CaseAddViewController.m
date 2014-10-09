@@ -723,7 +723,7 @@
         [cell removeVerify];
     }
 }
--(void)geographyLocation:(SVPlacemark*)place{
+-(void)geographyLocation:(CLPlacemark*)place{
     _caseArgs.Extend.Lat=[NSString stringWithFormat:@"%f",place.location.coordinate.latitude];
     _caseArgs.Extend.Lng=[NSString stringWithFormat:@"%f",place.location.coordinate.longitude];
 }

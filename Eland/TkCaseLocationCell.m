@@ -70,9 +70,10 @@
     }
     isLoading=YES;
     [ZAActivityBar showWithStatus:@"正在定位..." forAction:@"caselocation"];
-    [[LocationGPS sharedInstance] startLocation:^(SVPlacemark *place) {
+    
+    LocationGPS *gps=[[LocationGPS alloc] init];
+    [gps startLocation:^(CLPlacemark *place) {
         [ZAActivityBar showSuccessWithStatus:@"定位成功!" forAction:@"caselocation"];
-        //_label.text=[NSString stringWithFormat:@"%f~%f",place.location.coordinate.longitude,place.location.coordinate.latitude];
         isLoading=NO;
         if (self.controller&&[self.controller respondsToSelector:@selector(finishedLocation:)]) {
             [self.controller performSelector:@selector(finishedLocation:) withObject:place];

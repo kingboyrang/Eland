@@ -10,12 +10,13 @@
 
 @interface LocationGPS()//私有方法
 //获取当前位置
--(void) loadCurrentLocation:(CLLocation*)newlocation;
+-(void) loadCurrentLocation:(CLLocation*)location;
 -(void) start;
 -(void) stop;
 @end
 
 @implementation LocationGPS
+@synthesize delegate;
 + (LocationGPS *)sharedInstance {
     static dispatch_once_t  onceToken;
     static LocationGPS * sSharedInstance;
@@ -24,6 +25,21 @@
         sSharedInstance = [[LocationGPS alloc] init];
     });
     return sSharedInstance;
+}
+-(id) init {
+    if (self = [super init]) {
+        if (!locationManager) {
+            locationManager = [[CLLocationManager alloc] init];
+            locationManager.delegate = self;
+            locationManager.desiredAccuracy=kCLLocationAccuracyBest;
+        }
+        //[self start];
+    }
+    return self;
+}
+-(void)startLocation:(id<LocationHelperDelegate>)theDelegate{
+    self.delegate=theDelegate;
+    [self start];
 }
 -(void)startLocation:(void(^)())progress completed:(finishLocationBlock)finish failed:(failedLocationBlock)failed{
     if (progress) {
@@ -44,20 +60,17 @@
 #pragma mark CLLocationManagerDelegate Methods
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
     //if the time interval returned from core location is more than two minutes we ignore it because it might be from an old session
-    /***
     if ( abs([newLocation.timestamp timeIntervalSinceDate: [NSDate date]]) < 120) {
-        [self stop];//停止定位
-        [self loadCurrentLocation:newLocation.coordinate];
+        [self loadCurrentLocation:newLocation];
+        
     }
-     ***/
-
-    [self stop];//停止定位
-    [self loadCurrentLocation:newLocation];
-    //CLLocation *currentLocation = [locations lastObject];
 }
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    if (_failedlocationBlock) {
-        _failedlocationBlock(error);
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(faildLocation:)]) {
+        [self.delegate faildLocation:error];
+        if (_failedlocationBlock) {
+            _failedlocationBlock(error);
+        }
     }
     
     [self stop];//停止定位
@@ -65,66 +78,49 @@
 #pragma mark -
 #pragma mark 私有方法
 -(void) start {
-    [self stop];//先停止
-    locationManager = [[CLLocationManager alloc] init];
-    locationManager.delegate = self;
-    locationManager.desiredAccuracy=kCLLocationAccuracyBest;
     [locationManager startUpdatingLocation];
 }
+
 -(void) stop {
-    if (locationManager) {
-        [locationManager stopUpdatingLocation];
-        locationManager.delegate=nil;
-        [locationManager release],locationManager=nil;
-    }
+    [locationManager stopUpdatingLocation];
 }
--(void) loadCurrentLocation:(CLLocation*)newlocation{
-    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    [geocoder reverseGeocodeLocation:newlocation completionHandler:^(NSArray *array, NSError *error) {
-        if (array.count > 0) {
-            CLPlacemark *placemark = [array objectAtIndex:0];
-            if (_finishlocationBlock) {
-                _finishlocationBlock(placemark);
-            }
-        }
-        if (error) {
-            if (_failedlocationBlock) {
-                _failedlocationBlock(error);
-            }
-        }
-    }];
-    /***
-    [SVGeocoder reverseGeocode:coor2D
+-(void) loadCurrentLocation:(CLLocation*)location{
+    float lat=location.coordinate.latitude;
+    float log=location.coordinate.longitude;
+    [SVGeocoder reverseGeocode:CLLocationCoordinate2DMake(lat,log)
                     completion:^(NSArray *placemarks, NSHTTPURLResponse *urlResponse, NSError *error) {
                         // do something with placemarks, handle errors
-                         NSLog(@"error=%@",error.description);
+                        
                         if ([placemarks count]>0) {
                             SVPlacemark *place=(SVPlacemark*)[placemarks objectAtIndex:0];
+                           
                             
+                            if (self.delegate&&[self.delegate respondsToSelector:@selector(finishLocation:info:)]) {
+                                [self.delegate finishLocation:place];
+                            }
                             if (_finishlocationBlock) {
                                 _finishlocationBlock(place);
                             }
                         }
                         
                         if (error) {
+                            if (self.delegate&&[self.delegate respondsToSelector:@selector(faildLocation:)]) {
+                                [self.delegate faildLocation:error];
+                            }
                             if (_failedlocationBlock) {
                                 _failedlocationBlock(error);
                             }
                         }
-                       
+                        [self stop];//停止定位
                         
                     }];
-     ***/
 
     
 }
 
 -(void)dealloc{
     [super dealloc];
-    if (locationManager) {
-        [locationManager stopUpdatingLocation];
-        [locationManager release],locationManager=nil;
-    }
+    [locationManager release];
     Block_release(_finishlocationBlock);
     Block_release(_failedlocationBlock);
 }
