@@ -129,7 +129,7 @@
             UITableViewCell *cell=(UITableViewCell*)v;
             NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
             CGRect r=[_tableView rectForRowAtIndexPath:indexPath];
-            //r.size.height+=field.frame.origin.y;
+            //return  [self.view convertRect:field.frame fromView:cell];
             return r;
             //return field.frame;
         }
@@ -141,6 +141,8 @@
             }
             UITableViewCell *cell=(UITableViewCell*)v;
             NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
+            
+            //return  [self.view convertRect:field.frame fromView:cell];
             return [_tableView rectForRowAtIndexPath:indexPath];
             //return field.frame;
         }
@@ -177,7 +179,7 @@
     oldContentOffsetValue = [_tableView contentOffset].y;
     
     //计算textField滚动到的适当位置
-    CGFloat value = (textFieldRect.origin.y+_tableView.frame.origin.y+textFieldRect.size.height - self.view.bounds.size.height + keyboardSize.height)+2.0f;
+    CGFloat value = (textFieldRect.origin.y+_tableView.frame.origin.y+textFieldRect.size.height - _tableView.bounds.size.height + keyboardSize.height)+2.0f;
     
     NSLog(@"textView 键盘显示3 value=%f",value);
     //value>0则表示需要滚动，小于0表示当前textField没有被挡住，不需要滚动
