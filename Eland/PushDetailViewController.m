@@ -45,6 +45,9 @@
 	_labTitle.backgroundColor=[UIColor colorFromHexRGB:@"dfdfdf"];
     _labTitle.font=[UIFont boldSystemFontOfSize:16];
     _labTitle.textColor=[UIColor colorFromHexRGB:@"3DB5C0"];
+    _labTitle.numberOfLines=0;
+    _labTitle.lineBreakMode=NSLineBreakByWordWrapping;
+    _labTitle.textAlignment=NSTextAlignmentCenter;
     [self.view addSubview:_labTitle];
     
     _textView=[[ShowPushDetail alloc] initWithFrame:CGRectMake(0, 40, self.view.bounds.size.width, self.view.bounds.size.height-40)];
@@ -59,13 +62,12 @@
     }
 }
 -(void)updateUIShow{
-    CGSize size=[self.Entity.Subject textSize:[UIFont boldSystemFontOfSize:16] withWidth:self.view.bounds.size.width];
+    CGSize size=[self.Entity.Subject textSize:_labTitle.font withWidth:self.view.bounds.size.width];
     CGRect frame=_labTitle.frame;
-    frame.size.height=size.height;
-    if (size.height<40) {
-        frame.size.height=40;
+    if (size.height>40) {
+        frame.size.height=size.height;
+        _labTitle.frame=frame;
     }
-    _labTitle.frame=frame;
     _labTitle.text=self.Entity.Subject;
     
     frame=_textView.frame;

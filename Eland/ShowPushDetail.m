@@ -28,6 +28,8 @@
         
         _label=[[RTLabel alloc] initWithFrame:self.bounds];
         _label.delegate=self;
+        _label.textColor=[UIColor colorFromHexRGB:@"666666"];
+        _label.font=[UIFont boldSystemFontOfSize:16];
         [self addSubview:_label];
     }
     return self;

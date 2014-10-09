@@ -74,6 +74,7 @@
     if (index==0) {
         RepairItemViewController *item=[[RepairItemViewController alloc] init];
         item.parentNavigation=self.navigationController;
+        item.parentTabBarController=self.tabBarController;
         return item;
     }else if(index==1){
         CaseSearchViewController *search=[[CaseSearchViewController alloc] init];

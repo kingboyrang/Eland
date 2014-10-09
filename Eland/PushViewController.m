@@ -12,6 +12,7 @@
 #import "PushDetailViewController.h"
 #import "UserSet.h"
 #import "AlertHelper.h"
+#import "NSString+TPCategory.h"
 @interface PushViewController (){
     UITableView *_tableView;
 }
@@ -156,7 +157,46 @@
     
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 53.0;
+    PushResult *entity=[self.listData objectAtIndex:indexPath.row];
+    
+    UIFont *font=[UIFont boldSystemFontOfSize:14];
+    CGSize size=[entity.formatDataTw textSize:font withWidth:self.view.bounds.size.width];
+    CGFloat w=self.view.bounds.size.width-size.width-20-10-2;
+    size=[entity.Subject textSize:font withWidth:w];
+    CGFloat h=2+size.height+2;
+    size=[[entity.HtmlBody Trim] textSize:font withWidth:self.view.bounds.size.width-30];
+    h+=size.height+2;
+    return h;
+    
+    /***
+     self.labSubject.text=args.Subject;
+     self.labBody.text=args.HtmlBody;
+     self.labApplyDate.text=[args formatDataTw];
+     ***/
+    /***
+    CGSize size=[_labApplyDate.text textSize:_labApplyDate.font withWidth:self.bounds.size.width];
+    CGRect frame=_labApplyDate.frame;
+    frame.origin.x=self.bounds.size.width-size.width-20;
+    frame.size=size;
+    _labApplyDate.frame=frame;
+    
+    frame=_labSubject.frame;
+    frame.size.width=_labApplyDate.frame.origin.x-frame.origin.x-2;
+    size=[_labSubject.text textSize:_labSubject.font withWidth:frame.size.width];
+    frame.size.height=size.height;
+    _labSubject.frame=frame;
+    
+    
+    NSString *memo=[_labBody.text Trim];
+    size=[memo textSize:_labBody.font withWidth:self.bounds.size.width-15];
+    frame=_labBody.frame;
+    frame.origin.y=_labSubject.frame.origin.y+_labSubject.frame.size.height+2;
+    frame.size=size;
+    _labBody.frame=frame;
+     ***/
+    
+    
+    //return 53.0;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
