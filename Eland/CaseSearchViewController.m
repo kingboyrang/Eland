@@ -61,7 +61,6 @@
     
     CGFloat h=44*4;
     _searchField=[[SearchField alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, h)];
-    _searchField.autoresizingMask=UIViewAutoresizingFlexibleWidth;
     [_searchField.buttonCell.button addTarget:self action:@selector(buttonSearch) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_searchField];
     
@@ -148,10 +147,18 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)showSuccessPassword:(LevelCase*)entity{
-    CaseDetailViewController *detail=[[CaseDetailViewController alloc] init];
-    detail.itemCase=entity;
-    [self.navigationController pushViewController:detail animated:YES];
-    [detail release];
+    if (self.navigationController) {
+        CaseDetailViewController *detail=[[CaseDetailViewController alloc] init];
+        detail.itemCase=entity;
+        [self.navigationController pushViewController:detail animated:YES];
+        [detail release];
+    }else if (self.parentNavigation) {
+        CaseDetailViewController *detail=[[CaseDetailViewController alloc] init];
+        detail.itemCase=entity;
+        [self.parentNavigation pushViewController:detail animated:YES];
+        [detail release];
+    }
+    
 }
 #pragma mark -
 #pragma mark 密码验证

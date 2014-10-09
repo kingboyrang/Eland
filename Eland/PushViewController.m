@@ -161,10 +161,17 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (self.navigationController) {
+        PushDetailViewController *controller=[[PushDetailViewController alloc] init];
+        controller.Entity=[self.listData objectAtIndex:indexPath.row];
+        [self.navigationController pushViewController:controller animated:YES];
+        [controller release];
+    }else if (self.parentNavigation){
+        PushDetailViewController *controller=[[PushDetailViewController alloc] init];
+        controller.Entity=[self.listData objectAtIndex:indexPath.row];
+        [self.parentNavigation pushViewController:controller animated:YES];
+        [controller release];
+    }
     
-    PushDetailViewController *controller=[[PushDetailViewController alloc] init];
-    controller.Entity=[self.listData objectAtIndex:indexPath.row];
-    [self.navigationController pushViewController:controller animated:YES];
-    [controller release];
 }
 @end

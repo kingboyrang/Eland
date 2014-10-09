@@ -16,6 +16,7 @@
 #import "BasicNagigationController.h"
 #import "PushResult.h"
 #import "PushDetailViewController.h"
+#import "HostViewController.h"
 //获取设备的物理高度
 #define ScreenHeight [UIScreen mainScreen].bounds.size.height
 #define TABRHEIGHT 44 //工具栏高度
@@ -77,7 +78,7 @@
 #pragma mark - UI
 //初始化子控制器
 - (void)_initViewController {
-    IndexViewController *index=[[[IndexViewController alloc] init] autorelease];
+    HostViewController *index=[[[HostViewController alloc] init] autorelease];
     BasicNagigationController *nav1=[[[BasicNagigationController alloc] initWithRootViewController:index] autorelease];
     nav1.delegate=self;
 

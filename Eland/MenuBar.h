@@ -16,4 +16,5 @@
 @property(nonatomic,readonly) int selectedIndex;
 @property(nonatomic,assign) id controlers;
 -(void)setSelectedItemIndex:(int)index;
+-(void)setSelectedButtonWithIndex:(int)index;
 @end

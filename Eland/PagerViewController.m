@@ -35,7 +35,6 @@
     CGFloat topY=h;
     
     self.scrollView=[[UIScrollView alloc] initWithFrame:CGRectMake(0, topY, self.view.bounds.size.width, self.view.bounds.size.height-topY)];
-    //self.scrollView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     self.scrollView.backgroundColor=[UIColor clearColor];
 	// Do any additional setup after loading the view, typically from a nib.
 	[self.scrollView setPagingEnabled:NO];
@@ -51,58 +50,6 @@
     [self.view addSubview:self.pageControl];
     
     NSLog(@"scrollView frame=%@",NSStringFromCGRect(self.scrollView.frame));
-}
-#pragma mark 旋转处理
-- (BOOL)automaticallyForwardAppearanceAndRotationMethodsToChildViewControllers {
-	return NO;
-}
-/***
-- (BOOL)shouldAutorotate{
-    return YES;
-}
-- (NSUInteger)supportedInterfaceOrientations{
-    return UIInterfaceOrientationMaskLandscapeLeft|UIInterfaceOrientationMaskLandscapeRight|UIInterfaceOrientationMaskPortrait;
-}
- ***/
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-	return YES;
-}
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-	UIViewController *viewController = [self.childViewControllers objectAtIndex:self.pageControl.currentPage];
-	[viewController willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-	_rotating = YES;
-}
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-                                         duration:(NSTimeInterval)duration{
-    NSLog(@"1=====1");
-    
-	UIViewController *viewController = [self.childViewControllers objectAtIndex:self.pageControl.currentPage];
-	[viewController willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
-	
-	self.scrollView.contentSize = CGSizeMake(scrollView.frame.size.width * [self.childViewControllers count], scrollView.frame.size.height);
-    NSLog(@"size=%@\n",NSStringFromCGSize(self.scrollView.contentSize));
-    
-	NSUInteger page = 0;
-	for (viewController in self.childViewControllers) {
-		CGRect frame = self.scrollView.frame;
-		frame.origin.x = frame.size.width * page;
-		frame.origin.y = 0;
-		viewController.view.frame = frame;
-		page++;
-	}
-	
-	CGRect frame = self.scrollView.frame;
-    frame.origin.x = frame.size.width * _page;
-    frame.origin.y = 0;
-	[self.scrollView scrollRectToVisible:frame animated:NO];
-
-}
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-	_rotating = NO;
-	UIViewController *viewController = [self.childViewControllers objectAtIndex:self.pageControl.currentPage];
-	[viewController didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 #pragma mark -
 #pragma mark viewcontrols出现处理
@@ -173,6 +120,7 @@
         frame.origin.x = frame.size.width * page;
         frame.origin.y = 0;
         controller.view.frame = frame;
+        NSLog(@"controller frame=%@",NSStringFromCGRect(frame));
         [self.scrollView addSubview:controller.view];
     }
 }

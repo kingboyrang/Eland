@@ -11,6 +11,7 @@
 @interface PushViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>{
     ServiceHelper *_helper;
 }
+@property(nonatomic,strong) UINavigationController *parentNavigation;
 @property(nonatomic,retain) NSMutableArray *listData;
 -(void)relayout:(BOOL)isLand;
 @end

@@ -18,6 +18,7 @@
     PullingRefreshTableView *_tableView;
     ShakeView *_shakeView;
 }
+@property(nonatomic,strong) UINavigationController *parentNavigation;
 @property(nonatomic,strong) ASIFormDataRequest *helper;
 @property (nonatomic) BOOL refreshing;
 @property (nonatomic,strong) NSMutableArray *list;

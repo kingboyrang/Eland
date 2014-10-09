@@ -288,6 +288,8 @@
 		26A5BA5D17F072AC00A13AC6 /* aboutUs.txt in Resources */ = {isa = PBXBuildFile; fileRef = 26A5BA5C17F072AC00A13AC6 /* aboutUs.txt */; };
 		26A5BA6217F079A800A13AC6 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26A5BA6117F079A800A13AC6 /* CoreText.framework */; };
 		26A5BA6717F0887900A13AC6 /* RTLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A5BA6617F0887900A13AC6 /* RTLabel.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		3E19397F19E62AFC00B9A589 /* ViewPagerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E19397E19E62AFC00B9A589 /* ViewPagerController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		3E19398219E62BBA00B9A589 /* HostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E19398119E62BBA00B9A589 /* HostViewController.m */; };
 		3E9260A619E52E4300B13327 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E92608619E52E4300B13327 /* MKAnnotationView+WebCache.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		3E9260A719E52E4300B13327 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E92608819E52E4300B13327 /* NSData+ImageContentType.m */; };
 		3E9260A819E52E4300B13327 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E92608A19E52E4300B13327 /* SDImageCache.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -781,6 +783,10 @@
 		26A5BA6117F079A800A13AC6 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		26A5BA6517F0887900A13AC6 /* RTLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTLabel.h; sourceTree = "<group>"; };
 		26A5BA6617F0887900A13AC6 /* RTLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTLabel.m; sourceTree = "<group>"; };
+		3E19397D19E62AFC00B9A589 /* ViewPagerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewPagerController.h; sourceTree = "<group>"; };
+		3E19397E19E62AFC00B9A589 /* ViewPagerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewPagerController.m; sourceTree = "<group>"; };
+		3E19398019E62BBA00B9A589 /* HostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostViewController.h; sourceTree = "<group>"; };
+		3E19398119E62BBA00B9A589 /* HostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostViewController.m; sourceTree = "<group>"; };
 		3E92608519E52E4300B13327 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		3E92608619E52E4300B13327 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		3E92608719E52E4300B13327 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
@@ -1327,6 +1333,10 @@
 		0191799F17FAB5C4000188BD /* index */ = {
 			isa = PBXGroup;
 			children = (
+				3E19398019E62BBA00B9A589 /* HostViewController.h */,
+				3E19398119E62BBA00B9A589 /* HostViewController.m */,
+				3E19397D19E62AFC00B9A589 /* ViewPagerController.h */,
+				3E19397E19E62AFC00B9A589 /* ViewPagerController.m */,
 				01B38F7F17FBB35A0011EE56 /* PagerViewController.h */,
 				01B38F8017FBB35A0011EE56 /* PagerViewController.m */,
 				0191799C17FAB5B8000188BD /* MenuBar.h */,
@@ -2173,6 +2183,7 @@
 				01B831C917FD480300EDB870 /* Case.m in Sources */,
 				01B831CC17FD4C2800EDB870 /* CaseExtend.m in Sources */,
 				01B831CF17FD4EF700EDB870 /* BasicModle.m in Sources */,
+				3E19398219E62BBA00B9A589 /* HostViewController.m in Sources */,
 				01B831D217FD542400EDB870 /* CaseApplicant.m in Sources */,
 				01B831D517FD567600EDB870 /* CaseImage.m in Sources */,
 				01B831D817FD59AC00EDB870 /* CaseApprovalImage.m in Sources */,
@@ -2248,6 +2259,7 @@
 				01BBC1B11847172E000E070C /* ChooseRadioView.m in Sources */,
 				3E9260A919E52E4300B13327 /* SDWebImageCompat.m in Sources */,
 				01BBC1B41847180D000E070C /* TKCaseRadioCell.m in Sources */,
+				3E19397F19E62AFC00B9A589 /* ViewPagerController.m in Sources */,
 				01C4E9431857FDD6005A0871 /* TKCaseDropListCell.m in Sources */,
 				01C4E94618580011005A0871 /* CVUISelect.m in Sources */,
 				01F3FCF318617297003EAE0D /* AdminURL.m in Sources */,
@@ -2333,15 +2345,15 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 澜洲 吴 (M3F85US4G2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yanling zhang (C8684SUZ22)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Eland/Eland-Prefix.pch";
 				HEADER_SEARCH_PATHS = "${SDK_ROOT}/usr/include/libxml2";
 				INFOPLIST_FILE = "Eland/Eland-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "13B269E9-75A6-4538-A460-049A63FEDEF9";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "13B269E9-75A6-4538-A460-049A63FEDEF9";
+				PROVISIONING_PROFILE = "65d492ad-c21f-4f89-8d45-291fac8af6d7";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "65d492ad-c21f-4f89-8d45-291fac8af6d7";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2352,15 +2364,15 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 澜洲 吴 (M3F85US4G2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yanling zhang (C8684SUZ22)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Eland/Eland-Prefix.pch";
 				HEADER_SEARCH_PATHS = "${SDK_ROOT}/usr/include/libxml2";
 				INFOPLIST_FILE = "Eland/Eland-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "13B269E9-75A6-4538-A460-049A63FEDEF9";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "13B269E9-75A6-4538-A460-049A63FEDEF9";
+				PROVISIONING_PROFILE = "65d492ad-c21f-4f89-8d45-291fac8af6d7";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "65d492ad-c21f-4f89-8d45-291fac8af6d7";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

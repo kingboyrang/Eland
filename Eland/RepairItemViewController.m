@@ -20,6 +20,7 @@
 #import "NetWorkConnection.h"
 #import "ASIHTTPRequest.h"
 #import "NSString+TPCategory.h"
+#import "MainViewController.h"
 @interface RepairItemViewController ()
 
 -(void)updateSourceUI:(NSArray*)arr;
@@ -214,41 +215,31 @@
         __block UIView *bgView=nil;
         if (bgView==nil) {
             bgView=[self getHelperView];
-            /***
-             bgView=[[UIView alloc] initWithFrame:DeviceRect];
-            bgView.backgroundColor=[UIColor grayColor];
-            bgView.alpha=0.3;
-            
-            NSString *memo=@"網路檢測中...";
-            CGSize size=[memo textSize:[UIFont boldSystemFontOfSize:16] withWidth:bgView.frame.size.width];
-            UILabel *label=[[UILabel alloc] initWithFrame:CGRectMake((bgView.frame.size.width-size.width)/2, (bgView.frame.size.height-3*44-size.height)/2, size.width, size.height)];
-            label.backgroundColor=[UIColor clearColor];
-            label.text=memo;
-            label.font=[UIFont boldSystemFontOfSize:16];
-            [bgView addSubview:label];
-            
-           UIActivityIndicatorView  *_activityIndicatorView=[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-            _activityIndicatorView.frame=CGRectMake(label.frame.origin.x-2-30,(bgView.frame.size.height-3*44-30)/2, 30, 30);
-            [bgView addSubview:_activityIndicatorView];
-            [_activityIndicatorView startAnimating];
-            [_activityIndicatorView release];
-            [label release];
-           ***/
-
             [self.view addSubview:bgView];
         }
         [self checAccessWithURL:url complete:^(BOOL success) {
             [bgView removeFromSuperview];
             [bgView release],bgView=nil;
+             NSLog(@"bgView removeFromSuperview");
             if (!success) {
                 [AlertHelper initWithTitle:@"提示" message:@"網路連接發生異常,請檢查網路連接."];
                 //[self showNoNetworkNotice:nil];
                 return;
             }
-            CaseAddViewController *controller=[[CaseAddViewController alloc] init];
-            controller.Entity=setting;
-            [self.navigationController pushViewController:controller animated:YES];
-            [controller release];
+            if (self.navigationController) {
+                CaseAddViewController *controller=[[CaseAddViewController alloc] init];
+                controller.Entity=setting;
+                [self.navigationController pushViewController:controller animated:YES];
+                [controller release];
+            }else{
+                if (self.parentNavigation) {
+                    CaseAddViewController *controller=[[CaseAddViewController alloc] init];
+                    controller.Entity=setting;
+                    [self.parentNavigation pushViewController:controller animated:YES];
+                    [controller release];
+                }
+            }
+           
         }];
        
     }
@@ -291,7 +282,7 @@
                                          duration:(NSTimeInterval)duration
 {
    
-    NSLog(@"执行这里〜〜〜");
+
     if (!self.isPad) {
         UICollectionViewFlowLayout *flowlayout=[[UICollectionViewFlowLayout alloc] init];
         flowlayout.scrollDirection=UICollectionViewScrollDirectionVertical;
