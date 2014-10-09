@@ -87,11 +87,10 @@
     
     //NSLog(@"GUID=%@",self.Entity.GUID);
     CGRect r=self.view.bounds;
-    //r.size.height-=44;
+    r.size.height-=44*2;
     _tableView=[[UITableView alloc] initWithFrame:r style:UITableViewStylePlain];
     _tableView.dataSource=self;
     _tableView.delegate=self;
-    _tableView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     _tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
     _tableView.bounces=NO;
     _tableView.backgroundColor=[UIColor clearColor];

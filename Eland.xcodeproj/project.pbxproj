@@ -260,7 +260,6 @@
 		01EA095C183F482900F42D9E /* checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 01EA095A183F482900F42D9E /* checkbox.png */; };
 		01EA09AE183F55B800F42D9E /* TKCaseLightNumberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01EA09AD183F55B800F42D9E /* TKCaseLightNumberCell.m */; };
 		01F3FCF318617297003EAE0D /* AdminURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 01F3FCF218617297003EAE0D /* AdminURL.m */; };
-		26A0ECD517EF2B8D009AF735 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A0ECD417EF2B8D009AF735 /* MainViewController.m */; };
 		26A0ECDF17EF2E9B009AF735 /* about_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 26A0ECD717EF2E9B009AF735 /* about_normal.png */; };
 		26A0ECE017EF2E9B009AF735 /* about_select.png in Resources */ = {isa = PBXBuildFile; fileRef = 26A0ECD817EF2E9B009AF735 /* about_select.png */; };
 		26A0ECE117EF2E9B009AF735 /* index_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 26A0ECD917EF2E9B009AF735 /* index_normal.png */; };
@@ -306,6 +305,7 @@
 		3E9260B319E52E4300B13327 /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9260A119E52E4300B13327 /* UIImageView+HighlightedWebCache.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		3E9260B419E52E4300B13327 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9260A319E52E4300B13327 /* UIImageView+WebCache.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		3E9260B519E52E4300B13327 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9260A519E52E4300B13327 /* UIView+WebCacheOperation.m */; };
+		3EE2F5AD19E6975E00C872FC /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EE2F5AB19E6975E00C872FC /* MainViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -742,8 +742,6 @@
 		01EA09AD183F55B800F42D9E /* TKCaseLightNumberCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKCaseLightNumberCell.m; sourceTree = "<group>"; };
 		01F3FCF118617297003EAE0D /* AdminURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdminURL.h; sourceTree = "<group>"; };
 		01F3FCF218617297003EAE0D /* AdminURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdminURL.m; sourceTree = "<group>"; };
-		26A0ECD317EF2B8D009AF735 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
-		26A0ECD417EF2B8D009AF735 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		26A0ECD717EF2E9B009AF735 /* about_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = about_normal.png; sourceTree = "<group>"; };
 		26A0ECD817EF2E9B009AF735 /* about_select.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = about_select.png; sourceTree = "<group>"; };
 		26A0ECD917EF2E9B009AF735 /* index_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = index_normal.png; sourceTree = "<group>"; };
@@ -820,6 +818,8 @@
 		3E9260A319E52E4300B13327 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		3E9260A419E52E4300B13327 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		3E9260A519E52E4300B13327 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
+		3EE2F5AB19E6975E00C872FC /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		3EE2F5AC19E6975E00C872FC /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1176,13 +1176,13 @@
 		012F11E217E850F200AE73EB /* Index */ = {
 			isa = PBXGroup;
 			children = (
+				3EE2F5AB19E6975E00C872FC /* MainViewController.m */,
+				3EE2F5AC19E6975E00C872FC /* MainViewController.h */,
 				01B831A717FD03A200EDB870 /* SystemCheck */,
 				0191799F17FAB5C4000188BD /* index */,
 				01B448A617F9027F004B3A6C /* aboutUS */,
 				26A5877B17F7CAF600850DED /* SecrecyViewController.h */,
 				26A5877C17F7CAF600850DED /* SecrecyViewController.m */,
-				26A0ECD317EF2B8D009AF735 /* MainViewController.h */,
-				26A0ECD417EF2B8D009AF735 /* MainViewController.m */,
 				012F11EA17E8517900AE73EB /* IndexViewController.h */,
 				012F11EB17E8517900AE73EB /* IndexViewController.m */,
 				012F11EC17E8517900AE73EB /* aboutUSViewController.h */,
@@ -2117,7 +2117,6 @@
 				3E9260AE19E52E4300B13327 /* SDWebImagePrefetcher.m in Sources */,
 				0151212F180D2E0000594D95 /* AZGenieView.m in Sources */,
 				3E9260AC19E52E4300B13327 /* SDWebImageDownloaderOperation.m in Sources */,
-				26A0ECD517EF2B8D009AF735 /* MainViewController.m in Sources */,
 				26A5BA6717F0887900A13AC6 /* RTLabel.m in Sources */,
 				01A7BFD217F1229200A2C03B /* LinearView.m in Sources */,
 				3E9260AA19E52E4300B13327 /* SDWebImageDecoder.m in Sources */,
@@ -2195,6 +2194,7 @@
 				01B3926E181102A40070909F /* TkCaseImageCell.m in Sources */,
 				01B831F217FD60A600EDB870 /* PushToken.m in Sources */,
 				01B831F517FD71B700EDB870 /* CacheHelper.m in Sources */,
+				3EE2F5AD19E6975E00C872FC /* MainViewController.m in Sources */,
 				01B831FB17FD769500EDB870 /* DownloadManager.m in Sources */,
 				0151212D180D2E0000594D95 /* MKPhotoView.m in Sources */,
 				01B831FC17FD769500EDB870 /* DownLoadArgs.m in Sources */,

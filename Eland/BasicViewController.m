@@ -64,7 +64,8 @@
 #ifdef __IPHONE_7_0
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 7.0) {
         self.extendedLayoutIncludesOpaqueBars = NO;
-        self.edgesForExtendedLayout = UIRectEdgeBottom|UIRectEdgeLeft|UIRectEdgeRight;
+        //self.edgesForExtendedLayout = UIRectEdgeBottom|UIRectEdgeLeft|UIRectEdgeRight;
+        self.edgesForExtendedLayout = UIRectEdgeNone;
     }
 #endif
     self.view.backgroundColor=[UIColor colorFromHexRGB:@"F1F4F2"];
