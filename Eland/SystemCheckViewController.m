@@ -14,6 +14,7 @@
 #import "TKCheckLabelCell.h"
 #import "TKCheckButtonCell.h"
 #import "ASIHTTPRequest.h"
+#import "CLLocationManager+blocks.h"
 @interface SystemCheckViewController ()
 - (void)buttonLocation:(id)sender;
 - (void)buttonCompare;
@@ -117,7 +118,7 @@
     }];
 }
 - (void)checkGPSConnection{
-    BOOL is3G=[NetWorkConnection locationServicesEnabled];
+    BOOL is3G=[CLLocationManager isLocationUpdatesAvailable];
     TKCheckLabelCell *cell1=(TKCheckLabelCell*)self.gpscells[0];
     [cell1 setLabelValue:is3G?@"開啟":@"未開啟" normal:is3G];
 }

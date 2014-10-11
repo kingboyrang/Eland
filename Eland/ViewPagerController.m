@@ -312,7 +312,7 @@
 - (void)defaultSettings {
     
     // Default settings
-    _tabHeight = kDefaultTabHeight;
+    _tabHeight =DeviceIsPad?58:kDefaultTabHeight;
     _tabOffset = kDefaultTabOffset;
     _tabWidth = kDefaultTabWidth;
     
@@ -345,7 +345,7 @@
     
     // Get settings if provided
     if ([self.delegate respondsToSelector:@selector(viewPager:valueForOption:withDefault:)]) {
-        _tabHeight = [self.delegate viewPager:self valueForOption:ViewPagerOptionTabHeight withDefault:kDefaultTabHeight];
+        _tabHeight = [self.delegate viewPager:self valueForOption:ViewPagerOptionTabHeight withDefault:DeviceIsPad?58:kDefaultTabHeight];
         _tabOffset = [self.delegate viewPager:self valueForOption:ViewPagerOptionTabOffset withDefault:kDefaultTabOffset];
         _tabWidth = [self.delegate viewPager:self valueForOption:ViewPagerOptionTabWidth withDefault:kDefaultTabWidth];
         

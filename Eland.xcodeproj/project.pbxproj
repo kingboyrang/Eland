@@ -305,6 +305,7 @@
 		3E9260B319E52E4300B13327 /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9260A119E52E4300B13327 /* UIImageView+HighlightedWebCache.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		3E9260B419E52E4300B13327 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9260A319E52E4300B13327 /* UIImageView+WebCache.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		3E9260B519E52E4300B13327 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9260A519E52E4300B13327 /* UIView+WebCacheOperation.m */; };
+		3EA74B3619E910FA00E8110E /* CLLocationManager+blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EA74B3519E910FA00E8110E /* CLLocationManager+blocks.m */; };
 		3EE2F5AD19E6975E00C872FC /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EE2F5AB19E6975E00C872FC /* MainViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -818,6 +819,8 @@
 		3E9260A319E52E4300B13327 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		3E9260A419E52E4300B13327 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		3E9260A519E52E4300B13327 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
+		3EA74B3419E910FA00E8110E /* CLLocationManager+blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLLocationManager+blocks.h"; sourceTree = "<group>"; };
+		3EA74B3519E910FA00E8110E /* CLLocationManager+blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLLocationManager+blocks.m"; sourceTree = "<group>"; };
 		3EE2F5AB19E6975E00C872FC /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		3EE2F5AC19E6975E00C872FC /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1657,6 +1660,8 @@
 		01B831AF17FD122000EDB870 /* Location */ = {
 			isa = PBXGroup;
 			children = (
+				3EA74B3419E910FA00E8110E /* CLLocationManager+blocks.h */,
+				3EA74B3519E910FA00E8110E /* CLLocationManager+blocks.m */,
 				26A789D119E6CE7900368CFE /* LocationGPS.h */,
 				26A789D219E6CE7900368CFE /* LocationGPS.m */,
 				01B831B317FD125400EDB870 /* SVGeocoder */,
@@ -2081,6 +2086,7 @@
 				0104772C17DF1EF600BDCCE0 /* WBBlueGradientView.m in Sources */,
 				0104772D17DF1EF600BDCCE0 /* WBErrorNoticeView.m in Sources */,
 				0104772E17DF1EF600BDCCE0 /* WBGrayGradientView.m in Sources */,
+				3EA74B3619E910FA00E8110E /* CLLocationManager+blocks.m in Sources */,
 				01C2EA7A180B904000220F16 /* CaseSetting.m in Sources */,
 				0104772F17DF1EF600BDCCE0 /* WBNoticeOperation.m in Sources */,
 				0104773017DF1EF600BDCCE0 /* WBNoticeView.m in Sources */,
@@ -2345,15 +2351,15 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 澜洲 吴 (M3F85US4G2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yanling zhang (C8684SUZ22)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Eland/Eland-Prefix.pch";
 				HEADER_SEARCH_PATHS = "${SDK_ROOT}/usr/include/libxml2";
 				INFOPLIST_FILE = "Eland/Eland-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "13B269E9-75A6-4538-A460-049A63FEDEF9";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "13B269E9-75A6-4538-A460-049A63FEDEF9";
+				PROVISIONING_PROFILE = "65d492ad-c21f-4f89-8d45-291fac8af6d7";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "65d492ad-c21f-4f89-8d45-291fac8af6d7";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2364,15 +2370,15 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 澜洲 吴 (M3F85US4G2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yanling zhang (C8684SUZ22)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Eland/Eland-Prefix.pch";
 				HEADER_SEARCH_PATHS = "${SDK_ROOT}/usr/include/libxml2";
 				INFOPLIST_FILE = "Eland/Eland-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "13B269E9-75A6-4538-A460-049A63FEDEF9";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "13B269E9-75A6-4538-A460-049A63FEDEF9";
+				PROVISIONING_PROFILE = "65d492ad-c21f-4f89-8d45-291fac8af6d7";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "65d492ad-c21f-4f89-8d45-291fac8af6d7";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

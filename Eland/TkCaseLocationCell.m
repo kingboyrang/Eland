@@ -7,8 +7,9 @@
 //
 
 #import "TkCaseLocationCell.h"
-#import "LocationGPS.h"
+#import "CLLocationManager+blocks.h"
 @interface TkCaseLocationCell ()
+@property (nonatomic, strong) CLLocationManager *manager;
 -(void)buttonLocationClick;
 @end
 
@@ -29,6 +30,9 @@
     [_button addTarget:self action:@selector(buttonLocationClick) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:_button];
     
+    self.manager=[CLLocationManager updateManager];
+    self.manager.updateAccuracyFilter = kCLUpdateAccuracyFilterNone;
+    self.manager.updateLocationAgeFilter = kCLLocationAgeFilterNone;
     return self;
 }
 - (id) initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier {
@@ -64,24 +68,25 @@
 -(void)buttonLocationClick{
     if (isLoading){return;}
     //判断定位是否启用
-    if (![CLLocationManager locationServicesEnabled]) {
+    if (![CLLocationManager isLocationUpdatesAvailable]) {
         [AlertHelper initWithTitle:@"提示" message:@"定位未開啓，請在設置->隱私->定位服務->施政互動啓用!"];
         return;
     }
     isLoading=YES;
     [ZAActivityBar showWithStatus:@"正在定位..." forAction:@"caselocation"];
-    
-    LocationGPS *gps=[[LocationGPS alloc] init];
-    [gps startLocation:^(CLPlacemark *place) {
-        [ZAActivityBar showSuccessWithStatus:@"定位成功!" forAction:@"caselocation"];
-        isLoading=NO;
-        if (self.controller&&[self.controller respondsToSelector:@selector(finishedLocation:)]) {
-            [self.controller performSelector:@selector(finishedLocation:) withObject:place];
+
+    [self.manager startUpdatingLocationWithUpdateBlock:^(CLLocationManager *manager, CLLocation *location, NSError *error, BOOL *stopUpdating) {
+        if (error) {
+            [ZAActivityBar showErrorWithStatus:@"定位失敗!" forAction:@"caselocation"];
+            isLoading=NO;
+        }else{
+            [ZAActivityBar showSuccessWithStatus:@"定位成功!" forAction:@"caselocation"];
+            isLoading=NO;
+            if (self.controller&&[self.controller respondsToSelector:@selector(finishedLocation:)]) {
+                [self.controller performSelector:@selector(finishedLocation:) withObject:location];
+            }
         }
-        
-    } failed:^(NSError *error) {
-        [ZAActivityBar showErrorWithStatus:@"定位失敗!" forAction:@"caselocation"];
-        isLoading=NO;
+        *stopUpdating = YES;
     }];
 }
 @end

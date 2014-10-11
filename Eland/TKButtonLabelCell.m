@@ -9,10 +9,16 @@
 #import "TKButtonLabelCell.h"
 #import "NSString+TPCategory.h"
 #import "UIColor+TPCategory.h"
-#import "LocationGPS.h"
 #import "ZAActivityBar.h"
 #import "AlertHelper.h"
-#import <CoreLocation/CoreLocation.h>
+#import "CLLocationManager+blocks.h"
+
+@interface TKButtonLabelCell ()
+
+@property (nonatomic, strong) CLLocationManager *manager;
+
+@end
+
 @implementation TKButtonLabelCell
 
 - (id) initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -30,6 +36,10 @@
         _label.textColor=[UIColor redColor];
         _label.backgroundColor=[UIColor clearColor];
         [self.contentView addSubview:_label];
+    
+    self.manager=[CLLocationManager updateManager];
+    self.manager.updateAccuracyFilter = kCLUpdateAccuracyFilterNone;
+    self.manager.updateLocationAgeFilter = kCLLocationAgeFilterNone;
     
     return self;
 }
@@ -50,23 +60,25 @@ BOOL isLoading=NO;
 -(void)startLocation{
     if (isLoading){return;}
     //判断定位是否启用
-    if (![CLLocationManager locationServicesEnabled]) {
+    if (![CLLocationManager isLocationUpdatesAvailable]) {
         [AlertHelper initWithTitle:@"提示" message:@"定位未開啓，請在設置->隱私->定位服務->施政互動啓用!"];
         return;
     }
     isLoading=YES;
     [ZAActivityBar showWithStatus:@"正在定位..." forAction:@"checklocation"];
-    LocationGPS *gps=[[LocationGPS alloc] init];
-    [gps startLocation:^(CLPlacemark *place) {
-        [ZAActivityBar showSuccessWithStatus:@"定位成功!" forAction:@"checklocation"];
-        _label.text=[NSString stringWithFormat:@"%f~%f",place.location.coordinate.longitude,place.location.coordinate.latitude];
-        isLoading=NO;
-        
-    } failed:^(NSError *error) {
-        [ZAActivityBar showErrorWithStatus:@"定位失敗!" forAction:@"checklocation"];
-        isLoading=NO;
+
+    [self.manager startUpdatingLocationWithUpdateBlock:^(CLLocationManager *manager, CLLocation *location, NSError *error, BOOL *stopUpdating) {
+        if (error) {
+            [ZAActivityBar showErrorWithStatus:@"定位失敗!" forAction:@"checklocation"];
+            isLoading=NO;
+        }else{
+            [ZAActivityBar showSuccessWithStatus:@"定位成功!" forAction:@"checklocation"];
+            _label.text=[NSString stringWithFormat:@"%f~%f",location.coordinate.longitude,location.coordinate.latitude];
+            isLoading=NO;
+        }
+        *stopUpdating = YES;
     }];
-    
+
 }
 - (void) layoutSubviews {
     [super layoutSubviews];

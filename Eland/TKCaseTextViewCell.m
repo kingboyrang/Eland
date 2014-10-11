@@ -123,9 +123,9 @@
     [[self.textView layer] setShadowColor:nil];
 	[self.textView.layer setBorderColor:_borderColor.CGColor];
 }
--(void)finishedLocation:(CLPlacemark*)place{
+-(void)finishedLocation:(CLLocation*)location{
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    [geocoder reverseGeocodeLocation:place.location completionHandler:^(NSArray *array, NSError *error) {
+    [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *array, NSError *error) {
         if (array.count > 0) {
             
             CLPlacemark *placemark = [array objectAtIndex:0];
@@ -142,8 +142,9 @@
             }
             if (placemark.thoroughfare) {
                 [address appendString:placemark.thoroughfare];
-            }else if (placemark.name){
-                [address appendString:placemark.name];
+            }
+            if (placemark.subThoroughfare){
+                [address appendString:placemark.subThoroughfare];
             }
             
             self.textView.text=address;

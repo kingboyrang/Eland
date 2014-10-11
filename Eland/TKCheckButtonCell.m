@@ -8,7 +8,14 @@
 
 #import "TKCheckButtonCell.h"
 #import "UIColor+TPCategory.h"
-#import "LocationGPS.h"
+#import "CLLocationManager+blocks.h"
+
+@interface TKCheckButtonCell ()
+
+@property (nonatomic, strong) CLLocationManager *manager;
+
+@end
+
 @implementation TKCheckButtonCell
 
 - (id) initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -30,6 +37,10 @@
     [_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.contentView addSubview:_button];
     
+    self.manager=[CLLocationManager updateManager];
+    self.manager.updateAccuracyFilter = kCLUpdateAccuracyFilterNone;
+    self.manager.updateLocationAgeFilter = kCLLocationAgeFilterNone;
+    
     return self;
 }
 - (id) initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier {
@@ -39,27 +50,29 @@
 
 -(void)startLocation:(void(^)(BOOL finished))completed{
     if (isLoading){return;}
-    isLoading=YES;
-    [ZAActivityBar showWithStatus:@"正在定位..." forAction:@"checklocation"];
-
-    LocationGPS *gps=[[LocationGPS alloc] init];
-    [gps startLocation:^(CLPlacemark *place) {
-        [ZAActivityBar showSuccessWithStatus:@"定位成功!" forAction:@"checklocation"];
-        _label.text=[NSString stringWithFormat:@"%f~%f",place.location.coordinate.longitude,place.location.coordinate.latitude];
-        _label.textColor=[UIColor redColor];
-        isLoading=NO;
-        if (completed) {
-            completed(YES);
-        }
-        
-    } failed:^(NSError *error) {
-        [ZAActivityBar showErrorWithStatus:@"定位失敗!" forAction:@"checklocation"];
-        isLoading=NO;
-        _label.textColor=[UIColor colorFromHexRGB:@"666666"];
-        if (completed) {
-            completed(NO);
-        }
-    }];
+    if ([CLLocationManager isLocationUpdatesAvailable]) {
+        isLoading=YES;
+        [ZAActivityBar showWithStatus:@"正在定位..." forAction:@"checklocation"];
+        [self.manager startUpdatingLocationWithUpdateBlock:^(CLLocationManager *manager, CLLocation *location, NSError *error, BOOL *stopUpdating) {
+            if (error) {
+                [ZAActivityBar showErrorWithStatus:@"定位失敗!" forAction:@"checklocation"];
+                isLoading=NO;
+                _label.textColor=[UIColor colorFromHexRGB:@"666666"];
+                if (completed) {
+                    completed(NO);
+                }
+            }else{
+                [ZAActivityBar showSuccessWithStatus:@"定位成功!" forAction:@"checklocation"];
+                _label.text=[NSString stringWithFormat:@"%f~%f",location.coordinate.longitude,location.coordinate.latitude];
+                _label.textColor=[UIColor redColor];
+                isLoading=NO;
+                if (completed) {
+                    completed(YES);
+                }
+            }
+            *stopUpdating = YES;
+        }];
+    }
     
 }
 - (void) layoutSubviews {

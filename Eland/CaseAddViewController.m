@@ -47,7 +47,6 @@
 -(void)buttonSubmit;
 -(void)insertAndRemoveRows;
 -(void)updateCaseCityShowWithType:(int)type;
--(CGRect)fieldToRect:(UITextField*)field;
 - (NSInteger)getCityDownRowCell;
 @end
 
@@ -128,10 +127,10 @@
             }
             UITableViewCell *cell=(UITableViewCell*)v;
             NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
-            CGRect r=[_tableView rectForRowAtIndexPath:indexPath];
-            //return  [self.view convertRect:field.frame fromView:cell];
+           CGRect r=[_tableView rectForRowAtIndexPath:indexPath];
+            r.origin.y+=field.frame.origin.y*2+field.frame.size.height;
             return r;
-            //return field.frame;
+            //return [_tableView convertRect:field.frame fromView:cell];
         }
         if ([self.activeView isKindOfClass:[UITextView class]]) {
             UITextView *field=(UITextView*)self.activeView;
@@ -140,11 +139,12 @@
                 v=[v superview];
             }
             UITableViewCell *cell=(UITableViewCell*)v;
-            NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
-            
-            //return  [self.view convertRect:field.frame fromView:cell];
-            return [_tableView rectForRowAtIndexPath:indexPath];
-            //return field.frame;
+           // return [_tableView convertRect:field.frame fromView:cell];
+           NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
+            CGRect r=[_tableView rectForRowAtIndexPath:indexPath];
+            r.origin.y+=field.frame.origin.y*2+field.frame.size.height;
+            return r;
+           
         }
     }
     return CGRectZero;
@@ -155,40 +155,40 @@
     //如果键盘是显示状态，不用做重复的操作
     if (keyboardShown)
         return;
-    NSLog(@"textView 键盘显示2");
+   
     //获得键盘通知的用户信息字典
     NSDictionary* info = [aNotification userInfo];
     
     // 取得键盘尺寸.
-    NSValue* aValue = [info objectForKey:UIKeyboardBoundsUserInfoKey];
-    CGSize keyboardSize = [aValue CGRectValue].size;
-    
-    // 重新设置scrollView的size
-    CGRect viewFrame = [_tableView frame];
-    viewFrame.size.height -= keyboardSize.height;
-    _tableView.frame = viewFrame;
-    
-    
+    CGRect kbFrame = [[info valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGSize keyboardSize = kbFrame.size;
+    if (keyboardSize.height==0) {//UITextView取不到键盘高度处理
+        keyboardSize.height=216.0;
+    }
+
     // 把当前被挡住的text field滚动到view中适当的可见位置.
     CGRect textFieldRect = [self getActiveFrame];
-    NSLog(@"textFieldRect frame=%@",NSStringFromCGRect(textFieldRect));
-    [_tableView scrollRectToVisible:textFieldRect animated:YES];
+    //[_tableView scrollRectToVisible:textFieldRect animated:YES];
     
-    
+    CGFloat h=textFieldRect.origin.y+keyboardSize.height;
     //记录当前textField的偏移量，方便隐藏键盘时，恢复textField到原来位置
     oldContentOffsetValue = [_tableView contentOffset].y;
-    
-    //计算textField滚动到的适当位置
-    CGFloat value = (textFieldRect.origin.y+_tableView.frame.origin.y+textFieldRect.size.height - _tableView.bounds.size.height + keyboardSize.height)+2.0f;
-    
-    NSLog(@"textView 键盘显示3 value=%f",value);
-    //value>0则表示需要滚动，小于0表示当前textField没有被挡住，不需要滚动
-    if (value > 0) {
+    if(h>_tableView.frame.size.height&&h<_tableView.contentSize.height){//表示可以滚动
         //使textField滚动到适当位置
+        CGFloat value=h-_tableView.frame.size.height;
         [_tableView setContentOffset:CGPointMake(0, value) animated:YES];
         isNeedSetOffset = YES;//更改状态标志为需要滚动
     }
     
+    if (h>_tableView.contentSize.height) {
+        CGFloat value=textFieldRect.origin.y-(_tableView.frame.size.height-keyboardSize.height);
+        if (value>0) {
+            NSTimeInterval animationDuration=[[info valueForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+            [UIView animateWithDuration:animationDuration animations:^{
+                _tableView.contentInset=UIEdgeInsetsMake(-value, 0, 0, 0);
+            }];
+        }
+    }
     //更改键盘状态标志为已显示
     keyboardShown = YES;
 
@@ -196,21 +196,16 @@
 - (void)handleKeyboardWillHideNotification:(NSNotification *)aNotification{
     NSDictionary* info = [aNotification userInfo];
     
-    // Get the size of the keyboard.
-    CGRect kbFrame = [[info valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    //NSValue* aValue = [info objectForKey:UIKeyboardBoundsUserInfoKey];
-    CGSize keyboardSize = kbFrame.size;
-    
-    // Reset the height of the scroll view to its original value
-    CGRect viewFrame = [_tableView frame];
-    viewFrame.size.height += keyboardSize.height;
-    _tableView.frame = viewFrame;
-    
     //如果状态标志为需要滚动，则要执行textFiled复位操作
     if (isNeedSetOffset) {
         //oldContentOffsetValue记录了textField原来的位置，复位即可
         [_tableView setContentOffset:CGPointMake(0, oldContentOffsetValue) animated:YES];
     }
+    
+    NSTimeInterval animationDuration=[[info valueForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    [UIView animateWithDuration:animationDuration animations:^{
+        _tableView.contentInset=UIEdgeInsetsZero;
+    }];
     
     //复位状态标志
     isNeedSetOffset = NO;
@@ -423,7 +418,6 @@
 #pragma mark UITextViewDelegate Methods
 - (void)textViewDidBeginEditing:(UITextView *)textView{
     self.activeView=textView;
-    NSLog(@"textView 得到焦点1");
 }
 #pragma mark UITextFieldDelegate Methods
 -(void)textFieldDidBeginEditing:(UITextField *)textField {
@@ -432,21 +426,6 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
     return YES;
-}
-//计算输入框与顶部的高度
-- (CGRect)fieldToRect:(UITextField*)field{
-    id v=[field superview];
-    while (![v isKindOfClass:[UITableViewCell class]]) {
-        v=[v superview];
-    }
-    UITableViewCell *cell=(UITableViewCell*)v;
-    CGRect r=[self.view convertRect:cell.frame fromView:_tableView];//计算当前cell距离顶部的高度
-    //CGRect r1=[cell convertRect:field.frame fromView:cell];
-    r.origin.y+=field.frame.origin.y;
-    //[self tableView:_tableView heightForRowAtIndexPath:[_tableView indexPathForCell:cell]];
-    r.origin.x=field.frame.origin.x;
-    
-    return r;
 }
 //验证
 -(BOOL)formValidate{
@@ -587,6 +566,8 @@
     [request setPostValue:[_caseArgs XmlSerialize] forKey:@"xml"];
     [request setRequestMethod:@"POST"];
     [request setTimeOutSeconds:120.0];//表示30秒请求超时
+    NSLog(@"header=%@",request.requestHeaders);
+    NSLog(@"body=%@",[[NSString alloc] initWithData:request.postBody encoding:NSUTF8StringEncoding]);
     [request setCompletionBlock:^{
         NSLog(@"responseString=%@",request.responseString);
         if (request.responseStatusCode==200) {

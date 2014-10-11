@@ -32,5 +32,5 @@
 - (void)removeVerify;
 - (void)exitKeyboard;
 
--(void)finishedLocation:(CLPlacemark*)place;
+-(void)finishedLocation:(CLLocation*)location;
 @end
