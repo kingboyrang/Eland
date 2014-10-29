@@ -699,11 +699,18 @@
 }
 -(void)selectedVillageTown:(CaseCity*)city{
     [self hidePopoverCaseCity];
-    TKCaseTextFieldCell *cell=self.cells[3];
-    cell.field.text=city.Name;
-    _caseArgs.CityGuid=city.GUID;
-    if (cell.required) {
-        [cell removeVerify];
+    for (id item in self.cells) {
+        if ([item isKindOfClass:[TKCaseTextFieldCell class]]) {
+            TKCaseTextFieldCell *cell=(TKCaseTextFieldCell*)item;
+            if ([cell.LabelName isEqualToString:@"CityGuid"]) {
+                cell.field.text=city.Name;
+                _caseArgs.CityGuid=city.GUID;
+                if (cell.required) {
+                    [cell removeVerify];
+                }
+                break;
+            }
+        }
     }
 }
 -(void)geographyLocation:(CLPlacemark*)place{

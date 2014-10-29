@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
+#import "CaseCity.h"
+
 @interface VillageTownViewController : UIViewController<MBProgressHUDDelegate,UITableViewDataSource,UITableViewDelegate>{
 @private
     int currentIndex;
