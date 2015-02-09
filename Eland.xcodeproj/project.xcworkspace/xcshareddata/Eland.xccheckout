@@ -14,7 +14,7 @@
 		<string>https://github.com/kingboyrang/Eland.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Eland.xcodeproj/project.xcworkspace</string>
+	<string>Eland.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>1CFF84AA6EA102B9EE1206F94251FB6D02B12A12</key>

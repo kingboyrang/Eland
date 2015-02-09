@@ -306,6 +306,11 @@
 		3E9260B419E52E4300B13327 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9260A319E52E4300B13327 /* UIImageView+WebCache.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		3E9260B519E52E4300B13327 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9260A519E52E4300B13327 /* UIView+WebCacheOperation.m */; };
 		3EA74B3619E910FA00E8110E /* CLLocationManager+blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EA74B3519E910FA00E8110E /* CLLocationManager+blocks.m */; };
+		3EB07D8D1A88646600CF52C5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EB07D8C1A88646600CF52C5 /* Images.xcassets */; };
+		3EB07D911A8866D900CF52C5 /* Icon-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EB07D901A8866D900CF52C5 /* Icon-60@3x.png */; };
+		3EB07D931A886A0300CF52C5 /* ipad-Portrait@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EB07D921A886A0300CF52C5 /* ipad-Portrait@2x.png */; };
+		3EB07D961A886C1300CF52C5 /* Icon-29@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EB07D941A886C1300CF52C5 /* Icon-29@3x.png */; };
+		3EB07D971A886C1300CF52C5 /* Icon-40@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EB07D951A886C1300CF52C5 /* Icon-40@3x.png */; };
 		3EE2F5AD19E6975E00C872FC /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EE2F5AB19E6975E00C872FC /* MainViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -821,6 +826,11 @@
 		3E9260A519E52E4300B13327 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		3EA74B3419E910FA00E8110E /* CLLocationManager+blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLLocationManager+blocks.h"; sourceTree = "<group>"; };
 		3EA74B3519E910FA00E8110E /* CLLocationManager+blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLLocationManager+blocks.m"; sourceTree = "<group>"; };
+		3EB07D8C1A88646600CF52C5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		3EB07D901A8866D900CF52C5 /* Icon-60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60@3x.png"; sourceTree = "<group>"; };
+		3EB07D921A886A0300CF52C5 /* ipad-Portrait@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ipad-Portrait@2x.png"; sourceTree = "<group>"; };
+		3EB07D941A886C1300CF52C5 /* Icon-29@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29@3x.png"; sourceTree = "<group>"; };
+		3EB07D951A886C1300CF52C5 /* Icon-40@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40@3x.png"; sourceTree = "<group>"; };
 		3EE2F5AB19E6975E00C872FC /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		3EE2F5AC19E6975E00C872FC /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -899,6 +909,7 @@
 				0104770017DF1A1500BDCCE0 /* Class */,
 				010476E917DF1A0A00BDCCE0 /* AppDelegate.h */,
 				010476EA17DF1A0A00BDCCE0 /* AppDelegate.m */,
+				3EB07D8C1A88646600CF52C5 /* Images.xcassets */,
 				010476E117DF1A0A00BDCCE0 /* Supporting Files */,
 			);
 			path = Eland;
@@ -907,6 +918,7 @@
 		010476E117DF1A0A00BDCCE0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3EB07D921A886A0300CF52C5 /* ipad-Portrait@2x.png */,
 				01C1B9E2180F6FB20023972E /* Default~ipad@2x.png */,
 				01A7F58D180E80FA00B49B2A /* iTunesArtwork */,
 				01C1B9E0180F6ED80023972E /* Default~ipad.png */,
@@ -1443,6 +1455,9 @@
 		01A7F58C180E80E900B49B2A /* ICON */ = {
 			isa = PBXGroup;
 			children = (
+				3EB07D941A886C1300CF52C5 /* Icon-29@3x.png */,
+				3EB07D951A886C1300CF52C5 /* Icon-40@3x.png */,
+				3EB07D901A8866D900CF52C5 /* Icon-60@3x.png */,
 				01A7F58F180E811300B49B2A /* Icon.png */,
 				01A7F590180E811300B49B2A /* Icon-40.png */,
 				01A7F591180E811300B49B2A /* Icon-40@2x.png */,
@@ -1980,6 +1995,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				01A7F59F180E811300B49B2A /* Icon-57.png in Resources */,
+				3EB07D911A8866D900CF52C5 /* Icon-60@3x.png in Resources */,
 				010476E517DF1A0A00BDCCE0 /* InfoPlist.strings in Resources */,
 				0104772917DF1EF600BDCCE0 /* NoticeView.bundle in Resources */,
 				01A7F5A4180E811300B49B2A /* Icon-120.png in Resources */,
@@ -2020,6 +2036,7 @@
 				26A587E917F81BC400850DED /* search@2x.png in Resources */,
 				26A587EB17F81CB600850DED /* search.png in Resources */,
 				01A7F5A2180E811300B49B2A /* Icon-76.png in Resources */,
+				3EB07D971A886C1300CF52C5 /* Icon-40@3x.png in Resources */,
 				0191799B17FAAFAF000188BD /* btn.png in Resources */,
 				01EA095B183F482900F42D9E /* checkbox-checked.png in Resources */,
 				019179A917FAB638000188BD /* repair_select.png in Resources */,
@@ -2049,6 +2066,7 @@
 				01A563D918024DE7004149BA /* icon-info@2x.png in Resources */,
 				01AFB0B2180CE9B7000799C4 /* Default@2x.png in Resources */,
 				01A563E618027E6C004149BA /* cell_title.png in Resources */,
+				3EB07D961A886C1300CF52C5 /* Icon-29@3x.png in Resources */,
 				01B398791803F03700DACB9A /* gps_abnormal.png in Resources */,
 				0151213A180D30B400594D95 /* UIBarButtonItemArrowLeft@2x.png in Resources */,
 				01512139180D30B400594D95 /* UIBarButtonItemArrowLeft.png in Resources */,
@@ -2060,8 +2078,10 @@
 				01A7F585180E5E9900B49B2A /* iphone_push_normal.png in Resources */,
 				01A7F5A1180E811300B49B2A /* Icon-72.png in Resources */,
 				01B3987B1803F03700DACB9A /* net_abnormal.png in Resources */,
+				3EB07D8D1A88646600CF52C5 /* Images.xcassets in Resources */,
 				01B3987C1803F03700DACB9A /* net_noraml.png in Resources */,
 				01B023DC180502F40018BF9A /* down.png in Resources */,
+				3EB07D931A886A0300CF52C5 /* ipad-Portrait@2x.png in Resources */,
 				01B023DD180502F40018BF9A /* up.png in Resources */,
 				01A7F5A8180E811300B49B2A /* Icon-Small@2x.png in Resources */,
 				01E16BE6181A403E00CB60F3 /* QBImagePickerController.bundle in Resources */,
@@ -2349,17 +2369,19 @@
 		010476FE17DF1A0A00BDCCE0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 澜洲 吴 (M3F85US4G2)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: yanling zhang (C8684SUZ22)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yanling zhang (C8684SUZ22)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Eland/Eland-Prefix.pch";
 				HEADER_SEARCH_PATHS = "${SDK_ROOT}/usr/include/libxml2";
 				INFOPLIST_FILE = "Eland/Eland-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8690EF79-3734-40C2-9894-C82AB7F2B014";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8690EF79-3734-40C2-9894-C82AB7F2B014";
+				PROVISIONING_PROFILE = "f179633e-0803-4ba2-a651-b70230a5dd9f";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "f179633e-0803-4ba2-a651-b70230a5dd9f";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2368,17 +2390,19 @@
 		010476FF17DF1A0A00BDCCE0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 澜洲 吴 (M3F85US4G2)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: yanling zhang (C8684SUZ22)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yanling zhang (C8684SUZ22)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Eland/Eland-Prefix.pch";
 				HEADER_SEARCH_PATHS = "${SDK_ROOT}/usr/include/libxml2";
 				INFOPLIST_FILE = "Eland/Eland-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8690EF79-3734-40C2-9894-C82AB7F2B014";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8690EF79-3734-40C2-9894-C82AB7F2B014";
+				PROVISIONING_PROFILE = "f179633e-0803-4ba2-a651-b70230a5dd9f";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "f179633e-0803-4ba2-a651-b70230a5dd9f";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
