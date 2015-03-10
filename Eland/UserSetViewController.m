@@ -15,6 +15,7 @@
 #import "TKButtonButtonCell.h"
 #import "UIDevice+TPCategory.h"
 #import "AlertHelper.h"
+#import "MainViewController.h"
 @interface UserSetViewController ()
 -(void)buttonSaveClick;
 -(void)buttonSecrecyClick;
@@ -132,7 +133,11 @@
     user.Email=cell3.field.text;
     user.Nick=cell4.field.text;
     [user save];
-    [AlertHelper initWithTitle:@"提示" message:@"儲存成功!"];
+    //[AlertHelper initWithTitle:@"提示" message:@"儲存成功!"];
+    [AlertHelper initWithTitle:@"提示" message:@"儲存成功!" confirmTitle:@"確認" confirmAction:^{
+        MainViewController *main=(MainViewController*)self.tabBarController;
+        [main setSelectedItemIndex:0];
+    }];
 
 }
 - (void)didReceiveMemoryWarning
