@@ -28,10 +28,6 @@
     [super dealloc];
 }
 -(void)registerAPNS{
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge |
-     UIRemoteNotificationTypeAlert |
-     UIRemoteNotificationTypeSound];
-    /***
     //注册推播
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {//ios8推送注册
         [[UIApplication sharedApplication] registerForRemoteNotifications];
@@ -42,7 +38,7 @@
          UIRemoteNotificationTypeAlert |
          UIRemoteNotificationTypeSound];
     }
-     ***/
+    
 }
 -(void)registerAPNSToken:(NSString*)deviceId{
     if ([deviceId length]==0) {
