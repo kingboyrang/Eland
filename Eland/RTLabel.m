@@ -882,7 +882,10 @@
 			}
 			else
 			{
-				data = [data stringByReplacingOccurrencesOfString:delimiter withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(last_position, position+delimiter.length-last_position)];
+                if (last_position<[data length]) {
+                    data = [data stringByReplacingOccurrencesOfString:delimiter withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(last_position, position+delimiter.length-last_position)];
+                }
+				
 			}
 			
 			data = [data stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];

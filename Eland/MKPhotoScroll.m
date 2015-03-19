@@ -112,7 +112,8 @@
     CGRect rect=[self imageRect];
     UIImageView *imageView=[[[UIImageView alloc] initWithFrame:rect] autorelease];
     imageView.tag=100+currentCount;
-    [imageView setImageWithActivityFromURL:url completed:nil];
+    //[imageView setImageWithActivityFromURL:url completed:nil];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:url]];
     imageView.autoresizesSubviews=YES;
     imageView.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     imageView.userInteractionEnabled=YES;

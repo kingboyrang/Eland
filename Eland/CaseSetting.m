@@ -163,7 +163,7 @@
 -(void)dealloc{
     [super dealloc];
     if (_hrFields) {
-        [_hrFields release];
+        //[_hrFields release];
     }
 }
 @end

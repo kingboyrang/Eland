@@ -225,7 +225,8 @@
         }
         [self checAccessWithURL:url complete:^(BOOL success) {
             [bgView removeFromSuperview];
-            [bgView release],bgView=nil;
+            //[bgView release],
+            bgView=nil;
              NSLog(@"bgView removeFromSuperview");
             if (!success) {
                 [AlertHelper initWithTitle:@"提示" message:@"網路連接發生異常,請檢查網路連接."];
