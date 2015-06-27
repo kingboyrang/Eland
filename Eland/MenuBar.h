@@ -17,4 +17,8 @@
 @property(nonatomic,assign) id controlers;
 -(void)setSelectedItemIndex:(int)index;
 -(void)setSelectedButtonWithIndex:(int)index;
+
+//重新布局
+- (void)resetMenuLayOut;
+
 @end

@@ -32,4 +32,10 @@
 + (NSString*)ObjectToXml;
 //判断是否有值
 + (BOOL)emptyUser;
+
+//是否为政府人员(默认为政府人员)
++ (BOOL)isGovEmployee;
+//设置人员身份(一般民众或政府人员)
++ (void)enableGovEmployee:(BOOL)enable;
+
 @end

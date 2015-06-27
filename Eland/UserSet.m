@@ -108,6 +108,24 @@
     }
     return YES;
 }
+
+
+//是否为政府人员
++ (BOOL)isGovEmployee{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:@"isGovEmployee"]) {
+        return [defaults boolForKey:@"isGovEmployee"];
+    }
+    return YES;
+}
+
+//设置人员身份(一般民众或政府人员)
++ (void)enableGovEmployee:(BOOL)enable{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:enable forKey:@"isGovEmployee"];
+    [defaults synchronize];
+}
+
 #pragma mark -
 #pragma mark 私有方法
 -(void)initloadValue{

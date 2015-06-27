@@ -9,6 +9,7 @@
 #import "MenuBar.h"
 #import "UIColor+TPCategory.h"
 #import "UIImage+TPCategory.h"
+#import "UserSet.h"
 @interface MenuBar ()
 -(void)loadControls;
 -(void)selectedButton:(id)sender;
@@ -90,6 +91,58 @@
     
     
 }
+
+//重新布局
+- (void)resetMenuLayOut{
+
+   
+    BOOL boo=[UserSet isGovEmployee];
+    CGFloat w=80,h=30;
+    if (DeviceIsPad) {
+        w=150;
+        h=58;
+    }
+    
+    if (boo) {//政府员工
+        
+        for (NSInteger i=100; i<104; i++) {
+            if ([_scrollView viewWithTag:i]) {
+                UIButton *btn=(UIButton*)[_scrollView viewWithTag:i];
+                btn.frame=CGRectMake((i-100)*w, 0, w, h);
+                btn.hidden=NO;
+            }
+        }
+        
+        CGFloat totalW=4*w;
+        CGFloat leftX=DeviceWidth<totalW?0:(self.bounds.size.width-totalW)/2;
+        
+        _scrollView.contentSize=CGSizeMake(totalW, h);
+        _scrollView.frame=CGRectMake(leftX,(self.bounds.size.height-h)/2.0,self.bounds.size.width, h);
+        
+    }else{
+    
+        for (NSInteger i=100; i<104; i++) {
+            if ([_scrollView viewWithTag:i]) {
+                UIButton *btn=(UIButton*)[_scrollView viewWithTag:i];
+                if (i==103) {
+                    btn.hidden=YES;
+                    continue;
+                }
+                btn.frame=CGRectMake((i-100)*w, 0, w, h);
+                btn.hidden=NO;
+            }
+        }
+        
+        CGFloat totalW=3*w;
+        CGFloat leftX=DeviceWidth<totalW?0:(self.bounds.size.width-totalW)/2;
+        
+        _scrollView.contentSize=CGSizeMake(totalW, h);
+        _scrollView.frame=CGRectMake(leftX,(self.bounds.size.height-h)/2.0,self.bounds.size.width, h);
+    }
+    
+    
+}
+
 -(void)layoutSubviews{
     [super layoutSubviews];
     CGRect frame=_scrollView.frame;

@@ -22,6 +22,7 @@
 @implementation IndexViewController
 -(void)dealloc{
     [super dealloc];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_menuBar release],_menuBar=nil;
     [_caseSearch release],_caseSearch=nil;
    
@@ -58,6 +59,8 @@
     [self addChildViewController:_caseSearch];
     [self addChildViewController:_push];
     [self addChildViewController:_business];
+    
+    
      
     
     //[self.view bringSubviewToFront:_menuBar];
@@ -80,6 +83,11 @@
     ***/
     
 }
+
+
+
+
+
 /***
 - (void)handChangePageIndex:(int)index{
     [_menuBar setSelectedItemIndex:index];

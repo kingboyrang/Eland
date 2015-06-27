@@ -79,6 +79,8 @@
 	frame.size.height = (int)optimumSize.height + 5;
     frame.origin.y=(self.bounds.size.height-frame.size.height)/2.0;
 	[self.label setFrame:frame];
+    
+    NSLog(@"label frame =%@",NSStringFromCGRect(self.label.frame));
 
 }
 -(NSString*)labelName:(NSString*)title required:(BOOL)required{

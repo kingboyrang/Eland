@@ -166,8 +166,12 @@
     //判断是否是重复点击tab按钮
     if (button.tag == self.selectedIndex && button.tag == 0) {
        //[_homeCtrl autorefresh];
+        
+        
     }
     self.selectedIndex = button.tag-100;
+    
+    
     
 }
 - (void)setSelectedItemIndex:(int)index{
@@ -205,6 +209,10 @@
 -(void)updateSelectedStatus:(int)selectTag lastIndex:(int)prevIndex{
     UIButton *btn=(UIButton*)[_tabbarView viewWithTag:100+prevIndex];
     btn.selected=NO;
+    if (selectTag!=prevIndex&&selectTag==0) {
+        NSLog(@"判断是否是重复点击tab按钮");
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"kNotificationTabItemSelected" object:nil];
+    }
     _prevSelectIndex=selectTag;
 }
 -(void)updateTabBarViewFrame:(UIInterfaceOrientation)orientation{

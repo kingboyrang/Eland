@@ -174,10 +174,14 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     //[self performSelectorInBackground:@selector(backgroundRequestTask) withObject:nil];
-    [self backgroundRequestTask];
+    //[self backgroundRequestTask];
 }
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    
+    
+    [self registerAPNSToken:[[UserSet sharedInstance] AppToken]];
+    
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -192,6 +196,10 @@
                           substringWithRange:NSMakeRange(1, [[deviceToken description] length]-2)];
     deviceId = [deviceId stringByReplacingOccurrencesOfString:@" " withString:@""];
     deviceId = [deviceId stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:deviceId forKey:@"deviceToken"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     
     [self registerAPNSToken:deviceId];
     //[self registerAPNSToken:@"762e025eafe03fdbb13b2f03e6224d5216dfcc78dbeebfbb3147c9973d114ecc"];

@@ -36,8 +36,13 @@
     [self.navigationItem titleViewBackground];
     
     NSLog(@"nav=%@",self.navigationController);
+    
+    //回首页被选中
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveTabItemChange) name:@"kNotificationTabItemSelected" object:nil];
 }
-
+- (void)receiveTabItemChange{
+    [self.menuBar resetMenuLayOut];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

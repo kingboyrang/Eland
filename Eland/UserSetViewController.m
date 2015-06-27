@@ -16,7 +16,9 @@
 #import "UIDevice+TPCategory.h"
 #import "AlertHelper.h"
 #import "MainViewController.h"
+#import "IdentityView.h"
 @interface UserSetViewController ()
+@property (nonatomic,strong) IdentityView *cardView;
 -(void)buttonSaveClick;
 -(void)buttonSecrecyClick;
 @end
@@ -93,10 +95,21 @@
         cell4.field.text=entity.Nick;
     }
     
-    self.cells =[NSMutableArray arrayWithObjects:cell1,cell2,cell3,cell4, nil];
+    TKLabelCell *cell5=[[[TKLabelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    [cell5 setLabelName:@"身份" required:NO];
+    
+    self.cardView=[[IdentityView alloc] initWithFrame:CGRectMake(106, 0, self.view.bounds.size.width-106, 44)];
+    [cell5.contentView addSubview:self.cardView];
+    
+    
+    self.cells =[NSMutableArray arrayWithObjects:cell1,cell2,cell3,cell4,cell5, nil];
     
     self.view.backgroundColor=[UIColor colorFromHexRGB:@"dfdfdf"];
 	// Do any additional setup after loading the view.
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.cardView setIdentityValue];
 }
 -(void)buttonSaveClick{
     if (isSubmit) {
