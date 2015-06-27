@@ -46,6 +46,10 @@
         return;
     }
     UserSet *entity=[UserSet sharedInstance];
+    if ([entity.AppToken length]==0) {
+        entity.AppToken=deviceId;
+        [entity save];
+    }
     if (![entity isRegisterToken]) {
         [ServiceHelper asynService:[PushToken registerTokenWithDeivceId:deviceId] success:^(ServiceResult *result) {
             BOOL boo=NO;
